@@ -1,0 +1,29 @@
+{
+  "name": "ecommerce-website",
+  "version": "1.0.0",
+  "description": "Building ecommerce website from sratch",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client":"cd client && npm start",
+    "dev": "concurrently -n 'server,client' -c 'yellow,green' \"nodemon server.js\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashes-Mondal/Ecommerce-Website.git"
+  },
+  "author": "Ashes-Mondal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashes-Mondal/Ecommerce-Website/issues"
+  },
+  "homepage": "https://github.com/Ashes-Mondal/Ecommerce-Website#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8",
+    "nodemon": "^2.0.6"
+  }
+}
