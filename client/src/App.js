@@ -14,6 +14,7 @@ const reducer = (currState,action)=>{
 }
 
 const App = () => {
+    //const cart = React.createContext()
     const [robots, dispatch] = useReducer(reducer, []);
 
     //side effect when page first time rendered
@@ -28,11 +29,13 @@ const App = () => {
     }, [])
 
     return (
-        <div className="container" >
+        //<cart.provider value={hbh}>
+        <div className = "container" >
             <h1>RoboFriends</h1>
             <SearchBox />
             <CardList robots={robots} />
         </div>
+        //</cart.provider>
     )
 }
 

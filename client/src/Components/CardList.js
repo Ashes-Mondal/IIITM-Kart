@@ -2,8 +2,9 @@ import React from 'react';
 import Card from './Card';
 
 const CardList = ({ robots }) => {
+    //const cart = useContext(cart),
     return (
-        <div className="row justify-content-start">
+        <div className = "row justify-content-start">
             {
                 robots.map((user, i) => {
                     return (<Card
