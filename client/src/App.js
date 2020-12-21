@@ -2,6 +2,7 @@ import React,{useReducer,useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardList from './Components/CardList';
 import SearchBox from './Components/SearchBox';
+import "./App.css";
 
 const reducer = (currState,action)=>{
     switch(action.type){
