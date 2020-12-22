@@ -29,8 +29,9 @@ const App = () => {
     }, [])
 
     return (
-        <div className = "container" >
-            <h1>Ecommerce Site</h1>
+        <div class = "container" >
+            <span class="text1">IIITM-Kart</span>
+            <span class="text2">A Shopping site for IIITM students</span>
             <SearchBox />
             <CardList itemList={itemList} />
         </div>
