@@ -3,10 +3,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 //Files
 const routes = require("./routes/routes");
-const mongodb = require("./config/dbConfig");
+const mongodb = require("./config/keys");
 
 //PORT
 const port = process.env.PORT || 8000;
@@ -24,6 +25,20 @@ mongoose.connect(dbURL,{useNewUrlParser:true, useUnifiedTopology: true, useCreat
   else console.log("successfully connected to Db!")
 } );
 
+//serve static assets when in production
+if(process.env.NODE_ENV === "production"){
+
+  //serve JS and CSS file from this folder
+  app.use(express.static("client/build"))
+
+  //For HTML and routes
+  app.get("*",(req,res)=>{
+    res.sendFile(path.resolve(__dirname,"./client","bulid","index.html"));
+  })
+
+}
+
+console.log(path.resolve(__dirname,"./client","bulid","index.html"));
 //Routes
 app.use("/", routes);
 

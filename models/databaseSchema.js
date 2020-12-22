@@ -58,7 +58,6 @@ const userDetailSchema = mongoose.Schema({
 	password:{
         type: String,
         required: true,
-        unique:true,
       },
 	Address:{
         type: String,
