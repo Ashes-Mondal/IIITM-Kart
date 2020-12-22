@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Card = ({ name, email, id, price }) => {
+const Card = ({ name, Description, id, cost ,imgURL}) => {
     //props = {name,email,id,price}
     return (
         <div className = "container col">
             <div className = "card shadow p-3 mb-5 bg-white rounded">
-                <img alt="Robot" src={`https://robohash.org/${id}test?200x200`} />
+                <img alt={name} src={imgURL} />
                 <div>
                     <h2>{name}</h2>
-                    <p>{email}</p>
+                    <p>{Description}</p>
                     <div className = "row container justify-content-around">
                         <button type="button" className = "btn btn-primary">
                             Add to Cart
@@ -18,7 +18,7 @@ const Card = ({ name, email, id, price }) => {
                                 </svg>
                             </span>
                         </button>
-                        <p>${price}</p>
+                        <p>Rs {cost}</p>
                     </div>
                 </div>
             </div>

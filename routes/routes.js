@@ -2,12 +2,18 @@
 const express = require("express");
 
 //Files
-const fetchOp = require("../controller/fetchOp");
+const databaseCRUD = require("../controller/databaseCRUD");
 
 const router = express.Router();
 
 //All the routes
-router.get("/",fetchOp.fetchJson)
+//GET REQUESTS
+router.get("/fetchItems",databaseCRUD.fetchItems);
+router.get("/fetchUsers",databaseCRUD.fetchUsers);
+
+//POST REQUESTS
+router.post("/addItem",databaseCRUD.addItem);
+router.post("/addUser",databaseCRUD.addUser);
 
 
 

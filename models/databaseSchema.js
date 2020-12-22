@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 //Schemas
 const itemDetailSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     ItemName : {
         type:String,
         required: true,
@@ -32,6 +33,7 @@ const itemDetailSchema = mongoose.Schema({
 })
 
 const userDetailSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
 	name:{
         firstName:{
             type:String,
@@ -62,11 +64,11 @@ const userDetailSchema = mongoose.Schema({
         type: String,
         required: true,
       },
-    userCart: [  {item: itemDetailSchema , Qty: number } ]
+    userCart: [  {item: itemDetailSchema , Qty: Number } ]
 	
 });
 
-const ItemDetail = mongoose.model("ItemDetail",itemDetailSchema);
-const UserDetail = mongoose.model("UserDetail",userDetailSchema);
+ const ItemDetail = mongoose.model("ItemDetail",itemDetailSchema);
+ const UserDetail = mongoose.model("UserDetail",userDetailSchema);
 
-module.exports = {ItemDetail,UserDetail};
+ module.exports = {ItemDetail,UserDetail};

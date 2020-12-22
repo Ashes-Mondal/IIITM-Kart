@@ -1,18 +1,18 @@
 import React from 'react';
 import Card from './Card';
 
-const CardList = ({ robots }) => {
-    //const cart = useContext(cart),
+const CardList = ({ itemList }) => {
     return (
         <div className = "row justify-content-start">
             {
-                robots.map((user, i) => {
+                itemList.map((item, i) => {
                     return (<Card
                         key={i}
-                        id={user.id}
-                        name={user.name}
-                        email={user.email}
-                        price={user.price}
+                        id={item._id}
+                        name={item.ItemName}
+                        Description={item.Description}
+                        cost={item.cost}
+                        imgURL={item.imageURL}
                     />
                     );
                 })

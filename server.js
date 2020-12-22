@@ -19,7 +19,10 @@ app.use(cors());
 
 //Database
 const dbURL = mongodb.mongoDbURL;
-mongoose.connect(dbURL,{useNewUrlParser:true, useUnifiedTopology: true } );
+mongoose.connect(dbURL,{useNewUrlParser:true, useUnifiedTopology: true, useCreateIndex:true },(err)=>{
+  if(err)console.log(err);
+  else console.log("successfully connected to Db!")
+} );
 
 //Routes
 app.use("/", routes);
