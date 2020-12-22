@@ -25,6 +25,11 @@ mongoose.connect(dbURL,{useNewUrlParser:true, useUnifiedTopology: true, useCreat
   else console.log("successfully connected to Db!")
 } );
 
+
+//Routes
+app.use("/", routes);
+
+
 //serve static assets when in production
 if(process.env.NODE_ENV === 'production'){
 
@@ -37,9 +42,6 @@ if(process.env.NODE_ENV === 'production'){
   })
 
 }
-
-//Routes
-app.use("/", routes);
 
 app.listen(port, () => {
   console.log(`server is listening to port ${port}`);
