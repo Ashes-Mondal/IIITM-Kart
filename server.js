@@ -33,12 +33,12 @@ if(process.env.NODE_ENV === "production"){
 
   //For HTML and routes
   app.get("*",(req,res)=>{
-    res.sendFile(path.resolve(__dirname,"./client","bulid","index.html"));
+    res.sendFile(path.resolve(__dirname,"./client","build","index.html"));
   })
 
 }
 
-console.log(path.resolve(__dirname,"./client","bulid","index.html"));
+console.log(path.resolve(__dirname,"./client","build","index.html"));
 //Routes
 app.use("/", routes);
 
