@@ -19,7 +19,7 @@ const App = () => {
 
     //side effect when page first time rendered
     useEffect(() => {
-        const URL = `http://localhost:${process.env.PORT || 8000}/fetchItems`;
+        const URL = "/fetchItems";
 
         const fetchJSON_fromServer = async ()=>{
             const itemList = await (await fetch(URL)).json()
