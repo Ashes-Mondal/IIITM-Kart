@@ -3,7 +3,7 @@ import Card from './Card';
 
 const CardList = ({ itemList }) => {
     return (
-        <div className = "row justify-content-start">
+        <div className = "row justify-content-center">
             {
                 itemList.map((item, i) => {
                     return (<Card

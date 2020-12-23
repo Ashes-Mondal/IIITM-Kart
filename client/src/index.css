@@ -13,16 +13,20 @@ code {
 }
 
 .card {
-  width: 300px;
-  min-height: 450px;
+  width: 21rem;
+  height: 32rem;
+  margin:2rem;
   text-align: center;
   animation-name: shrink;
   animation-duration: 0.5s;
 }
 
-.add-bottom {
-  position: absolute;
+.add-buttom {
+  /* position: absolute; */
   bottom: 20px;
+}
+.d{
+  padding: 1rem;
 }
 
 .card:hover {
@@ -48,6 +52,7 @@ code {
   }
 }
 img {
+  margin: 1rem;
   position: relative;
   height: 200px;
   object-fit: contain;

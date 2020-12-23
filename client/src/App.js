@@ -29,14 +29,17 @@ const App = () => {
   }, []);
 
   return (
-    <div className="container">
-      <div className ="heading">
+    <>
+      <div className="heading">
         <span className="text1">IIITM-Kart</span>
-        <div className="text2">A Shopping site for IIITM students</div>
+        <span className="text2">A Shopping site for IIITM students</span>
       </div>
-      <SearchBox />
-      <CardList itemList={itemList} />
-    </div>
+
+      <div className="col container shadow p-3 mb-5 bg-white rounded">
+        <SearchBox />
+        <CardList itemList={itemList} />
+      </div>
+    </>
   );
 };
 
