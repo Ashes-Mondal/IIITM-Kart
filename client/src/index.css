@@ -1,11 +1,12 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  background-color: 	#C0C0C0;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -21,10 +22,6 @@ code {
   animation-duration: 0.5s;
 }
 
-.add-buttom {
-  /* position: absolute; */
-  /* bottom: 20px; */
-}
 .d {
   padding: 1rem;
 }
@@ -58,24 +55,46 @@ img {
   object-fit: contain;
 }
 
-ul {
-  list-style: none;
-  list-style-type: none;
+.nav-bar {
+  position: fixed;
+  background-color: blue;
+  width: 100%;
+  justify-content: flex-start;
+  align-content: center;
+  display: flex;
+}
+.site-name {
+  text-align: center;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.search-box {
+  width: 32%;
+  display: flex;
+  align-items: center;
+}
+.form-control {
+  width: 100%;
+}
+.navlink-container {
+  width: 32%;
   display: flex;
   justify-content: space-around;
-  align-content: flex-end;
+  align-items: center;
 }
 
-li {
-  display: inline-block;
-}
-
-.navlinks {
+.navlink {
   color: white;
-  font-size: large;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
-
-a {
-  color: white !important;
+.navlink:hover {
+  color: #d3d3d3;
+  text-decoration: none;
+}
+a.active-nav-link {
+  font-weight: bolder;
+  border-bottom: 2px solid red;
 }
