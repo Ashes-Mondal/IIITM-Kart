@@ -37,7 +37,7 @@ body {
   color: cornsilk;
   font-family: "Nova Flat", cursive;
   font-family: "Roboto Slab", serif;
-  font-size: 60px;
+  font-size: 30px;
   font-weight: 700;
   letter-spacing: 3px;
 
@@ -47,7 +47,7 @@ body {
 
 .text2 {
   -webkit-text-stroke: 1px rgb(255, 251, 0);
-  font-size: 30px;
+  font-size: 15px;
   color: azure;
   font-weight: 700;
 }

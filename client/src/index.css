@@ -15,7 +15,7 @@ code {
 .card {
   width: 21rem;
   height: 32rem;
-  margin:2rem;
+  margin: 2rem;
   text-align: center;
   animation-name: shrink;
   animation-duration: 0.5s;
@@ -25,7 +25,7 @@ code {
   /* position: absolute; */
   bottom: 20px;
 }
-.d{
+.d {
   padding: 1rem;
 }
 
@@ -56,4 +56,26 @@ img {
   position: relative;
   height: 200px;
   object-fit: contain;
+}
+
+ul {
+  list-style: none;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-content: flex-end;
+}
+
+li {
+  display: inline-block;
+}
+
+.navlinks {
+  color: white;
+  font-size: large;
+  font-weight: bold;
+}
+
+a {
+  color: white !important;
 }
