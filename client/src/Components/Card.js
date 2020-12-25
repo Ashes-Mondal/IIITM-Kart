@@ -11,7 +11,7 @@ const Card = ({ name, Description, id, cost, imgURL }) => {
           <p>{Description}</p>
           {/* justify-content-around */}
           <p>Rs {cost}</p>
-          <button type="button" className="btn btn-primary add-button">
+          <button type="button" className="btn btn-primary">
             Add to Cart
             <span className="m-2">
               <svg
