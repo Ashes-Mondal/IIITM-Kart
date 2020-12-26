@@ -6,10 +6,9 @@ const Card = ({ name, Description, id, cost, imgURL }) => {
     <>
       <div className="card shadow bg-white rounded ">
         <img className=" " alt={name} src={imgURL} />
-        <div className="justify-content-center d">
+        <div className="justify-content-center">
           <h2>{name}</h2>
           <p>{Description}</p>
-          {/* justify-content-around */}
           <p>Rs {cost}</p>
           <button type="button" className="btn btn-primary">
             Add to Cart
