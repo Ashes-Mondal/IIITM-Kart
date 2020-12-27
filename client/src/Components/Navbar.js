@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SearchBox from "./SearchBox";
 import { NavLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
+import { IconButton, Drawer, Link, MenuItem } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  root: {
+    fontSize: "1.7rem",
+    width:"100%",
+    textAlign:"center"
+  },
+  MuiDrawer_paper:{
+    width: "30%",
+    height: "85%",
+    justifyContent: "center",
+  }
+});
 
 function Navbar() {
-  return (
-    <nav className="nav-bar navbar sticky-top">
-      <div className="site-name">
-        <span className="text1">IIITM-Kart</span>
-        <span className="text2">A Shopping site for IIITM students</span>
-      </div>
-      <div className="search-box">
-        <SearchBox />
-      </div>
-      <div className="navlink-container">
+  //styles
+  const classes = useStyles();
+  //state = {}
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+  const { mobileView, drawerOpen } = state;
+  //when in desktop size
+  const displayDesktop = () => {
+    return (
+      <>
         <NavLink
           className="navlink"
           activeClassName="active-nav-link"
@@ -74,6 +92,91 @@ function Navbar() {
           </svg>
           <span class="m-3">User</span>
         </NavLink>
+      </>
+    );
+  };
+  //when in mobile size
+  const displayMobile = () => {
+    //functions to handle states
+    const handleDrawerOpen = () => {
+      setState((prevState) => ({ ...prevState, drawerOpen: true }));
+    };
+    const handleDrawerClose = () => {
+      setState((prevState) => ({ ...prevState, drawerOpen: false }));
+    };
+    //Menu data and links
+    const headersData = [
+      { label: "Home", href: "/" },
+      { label: "Cart", href: "/cart" },
+      { label: "User", href: "/user" },
+    ];
+
+    const getDrawerChoices = () => {
+      return headersData.map(({ label, href }) => {
+        return (
+          <div>
+            <Link
+              {...{
+                component: NavLink,
+                to: href,
+                color: "inherit",
+                style: { textDecoration: "none" },
+                key: label,
+              }}
+            >
+              <MenuItem className={classes.root}>{label}</MenuItem>
+            </Link>
+          </div>
+        );
+      });
+    };
+    return (
+      <div className="menu-icon">
+        <IconButton
+          {...{
+            edge: "start",
+            color: "inherit",
+            "aria-label": "menu",
+            "aria-haspopup": "true",
+            onClick: handleDrawerOpen,
+          }}
+        >
+          <MenuIcon style={{ fontSize: 40, color: "white" }} />
+        </IconButton>
+        <Drawer
+          {...{
+            anchor: "right",
+            classes:{paper:classes.MuiDrawer_paper},
+            open: drawerOpen,
+            onClose: handleDrawerClose,
+          }}
+        >
+          <div className="menu-choices">{getDrawerChoices()}</div>
+        </Drawer>
+      </div>
+    );
+  };
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setState((prevState) => ({ ...prevState, mobileView: true }))
+        : setState((prevState) => ({ ...prevState, mobileView: false }));
+    };
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
+  return (
+    <nav className="nav-bar navbar sticky-top">
+      <div className="site-name">
+        <span className="text1">IIITM-Kart</span>
+        <span className="text2">A Shopping site for IIITM students</span>
+      </div>
+      <div className="search-box">
+        <SearchBox />
+      </div>
+      <div className="navlink-container">
+        {mobileView ? displayMobile() : displayDesktop()}
       </div>
     </nav>
   );
