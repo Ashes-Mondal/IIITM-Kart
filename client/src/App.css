@@ -51,17 +51,18 @@ body {
 @keyframes text {
   0% {
     color: black;
-    letter-spacing: -0.8rem;
+    /* letter-spacing: -0.8rem; */
+    letter-spacing: 0.201rem;
     margin-bottom: -0.9375rem;
   }
   30% {
     /* letter-spacing: 1.5625rem; */
-    letter-spacing: 0.5em;
+    letter-spacing: 0.1em;
     margin-bottom: -0.9375rem;
   }
   65% {
     /* letter-spacing: 0.5 rem; */
-    letter-spacing: 0.1 rem;
+    letter-spacing: 0.02 rem;
     margin-bottom: -0.9375rem;
   }
 }
