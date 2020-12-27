@@ -5,7 +5,7 @@ const SearchBox = () => {
       <input
         className="form-control"
         type="search"
-        placeholder="search products"
+        placeholder="search product"
       />
   );
 };

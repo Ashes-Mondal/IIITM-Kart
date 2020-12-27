@@ -14,8 +14,9 @@ code {
 }
 
 .card {
+  height: auto; 
   width: 21rem;
-  height: 32rem;
+  min-height: 32rem;
   margin: 2rem;
   text-align: center;
   animation-name: shrink;
