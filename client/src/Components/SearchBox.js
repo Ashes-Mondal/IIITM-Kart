@@ -2,13 +2,11 @@ import React from "react";
 
 const SearchBox = () => {
   return (
-    <div>
       <input
-        className="form-control p-2 m-4"
+        className="form-control"
         type="search"
         placeholder="search products"
       />
-    </div>
   );
 };
 

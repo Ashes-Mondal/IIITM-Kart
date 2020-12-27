@@ -1,7 +1,10 @@
 import React, { useReducer, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CardList from "./Components/CardList";
-import SearchBox from "./Components/SearchBox";
+import HomePage from "./Components/HomePage";
+import Navbar from "./Components/Navbar";
+import UserDetails from "./Components/UserDetails";
+import ShoppingCart from "./Components/ShoppingCart";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 const reducer = (currState, action) => {
@@ -29,17 +32,22 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <div className="heading">
-        <span className="text1">IIITM-Kart</span>
-        <span className="text2">A Shopping site for IIITM students</span>
-      </div>
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route exact path="/">
+          <HomePage itemList={itemList} />
+        </Route>
 
-      <div className="col container shadow p-3 mb-5 bg-white rounded">
-        <SearchBox />
-        <CardList itemList={itemList} />
-      </div>
-    </>
+        <Route exact path="/user">
+          <UserDetails />
+        </Route>
+
+        <Route exact path="/cart">
+          <ShoppingCart />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 

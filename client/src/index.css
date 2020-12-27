@@ -1,11 +1,12 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  background-color: 	#C0C0C0;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -15,17 +16,10 @@ code {
 .card {
   width: 21rem;
   height: 32rem;
-  margin:2rem;
+  margin: 2rem;
   text-align: center;
   animation-name: shrink;
   animation-duration: 0.5s;
-}
-
-.add-buttom {
-  /* position: absolute; */
-  bottom: 20px;
-}
-.d{
   padding: 1rem;
 }
 
@@ -56,4 +50,51 @@ img {
   position: relative;
   height: 200px;
   object-fit: contain;
+}
+
+.nav-bar {
+  position: fixed;
+  background-color: blue;
+  width: 100%;
+  justify-content: flex-start;
+  align-content: center;
+  display: flex;
+}
+.site-name {
+  text-align: center;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.search-box {
+  width: 32%;
+  display: flex;
+  align-items: center;
+}
+.form-control {
+  width: 100%;
+}
+.navlink-container {
+  width: 32%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navlink {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.navlink:hover {
+  color: #d3d3d3;
+  text-decoration: none;
+}
+a.active-nav-link {
+  font-weight: bolder;
+  border-bottom: 2px solid red;
+}
+.userform {
+  text-align: start;
 }
