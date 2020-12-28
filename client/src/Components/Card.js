@@ -1,7 +1,30 @@
 import React from "react";
 
-const Card = ({ name, Description, id, cost, imgURL }) => {
-  //props = {name,email,id,price}
+const Card = ({
+  name,
+  id,
+  Description,
+  cost,
+  imgURL,
+  product,
+  cart,
+  setCart,
+}) => {
+  const addToCart = (product) => {
+    let newCart = [...cart];
+    let itemInCart = newCart.find((item) => product.name === item.name);
+    if (itemInCart) {
+      itemInCart.quantity++;
+    } else {
+      itemInCart = {
+        ...product,
+        quantity: 1,
+      };
+      newCart.push(itemInCart);
+    }
+    setCart(newCart);
+  };
+
   return (
     <>
       <div className="card shadow bg-white rounded ">
@@ -10,7 +33,11 @@ const Card = ({ name, Description, id, cost, imgURL }) => {
           <h2>{name}</h2>
           <p>{Description}</p>
           <p>Rs {cost}</p>
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => addToCart(product)}
+          >
             Add to Cart
             <span className="m-2">
               <svg

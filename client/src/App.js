@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./Components/HomePage";
 import Navbar from "./Components/Navbar";
@@ -19,6 +19,7 @@ const reducer = (currState, action) => {
 
 const App = () => {
   const [itemList, dispatch] = useReducer(reducer, []);
+  const [cart, setCart] = useState([]);
 
   //side effect when page first time rendered
   useEffect(() => {
@@ -36,7 +37,7 @@ const App = () => {
       <Navbar />
       <Switch>
         <Route exact path="/">
-          <HomePage itemList={itemList} />
+          <HomePage itemList={itemList} cart={cart} setCart={setCart} />
         </Route>
 
         <Route exact path="/user">
@@ -44,7 +45,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/cart">
-          <ShoppingCart />
+          <ShoppingCart cart={cart} setCart={setCart} />
         </Route>
       </Switch>
     </Router>
