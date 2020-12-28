@@ -1,10 +1,13 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 const Card = (props) => {
-const {product,cart,setCart} = props;
-const {ItemName,_id:id,Description,cost,imageURL} = product;
-
-//funtion that adds item to the cart
+  const { product, cart, setCart } = props;
+  const { ItemName, _id: id, Description, cost, imageURL } = product;
+  const [buttonState, setButtonState] = useState(false);
+  //funtion that adds item to the cart
+  const goToCart = () => {
+    <Redirect to="/cart" />;
+  };
   const addToCart = (product) => {
     let newCart = [...cart];
     //finding if the item already exist in the cart
@@ -13,13 +16,14 @@ const {ItemName,_id:id,Description,cost,imageURL} = product;
       itemInCart.Qty++;
     } else {
       itemInCart = {
-        item:product,
+        item: product,
         Qty: 1,
       };
       newCart.push(itemInCart);
     }
     console.log(newCart);
     setCart(newCart);
+    setButtonState(true);
   };
 
   return (
@@ -33,9 +37,9 @@ const {ItemName,_id:id,Description,cost,imageURL} = product;
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => addToCart(product)}
+            onClick={() => (buttonState ? goToCart() : addToCart(product))}
           >
-            Add to Cart
+            {buttonState ? <Link to="/cart">"Go to Cart"</Link> : "Add to Cart"}
             <span className="m-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

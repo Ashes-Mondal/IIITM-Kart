@@ -4,6 +4,7 @@ import HomePage from "./Components/HomePage";
 import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/UserDetails";
 import ShoppingCart from "./Components/ShoppingCart";
+import Error from "./Components/Error";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 
@@ -40,12 +41,20 @@ const App = () => {
           <HomePage itemList={itemList} cart={cart} setCart={setCart} />
         </Route>
 
+        <Route exact path="/:id/user">
+          <UserDetails />
+        </Route>
+
         <Route exact path="/user">
           <UserDetails />
         </Route>
 
         <Route exact path="/cart">
           <ShoppingCart cart={cart} setCart={setCart} />
+        </Route>
+
+        <Route path="*">
+          <Error />
         </Route>
       </Switch>
     </Router>
