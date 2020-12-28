@@ -13,7 +13,6 @@ const useStyles = makeStyles({
   },
   MuiDrawer_paper:{
     width: "30%",
-    
     justifyContent: "center",
   }
 });
