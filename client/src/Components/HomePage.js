@@ -7,17 +7,7 @@ const HomePage = ({ itemList, cart, setCart }) => {
       <div className="row justify-content-center ">
         {itemList.map((item, i) => {
           return (
-            <Card
-              key={i}
-              id={item._id}
-              name={item.ItemName}
-              Description={item.Description}
-              cost={item.cost}
-              imgURL={item.imageURL}
-              product={item}
-              cart={cart}
-              setCart={setCart}
-            />
+            <Card key={i} cart={cart} setCart={setCart} product={item} />    
           );
         })}
       </div>

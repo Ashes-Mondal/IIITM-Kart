@@ -1,36 +1,33 @@
 import React from "react";
 
-const Card = ({
-  name,
-  id,
-  Description,
-  cost,
-  imgURL,
-  product,
-  cart,
-  setCart,
-}) => {
+const Card = (props) => {
+const {product,cart,setCart} = props;
+const {ItemName,_id:id,Description,cost,imageURL} = product;
+
+//funtion that adds item to the cart
   const addToCart = (product) => {
     let newCart = [...cart];
-    let itemInCart = newCart.find((item) => product.name === item.name);
+    //finding if the item already exist in the cart
+    let itemInCart = newCart.find((itemElement) => id === itemElement.item._id);
     if (itemInCart) {
-      itemInCart.quantity++;
+      itemInCart.Qty++;
     } else {
       itemInCart = {
-        ...product,
-        quantity: 1,
+        item:product,
+        Qty: 1,
       };
       newCart.push(itemInCart);
     }
+    console.log(newCart);
     setCart(newCart);
   };
 
   return (
     <>
       <div className="card shadow bg-white rounded ">
-        <img className=" " alt={name} src={imgURL} />
+        <img className=" " alt={ItemName} src={imageURL} />
         <div className="justify-content-center">
-          <h2>{name}</h2>
+          <h2>{ItemName}</h2>
           <p>{Description}</p>
           <p>Rs {cost}</p>
           <button
