@@ -1,36 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext} from "react";
+// import { useParams } from "react-router-dom";
+import {User} from "../App"
 
 function UserDetails() {
-  const { id } = useParams();
-  const [details, setDetails] = useState({
-    Address: "",
-    email: "",
-    name: { firstName: "", lastName: "" },
-    orders: [],
-    password: "",
-    phone: "",
-    userCart: [{}],
-    __v: 0,
-    _id: "",
-  });
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      //POST request option
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: id }),
-      };
-      //submitting on server side and changing the state
-      const data = await (
-        await fetch("/getUserDetails", requestOptions)
-      ).json();
-      console.log("UserData:", data);
-      await setDetails(data);
-    };
-    fetchUserDetails();
-  }, [id]);
+  const {user,setUser} = useContext(User);
+  console.log("user:",user)
 
   return (
     <div className="jumbotron container">
@@ -45,13 +19,13 @@ function UserDetails() {
           <input
             type="text"
             className="mr-2"
-            value={details.name.firstName}
+            value={user.name.firstName}
             name="FirstName"
             disabled
           />
           <input
             type="text"
-            value={details.name.lastName}
+            value={user.name.lastName}
             name="LastName"
             disabled
           />
@@ -62,7 +36,7 @@ function UserDetails() {
           <h6 style={{ color: "blue" }} onClick={() => {}}>
             Edit
           </h6>
-          <input type="text" value={details.email} name="Email" disabled />
+          <input type="text" value={user.email} name="Email" disabled />
         </div>
         <br />
         <div className="form-group">
@@ -70,7 +44,7 @@ function UserDetails() {
           <h6 style={{ color: "blue" }} onClick={() => {}}>
             Edit
           </h6>
-          <input type="text" value={details.phone} name="Phno" disabled />
+          <input type="text" value={user.phone} name="Phno" disabled />
         </div>
       </form>
     </div>

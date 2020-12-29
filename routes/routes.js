@@ -10,17 +10,15 @@ const router = express.Router();
 //GET REQUESTS
 router.get("/fetchItems",databaseCRUD.fetchItems);
 router.get("/fetchAllUsers",databaseCRUD.fetchAllUsers);
-
+router.get("/getUserDetails",databaseCRUD.getUserDetails);
 //POST REQUESTS
 //router.post("/addItem",databaseCRUD.addItem); Not for users
-router.post("/addUser",databaseCRUD.addUser);
 router.post("/addToCart",databaseCRUD.addToCart);
 router.post("/deleteFromCart",databaseCRUD.deleteFromCart);
 router.post("/updateQty",databaseCRUD.updateQty);
-router.post("/getUserDetails",databaseCRUD.getUserDetails);
-
-
-
+router.post("/login",databaseCRUD.login);
+router.post("/signup",databaseCRUD.signup);
+router.post("/logout",databaseCRUD.logout);
 
 //exporting
 module.exports = router;

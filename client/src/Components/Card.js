@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState,useContext } from "react";
+import { Link } from "react-router-dom";
+import {Authentication} from "../App"
+
 const Card = (props) => {
+  const {isAuth} = useContext(Authentication)
   const { product, cart, setCart } = props;
   const { ItemName, _id: id, Description, cost, imageURL } = product;
   const [buttonState, setButtonState] = useState(false);
   //funtion that adds item to the cart
-  const goToCart = () => {
-    <Redirect to="/cart" />;
-  };
   const addToCart = (product) => {
     let newCart = [...cart];
     //finding if the item already exist in the cart
@@ -37,9 +37,10 @@ const Card = (props) => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => (buttonState ? goToCart() : addToCart(product))}
+            onClick={() => (buttonState ? null: addToCart(product))}
+             disabled = {!isAuth}
           >
-            {buttonState ? <Link to="/cart">"Go to Cart"</Link> : "Add to Cart"}
+            {buttonState ? <Link to="/cart" className="btn text-white">Go to Cart</Link> : "Add to Cart"}
             <span className="m-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

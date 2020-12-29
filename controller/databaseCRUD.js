@@ -1,42 +1,36 @@
 //Dependencies
 const mongoose = require("mongoose");
+const passport = require("passport");
 //Files
 const { ItemDetail, UserDetail } = require("../models/databaseSchema");
-
 //Controller Functions
-
-//User functions
+/****************************User functions***********************************/
+//FETCH ALL USERS
 exports.fetchAllUsers = async (req, res) => {
   //Fetching data from database
   const usersData = await UserDetail.find();
   res.send(usersData);
 };
+//GET USER DETAILS
 exports.getUserDetails = async (req, res) => {
   //body details are obtained
-  const userId = req.body.userId;
-  try {
-    //user details fetched from the database
-    let userDetails = await UserDetail.findById(userId).exec();
-    userDetails["response"] = true;
-    console.log(userDetails);
-    res.send(userDetails);
-  } catch (err) {
-    res.send({ response: false,error:err });
+  const userId = req.session.userId;
+  if (userId) {
+    try {
+      //user details fetched from the database
+      let userDetails = await UserDetail.findById(userId).exec();
+      userDetails["response"] = true;
+      console.log("userDetails:", userDetails);
+      res.send(userDetails);
+    } catch (err) {
+      res.send({ response: false, error: err });
+    }
+  } else {
+    res.send({ response: false, error: "not logged in" });
   }
 };
-exports.addUser = async (req, res) => {
-  //body details are obtained
-  let userData = req.body;
-  //_id is added then updated to the database
-  userData["_id"] = new mongoose.Types.ObjectId();
-  try {
-    newUser = await new UserDetail(userData);
-    await newUser.save();
-    res.send({ response: true });
-  } catch (error) {
-    res.send({ response: false });
-  }
-};
+/************************** CART CRUD OPERATION **********************************/
+//ADD TO CART
 exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -65,6 +59,7 @@ exports.addToCart = async (req, res) => {
     }
   });
 };
+//DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -85,6 +80,7 @@ exports.deleteFromCart = async (req, res) => {
     }
   });
 };
+//UPDATE CART QTY
 exports.updateQty = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -109,8 +105,44 @@ exports.updateQty = async (req, res) => {
     }
   });
 };
-
-//Item funtions
+/*****************************LOGIN, SIGNUP, LOGOUT***************************/
+//LOGIN
+exports.login = async (req, res) => {
+  const { phone, password } = req.body;
+  const user = await UserDetail.findOne({ phone: phone }).exec();
+  if (user.password === password) {
+    req.session.userId = user._id;
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
+  }
+};
+//SIGNUP
+exports.signup = async (req, res) => {
+  //_id is added then updated to the database
+  const userData = {
+    _id: new mongoose.Types.ObjectId(),
+    name: { firstName: req.body.firstName, lastName: req.body.lastName },
+    email: req.body.email,
+    phone: req.body.phone,
+    Address: req.body.Address,
+    password: req.body.password,
+  };
+  console.log("userData:", userData);
+  try {
+    newUser = await new UserDetail(userData);
+    await newUser.save();
+    res.redirect("/login");
+  } catch (error) {
+    res.redirect("/signup");
+  }
+};
+//LOGOUT
+exports.logout = async (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+};
+/********************************Item funtions********************************/
 exports.fetchItems = async (req, res) => {
   //Fetching data from database
   try {

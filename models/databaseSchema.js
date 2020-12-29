@@ -71,6 +71,7 @@ const userDetailSchema = mongoose.Schema({
   ],
 });
 
+
 const ItemDetail = mongoose.model("ItemDetail", itemDetailSchema);
 const UserDetail = mongoose.model("UserDetail", userDetailSchema);
 
