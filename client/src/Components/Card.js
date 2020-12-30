@@ -23,19 +23,24 @@ const Card = (props) => {
       newCart.push(itemInCart);
     }
     console.log(newCart);
+    
     //Adding the item in user cart
     //POST request option
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId:user._id,itemId:id }),
+      body: JSON.stringify({ userId: user._id, itemId: id }),
     };
     try {
-      await (await fetch("/addToCart", requestOptions)).json();
-      setCart(newCart);
-      setButtonState(true);
+      const response = await (await fetch("/addToCart", requestOptions)).json();
+      if (response) {
+        setCart(newCart);
+        setButtonState(true);
+      }else{
+        alert('Could not add to cart');
+      }
     } catch (error) {
-      console.log("ERROR:",error);
+      console.log("ERROR:", error);
     }
   };
 

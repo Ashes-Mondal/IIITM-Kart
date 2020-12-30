@@ -35,11 +35,13 @@ exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
   const itemId = req.body.itemId;
+  console.log("POST body:",req.body)
   //item and user details fetched from the database
   const itemDetails = await ItemDetail.findById(itemId).exec();
   const userDetails = await UserDetail.findById(userId).exec();
   //User cart details fetched
   let userCart = userDetails.userCart;
+  console.log("userCartB:",userCart);
   //flag checks whether the item is there in cart or not,if not then added to the userCart
   let flag = true;
   userCart = userCart.map((itemElement) => {
@@ -47,11 +49,13 @@ exports.addToCart = async (req, res) => {
       itemElement.item = itemDetails;
       itemElement.Qty += 1;
       flag = false;
-      return itemElement;
     }
+    return itemElement;
   });
+  console.log("FLAG:",flag);
   if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
   //Finally the userCart is updated to the database
+  console.log("userCartA:",userCart);
   await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
     if (err) res.send({ response: false });
     else {

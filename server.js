@@ -40,6 +40,7 @@ mongoose.connect(
     else console.log("successfully connected to Db!");
   }
 );
+mongoose.set('useFindAndModify', false);
 //Routes
 app.use("/", routes);
 //serve static assets when in production
