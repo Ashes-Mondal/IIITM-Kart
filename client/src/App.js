@@ -25,7 +25,7 @@ const reducer = (currState, action) => {
 };
 const App = () => {
   const [itemList, dispatch] = useReducer(reducer, []);
-  let [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
   //side effect when page first time rendered

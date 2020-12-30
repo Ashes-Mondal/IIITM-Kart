@@ -1,47 +1,89 @@
-import React from "react";
+import React,{useContext} from "react";
+import {User} from "../App";
 
 function ShoppingCart({ cart, setCart }) {
+ const {user} = useContext(User);
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
   };
 
-  const clearCart = () => {
-    setCart([]);
+  //clears the cart
+  const clearCart = async() => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userId:user._id}),
+    };
+    const result = await (await fetch("/clearCart",requestOptions)).json();
+    console.log("result:",result);
+    if(result.response){
+      setCart([]);
+    }else{
+      alert("Could not clear the cart!");
+    }
+    
   };
-
   // increase qty of item
-  const plusItemQuantity = (product_id) => {
-    let tempCart = cart.map((item) => {
-      if (item._id === product_id) {
-        item.Qty = item.Qty + 1;
-      }
-      return item;
-    });
-
-    setCart(tempCart);
+  const plusItemQuantity = async(Product) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userId:user._id,itemId:Product.item._id,itemQty:Product.Qty+1}),
+    };
+    const result = await (await fetch("/updateQty",requestOptions)).json();
+    console.log("result:",result);
+    if(result.response){
+      const tempCart = cart.map((product) => {
+        if (product._id === Product._id ) {
+          product.Qty = product.Qty + 1;
+        }
+        return product;
+      });
+      setCart(tempCart);
+    }else{
+      alert("Could not increase the Qty!");
+    }
   };
 
   // decrease qty of item
-  const minusItemQuantity = (product_id) => {
-    let tempCart = cart.map((item) => {
-      if (item._id === product_id && item.Qty > 0) {
-        item.Qty = item.Qty - 1;
-      }
-      return item;
-    });
-
-    setCart(tempCart);
-  };
-
-  const removeFromCart = (product_Qty) => {
-    setCart(cart.filter((product) => product !== product_Qty));
-  };
-
-  /*const checkCart = (cart) => {
-    if (cart.length() < 1) {
-      alert("Cart is empty");
+  const minusItemQuantity = async(Product) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userId:user._id,itemId:Product.item._id,itemQty:Product.Qty-1}),
+    };
+    const result = await (await fetch("/updateQty",requestOptions)).json();
+    console.log("result:",result);
+    if(result.response){
+      let tempCart = cart.map((product) => {
+        if (product._id === Product._id && product.Qty > 0) {
+          product.Qty = product.Qty - 1;
+        }
+        return product;
+      });
+      setCart(tempCart);
+    }else{
+      alert("Could not decrease the Qty!");
     }
-  };*/
+  };
+
+  //Handles item removal from the cart
+  const removeFromCart = async(productDetail) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userId:user._id,itemId:productDetail.item._id}),
+    };
+    const result = await (await fetch("/deleteFromCart",requestOptions)).json();
+    console.log("result:",result);
+    if(result.response){
+      setCart(cart.filter((product) => product !== productDetail));
+    }else{
+      alert("Could not remove from cart!");
+    }
+    
+  };
+
   console.log("This is cart ", cart);
   return (
     <>
@@ -51,10 +93,10 @@ function ShoppingCart({ cart, setCart }) {
           <button onClick={clearCart}>Clear Cart</button>
 
           <div className="products shadow bg-cadetblue rounded">
-            {cart.map((product_Qty, idx) => {
-              const { item, Qty } = product_Qty;
+            {cart.map((productDetail, index) => {
+              const { item, Qty } = productDetail;
               return (
-                <div className="product" key={idx}>
+                <div className="product" key={index}>
                   <div className="flex-container">
                     <div className="flex-child3">
                       <h3>{item.ItemName}</h3>
@@ -65,14 +107,14 @@ function ShoppingCart({ cart, setCart }) {
                       <h4>Rs. {item.cost}</h4>
                       <button
                         className="btn btn-primary mb-2"
-                        onClick={() => plusItemQuantity(product_Qty._id)}
+                        onClick={()=>{plusItemQuantity(productDetail)}}
                       >
                         +
                       </button>
                       {Qty}
                       <button
                         className="btn btn-primary mb-2"
-                        onClick={() => minusItemQuantity(product_Qty._id)}
+                        onClick={()=>{minusItemQuantity(productDetail)}}
                       >
                         -
                       </button>
@@ -80,11 +122,11 @@ function ShoppingCart({ cart, setCart }) {
                       <br />
                       <button
                         className="btn btn-primary mb-3"
-                        onClick={() => removeFromCart(product_Qty)}
+                        onClick={() => removeFromCart(productDetail)}
                       >
                         Remove this Item
                       </button>
-                      <h1>{item.product_Qty}</h1>
+                      <h1>{}</h1>
                     </div>
                   </div>
                   <br />

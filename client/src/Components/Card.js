@@ -4,7 +4,7 @@ import { Authentication, User } from "../App";
 
 const Card = (props) => {
   const { isAuth } = useContext(Authentication);
-  const { user, setUser } = useContext(User);
+  const { user } = useContext(User);
   const { product, cart, setCart } = props;
   const { ItemName, _id: id, Description, cost, imageURL } = product;
   const [buttonState, setButtonState] = useState(false);

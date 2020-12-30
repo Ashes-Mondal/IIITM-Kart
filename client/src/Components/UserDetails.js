@@ -3,7 +3,7 @@ import React, { useContext} from "react";
 import {User} from "../App"
 
 function UserDetails() {
-  const {user,setUser} = useContext(User);
+  const {user} = useContext(User);
   console.log("user:",user)
 
   return (

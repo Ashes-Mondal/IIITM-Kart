@@ -16,6 +16,7 @@ router.get("/getUserDetails",databaseCRUD.getUserDetails);
 router.post("/addToCart",databaseCRUD.addToCart);
 router.post("/deleteFromCart",databaseCRUD.deleteFromCart);
 router.post("/updateQty",databaseCRUD.updateQty);
+router.post("/clearCart",databaseCRUD.clearCart);
 router.post("/login",databaseCRUD.login);
 router.post("/signup",databaseCRUD.signup);
 router.post("/logout",databaseCRUD.logout);

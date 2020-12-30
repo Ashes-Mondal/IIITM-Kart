@@ -109,6 +109,15 @@ exports.updateQty = async (req, res) => {
     }
   });
 };
+//CLEAR CART
+exports.clearCart = async(req,res)=>{
+  await UserDetail.findByIdAndUpdate(req.body.userId, { userCart: [] }, (err) => {
+    if (err) res.send({ response: false, error: err });
+    else {
+      res.send({ response: true });
+    }
+  });
+}
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
