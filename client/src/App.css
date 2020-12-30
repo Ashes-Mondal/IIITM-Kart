@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nova+Flat&family=Roboto+Slab:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap");
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,12 +12,85 @@ body {
   background-color: #f1f3f6;
 }
 
+h1 {
+  text-align: center;
+}
+
 .container {
   margin: 2rem 13% 4rem;
   width: auto;
   text-align: center;
   background-color: #fffafa;
   position: relative;
+}
+
+.float-container {
+  border: 3px solid #fff;
+  padding: 20px;
+}
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 20px;
+  border: 2px solid red;
+  color: cadetblue;
+}
+
+.flex-container {
+  display: flex;
+  padding: 20px;
+}
+
+.flex-child1 {
+  flex: 2;
+  margin-right: 20px;
+  padding: 20px;
+}
+
+.flex-child2 {
+  flex: 1;
+  padding: 20px;
+  margin-bottom: auto;
+  position: sticky;
+}
+
+.flex-child3 {
+  padding: 10px;
+}
+
+.flex-child4 {
+  margin-top: 100px;
+  margin-left: 60px;
+}
+
+.btn {
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
+.qtyInput {
+  width: 10%;
+  border-radius: 2px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.cost {
+  text-align: center;
+  color: #f1f3f6;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 26px;
+  border: 2px solid orangered;
+  border-radius: 8px;
+  background-color: orangered;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 20px;
 }
 
 .text1 {
@@ -34,7 +109,7 @@ body {
   -webkit-text-stroke: 1px rgb(255, 251, 0);
   font-size: 15px;
   color: azure;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .menu-icon {
@@ -64,17 +139,4 @@ body {
     letter-spacing: 0.02 rem;
     margin-bottom: -0.9375rem;
   }
-}
-
-.products {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.products img {
-  width: 100%;
-}
-
-.product {
-  padding: 40px;
 }

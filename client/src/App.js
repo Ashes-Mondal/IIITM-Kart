@@ -10,11 +10,10 @@ import "./App.css";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 
-
-  //creating User and Authentication context
-  const User = createContext();
-  const Authentication = createContext();
-  //item reducer function
+//creating User and Authentication context
+const User = createContext();
+const Authentication = createContext();
+//item reducer function
 const reducer = (currState, action) => {
   switch (action.type) {
     case "fetchedItemJson":
@@ -26,7 +25,7 @@ const reducer = (currState, action) => {
 };
 const App = () => {
   const [itemList, dispatch] = useReducer(reducer, []);
-  const [cart, setCart] = useState([]);
+  let [cart, setCart] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
   //side effect when page first time rendered
@@ -37,8 +36,8 @@ const App = () => {
       const itemList = await (await fetch(URL)).json();
       dispatch({ type: "fetchedItemJson", payload: itemList });
       const userData = await (await fetch("/getUserDetails")).json();
-      console.log("userData:",userData);
-      if(userData.response !==false){
+      console.log("userData:", userData);
+      if (userData.response !== false) {
         setIsAuth(true);
         setUser(userData);
         setCart(userData.userCart);
@@ -49,8 +48,10 @@ const App = () => {
 
   return (
     <Router>
-      <User.Provider value={{user:user,setUser:setUser}}>
-        <Authentication.Provider value={{isAuth:isAuth,setIsAuth:setIsAuth} }>
+      <User.Provider value={{ user: user, setUser: setUser }}>
+        <Authentication.Provider
+          value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
+        >
           <Navbar />
           <Switch>
             <Route exact path="/">
@@ -83,4 +84,4 @@ const App = () => {
 };
 
 export default App;
-export {User,Authentication};
+export { User, Authentication };
