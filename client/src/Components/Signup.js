@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { User, Authentication } from "../App";
+import React, { useState } from "react";
 function Signup() {
   const [signup, setSignup] = useState({
     name: { firstName: "", lastName: "" },
@@ -8,12 +7,6 @@ function Signup() {
     password: "",
     Address: "",
   });
-  const { user, setUser } = useContext(User);
-  const { isAuth, setIsAuth } = useContext(Authentication);
-  //handle Signup
-  const handleSignup = () => {
-
-  };
 
   return (
     <div>
@@ -50,7 +43,7 @@ function Signup() {
         />
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type="password"
           name="password"
           required
           value={signup.password}
@@ -78,7 +71,6 @@ function Signup() {
             setSignup({ ...signup, Address: e.target.value });
           }}
         />
-
         <button>Signup</button>
       </form>
     </div>

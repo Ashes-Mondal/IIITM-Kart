@@ -30,6 +30,7 @@ function Navbar() {
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
+    //USER-LOGOUT render
     const user_logout_render = () => {
       return (
         <>
@@ -57,7 +58,7 @@ function Navbar() {
         </>
       );
     };
-
+//LOGIN-SIGNUP render
     const login_signup_render = () => {
       return (
         <>

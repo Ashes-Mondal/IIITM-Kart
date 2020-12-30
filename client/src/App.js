@@ -39,9 +39,9 @@ const App = () => {
       const userData = await (await fetch("/getUserDetails")).json();
       console.log("userData:",userData);
       if(userData.response !==false){
-        console.log("INSIDE")
         setIsAuth(true);
         setUser(userData);
+        setCart(userData.userCart);
       }
     };
     fetchJSON_fromServer();
