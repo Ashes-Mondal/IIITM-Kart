@@ -1,6 +1,6 @@
 //Dependencies
 const mongoose = require("mongoose");
-const passport = require("passport");
+const bcrypt = require("bcryptjs");
 //Files
 const { ItemDetail, UserDetail } = require("../models/databaseSchema");
 //Controller Functions
@@ -35,13 +35,13 @@ exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
   const itemId = req.body.itemId;
-  console.log("POST body:",req.body)
+  console.log("POST body:", req.body);
   //item and user details fetched from the database
   const itemDetails = await ItemDetail.findById(itemId).exec();
   const userDetails = await UserDetail.findById(userId).exec();
   //User cart details fetched
   let userCart = userDetails.userCart;
-  console.log("userCartB:",userCart);
+  console.log("userCartB:", userCart);
   //flag checks whether the item is there in cart or not,if not then added to the userCart
   let flag = true;
   userCart = userCart.map((itemElement) => {
@@ -52,10 +52,10 @@ exports.addToCart = async (req, res) => {
     }
     return itemElement;
   });
-  console.log("FLAG:",flag);
+  console.log("FLAG:", flag);
   if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
   //Finally the userCart is updated to the database
-  console.log("userCartA:",userCart);
+  console.log("userCartA:", userCart);
   await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
     if (err) res.send({ response: false });
     else {
@@ -114,23 +114,28 @@ exports.updateQty = async (req, res) => {
 exports.login = async (req, res) => {
   const { phone, password } = req.body;
   const user = await UserDetail.findOne({ phone: phone }).exec();
-  if (user.password === password) {
-    req.session.userId = user._id;
-    res.redirect("/");
-  } else {
+
+  if (!user) {
     res.redirect("/login");
   }
+  const isMatch = bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    res.redirect("/login");
+  }
+  req.session.userId = user._id;
+  res.redirect("/");
 };
 //SIGNUP
 exports.signup = async (req, res) => {
   //_id is added then updated to the database
+  const hashedPassword = await bcrypt.hash(req.body.password, 12);
   const userData = {
     _id: new mongoose.Types.ObjectId(),
     name: { firstName: req.body.firstName, lastName: req.body.lastName },
     email: req.body.email,
     phone: req.body.phone,
     Address: req.body.Address,
-    password: req.body.password,
+    password: hashedPassword,
   };
   console.log("userData:", userData);
   try {
