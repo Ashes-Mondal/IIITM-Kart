@@ -2,7 +2,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 //Files
-const { ItemDetail, UserDetail } = require("../models/databaseSchema");
+const  {ItemDetail} = require("../models/itemSchema");
+const  UserDetail  = require("../models/userScema");
 //Controller Functions
 /****************************User functions***********************************/
 //FETCH ALL USERS
@@ -20,7 +21,6 @@ exports.getUserDetails = async (req, res) => {
       //user details fetched from the database
       let userDetails = await UserDetail.findById(userId).exec();
       userDetails["response"] = true;
-      console.log("userDetails:", userDetails);
       res.send(userDetails);
     } catch (err) {
       res.send({ response: false, error: err });
@@ -35,13 +35,11 @@ exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
   const itemId = req.body.itemId;
-  console.log("POST body:", req.body);
   //item and user details fetched from the database
   const itemDetails = await ItemDetail.findById(itemId).exec();
   const userDetails = await UserDetail.findById(userId).exec();
   //User cart details fetched
   let userCart = userDetails.userCart;
-  console.log("userCartB:", userCart);
   //flag checks whether the item is there in cart or not,if not then added to the userCart
   let flag = true;
   userCart = userCart.map((itemElement) => {
@@ -52,10 +50,8 @@ exports.addToCart = async (req, res) => {
     }
     return itemElement;
   });
-  console.log("FLAG:", flag);
   if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
   //Finally the userCart is updated to the database
-  console.log("userCartA:", userCart);
   await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
     if (err) res.send({ response: false });
     else {
@@ -110,14 +106,18 @@ exports.updateQty = async (req, res) => {
   });
 };
 //CLEAR CART
-exports.clearCart = async(req,res)=>{
-  await UserDetail.findByIdAndUpdate(req.body.userId, { userCart: [] }, (err) => {
-    if (err) res.send({ response: false, error: err });
-    else {
-      res.send({ response: true });
+exports.clearCart = async (req, res) => {
+  await UserDetail.findByIdAndUpdate(
+    req.body.userId,
+    { userCart: [] },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
     }
-  });
-}
+  );
+};
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
@@ -127,12 +127,14 @@ exports.login = async (req, res) => {
   if (!user) {
     res.redirect("/login");
   }
-  const isMatch = bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (isMatch) {
+    req.session.userId = user._id;
+    res.redirect("/");
+  }else{
     res.redirect("/login");
   }
-  req.session.userId = user._id;
-  res.redirect("/");
+
 };
 //SIGNUP
 exports.signup = async (req, res) => {
@@ -143,10 +145,9 @@ exports.signup = async (req, res) => {
     name: { firstName: req.body.firstName, lastName: req.body.lastName },
     email: req.body.email,
     phone: req.body.phone,
-    Address: req.body.Address,
+    address: req.body.address,
     password: hashedPassword,
   };
-  console.log("userData:", userData);
   try {
     newUser = await new UserDetail(userData);
     await newUser.save();
@@ -172,8 +173,7 @@ exports.fetchItems = async (req, res) => {
 };
 exports.addItem = async (req, res) => {
   const itemData = req.body;
-  (itemData["_id"] = new mongoose.Types.ObjectId()),
-    console.log("itemData: ", itemData);
+  (itemData["_id"] = new mongoose.Types.ObjectId());
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();

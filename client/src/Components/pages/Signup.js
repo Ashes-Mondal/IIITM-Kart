@@ -5,7 +5,7 @@ function Signup() {
     phone: "",
     email: "",
     password: "",
-    Address: "",
+    address: "",
   });
 
   return (
@@ -86,16 +86,16 @@ function Signup() {
               }}
             />
           </div>
-          {/* <label htmlFor="Address">Address</label> */}
+          {/* <label htmlFor="address">address</label> */}
           <div className="col-6">
             <input
               type="text"
-              name="Address"
-              placeholder="Address"
+              name="address"
+              placeholder="address"
               required
-              value={signup.Address}
+              value={signup.address}
               onChange={(e) => {
-                setSignup({ ...signup, Address: e.target.value });
+                setSignup({ ...signup, address: e.target.value });
               }}
             />
           </div>

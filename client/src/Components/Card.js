@@ -22,8 +22,11 @@ const Card = (props) => {
       };
       newCart.push(itemInCart);
     }
+<<<<<<< HEAD
     console.log(newCart);
 
+=======
+>>>>>>> a7a60fe4fdee09afb628fee5cd64ff3690db111c
     //Adding the item in user cart
     //POST request option
     const requestOptions = {
@@ -49,22 +52,25 @@ const Card = (props) => {
       <div className="card shadow bg-white rounded ">
         <img className=" " alt={itemName} src={imageURL} />
         <div className="justify-content-center">
+<<<<<<< HEAD
           <h2>{itemName}</h2>
+=======
+          <h2>{product.itemName}</h2>
+>>>>>>> a7a60fe4fdee09afb628fee5cd64ff3690db111c
           <p>{description}</p>
           <p>Rs {cost}</p>
           <button
             type="button"
             className="btn btn-primary"
             onClick={() => (buttonState ? null : addToCart(product))}
-            disabled={!isAuth}
           >
-            {buttonState ? (
+            {isAuth?(buttonState ? (
               <Link to="/cart" className="btn text-white">
                 Go to Cart
               </Link>
-            ) : (
-              "Add to Cart"
-            )}
+            ) : 
+              "Add to Cart") : (<Link to="/login" className="btn text-white">Add to Cart</Link>)
+            }
             <span className="m-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

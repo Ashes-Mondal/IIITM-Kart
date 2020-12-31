@@ -1,14 +1,14 @@
 import React, { useReducer, useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from "./Components/HomePage";
+import HomePage from "./Components/pages/HomePage";
 import Navbar from "./Components/Navbar";
-import UserDetails from "./Components/UserDetails";
-import ShoppingCart from "./Components/ShoppingCart";
-import Error from "./Components/Error";
+import UserDetails from "./Components/pages/UserDetails";
+import ShoppingCart from "./Components/pages/ShoppingCart";
+import Error from "./Components/pages/Error";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
+import Login from "./Components/pages/Login";
+import Signup from "./Components/pages/Signup";
 
 //creating User and Authentication context
 const User = createContext();

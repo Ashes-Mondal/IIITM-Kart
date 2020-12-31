@@ -53,13 +53,16 @@ img {
   object-fit: contain;
 }
 
-.nav-bar {
-  position: fixed;
+.navbar {
   background-color: blue;
   width: 100%;
   justify-content: flex-start;
   align-content: center;
   display: flex;
+}
+.drawer-logout {
+  width: 100%;
+  font-size: 2rem;
 }
 .site-name {
   text-align: center;

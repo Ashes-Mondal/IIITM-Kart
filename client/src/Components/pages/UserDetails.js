@@ -1,10 +1,9 @@
-import React, { useContext} from "react";
-// import { useParams } from "react-router-dom";
-import {User} from "../App"
+import React, { useContext } from "react";
+import { User } from "../../App";
 
 function UserDetails() {
-  const {user} = useContext(User);
-  console.log("user:",user)
+  const { user } = useContext(User);
+  console.log("user:", user);
 
   return (
     <div className="jumbotron container">
@@ -32,7 +31,7 @@ function UserDetails() {
         </div>
         <br />
         <div className="form-group">
-          <h5>Email Address</h5>
+          <h5>Email address</h5>
           <h6 style={{ color: "blue" }} onClick={() => {}}>
             Edit
           </h6>

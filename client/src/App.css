@@ -51,6 +51,7 @@ h1 {
 .flex-child2 {
   flex: 1;
   padding: 20px;
+  
   margin-bottom: auto;
   top: 6.5rem;
 }
@@ -69,7 +70,7 @@ h1 {
   border: none;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 1.3rem;
 }
 
 .qtyInput {

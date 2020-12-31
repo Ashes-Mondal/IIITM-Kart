@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { User } from "../App";
+import { User } from "../../App";
 
 function ShoppingCart({ cart, setCart }) {
   const { user } = useContext(User);
@@ -111,11 +111,11 @@ function ShoppingCart({ cart, setCart }) {
                 key={index}
               >
                 <div className="flex-child3">
-                  <h3>{item.ItemName}</h3>
-                  <img src={item.imageURL} alt={item.ItemName} />
+                  <h3>{item.itemName}</h3>
+                  <img src={item.imageURL} alt={item.itemName} />
                 </div>
                 <div className="flex-child4">
-                  <h5>{item.Description}</h5>
+                  <h5>{item.description}</h5>
                   <h4>Rs. {item.cost}</h4>
                   <button
                     className="btn btn-primary mb-2"
@@ -154,7 +154,7 @@ function ShoppingCart({ cart, setCart }) {
               const { item, Qty } = product_Qty;
               return (
                 <span className="bill">
-                  <h5>{item.ItemName}</h5> <h6>{item.cost}</h6>
+                  <h5>{item.itemName}</h5> <h6>{item.cost}</h6>
                 </span>
               );
             })}

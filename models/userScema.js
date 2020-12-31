@@ -1,36 +1,8 @@
 //Dependencies
 const mongoose = require("mongoose");
+const {itemDetailSchema} = require("./itemSchema");
 
-//Schemas
-const itemDetailSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  ItemName: {
-    type: String,
-    required: true,
-  },
-  Description: {
-    type: String,
-    required: true,
-  },
-  imageURL: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  cost: {
-    type: Number,
-    required: true,
-  },
-  rating: {
-    type: Number,
-    required: true,
-    max: 5,
-  },
-});
-
+//userDetailSchema
 const userDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
@@ -58,7 +30,7 @@ const userDetailSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  Address: {
+  address: {
     type: String,
     required: true,
   },
@@ -71,8 +43,7 @@ const userDetailSchema = mongoose.Schema({
   ],
 });
 
-
-const ItemDetail = mongoose.model("ItemDetail", itemDetailSchema);
 const UserDetail = mongoose.model("UserDetail", userDetailSchema);
 
-module.exports = { ItemDetail, UserDetail };
+module.exports = UserDetail ;
+
