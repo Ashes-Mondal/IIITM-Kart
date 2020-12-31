@@ -9,19 +9,15 @@ import { Authentication } from "../App";
 const useStyles = makeStyles({
   root: {
     fontSize: "2rem",
-    justifyContent:"center",
+    justifyContent: "center",
   },
   MuiDrawer_paper: {
     width: "30%",
     justifyContent: "center",
   },
 });
-<<<<<<< HEAD
 
 function Navbar(cart) {
-=======
-function Navbar() {
->>>>>>> a7a60fe4fdee09afb628fee5cd64ff3690db111c
   const { isAuth } = useContext(Authentication);
   //usestyles
   const classes = useStyles();
@@ -30,7 +26,6 @@ function Navbar() {
     mobileView: false,
     drawerOpen: false,
   });
-<<<<<<< HEAD
   const [Cart, setCart] = useState(cart);
   const [searchfields, setSearchField] = useState("");
 
@@ -43,9 +38,6 @@ function Navbar() {
     console.log(filteredNames);
   };
 
-=======
-  //destructuring the state
->>>>>>> a7a60fe4fdee09afb628fee5cd64ff3690db111c
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
