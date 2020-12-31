@@ -52,13 +52,13 @@ function Navbar() {
             </svg>
             <span className="m-3">User</span>
           </NavLink>
-          <form  className="navlink" method="POST" action="/logout">
+          <form className="navlink" method="POST" action="/logout">
             <button>Logout</button>
           </form>
         </>
       );
     };
-//LOGIN-SIGNUP render
+    //LOGIN-SIGNUP render
     const login_signup_render = () => {
       return (
         <>
@@ -127,7 +127,7 @@ function Navbar() {
           </svg>
           <span className="m-3">Cart</span>
         </NavLink>
-        {isAuth?user_logout_render():login_signup_render()}
+        {isAuth ? user_logout_render() : login_signup_render()}
       </>
     );
   };

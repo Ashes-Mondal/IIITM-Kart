@@ -6,20 +6,23 @@ function Login() {
 
   return (
     <div>
-      <form action="/login" method="POST">
-        <label htmlFor="phone">Phone</label>
+      <form className="box shadow-lg mt-5" action="/login" method="POST">
+        <h1>Login</h1>
+        {/* <label htmlFor="phone">Phone</label> */}
         <input
           type="text"
           name="phone"
+          placeholder="Phone"
           value={phone}
           onChange={(e) => {
             setPhone(e.target.value);
           }}
         />
-        <label htmlFor="password">Password</label>
+        {/* <label htmlFor="password">Password</label> */}
         <input
           type="password"
           name="password"
+          placeholder="password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
