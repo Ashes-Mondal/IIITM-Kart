@@ -52,8 +52,8 @@ function Navbar() {
             </svg>
             <span className="m-3">User</span>
           </NavLink>
-          <form className="navlink" method="POST" action="/logout">
-            <button>Logout</button>
+          <form   method="POST" action="/logout">
+            <button className="navlink" >Logout</button>
           </form>
         </>
       );
