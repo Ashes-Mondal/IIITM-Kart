@@ -142,7 +142,7 @@ function ShoppingCart({ cart, setCart }) {
             );
           })}
         </div>
-        <div className="flex-child2 shadow bg-white rounded">
+        <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
           <div className="list">
             {/*cart.map((product_Qty, idx) => {
