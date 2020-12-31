@@ -203,7 +203,7 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="nav-bar navbar sticky-top">
+    <nav className="navbar sticky-top">
       <div className="site-name">
         <span className="text1">IIITM-Kart</span>
         <span className="text2">A Shopping site for IIITM students</span>

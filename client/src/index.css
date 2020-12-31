@@ -53,8 +53,7 @@ img {
   object-fit: contain;
 }
 
-.nav-bar {
-  position: fixed;
+.navbar {
   background-color: blue;
   width: 100%;
   justify-content: flex-start;
