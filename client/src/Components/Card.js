@@ -6,7 +6,7 @@ const Card = (props) => {
   const { isAuth } = useContext(Authentication);
   const { user } = useContext(User);
   const { product, cart, setCart } = props;
-  const { ItemName, _id: id, Description, cost, imageURL } = product;
+  const { itemName, _id: id, description, cost, imageURL } = product;
   const [buttonState, setButtonState] = useState(false);
   //funtion that adds item to the cart
   const addToCart = async (product) => {
@@ -23,7 +23,7 @@ const Card = (props) => {
       newCart.push(itemInCart);
     }
     console.log(newCart);
-    
+
     //Adding the item in user cart
     //POST request option
     const requestOptions = {
@@ -36,8 +36,8 @@ const Card = (props) => {
       if (response) {
         setCart(newCart);
         setButtonState(true);
-      }else{
-        alert('Could not add to cart');
+      } else {
+        alert("Could not add to cart");
       }
     } catch (error) {
       console.log("ERROR:", error);
@@ -47,10 +47,10 @@ const Card = (props) => {
   return (
     <>
       <div className="card shadow bg-white rounded ">
-        <img className=" " alt={ItemName} src={imageURL} />
+        <img className=" " alt={itemName} src={imageURL} />
         <div className="justify-content-center">
-          <h2>{ItemName}</h2>
-          <p>{Description}</p>
+          <h2>{itemName}</h2>
+          <p>{description}</p>
           <p>Rs {cost}</p>
           <button
             type="button"

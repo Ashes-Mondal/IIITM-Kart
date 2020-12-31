@@ -1,12 +1,13 @@
 import React from "react";
 
-const SearchBox = () => {
+const SearchBox = (props) => {
   return (
-      <input
-        className="form-control"
-        type="search"
-        placeholder="search product"
-      />
+    <input
+      className="form-control"
+      type="search"
+      placeholder="search product"
+      onChange={props.searchChange}
+    />
   );
 };
 

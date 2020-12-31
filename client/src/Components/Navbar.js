@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Navbar() {
+function Navbar(cart) {
   const { isAuth } = useContext(Authentication);
   //styles
   const classes = useStyles();
@@ -27,6 +27,18 @@ function Navbar() {
     mobileView: false,
     drawerOpen: false,
   });
+  const [Cart, setCart] = useState(cart);
+  const [searchfields, setSearchField] = useState("");
+
+  const onSearchChange = (event) => {
+    const filteredNames = setCart(
+      Cart.filter((item) => {
+        return item.itemName.toLowerCase().includes(searchfields.toLowerCase);
+      })
+    );
+    console.log(filteredNames);
+  };
+
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
@@ -209,7 +221,7 @@ function Navbar() {
         <span className="text2">A Shopping site for IIITM students</span>
       </div>
       <div className="search-box">
-        <SearchBox />
+        <SearchBox searchChange={onSearchChange} />
       </div>
       <div className="navlink-container">
         {mobileView ? displayMobile() : displayDesktop()}
@@ -219,3 +231,14 @@ function Navbar() {
 }
 
 export default Navbar;
+
+/*const onSearchChange = (event) => {
+    setSearchField({ searchfields: event.target.value });
+  };
+
+  cart.filter((product) => {
+    return product.itemName
+      .toLowerCase()
+      .includes(searchfields.toLowerCase());
+  });
+*/
