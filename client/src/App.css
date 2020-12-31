@@ -52,7 +52,7 @@ h1 {
   flex: 1;
   padding: 20px;
   margin-bottom: auto;
-  top:6.5rem
+  top: 6.5rem;
 }
 .flex-child3 {
   width: 50%;
@@ -79,7 +79,8 @@ h1 {
   margin-top: 10px;
 }
 
-.cost {
+.btnProceed {
+  color: #fffafa;
   text-align: center;
   color: #f1f3f6;
   font-family: "Josefin Sans", sans-serif;
@@ -87,9 +88,9 @@ h1 {
   border: 2px solid orangered;
   border-radius: 8px;
   background-color: orangered;
-  margin-left: 40px;
-  margin-right: 40px;
-  margin-top: 20px;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 5%;
 }
 
 .text1 {

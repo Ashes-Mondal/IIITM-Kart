@@ -53,7 +53,7 @@ function Navbar() {
             <span className="m-3">User</span>
           </NavLink>
           <form className="navlink" method="POST" action="/logout">
-            <button>Logout</button>
+            <button className="btn btn-danger">Logout</button>
           </form>
         </>
       );

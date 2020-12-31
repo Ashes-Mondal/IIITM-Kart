@@ -100,11 +100,16 @@ function ShoppingCart({ cart, setCart }) {
       <div className="product flex-container">
         <div className="flex-child1 shadow bg-white rounded">
           <h1>CART</h1>
-          <button onClick={clearCart}>Clear Cart</button>
+          <button className="btn btn-danger" onClick={clearCart}>
+            Clear Cart
+          </button>
           {cart.map((productDetail, index) => {
             const { item, Qty } = productDetail;
             return (
-              <div className="flex-container shadow rounded mb-3 mt-3" key={index}>
+              <div
+                className="flex-container shadow rounded mb-3 mt-3"
+                key={index}
+              >
                 <div className="flex-child3">
                   <h3>{item.ItemName}</h3>
                   <img src={item.imageURL} alt={item.ItemName} />
@@ -144,15 +149,20 @@ function ShoppingCart({ cart, setCart }) {
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
-          <div className="list">
-            {/*cart.map((product_Qty, idx) => {
+          {/*<div className="list">
+            {cart.map((product_Qty, idx) => {
               const { item, Qty } = product_Qty;
-              return <h2>hi</h2>;
-            })*/}
-          </div>
-          <div className="cost">
-            <b>Total Cost: Rs. {getTotalSum()}</b>
-          </div>
+              return (
+                <span className="bill">
+                  <h5>{item.ItemName}</h5> <h6>{item.cost}</h6>
+                </span>
+              );
+            })}
+          </div>*/}
+          <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
+          <button className="btnProceed">
+            <h5>Proceed To Checkout</h5>
+          </button>
         </div>
       </div>
     </>
