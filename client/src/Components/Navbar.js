@@ -5,28 +5,27 @@ import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import { IconButton, Drawer, Link, MenuItem } from "@material-ui/core";
 import { Authentication } from "../App";
-
+//css for the drawer
 const useStyles = makeStyles({
   root: {
-    fontSize: "1.7rem",
-    width: "100%",
-    textAlign: "center",
+    fontSize: "2rem",
+    justifyContent:"center",
   },
   MuiDrawer_paper: {
     width: "30%",
     justifyContent: "center",
   },
 });
-
 function Navbar() {
   const { isAuth } = useContext(Authentication);
-  //styles
+  //usestyles
   const classes = useStyles();
-  //state = {}
+  //mobile display state = {}
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
   });
+  //destructuring the state
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
@@ -141,12 +140,18 @@ function Navbar() {
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
     };
     //Menu data and links
-    const headersData = [
-      { label: "Home", href: "/" },
-      { label: "Cart", href: "/cart" },
-      { label: "User", href: "/user" },
-    ];
-
+    const headersData = isAuth
+      ? [
+          { label: "Home", href: "/" },
+          { label: "Cart", href: "/cart" },
+          { label: "User", href: "/user" },
+        ]
+      : [
+          { label: "Home", href: "/" },
+          { label: "Cart", href: "/cart" },
+          { label: "Login", href: "/login" },
+          { label: "Signup", href: "/signup" },
+        ];
     const getDrawerChoices = () => {
       return headersData.map(({ label, href }) => {
         return (
@@ -188,10 +193,16 @@ function Navbar() {
           }}
         >
           <div className="menu-choices">{getDrawerChoices()}</div>
+          {isAuth ? (
+            <form className="" method="POST" action="/logout">
+              <button className="btn btn-danger drawer-logout">Logout</button>
+            </form>
+          ) : null}
         </Drawer>
       </div>
     );
   };
+  //side-effect
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
