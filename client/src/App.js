@@ -52,7 +52,7 @@ const App = () => {
         <Authentication.Provider
           value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
         >
-          <Navbar />
+          <Navbar cart={cart} />
           <Switch>
             <Route exact path="/">
               <HomePage itemList={itemList} cart={cart} setCart={setCart} />
