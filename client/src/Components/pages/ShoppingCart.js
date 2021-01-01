@@ -3,6 +3,7 @@ import { User } from "../../App";
 
 function ShoppingCart({ cart, setCart }) {
   const { user } = useContext(User);
+  console.log("user:", user);
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
   };

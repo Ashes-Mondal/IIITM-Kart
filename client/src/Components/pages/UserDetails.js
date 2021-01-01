@@ -10,11 +10,11 @@ function UserDetails() {
       <h1>User Details</h1>
       <br />
       <form className="userform">
+        <h6 style={{ color: "blue" }} onClick={() => {}}>
+          Edit
+        </h6>
         <div className="form-group">
           <h5>Personal Information</h5>
-          <h6 style={{ color: "blue" }} onClick={() => {}}>
-            Edit
-          </h6>
           <input
             type="text"
             className="mr-2"
@@ -32,17 +32,13 @@ function UserDetails() {
         <br />
         <div className="form-group">
           <h5>Email address</h5>
-          <h6 style={{ color: "blue" }} onClick={() => {}}>
-            Edit
-          </h6>
+
           <input type="text" value={user.email} name="Email" disabled />
         </div>
         <br />
         <div className="form-group">
           <h5>Mobile Number</h5>
-          <h6 style={{ color: "blue" }} onClick={() => {}}>
-            Edit
-          </h6>
+
           <input type="text" value={user.phone} name="Phno" disabled />
         </div>
       </form>
