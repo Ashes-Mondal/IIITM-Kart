@@ -14,7 +14,7 @@ code {
 }
 
 .card {
-  height: auto; 
+  height: auto;
   width: 21rem;
   min-height: 32rem;
   margin: 2rem;
@@ -98,4 +98,7 @@ a.active-nav-link {
 }
 .userform {
   text-align: start;
+}
+.edituser {
+  color: blue;
 }
