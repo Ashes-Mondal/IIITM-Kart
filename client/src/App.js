@@ -28,9 +28,15 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({
+<<<<<<< HEAD
     name: { firstName: "", lastName: "" },
     email: "",
     phone: "",
+=======
+    name:{firstName:"",lastName:""},
+    email:"",
+    phone:"",
+>>>>>>> ce9b72690d4eb3b0a0dfd92248e02c12cacc122b
   });
   //side effect when page first time rendered
   useEffect(() => {
