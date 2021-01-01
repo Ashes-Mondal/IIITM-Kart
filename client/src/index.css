@@ -157,3 +157,7 @@ a.active-nav-link {
 .box-signup {
   width: 40%;
 }
+.edituser {
+  color: blue;
+  cursor: pointer;
+}

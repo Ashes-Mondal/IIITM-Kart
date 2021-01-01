@@ -1,45 +1,98 @@
-import React, { useContext } from "react";
-import { User } from "../../App";
+import React, { useContext, useState } from "react";
+// import { User } from "../../App";
 
-function UserDetails() {
-  const { user } = useContext(User);
-  console.log("user:", user);
-
+function UserDetails({ user, setUser }) {
+  // const { user } = useContext(User);
+  // console.log("user:", user);
+  const [editable, setEditable] = useState(false);
+  // const [userInfo, setUserInfo] = useState(user);
+  console.log("userInfo:", user);
   return (
     <div className="jumbotron container">
       <h1>User Details</h1>
       <br />
       <form className="userform">
-        <h6 style={{ color: "blue" }} onClick={() => {}}>
-          Edit
-        </h6>
+        {editable ? (
+          <h6
+            className="edituser"
+            onClick={() => {
+              setEditable(false);
+            }}
+          >
+            Update
+          </h6>
+        ) : (
+          <h6
+            className="edituser"
+            onClick={() => {
+              setEditable(true);
+            }}
+          >
+            Edit
+          </h6>
+        )}
+
         <div className="form-group">
           <h5>Personal Information</h5>
           <input
             type="text"
             className="mr-2"
-            value={user.name.firstName}
+            value={user.name.firstName || ""}
             name="FirstName"
-            disabled
+            disabled={editable ? "" : "disabled"}
+            onChange={(e) => {
+              setUser({
+                ...user,
+                name: {
+                  firstName: e.target.value,
+                  lastName: user.name.lastName,
+                },
+              });
+            }}
           />
           <input
             type="text"
-            value={user.name.lastName}
+            value={user.name.lastName || ""}
             name="LastName"
-            disabled
+            disabled={editable ? "" : "disabled"}
+            onChange={(e) => {
+              setUser({
+                ...user,
+                name: {
+                  firstName: user.name.firstName,
+                  lastName: e.target.value,
+                },
+              });
+            }}
           />
         </div>
         <br />
         <div className="form-group">
           <h5>Email address</h5>
 
-          <input type="text" value={user.email} name="Email" disabled />
+          <input
+            type="text"
+            value={user.email || ""}
+            name="Email"
+            disabled={editable ? "" : "disabled"}
+            onChange={(e) => {
+              setUser({ ...user, email: e.target.value });
+            }}
+          />
         </div>
         <br />
         <div className="form-group">
           <h5>Mobile Number</h5>
 
-          <input type="text" value={user.phone} name="Phno" disabled />
+          <input
+            type="text"
+            value={user.phone || ""}
+            name="Phno"
+            disabled={editable ? "" : "disabled"}
+            onChange={(e) => {
+              setUser({ ...user, phone: e.target.value });
+            }}
+          />
         </div>
       </form>
     </div>

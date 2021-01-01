@@ -2,8 +2,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 //Files
-const  {ItemDetail} = require("../models/itemSchema");
-const  UserDetail  = require("../models/userScema");
+const { ItemDetail } = require("../models/itemSchema");
+const UserDetail = require("../models/userScema");
 //Controller Functions
 /****************************User functions***********************************/
 //FETCH ALL USERS
@@ -14,6 +14,40 @@ exports.fetchAllUsers = async (req, res) => {
 };
 //GET USER DETAILS
 exports.getUserDetails = async (req, res) => {
+  //body details are obtained
+  const userId = req.session.userId;
+  if (userId) {
+    try {
+      //user details fetched from the database
+      let userDetails = await UserDetail.findById(userId).exec();
+      userDetails["response"] = true;
+      res.send(userDetails);
+    } catch (err) {
+      res.send({ response: false, error: err });
+    }
+  } else {
+    res.send({ response: false, error: "not logged in" });
+  }
+};
+//EDIT USER DETAILS
+exports.editUserDetails = async (req, res) => {
+  //body details are obtained
+  const userId = req.session.userId;
+  if (userId) {
+    try {
+      //user details fetched from the database
+      let userDetails = await UserDetail.findById(userId).exec();
+      userDetails["response"] = true;
+      res.send(userDetails);
+    } catch (err) {
+      res.send({ response: false, error: err });
+    }
+  } else {
+    res.send({ response: false, error: "not logged in" });
+  }
+};
+//DELETE USER
+exports.deleteUser = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
   if (userId) {
@@ -131,10 +165,9 @@ exports.login = async (req, res) => {
   if (isMatch) {
     req.session.userId = user._id;
     res.redirect("/");
-  }else{
+  } else {
     res.redirect("/login");
   }
-
 };
 //SIGNUP
 exports.signup = async (req, res) => {
@@ -173,7 +206,7 @@ exports.fetchItems = async (req, res) => {
 };
 exports.addItem = async (req, res) => {
   const itemData = req.body;
-  (itemData["_id"] = new mongoose.Types.ObjectId());
+  itemData["_id"] = new mongoose.Types.ObjectId();
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();
