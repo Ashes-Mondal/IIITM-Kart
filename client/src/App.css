@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nova+Flat&family=Roboto+Slab:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap");
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -7,15 +9,89 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:	#f1f3f6;
+  background-color: #f1f3f6;
+}
+
+h1 {
+  text-align: center;
 }
 
 .container {
   margin: 2rem 13% 4rem;
   width: auto;
   text-align: center;
-  background-color:	#FFFAFA;
+  background-color: #fffafa;
   position: relative;
+}
+
+.float-container {
+  border: 3px solid #fff;
+  padding: 20px;
+}
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 20px;
+  border: 2px solid red;
+  color: cadetblue;
+}
+
+.flex-container {
+  display: flex;
+  padding: 20px;
+}
+
+.flex-child1 {
+  flex: 2;
+  margin-right: 20px;
+  padding: 20px;
+}
+
+.flex-child2 {
+  flex: 1;
+  padding: 20px;
+  
+  margin-bottom: auto;
+  top: 6.5rem;
+}
+.flex-child3 {
+  width: 50%;
+  padding: 10px;
+}
+
+.flex-child4 {
+  width: 50%;
+  margin-top: 100px;
+  margin-left: 60px;
+}
+
+.btn {
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.qtyInput {
+  border-radius: 2px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.btnProceed {
+  color: #fffafa;
+  text-align: center;
+  color: #f1f3f6;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 26px;
+  border: 2px solid orangered;
+  border-radius: 8px;
+  background-color: orangered;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 5%;
 }
 
 .text1 {
@@ -34,16 +110,15 @@ body {
   -webkit-text-stroke: 1px rgb(255, 251, 0);
   font-size: 15px;
   color: azure;
-  font-weight: 700;
+  font-weight: 400;
 }
 
-.menu-icon{
+.menu-icon {
   display: flex;
-  width:50%;
+  width: 50%;
   height: 10%;
-
 }
-.menu-choices{
+.menu-choices {
   width: 100%;
   display: flex;
   flex-direction: column;

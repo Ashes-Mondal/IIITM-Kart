@@ -1,26 +1,23 @@
 //Dependencies
 const express = require("express");
-
 //Files
-const databaseCRUD = require("../controller/databaseCRUD");
+const controllerFunctions = require("../controller/controllerFunctions");
 
 const router = express.Router();
-
 //All the routes
 //GET REQUESTS
-router.get("/fetchItems",databaseCRUD.fetchItems);
-router.get("/fetchAllUsers",databaseCRUD.fetchAllUsers);
-
+router.get("/fetchItems",controllerFunctions.fetchItems);
+router.get("/fetchAllUsers",controllerFunctions.fetchAllUsers);
+router.get("/getUserDetails",controllerFunctions.getUserDetails);
 //POST REQUESTS
-//router.post("/addItem",databaseCRUD.addItem); Not for users
-router.post("/addUser",databaseCRUD.addUser);
-router.post("/addToCart",databaseCRUD.addToCart);
-router.post("/deleteFromCart",databaseCRUD.deleteFromCart);
-router.post("/updateQty",databaseCRUD.updateQty);
-router.post("/getUserDetails",databaseCRUD.getUserDetails);
-
-
-
+//router.post("/addItem",controllerFunctions.addItem); Not for users
+router.post("/addToCart",controllerFunctions.addToCart);
+router.post("/deleteFromCart",controllerFunctions.deleteFromCart);
+router.post("/updateQty",controllerFunctions.updateQty);
+router.post("/clearCart",controllerFunctions.clearCart);
+router.post("/login",controllerFunctions.login);
+router.post("/signup",controllerFunctions.signup);
+router.post("/logout",controllerFunctions.logout);
 
 //exporting
 module.exports = router;

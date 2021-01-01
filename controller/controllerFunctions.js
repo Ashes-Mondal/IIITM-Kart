@@ -1,42 +1,36 @@
 //Dependencies
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 //Files
-const { ItemDetail, UserDetail } = require("../models/databaseSchema");
-
+const  {ItemDetail} = require("../models/itemSchema");
+const  UserDetail  = require("../models/userScema");
 //Controller Functions
-
-//User functions
+/****************************User functions***********************************/
+//FETCH ALL USERS
 exports.fetchAllUsers = async (req, res) => {
   //Fetching data from database
   const usersData = await UserDetail.find();
   res.send(usersData);
 };
+//GET USER DETAILS
 exports.getUserDetails = async (req, res) => {
   //body details are obtained
-  const userId = req.body.userId;
-  try {
-    //user details fetched from the database
-    let userDetails = await UserDetail.findById(userId).exec();
-    userDetails["response"] = true;
-    console.log(userDetails);
-    res.send(userDetails);
-  } catch (err) {
-    res.send({ response: false,error:err });
+  const userId = req.session.userId;
+  if (userId) {
+    try {
+      //user details fetched from the database
+      let userDetails = await UserDetail.findById(userId).exec();
+      userDetails["response"] = true;
+      res.send(userDetails);
+    } catch (err) {
+      res.send({ response: false, error: err });
+    }
+  } else {
+    res.send({ response: false, error: "not logged in" });
   }
 };
-exports.addUser = async (req, res) => {
-  //body details are obtained
-  let userData = req.body;
-  //_id is added then updated to the database
-  userData["_id"] = new mongoose.Types.ObjectId();
-  try {
-    newUser = await new UserDetail(userData);
-    await newUser.save();
-    res.send({ response: true });
-  } catch (error) {
-    res.send({ response: false });
-  }
-};
+/************************** CART CRUD OPERATION **********************************/
+//ADD TO CART
 exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -53,8 +47,8 @@ exports.addToCart = async (req, res) => {
       itemElement.item = itemDetails;
       itemElement.Qty += 1;
       flag = false;
-      return itemElement;
     }
+    return itemElement;
   });
   if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
   //Finally the userCart is updated to the database
@@ -65,6 +59,7 @@ exports.addToCart = async (req, res) => {
     }
   });
 };
+//DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -85,6 +80,7 @@ exports.deleteFromCart = async (req, res) => {
     }
   });
 };
+//UPDATE CART QTY
 exports.updateQty = async (req, res) => {
   //body details are obtained
   const userId = req.body.userId;
@@ -109,8 +105,63 @@ exports.updateQty = async (req, res) => {
     }
   });
 };
+//CLEAR CART
+exports.clearCart = async (req, res) => {
+  await UserDetail.findByIdAndUpdate(
+    req.body.userId,
+    { userCart: [] },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+/*****************************LOGIN, SIGNUP, LOGOUT***************************/
+//LOGIN
+exports.login = async (req, res) => {
+  const { phone, password } = req.body;
+  const user = await UserDetail.findOne({ phone: phone }).exec();
 
-//Item funtions
+  if (!user) {
+    res.redirect("/login");
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (isMatch) {
+    req.session.userId = user._id;
+    res.redirect("/");
+  }else{
+    res.redirect("/login");
+  }
+
+};
+//SIGNUP
+exports.signup = async (req, res) => {
+  //_id is added then updated to the database
+  const hashedPassword = await bcrypt.hash(req.body.password, 12);
+  const userData = {
+    _id: new mongoose.Types.ObjectId(),
+    name: { firstName: req.body.firstName, lastName: req.body.lastName },
+    email: req.body.email,
+    phone: req.body.phone,
+    address: req.body.address,
+    password: hashedPassword,
+  };
+  try {
+    newUser = await new UserDetail(userData);
+    await newUser.save();
+    res.redirect("/login");
+  } catch (error) {
+    res.redirect("/signup");
+  }
+};
+//LOGOUT
+exports.logout = async (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+};
+/********************************Item funtions********************************/
 exports.fetchItems = async (req, res) => {
   //Fetching data from database
   try {
@@ -122,8 +173,7 @@ exports.fetchItems = async (req, res) => {
 };
 exports.addItem = async (req, res) => {
   const itemData = req.body;
-  (itemData["_id"] = new mongoose.Types.ObjectId()),
-    console.log("itemData: ", itemData);
+  (itemData["_id"] = new mongoose.Types.ObjectId());
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();

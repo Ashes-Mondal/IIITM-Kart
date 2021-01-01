@@ -1,17 +1,86 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { Authentication, User } from "../App";
 
-const Card = ({ name, Description, id, cost, imgURL }) => {
-  //props = {name,email,id,price}
+const Card = (props) => {
+  const { isAuth } = useContext(Authentication);
+  const { user } = useContext(User);
+  const { product, cart, setCart } = props;
+  const { itemName, _id: id, description, cost, imageURL, rating } = product;
+  const [buttonState, setButtonState] = useState(false);
+  //funtion that adds item to the cart
+  const addToCart = async (product) => {
+    let newCart = [...cart];
+    //finding if the item already exist in the cart
+    let itemInCart = newCart.find((itemElement) => id === itemElement.item._id);
+    if (itemInCart) {
+      itemInCart.Qty++;
+    } else {
+      itemInCart = {
+        item: product,
+        Qty: 1,
+      };
+      newCart.push(itemInCart);
+    }
+    //Adding the item in user cart
+    //POST request option
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user._id, itemId: id }),
+    };
+    try {
+      const response = await (await fetch("/addToCart", requestOptions)).json();
+      if (response) {
+        setCart(newCart);
+        setButtonState(true);
+      } else {
+        alert("Could not add to cart");
+      }
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  };
+
   return (
     <>
       <div className="card shadow bg-white rounded ">
-        <img className=" " alt={name} src={imgURL} />
+        <img className=" " alt={itemName} src={imageURL} />
         <div className="justify-content-center">
-          <h2>{name}</h2>
-          <p>{Description}</p>
+          <h2>{product.itemName}</h2>
+          <p>{description}</p>
           <p>Rs {cost}</p>
-          <button type="button" className="btn btn-primary">
-            Add to Cart
+          <p>
+            Rating: {rating}{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="30"
+              fill="currentColor"
+              class="bi bi-star"
+              viewBox="0 3 16 16"
+            >
+              <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+            </svg>
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => (buttonState ? null : addToCart(product))}
+          >
+            {isAuth ? (
+              buttonState ? (
+                <Link to="/cart" className="btn text-white">
+                  Go to Cart
+                </Link>
+              ) : (
+                "Add to Cart"
+              )
+            ) : (
+              <Link to="/login" className="btn text-white">
+                Add to Cart
+              </Link>
+            )}
             <span className="m-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
