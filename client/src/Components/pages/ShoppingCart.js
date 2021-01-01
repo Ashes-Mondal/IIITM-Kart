@@ -22,7 +22,7 @@ function ShoppingCart({ cart, setCart }) {
       alert("Could not clear the cart!");
     }
   };
-  // increase qty of item
+  // increase qty of item by 1
   const plusItemQuantity = async (Product) => {
     const requestOptions = {
       method: "POST",
@@ -34,10 +34,10 @@ function ShoppingCart({ cart, setCart }) {
       }),
     };
     const result = await (await fetch("/updateQty", requestOptions)).json();
-    console.log("result:", result);
+    console.log("response:", result.response);
     if (result.response) {
       const tempCart = cart.map((product) => {
-        if (product._id === Product._id) {
+        if (product.item._id === Product.item._id) {
           product.Qty = product.Qty + 1;
         }
         return product;
@@ -63,7 +63,7 @@ function ShoppingCart({ cart, setCart }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product._id === Product._id && product.Qty > 0) {
+        if (product.item._id === Product.item._id && product.Qty > 0) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -149,16 +149,6 @@ function ShoppingCart({ cart, setCart }) {
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
-          {/*<div className="list">
-            {cart.map((product_Qty, idx) => {
-              const { item, Qty } = product_Qty;
-              return (
-                <span className="bill">
-                  <h5>{item.itemName}</h5> <h6>{item.cost}</h6>
-                </span>
-              );
-            })}
-          </div>*/}
           <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
           <button className="btnProceed">
             <h5>Proceed To Checkout</h5>

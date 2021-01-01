@@ -18,13 +18,6 @@ const useStyles = makeStyles({
 });
 function Navbar({cart}) {
   const { isAuth } = useContext(Authentication);
-  //usestyles
-  const classes = useStyles();
-  //mobile display state = {}
-  const [state, setState] = useState({
-    mobileView: false,
-    drawerOpen: false,
-  });
   const [Cart, setCart] = useState(cart);
   const [searchfields, setSearchField] = useState("");
   
@@ -36,6 +29,14 @@ function Navbar({cart}) {
     );
     console.log(filteredNames);
   };
+  /****************************** hamburger Drawer Start********************************************/
+  //usestyles
+  const classes = useStyles();
+  //mobile display state = {}
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
     //destructuring the state
   const { mobileView, drawerOpen } = state;
   //when in desktop size
@@ -213,6 +214,7 @@ function Navbar({cart}) {
       </div>
     );
   };
+  /************************************ hamburger Drawer End **********************************/
   //side-effect
   useEffect(() => {
     const setResponsiveness = () => {
