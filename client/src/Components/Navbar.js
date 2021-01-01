@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 });
 function Navbar({cart}) {
   const { isAuth } = useContext(Authentication);
+  /**************************************Search-Box******************************************** */
   const [Cart, setCart] = useState(cart);
   const [searchfields, setSearchField] = useState("");
   
@@ -29,7 +30,7 @@ function Navbar({cart}) {
     );
     console.log(filteredNames);
   };
-  /****************************** hamburger Drawer Start********************************************/
+  /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
   const classes = useStyles();
   //mobile display state = {}
@@ -214,7 +215,7 @@ function Navbar({cart}) {
       </div>
     );
   };
-  /************************************ hamburger Drawer End **********************************/
+  /************************************ hamburger Drawer Ends here **********************************/
   //side-effect
   useEffect(() => {
     const setResponsiveness = () => {
@@ -233,7 +234,7 @@ function Navbar({cart}) {
         <span className="text2">A Shopping site for IIITM students</span>
       </div>
       <div className="search-box">
-        <SearchBox searchChange={onSearchChange} />
+        <SearchBox />{/**searchChange={onSearchChange}  */}
       </div>
       <div className="navlink-container">
         {mobileView ? displayMobile() : displayDesktop()}
