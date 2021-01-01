@@ -27,7 +27,11 @@ const App = () => {
   const [itemList, dispatch] = useReducer(reducer, []);
   const [cart, setCart] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    name:{firstName:"",lastName:""},
+    email:"",
+    phone:"",
+  });
   //side effect when page first time rendered
   useEffect(() => {
     const URL = "/fetchItems";
