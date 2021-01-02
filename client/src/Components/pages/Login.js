@@ -5,29 +5,34 @@ function Login() {
   const [phone, setPhone] = useState("");
 
   return (
-    <div>
-      <form className="box shadow-lg mt-5" action="/login" method="POST">
+    <div className="login-form">
+      <form action="/login" method="POST">
+        {/*box shadow-lg mt-5*/}
         <h1>Login</h1>
-        {/* <label htmlFor="phone">Phone</label> */}
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-        {/* <label htmlFor="password">Password</label> */}
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+        <div>
+          <label htmlFor="phone">Phone</label>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </div>
         <button>LogIn</button>
       </form>
     </div>
