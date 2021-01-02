@@ -20,6 +20,7 @@ router.post("/signup", controllerFunctions.signup);
 router.post("/logout", controllerFunctions.logout);
 router.post("/editUserDetails", controllerFunctions.editUserDetails);
 router.post("/deleteUser", controllerFunctions.deleteUser);
+router.post("/addOrder", controllerFunctions.addOrder);
 
 //exporting
 module.exports = router;
