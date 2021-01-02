@@ -1,6 +1,6 @@
 //Dependencies
 const mongoose = require("mongoose");
-const {itemDetailSchema} = require("./itemSchema");
+const { itemDetailSchema } = require("./itemSchema");
 
 //userDetailSchema
 const userDetailSchema = mongoose.Schema({
@@ -29,6 +29,7 @@ const userDetailSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    unique: true,
   },
   address: {
     type: String,
@@ -45,5 +46,4 @@ const userDetailSchema = mongoose.Schema({
 
 const UserDetail = mongoose.model("UserDetail", userDetailSchema);
 
-module.exports = UserDetail ;
-
+module.exports = UserDetail;

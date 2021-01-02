@@ -46,7 +46,7 @@ const App = () => {
       const userData = await (await fetch("/getUserDetails")).json();
       console.log("userData:", userData);
       //if response is true then user is logged in
-      if (userData.response === true) {
+      if (userData.response !== false) {
         //accordingly setting the states
         setIsAuth(true);
         setUser(userData);
@@ -70,7 +70,7 @@ const App = () => {
               </Route>
 
               <Route exact path="/user">
-                <UserDetails />
+                <UserDetails user={user} setUser={setUser} />
               </Route>
 
               <Route exact path="/login">
