@@ -5,12 +5,11 @@ function Login() {
   const [phone, setPhone] = useState("");
 
   return (
-    <div className="login-form">
-      <form action="/login" method="POST">
+    <div >{/*className="login-form"*/}
+      <form className="box shadow-lg mt-5" action="/login" method="POST">
         {/*box shadow-lg mt-5*/}
         <h1>Login</h1>
-        <div>
-          <label htmlFor="phone">Phone</label>
+          {/* <label htmlFor="phone">Phone</label> */}
           <input
             type="text"
             name="phone"
@@ -20,9 +19,7 @@ function Login() {
               setPhone(e.target.value);
             }}
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             type="password"
             name="password"
@@ -32,7 +29,7 @@ function Login() {
               setPassword(e.target.value);
             }}
           />
-        </div>
+
         <button>LogIn</button>
       </form>
     </div>

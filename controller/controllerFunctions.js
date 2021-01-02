@@ -20,7 +20,7 @@ exports.getUserDetails = async (req, res) => {
     try {
       //user details fetched from the database
       let userDetails = await UserDetail.findById(userId).exec();
-      userDetails["response"] = true;
+      userDetails._doc["response"] = true;
       res.send(userDetails);
     } catch (err) {
       res.send({ response: false, error: err });
