@@ -12,11 +12,12 @@ import Signup from "./Components/pages/Signup";
 
 //creating User and Authentication context
 const User = createContext();
+const Item = createContext();
 const Authentication = createContext();
 //item reducer function
 const reducer = (currState, action) => {
   switch (action.type) {
-    case "fetchedItemJson":
+    case "setItemList":
       console.log("dispatch-ItemData", action.payload);
       return action.payload;
     default:
@@ -36,61 +37,68 @@ const App = () => {
   useEffect(() => {
     const URL = "/fetchItems";
 
-    const fetchJSON_fromServer = async () => {
-      const itemList = await (await fetch(URL)).json();
-      dispatch({ type: "fetchedItemJson", payload: itemList });
+    const fetchItems_fetchUser = async () => {
+      //fetching item list from the server side
+      const listOfItems = await (await fetch(URL)).json();
+      //setting the itemList state
+      dispatch({ type: "setItemList", payload: listOfItems });
+      //fetching user data from the server side
       const userData = await (await fetch("/getUserDetails")).json();
       console.log("userData:", userData);
-      if (userData.response !== false) {
+      //if response is true then user is logged in
+      if (userData.response === true) {
+        //accordingly setting the states
         setIsAuth(true);
         setUser(userData);
         setCart(userData.userCart);
       }
     };
-    fetchJSON_fromServer();
+    fetchItems_fetchUser();
   }, []);
 
   return (
     <Router>
-      <User.Provider value={{ user: user, setUser: setUser }}>
-        <Authentication.Provider
-          value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
-        >
-          <Navbar cart={cart} />
-          <Switch>
-            <Route exact path="/">
-              <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-            </Route>
+      <Item.Provider value={{ setItemList: dispatch }}>
+        <User.Provider value={{ user: user, setUser: setUser }}>
+          <Authentication.Provider
+            value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
+          >
+            <Navbar cart={cart} />
+            <Switch>
+              <Route exact path="/">
+                <HomePage itemList={itemList} cart={cart} setCart={setCart} />
+              </Route>
 
-            <Route exact path="/user">
-              <UserDetails user={user} setUser={setUser} />
-            </Route>
+              <Route exact path="/user">
+                <UserDetails user={user} setUser={setUser} />
+              </Route>
 
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <Signup />
-            </Route>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route exact path="/signup">
+                <Signup />
+              </Route>
 
-            <Route exact path="/cart">
-              <ShoppingCart
-                cart={cart}
-                setCart={setCart}
-                user={user}
-                setUser={setUser}
-              />
-            </Route>
+              <Route exact path="/cart">
+                <ShoppingCart
+                  cart={cart}
+                  setCart={setCart}
+                  user={user}
+                  setUser={setUser}
+                />
+              </Route>
 
-            <Route path="*">
-              <Error />
-            </Route>
-          </Switch>
-        </Authentication.Provider>
-      </User.Provider>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Switch>
+          </Authentication.Provider>
+        </User.Provider>
+      </Item.Provider>
     </Router>
   );
 };
 
 export default App;
-export { User, Authentication };
+export { User, Authentication, Item };

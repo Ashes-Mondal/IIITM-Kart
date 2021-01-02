@@ -18,18 +18,6 @@ const useStyles = makeStyles({
 });
 function Navbar({cart}) {
   const { isAuth } = useContext(Authentication);
-  /**************************************Search-Box******************************************** */
-  const [Cart, setCart] = useState(cart);
-  const [searchfields, setSearchField] = useState("");
-  
-  const onSearchChange = (event) => {
-    const filteredNames = setCart(
-      Cart.filter((item) => {
-        return item.itemName.toLowerCase().includes(searchfields.toLowerCase);
-      })
-    );
-    console.log(filteredNames);
-  };
   /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
   const classes = useStyles();
@@ -234,7 +222,7 @@ function Navbar({cart}) {
         <span className="text2">A Shopping site for IIITM students</span>
       </div>
       <div className="search-box">
-        <SearchBox />{/**searchChange={onSearchChange}  */}
+        <SearchBox />
       </div>
       <div className="navlink-container">
         {mobileView ? displayMobile() : displayDesktop()}
