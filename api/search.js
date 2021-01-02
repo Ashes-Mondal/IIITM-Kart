@@ -2,17 +2,17 @@
 const { ItemDetail } = require("../models/itemSchema");
 //SEARCH
 exports.search = async (req, res) => {
-  const Search = req.body.Search.toLowerCase();
-   //new RegExp("\\b" + Search + "\\b", "gi")
+  const Search = req.body.Search;
+  const regex = new RegExp("\\b" + Search + "\\b", "i");
   const itemName = await ItemDetail.find({
-    itemName: new RegExp("\\b" + Search + "\\b", "gi"),
-  }).exec();
+    itemName:regex
+  });
   const description = await ItemDetail.find({
-    discription: new RegExp("\\b" + Search + "\\b", "gi"),
-  }).exec();
+    description:regex
+  });
   const category = await ItemDetail.find({
-    category: new RegExp("\\b" + Search + "\\b", "gi"),
-  }).exec();
+    category:regex
+  });
   const combinedResult = [...itemName, ...description, ...category];
   //unique array of objects
   const jsonObject = combinedResult.map(JSON.stringify);
