@@ -2,8 +2,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 //Files
-const  {ItemDetail} = require("../models/itemSchema");
-const  UserDetail  = require("../models/userScema");
+const { ItemDetail } = require("../models/itemSchema");
+const UserDetail = require("../models/userScema");
 //Controller Functions
 /****************************User functions***********************************/
 //FETCH ALL USERS
@@ -22,6 +22,47 @@ exports.getUserDetails = async (req, res) => {
       let userDetails = await UserDetail.findById(userId).exec();
       userDetails["response"] = true;
       res.send(userDetails);
+    } catch (err) {
+      res.send({ response: false, error: err });
+    }
+  } else {
+    res.send({ response: false, error: "not logged in" });
+  }
+};
+//EDIT USER DETAILS
+exports.editUserDetails = async (req, res) => {
+  //body details are obtained
+  const userId = req.session.userId;
+  const phone = req.body.phone;
+  const email = req.body.email;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+
+  await UserDetail.findByIdAndUpdate(
+    userId,
+    {
+      phone: phone,
+      email: email,
+      name: { firstName: firstName, lastName: lastName },
+    },
+    (err) => {
+      if (err) res.send({ response: false });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+//DELETE USER
+exports.deleteUser = async (req, res) => {
+  //body details are obtained
+  const userId = req.session.userId;
+  if (userId) {
+    try {
+      //user details fetched from the database
+      let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
+      userDetails["response"] = true;
+      res.redirect("/login");
     } catch (err) {
       res.send({ response: false, error: err });
     }
@@ -131,10 +172,9 @@ exports.login = async (req, res) => {
   if (isMatch) {
     req.session.userId = user._id;
     res.redirect("/");
-  }else{
+  } else {
     res.redirect("/login");
   }
-
 };
 //SIGNUP
 exports.signup = async (req, res) => {
@@ -173,7 +213,7 @@ exports.fetchItems = async (req, res) => {
 };
 exports.addItem = async (req, res) => {
   const itemData = req.body;
-  (itemData["_id"] = new mongoose.Types.ObjectId());
+  itemData["_id"] = new mongoose.Types.ObjectId();
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();
