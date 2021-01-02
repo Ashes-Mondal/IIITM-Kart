@@ -74,8 +74,12 @@ img {
 .search-box {
   width: 32%;
   display: flex;
-  align-items: center;
 }
+.search-box-form {
+  width: 100%;
+  display: flex;
+}
+
 .form-control {
   width: 100%;
 }

@@ -16,9 +16,9 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
 });
-
-function Navbar(cart) {
+function Navbar({ cart }) {
   const { isAuth } = useContext(Authentication);
+  /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
   const classes = useStyles();
   //mobile display state = {}
@@ -26,18 +26,7 @@ function Navbar(cart) {
     mobileView: false,
     drawerOpen: false,
   });
-  const [Cart, setCart] = useState(cart);
-  const [searchfields, setSearchField] = useState("");
-
-  const onSearchChange = (event) => {
-    const filteredNames = setCart(
-      Cart.filter((item) => {
-        return item.itemName.toLowerCase().includes(searchfields.toLowerCase);
-      })
-    );
-    console.log(filteredNames);
-  };
-
+  //destructuring the state
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
@@ -214,6 +203,7 @@ function Navbar(cart) {
       </div>
     );
   };
+  /************************************ hamburger Drawer Ends here **********************************/
   //side-effect
   useEffect(() => {
     const setResponsiveness = () => {
@@ -232,7 +222,7 @@ function Navbar(cart) {
         <span className="text2">A Shopping site for IIITM students</span>
       </div>
       <div className="search-box">
-        <SearchBox searchChange={onSearchChange} />
+        <SearchBox />
       </div>
       <div className="navlink-container">
         {mobileView ? displayMobile() : displayDesktop()}
@@ -242,14 +232,3 @@ function Navbar(cart) {
 }
 
 export default Navbar;
-
-/*const onSearchChange = (event) => {
-    setSearchField({ searchfields: event.target.value });
-  };
-
-  cart.filter((product) => {
-    return product.itemName
-      .toLowerCase()
-      .includes(searchfields.toLowerCase());
-  });
-*/
