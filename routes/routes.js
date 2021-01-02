@@ -2,6 +2,7 @@
 const express = require("express");
 //Files
 const controllerFunctions = require("../controller/controllerFunctions");
+const api = require("../api/search");
 
 const router = express.Router();
 //All the routes
@@ -18,6 +19,7 @@ router.post("/clearCart",controllerFunctions.clearCart);
 router.post("/login",controllerFunctions.login);
 router.post("/signup",controllerFunctions.signup);
 router.post("/logout",controllerFunctions.logout);
+router.post("/search",api.search);
 
 //exporting
 module.exports = router;

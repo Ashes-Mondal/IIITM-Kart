@@ -76,7 +76,11 @@ img {
   display: flex;
 }
 .search-box-form {
+<<<<<<< HEAD
   width: 100%;
+=======
+  width:100%;
+>>>>>>> 00023b745f4036cd8dacf12c53cf31abbc4f81f1
   display: flex;
 }
 
