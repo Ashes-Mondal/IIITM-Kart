@@ -69,9 +69,15 @@ const App = () => {
                 <HomePage itemList={itemList} cart={cart} setCart={setCart} />
               </Route>
 
+<<<<<<< HEAD
               <Route exact path="/user">
                 <UserDetails user={user} setUser={setUser} />
               </Route>
+=======
+            <Route exact path="/user">
+              <UserDetails user={user} setUser={setUser} />
+            </Route>
+>>>>>>> 96e7e863e5679a08c81e40b59e8ead0e335b4dc9
 
               <Route exact path="/login">
                 <Login />
