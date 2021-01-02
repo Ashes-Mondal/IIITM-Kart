@@ -7,6 +7,25 @@ function UserDetails({ user, setUser }) {
   const [editable, setEditable] = useState(false);
   // const [userInfo, setUserInfo] = useState(user);
   console.log("userInfo:", user);
+
+  const updateUser = async () => {
+    console.log("Updating User...");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user._id,
+        firstName: user.name.firstName,
+        lastName: user.name.lastName,
+        phone: user.phone,
+        email: user.email,
+      }),
+    };
+    const result = await (
+      await fetch("/editUserDetails", requestOptions)
+    ).json();
+    console.log("response:", result.response);
+  };
   return (
     <div className="jumbotron container">
       <h1>User Details</h1>
@@ -17,6 +36,7 @@ function UserDetails({ user, setUser }) {
             className="edituser"
             onClick={() => {
               setEditable(false);
+              updateUser(user);
             }}
           >
             Update
@@ -94,6 +114,9 @@ function UserDetails({ user, setUser }) {
             }}
           />
         </div>
+      </form>
+      <form action="/deleteUser" method="POST">
+        <button className="btn btn-danger">Delete User</button>
       </form>
     </div>
   );

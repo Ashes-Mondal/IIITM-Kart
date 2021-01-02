@@ -33,18 +33,25 @@ exports.getUserDetails = async (req, res) => {
 exports.editUserDetails = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if (userId) {
-    try {
-      //user details fetched from the database
-      let userDetails = await UserDetail.findById(userId).exec();
-      userDetails["response"] = true;
-      res.send(userDetails);
-    } catch (err) {
-      res.send({ response: false, error: err });
+  const phone = req.body.phone;
+  const email = req.body.email;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+
+  await UserDetail.findByIdAndUpdate(
+    userId,
+    {
+      phone: phone,
+      email: email,
+      name: { firstName: firstName, lastName: lastName },
+    },
+    (err) => {
+      if (err) res.send({ response: false });
+      else {
+        res.send({ response: true });
+      }
     }
-  } else {
-    res.send({ response: false, error: "not logged in" });
-  }
+  );
 };
 //DELETE USER
 exports.deleteUser = async (req, res) => {
@@ -53,9 +60,9 @@ exports.deleteUser = async (req, res) => {
   if (userId) {
     try {
       //user details fetched from the database
-      let userDetails = await UserDetail.findById(userId).exec();
+      let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
       userDetails["response"] = true;
-      res.send(userDetails);
+      res.redirect("/login");
     } catch (err) {
       res.send({ response: false, error: err });
     }

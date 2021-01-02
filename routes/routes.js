@@ -9,8 +9,6 @@ const router = express.Router();
 router.get("/fetchItems", controllerFunctions.fetchItems);
 router.get("/fetchAllUsers", controllerFunctions.fetchAllUsers);
 router.get("/getUserDetails", controllerFunctions.getUserDetails);
-router.get("/editUserDetails", controllerFunctions.editUserDetails);
-router.get("/deleteUser", controllerFunctions.deleteUser);
 //POST REQUESTS
 //router.post("/addItem",controllerFunctions.addItem); Not for users
 router.post("/addToCart", controllerFunctions.addToCart);
@@ -20,6 +18,8 @@ router.post("/clearCart", controllerFunctions.clearCart);
 router.post("/login", controllerFunctions.login);
 router.post("/signup", controllerFunctions.signup);
 router.post("/logout", controllerFunctions.logout);
+router.post("/editUserDetails", controllerFunctions.editUserDetails);
+router.post("/deleteUser", controllerFunctions.deleteUser);
 
 //exporting
 module.exports = router;
