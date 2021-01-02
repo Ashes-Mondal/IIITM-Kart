@@ -21,10 +21,7 @@ router.post("/signup", controllerFunctions.signup);
 router.post("/logout", controllerFunctions.logout);
 router.post("/editUserDetails", controllerFunctions.editUserDetails);
 router.post("/deleteUser", controllerFunctions.deleteUser);
-<<<<<<< HEAD
-=======
-router.post("/search",api.search);
->>>>>>> 96e7e863e5679a08c81e40b59e8ead0e335b4dc9
+router.post("/search", api.search);
 
 //exporting
 module.exports = router;
