@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import { Authentication, User } from "../App";
 
 const Card = (props) => {
-  const { isAuth } = useContext(Authentication);
+  const history = useHistory();
+  const { isAuth , setIsAuth} = useContext(Authentication);
   const { user } = useContext(User);
   const { product, cart, setCart } = props;
   const { itemName, _id: id, description, cost, imageURL, rating } = product;
@@ -30,12 +31,13 @@ const Card = (props) => {
       body: JSON.stringify({ userId: user._id, itemId: id }),
     };
     try {
-      const response = await (await fetch("/addToCart", requestOptions)).json();
-      if (response) {
+      const result = await (await fetch("/addToCart", requestOptions)).json();
+      if (result.response) {
         setCart(newCart);
         setButtonState(true);
       } else {
-        alert("Could not add to cart");
+        setIsAuth(false);
+        history.push("/login");
       }
     } catch (error) {
       console.log("ERROR:", error);

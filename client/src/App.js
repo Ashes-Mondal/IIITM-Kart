@@ -5,7 +5,12 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
@@ -34,14 +39,17 @@ const App = () => {
     email: "",
     phone: "",
   });
+  const [admin, setAdmin] = useState(false);
   //side effect when page first time rendered
   useEffect(() => {
     const fetchItems_fetchUser = async () => {
-      //fetching item list from the server side and setting in itemList state
-      const listOfItems = await (await fetch("/fetchItems")).json();
-      dispatch({ type: "setItemList", payload: listOfItems });
       //fetching user data from the server side if any
       const userData = await (await fetch("/getUserDetails")).json();
+      console.log("userData:", userData);
+      //if the user is admin setAdmin(true)
+      if (userData.admin === true) {
+        setAdmin(true);
+      }
       //if response is true then user is logged in
       if (userData.response === true) {
         //accordingly setting the states
@@ -49,50 +57,70 @@ const App = () => {
         setUser(userData);
         setCart(userData.userCart);
       }
+      //fetching item list from the server side and setting in itemList state
+      const listOfItems = await (await fetch("/fetchItems")).json();
+      dispatch({ type: "setItemList", payload: listOfItems });
     };
     fetchItems_fetchUser();
-  }, []);
+  }, [admin]);
+  const userComponents = () => {
+    return (
+      <>
+        <Navbar cart={cart} />
+        <Switch>
+        <Redirect exact from="/admin" to="/login" />
+          <Route exact path="/">
+            <HomePage itemList={itemList} cart={cart} setCart={setCart} />
+          </Route>
+          <Route exact path="/user">
+            <UserDetails user={user} setUser={setUser} setCart={setCart} />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+          <Route exact path="/cart">
+            <ShoppingCart
+              cart={cart}
+              setCart={setCart}
+              user={user}
+              setUser={setUser}
+            />
+          </Route>
+          <Route path="*">
+            <Error />
+          </Route>
+        </Switch>
+      </>
+    );
+  };
 
+  const adminComponents = () => {
+    return (
+      <>
+        <Switch>
+        <Redirect exact from="/login" to="/admin" />
+          <Redirect exact from="/" to="/admin" />
+          <Route exact path="/admin">
+            <Admin />
+          </Route>
+          <Route path="*">
+            <Error />
+          </Route>
+        </Switch>
+      </>
+    );
+  };
   return (
     <Router>
-      <Item.Provider value={{ setItemList: dispatch,itemList:itemList }}>
+      <Item.Provider value={{ setItemList: dispatch, itemList: itemList }}>
         <User.Provider value={{ user: user, setUser: setUser }}>
           <Authentication.Provider
             value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
           >
-            <Navbar cart={cart} />
-            <Switch>
-              <Route exact path="/admin">
-                <Admin  />
-              </Route>
-              <Route exact path="/">
-                <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-              </Route>
-
-              <Route exact path="/user">
-                <UserDetails user={user} setUser={setUser} />
-              </Route>
-
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-
-              <Route exact path="/cart">
-                <ShoppingCart
-                  cart={cart}
-                  setCart={setCart}
-                  user={user}
-                  setUser={setUser}
-                />
-              </Route>
-
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+            {admin ? adminComponents() : userComponents()}
           </Authentication.Provider>
         </User.Provider>
       </Item.Provider>

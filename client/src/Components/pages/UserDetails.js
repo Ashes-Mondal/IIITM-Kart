@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-// import { User } from "../../App";
+import React, { useState,useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Authentication } from "../../App";
 
-function UserDetails({ user, setUser }) {
-  // const { user } = useContext(User);
-  // console.log("user:", user);
+function UserDetails({ user, setUser ,setCart}) {
+  const { setIsAuth } = useContext(Authentication);
+  const history = useHistory();
   const [editable, setEditable] = useState(false);
-  // const [userInfo, setUserInfo] = useState(user);
+
 
   const updateUser = async () => {
-    console.log("Updating User...");
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,7 +23,12 @@ function UserDetails({ user, setUser }) {
     const result = await (
       await fetch("/editUserDetails", requestOptions)
     ).json();
-    console.log("response:", result.response);
+    if(result.response === false){
+      alert("Could not update!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
   };
   return (
     <>
