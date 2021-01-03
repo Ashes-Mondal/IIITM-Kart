@@ -14,7 +14,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id }),
+      body: JSON.stringify({}),
     };
     const result = await (await fetch("/clearCart", requestOptions)).json();
     console.log("result:", result);
@@ -33,7 +33,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty + 1,
       }),
@@ -62,7 +61,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty - 1,
       }),
@@ -91,7 +89,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: productDetail.item._id,
       }),
     };
@@ -114,7 +111,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         userCart: cart,
         userOrders: user.orders,
       }),

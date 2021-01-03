@@ -13,7 +13,6 @@ function UserDetails({ user, setUser ,setCart}) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         firstName: user.name.firstName,
         lastName: user.name.lastName,
         phone: user.phone,

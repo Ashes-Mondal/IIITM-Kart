@@ -7,7 +7,6 @@ import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
 import {
   BrowserRouter as Router,
-  Redirect,
   Route,
   Switch,
 } from "react-router-dom";
@@ -63,12 +62,23 @@ const App = () => {
     };
     fetchItems_fetchUser();
   }, [admin]);
+
+
+  const adminComponents = () => {
+      return (
+        <>
+          <Route exact path="/admin">
+              <Admin />
+            </Route>
+        </>
+      );
+  };
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} />
+        <Navbar cart={cart} admin={admin}/>
         <Switch>
-        <Redirect exact from="/admin" to="/login" />
+        
           <Route exact path="/">
             <HomePage itemList={itemList} cart={cart} setCart={setCart} />
           </Route>
@@ -89,6 +99,7 @@ const App = () => {
               setUser={setUser}
             />
           </Route>
+          {admin?adminComponents():null}
           <Route path="*">
             <Error />
           </Route>
@@ -97,22 +108,6 @@ const App = () => {
     );
   };
 
-  const adminComponents = () => {
-    return (
-      <>
-        <Switch>
-        <Redirect exact from="/login" to="/admin" />
-          <Redirect exact from="/" to="/admin" />
-          <Route exact path="/admin">
-            <Admin />
-          </Route>
-          <Route path="*">
-            <Error />
-          </Route>
-        </Switch>
-      </>
-    );
-  };
   return (
     <Router>
       <Item.Provider value={{ setItemList: dispatch, itemList: itemList }}>
@@ -120,7 +115,7 @@ const App = () => {
           <Authentication.Provider
             value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
           >
-            {admin ? adminComponents() : userComponents()}
+            {userComponents()}
           </Authentication.Provider>
         </User.Provider>
       </Item.Provider>

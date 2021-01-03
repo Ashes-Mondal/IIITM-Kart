@@ -28,7 +28,7 @@ const Card = (props) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id, itemId: id }),
+      body: JSON.stringify({ itemId: id }),
     };
     try {
       const result = await (await fetch("/addToCart", requestOptions)).json();
