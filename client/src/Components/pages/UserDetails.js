@@ -25,6 +25,51 @@ function UserDetails({ user, setUser }) {
     ).json();
     console.log("response:", result.response);
   };
+
+  const clearOrders = async () => {
+    console.log("Clearing Orders...");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user._id,
+      }),
+    };
+    const result = await (await fetch("/clearOrders", requestOptions)).json();
+    console.log("response:", result.response);
+    if (result.response) {
+      setUser({
+        ...user,
+        orders: [],
+      });
+      console.log(user);
+    }
+  };
+
+  const cancelOrder = async (orderId) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user._id,
+        orderId: orderId,
+      }),
+    };
+    const result = await (await fetch("/cancelOrder", requestOptions)).json();
+    console.log("response:", result.response);
+    if (result.response) {
+      let ordersList = user.orders;
+      ordersList = ordersList.filter((orderElement) => {
+        if (orderElement._id !== orderId) return orderElement;
+      });
+
+      setUser({
+        ...user,
+        orders: ordersList,
+      });
+      console.log(user);
+    }
+  };
   return (
     <>
       <div className="jumbotron container">
@@ -125,26 +170,34 @@ function UserDetails({ user, setUser }) {
           {user.orders
             ? user.orders.map((element, index) => {
                 return (
-                  <>
-                    <h3>Order #{index}</h3>
-                    <p>
-                      Date Of Order : {element.dateOfOrder.toLocaleString()}
-                    </p>
-                    {element.order.map((item) => {
+                  <div key={index}>
+                    <h3>
+                      Order #{index + 1}
+                      <button
+                        onClick={() => cancelOrder(user.orders[index]._id)}
+                        className="btn btn-warning ml-3"
+                      >
+                        Cancel Order
+                      </button>
+                    </h3>
+                    <p>Date Of Order : {element.dateOfOrder.toString()}</p>
+                    {element.order.map((item, i) => {
                       return (
-                        <>
-                          <li>
-                            Item Name: {item.item.itemName}, Cost:{" "}
-                            {item.item.cost} Qty:{item.Qty}
-                          </li>
-                        </>
+                        <li key={i}>
+                          Item Name: {item.item.itemName}, Cost:{" "}
+                          {item.item.cost} Qty:{item.Qty}
+                        </li>
                       );
                     })}
-                  </>
+                  </div>
                 );
               })
             : []}
         </ul>
+
+        <button onClick={() => clearOrders()} className="btn btn-danger">
+          Clear Order History
+        </button>
       </div>
     </>
   );

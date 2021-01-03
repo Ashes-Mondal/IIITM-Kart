@@ -109,13 +109,20 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     };
     const result = await (await fetch("/addOrder", requestOptions)).json();
     console.log("result:", result);
-    let tempCart = cart;
     if (result.response) {
       setUser({
         ...user,
-        orders: [...user.orders, { order: tempCart, dateOfOrder: new Date() }],
+        orders: [
+          ...user.orders,
+          {
+            order: JSON.parse(JSON.stringify(cart)),
+            dateOfOrder: new Date().toString(),
+          },
+        ],
       });
-      console.log(user);
+      console.log("userAddedOrder:", user);
+      setCart([]);
+      console.log("userAddedOrder after clearing cart:", user);
     }
   };
 

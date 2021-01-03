@@ -22,6 +22,8 @@ router.post("/logout", controllerFunctions.logout);
 router.post("/editUserDetails", controllerFunctions.editUserDetails);
 router.post("/deleteUser", controllerFunctions.deleteUser);
 router.post("/addOrder", controllerFunctions.addOrder);
+router.post("/clearOrders", controllerFunctions.clearOrders);
+router.post("/cancelOrder", controllerFunctions.cancelOrder);
 router.post("/search", api.search);
 
 //exporting

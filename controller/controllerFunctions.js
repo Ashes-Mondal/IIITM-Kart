@@ -234,8 +234,53 @@ exports.addOrder = async (req, res) => {
     {
       orders: [
         ...req.body.userOrders,
-        { order: req.body.userCart, dateOfOrder: new Date() },
+        {
+          _id: new mongoose.Types.ObjectId(),
+          order: req.body.userCart,
+          dateOfOrder: new Date().toString(),
+        },
       ],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+
+exports.clearOrders = async (req, res) => {
+  console.log("Emptying orders list...");
+  await UserDetail.findByIdAndUpdate(
+    req.body.userId,
+    {
+      orders: [],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+
+exports.cancelOrder = async (req, res) => {
+  const userId = req.body.userId;
+  const orderId = req.body.orderId;
+  console.log("cancelling order...", orderId);
+  const userDetails = await UserDetail.findById(userId).exec();
+  let ordersList = userDetails.orders;
+  ordersList = ordersList.filter((orderElement) => {
+    if (orderElement._id != orderId) return orderElement;
+  });
+  console.log("Orders List: ", ordersList);
+
+  await UserDetail.findByIdAndUpdate(
+    userId,
+    {
+      orders: ordersList,
     },
     (err) => {
       if (err) res.send({ response: false, error: err });
