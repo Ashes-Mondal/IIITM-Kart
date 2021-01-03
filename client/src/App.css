@@ -26,6 +26,13 @@ h1 {
   position: relative;
 }
 
+.itemImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .float-container {
   border: 3px solid #fff;
   padding: 20px;
@@ -175,7 +182,7 @@ h1 {
   }
 }
 
-/********************************************** Login************************************/
+/**********************************************Login************************************/
 .login-form {
   position: relative;
   display: flex;

@@ -45,7 +45,7 @@ const Card = (props) => {
   return (
     <>
       <div className="card shadow bg-white rounded ">
-        <img className=" " alt={itemName} src={imageURL} />
+        <img className="itemImg" alt={itemName} src={imageURL} />
         <div className="justify-content-center">
           <h2>{product.itemName}</h2>
           <p>{description}</p>

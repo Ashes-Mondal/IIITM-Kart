@@ -115,7 +115,7 @@ function ShoppingCart({ cart, setCart }) {
               />
               <button className="btnShop">
                 <Link to="/" className="text-white">
-                  Shop Now
+                  Start Shopping Now
                 </Link>
               </button>
             </div>
