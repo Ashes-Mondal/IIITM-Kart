@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { User } from "../../App";
+import React from "react";
+// import { User } from "../../App";
 
-function ShoppingCart({ cart, setCart }) {
-  const { user } = useContext(User);
-  console.log("user:", user);
+function ShoppingCart({ cart, setCart, user, setUser }) {
+  // const { user } = useContext(User);
+  // console.log("user:", user);
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
   };
@@ -64,7 +64,7 @@ function ShoppingCart({ cart, setCart }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product.item._id === Product.item._id && product.Qty > 0) {
+        if (product.item._id === Product.item._id && product.Qty > 1) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -93,6 +93,29 @@ function ShoppingCart({ cart, setCart }) {
       setCart(cart.filter((product) => product !== productDetail));
     } else {
       alert("Could not remove from cart!");
+    }
+  };
+
+  const addOrder = async () => {
+    console.log("Adding order...");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user._id,
+        userCart: cart,
+        userOrders: user.orders,
+      }),
+    };
+    const result = await (await fetch("/addOrder", requestOptions)).json();
+    console.log("result:", result);
+    let tempCart = cart;
+    if (result.response) {
+      setUser({
+        ...user,
+        orders: [...user.orders, { order: tempCart, dateOfOrder: new Date() }],
+      });
+      console.log(user);
     }
   };
 
@@ -151,7 +174,7 @@ function ShoppingCart({ cart, setCart }) {
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
           <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
-          <button className="btnProceed">
+          <button className="btnProceed" onClick={() => addOrder()}>
             <h5>Proceed To Checkout</h5>
           </button>
         </div>

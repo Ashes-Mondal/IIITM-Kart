@@ -223,3 +223,25 @@ exports.addItem = async (req, res) => {
     res.send(`Error occurred ${error}`);
   }
 };
+
+/***************************************ORDER*****************************/
+
+exports.addOrder = async (req, res) => {
+  const userId = req.body.userId;
+  await UserDetail.findByIdAndUpdate(
+    req.body.userId,
+
+    {
+      orders: [
+        ...req.body.userOrders,
+        { order: req.body.userCart, dateOfOrder: new Date() },
+      ],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
