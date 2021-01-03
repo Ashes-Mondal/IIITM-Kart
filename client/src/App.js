@@ -62,8 +62,8 @@ const App = () => {
           >
             <Navbar cart={cart} />
             <Switch>
-              <Route exact path="/">
-                <Admin exact path="/admin" />
+              <Route exact path="/admin">
+                <Admin  />
               </Route>
               <Route exact path="/">
                 <HomePage itemList={itemList} cart={cart} setCart={setCart} />
