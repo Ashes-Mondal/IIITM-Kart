@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { User } from "../../App";
 
 function ShoppingCart({ cart, setCart }) {
@@ -100,10 +101,25 @@ function ShoppingCart({ cart, setCart }) {
     <>
       <div className="product flex-container">
         <div className="flex-child1 shadow bg-white rounded">
-          <h1>CART</h1>
-          <button className="btn btn-danger" onClick={clearCart}>
-            Clear Cart
-          </button>
+          <h1>My Cart</h1>
+          {cart.length ? (
+            <button className="btn btn-danger" onClick={clearCart}>
+              Clear Cart
+            </button>
+          ) : (
+            <div>
+              <img
+                className="cartEmpty"
+                src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
+                alt="Cart is empty"
+              />
+              <button className="btnShop">
+                <Link to="/" className="text-white">
+                  Shop Now
+                </Link>
+              </button>
+            </div>
+          )}
           {cart.map((productDetail, index) => {
             const { item, Qty } = productDetail;
             return (
@@ -150,10 +166,28 @@ function ShoppingCart({ cart, setCart }) {
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
+          <br />
+          <h5>
+            <b>Item</b>
+            <span className="side">
+              <b>Qty x Cost(Rs.)</b>
+            </span>
+          </h5>
+          {cart.map((productDetail, index) => {
+            const { item, Qty } = productDetail;
+            return (
+              <div>
+                <h6>
+                  {item.itemName}
+                  <span className="side">
+                    {Qty} x {item.cost}
+                  </span>
+                </h6>
+              </div>
+            );
+          })}
           <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
-          <button className="btnProceed">
-            <h5>Proceed To Checkout</h5>
-          </button>
+          <button className="btnProceed">Proceed To Checkout</button>
         </div>
       </div>
     </>
