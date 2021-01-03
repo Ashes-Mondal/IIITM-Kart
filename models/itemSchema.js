@@ -1,7 +1,6 @@
 //Dependencies
 const mongoose = require("mongoose");
 
-
 // itemDetailSchema
 const itemDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -34,6 +33,4 @@ const itemDetailSchema = mongoose.Schema({
 
 const ItemDetail = mongoose.model("ItemDetail", itemDetailSchema);
 
-module.exports  = {ItemDetail:ItemDetail,itemDetailSchema:itemDetailSchema} ;
-
-
+module.exports = { ItemDetail: ItemDetail, itemDetailSchema: itemDetailSchema };
