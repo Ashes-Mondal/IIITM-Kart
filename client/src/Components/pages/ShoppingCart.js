@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import { User } from "../../App";
+=======
+import { useHistory } from "react-router-dom";
+import { Authentication } from "../../App";
+>>>>>>> be59cffe9dfea4b5ce8b0699be510766dd4b9c19
 
-function ShoppingCart({ cart, setCart }) {
-  const { user } = useContext(User);
-  console.log("user:", user);
+function ShoppingCart({ cart, setCart, user, setUser }) {
+  const { setIsAuth } = useContext(Authentication);
+  const history = useHistory();
   const getTotalSum = () => {
     let total = cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
     return total;
@@ -15,7 +20,7 @@ function ShoppingCart({ cart, setCart }) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id }),
+      body: JSON.stringify({}),
     };
     const result = await (await fetch("/clearCart", requestOptions)).json();
     console.log("result:", result);
@@ -23,6 +28,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart([]);
     } else {
       alert("Could not clear the cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
   // increase qty of item by 1
@@ -31,7 +39,6 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty + 1,
       }),
@@ -48,6 +55,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart(tempCart);
     } else {
       alert("Could not increase the Qty!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
 
@@ -57,7 +67,6 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty - 1,
       }),
@@ -66,7 +75,7 @@ function ShoppingCart({ cart, setCart }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product.item._id === Product.item._id && product.Qty > 0) {
+        if (product.item._id === Product.item._id && product.Qty > 1) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -74,6 +83,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart(tempCart);
     } else {
       alert("Could not decrease the Qty!");
+      setCart([]);
+      setIsAuth(false);
+      history.push("/login");
     }
   };
 
@@ -83,18 +95,46 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: productDetail.item._id,
       }),
     };
     const result = await (
       await fetch("/deleteFromCart", requestOptions)
     ).json();
-    console.log("result:", result);
     if (result.response) {
       setCart(cart.filter((product) => product !== productDetail));
     } else {
       alert("Could not remove from cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
+  };
+
+  const addOrder = async () => {
+    console.log("Adding order...");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userCart: cart,
+        userOrders: user.orders,
+      }),
+    };
+    const result = await (await fetch("/addOrder", requestOptions)).json();
+    if(result.response === false){
+      alert("Could not proceed further!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
+    let tempCart = cart;
+    if (result.response) {
+      setUser({
+        ...user,
+        orders: [...user.orders, { order: tempCart, dateOfOrder: new Date() }],
+      });
+      console.log(user);
     }
   };
 
@@ -236,8 +276,13 @@ function ShoppingCart({ cart, setCart }) {
             );
           })}
           <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
+<<<<<<< HEAD
           <button className="btnProceed" onClick={proceedPayment}>
             Proceed To Checkout
+=======
+          <button className="btnProceed" onClick={() => addOrder()}>
+            <h5>Proceed To Checkout</h5>
+>>>>>>> be59cffe9dfea4b5ce8b0699be510766dd4b9c19
           </button>
         </div>
       </div>

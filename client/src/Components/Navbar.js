@@ -16,7 +16,11 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
 });
+<<<<<<< HEAD
 function Navbar({ cart }) {
+=======
+function Navbar({ cart,admin }) {
+>>>>>>> be59cffe9dfea4b5ce8b0699be510766dd4b9c19
   const { isAuth } = useContext(Authentication);
   /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
@@ -52,6 +56,15 @@ function Navbar({ cart }) {
             </svg>
             <span className="m-3">User</span>
           </NavLink>
+          {admin?
+          <NavLink
+            className="navlink"
+            activeClassName="active-nav-link"
+            exact
+            to="/admin"
+          >
+            <span className="m-3">Admin</span>
+          </NavLink>:null}
           <form className="navlink" method="POST" action="/logout">
             <button className="btn btn-danger">Logout</button>
           </form>
@@ -141,13 +154,20 @@ function Navbar({ cart }) {
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
     };
     //Menu data and links
-    const headersData = isAuth
+    const headersData = admin
       ? [
           { label: "Home", href: "/" },
           { label: "Cart", href: "/cart" },
           { label: "User", href: "/user" },
+          { label: "Admin", href: "/admin" },
         ]
-      : [
+      : isAuth
+      ? [
+        { label: "Home", href: "/" },
+        { label: "Cart", href: "/cart" },
+        { label: "User", href: "/user" },
+        ]:
+        [
           { label: "Home", href: "/" },
           { label: "Cart", href: "/cart" },
           { label: "Login", href: "/login" },

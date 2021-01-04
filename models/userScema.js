@@ -5,7 +5,8 @@ const { itemDetailSchema } = require("./itemSchema");
 //userDetailSchema
 const userDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  name: {
+  admin:Boolean,
+    name: {
     firstName: {
       type: String,
       required: true,

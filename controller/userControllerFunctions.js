@@ -13,12 +13,6 @@ const razorpay = new Razorpay({
 
 //Controller Functions
 /****************************User functions***********************************/
-//FETCH ALL USERS
-exports.fetchAllUsers = async (req, res) => {
-  //Fetching data from database
-  const usersData = await UserDetail.find();
-  res.send(usersData);
-};
 //GET USER DETAILS
 exports.getUserDetails = async (req, res) => {
   //body details are obtained
@@ -28,6 +22,7 @@ exports.getUserDetails = async (req, res) => {
       //user details fetched from the database
       let userDetails = await UserDetail.findById(userId).exec();
       userDetails._doc["response"] = true;
+      userDetails._doc["admin"] = userDetails.admin;
       res.send(userDetails);
     } catch (err) {
       res.send({ response: false, error: err });
@@ -40,25 +35,29 @@ exports.getUserDetails = async (req, res) => {
 exports.editUserDetails = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  const phone = req.body.phone;
-  const email = req.body.email;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  if (userId) {
+    const phone = req.body.phone;
+    const email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
 
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    {
-      phone: phone,
-      email: email,
-      name: { firstName: firstName, lastName: lastName },
-    },
-    (err) => {
-      if (err) res.send({ response: false });
-      else {
-        res.send({ response: true });
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      {
+        phone: phone,
+        email: email,
+        name: { firstName: firstName, lastName: lastName },
+      },
+      (err) => {
+        if (err) res.send({ response: false });
+        else {
+          res.send({ response: true });
+        }
       }
-    }
-  );
+    );
+  } else {
+      res.send({ response: false,error:"Not logged in" });
+  }
 };
 //DELETE USER
 exports.deleteUser = async (req, res) => {
@@ -74,43 +73,55 @@ exports.deleteUser = async (req, res) => {
       res.send({ response: false, error: err });
     }
   } else {
-    res.send({ response: false, error: "not logged in" });
+    res.send({ response: false ,error:"Not logged in"});
   }
 };
 /************************** CART CRUD OPERATION **********************************/
 //ADD TO CART
 exports.addToCart = async (req, res) => {
   //body details are obtained
-  const userId = req.body.userId;
-  const itemId = req.body.itemId;
-  //item and user details fetched from the database
-  const itemDetails = await ItemDetail.findById(itemId).exec();
-  const userDetails = await UserDetail.findById(userId).exec();
-  //User cart details fetched
-  let userCart = userDetails.userCart;
-  //flag checks whether the item is there in cart or not,if not then added to the userCart
-  let flag = true;
-  userCart = userCart.map((itemElement) => {
-    if (itemElement.item._id == itemId) {
-      itemElement.item = itemDetails;
-      itemElement.Qty += 1;
-      flag = false;
-    }
-    return itemElement;
-  });
-  if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
-  //Finally the userCart is updated to the database
-  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
-    if (err) res.send({ response: false });
-    else {
-      res.send({ response: true });
-    }
-  });
+  const userId = req.session.userId;
+  if(userId===undefined){
+    res.send({ response: false,error:"Not logged in" });
+    return;
+  }
+    const itemId = req.body.itemId;
+    //item and user details fetched from the database
+    const itemDetails = await ItemDetail.findById(itemId).exec();
+    const userDetails = await UserDetail.findById(userId).exec();
+    //User cart details fetched
+    let userCart = userDetails.userCart;
+    //flag checks whether the item is there in cart or not,if not then added to the userCart
+    let flag = true;
+    userCart = userCart.map((itemElement) => {
+      if (itemElement.item._id == itemId) {
+        itemElement.item = itemDetails;
+        itemElement.Qty += 1;
+        flag = false;
+      }
+      return itemElement;
+    });
+    if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
+    //Finally the userCart is updated to the database
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      { userCart: userCart },
+      (err) => {
+        if (err) res.send({ response: false });
+        else {
+          res.send({ response: true });
+        }
+      }
+    );
 };
 //DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
   //body details are obtained
-  const userId = req.body.userId;
+  const userId = req.session.userId;
+  if(userId===undefined){
+    res.send({ response: false,error:"Not logged in" });
+    return;
+  }
   const itemId = req.body.itemId;
   //user details fetched from the database
   const userDetails = await UserDetail.findById(userId).exec();
@@ -131,7 +142,11 @@ exports.deleteFromCart = async (req, res) => {
 //UPDATE CART QTY
 exports.updateQty = async (req, res) => {
   //body details are obtained
-  const userId = req.body.userId;
+  const userId = req.session.userId;
+  if(userId===undefined){
+    res.send({ response: false,error:"Not logged in" });
+    return;
+  }
   const itemId = req.body.itemId;
   const itemQty = req.body.itemQty;
   //user details fetched from the database
@@ -155,8 +170,13 @@ exports.updateQty = async (req, res) => {
 };
 //CLEAR CART
 exports.clearCart = async (req, res) => {
+  const userId = req.session.userId;
+  if(userId===undefined){
+    res.send({ response: false,error:"Not logged in" });
+    return;
+  }
   await UserDetail.findByIdAndUpdate(
-    req.body.userId,
+    userId,
     { userCart: [] },
     (err) => {
       if (err) res.send({ response: false, error: err });
@@ -196,8 +216,8 @@ exports.goToPayment = async (req, res) => {
 //LOGIN
 exports.login = async (req, res) => {
   const { phone, password } = req.body;
-  const user = await UserDetail.findOne({ phone: phone }).exec();
 
+  const user = await UserDetail.findOne({ phone: phone }).exec();
   if (!user) {
     res.redirect("/login");
   }
@@ -220,6 +240,7 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
     address: req.body.address,
     password: hashedPassword,
+    admin:false
   };
   try {
     newUser = await new UserDetail(userData);
@@ -235,6 +256,7 @@ exports.logout = async (req, res) => {
   res.redirect("/");
 };
 /********************************Item funtions********************************/
+//Fetch ALL ITEMS
 exports.fetchItems = async (req, res) => {
   //Fetching data from database
   try {
@@ -244,15 +266,28 @@ exports.fetchItems = async (req, res) => {
     res.send({ response: false, error: err });
   }
 };
-exports.addItem = async (req, res) => {
-  const itemData = req.body;
-  itemData["_id"] = new mongoose.Types.ObjectId();
-  try {
-    newItem = await new ItemDetail(itemData);
-    await newItem.save();
-    res.send("Item details Sucessfully saved in Database");
-  } catch (error) {
-    console.log("Add Item error: ", error);
-    res.send(`Error occurred ${error}`);
+/***************************************ORDER*****************************/
+//ADD ORDER
+exports.addOrder = async (req, res) => {
+  const userId = req.session.userId;
+  if(userId===undefined){
+    res.send({ response: false,error:"Not logged in" });
+    return;
   }
+  await UserDetail.findByIdAndUpdate(
+    userId,
+
+    {
+      orders: [
+        ...req.body.userOrders,
+        { order: req.body.userCart, dateOfOrder: new Date() },
+      ],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
 };
