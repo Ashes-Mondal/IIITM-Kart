@@ -227,9 +227,8 @@ exports.addItem = async (req, res) => {
 /***************************************ORDER*****************************/
 
 exports.addOrder = async (req, res) => {
-  const userId = req.body.userId;
   await UserDetail.findByIdAndUpdate(
-    req.body.userId,
+    req.session.userId,
 
     {
       orders: [
@@ -253,7 +252,7 @@ exports.addOrder = async (req, res) => {
 exports.clearOrders = async (req, res) => {
   console.log("Emptying orders list...");
   await UserDetail.findByIdAndUpdate(
-    req.body.userId,
+    req.session.userId,
     {
       orders: [],
     },
@@ -267,7 +266,7 @@ exports.clearOrders = async (req, res) => {
 };
 
 exports.cancelOrder = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.session.userId;
   const orderId = req.body.orderId;
   console.log("cancelling order...", orderId);
   const userDetails = await UserDetail.findById(userId).exec();
