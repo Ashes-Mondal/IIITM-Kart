@@ -1,9 +1,10 @@
-import React from "react";
-// import { User } from "../../App";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Authentication } from "../../App";
 
 function ShoppingCart({ cart, setCart, user, setUser }) {
-  // const { user } = useContext(User);
-  // console.log("user:", user);
+  const { setIsAuth } = useContext(Authentication);
+  const history = useHistory();
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
   };
@@ -13,7 +14,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id }),
+      body: JSON.stringify({}),
     };
     const result = await (await fetch("/clearCart", requestOptions)).json();
     console.log("result:", result);
@@ -21,6 +22,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart([]);
     } else {
       alert("Could not clear the cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
   // increase qty of item by 1
@@ -29,7 +33,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty + 1,
       }),
@@ -46,6 +49,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart(tempCart);
     } else {
       alert("Could not increase the Qty!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
 
@@ -55,7 +61,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty - 1,
       }),
@@ -72,6 +77,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart(tempCart);
     } else {
       alert("Could not decrease the Qty!");
+      setCart([]);
+      setIsAuth(false);
+      history.push("/login");
     }
   };
 
@@ -81,18 +89,19 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: productDetail.item._id,
       }),
     };
     const result = await (
       await fetch("/deleteFromCart", requestOptions)
     ).json();
-    console.log("result:", result);
     if (result.response) {
       setCart(cart.filter((product) => product !== productDetail));
     } else {
       alert("Could not remove from cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
 
@@ -102,12 +111,18 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         userCart: cart,
         userOrders: user.orders,
       }),
     };
     const result = await (await fetch("/addOrder", requestOptions)).json();
+    if(result.response === false){
+      alert("Could not proceed further!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
+    let tempCart = cart;
     console.log("result:", result);
     if (result.response) {
       setUser({

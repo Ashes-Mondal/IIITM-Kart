@@ -9,14 +9,14 @@ import { Authentication } from "../App";
 const useStyles = makeStyles({
   root: {
     fontSize: "2rem",
-    justifyContent:"center",
+    justifyContent: "center",
   },
   MuiDrawer_paper: {
     width: "30%",
     justifyContent: "center",
   },
 });
-function Navbar({cart}) {
+function Navbar({ cart,admin }) {
   const { isAuth } = useContext(Authentication);
   /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
@@ -26,7 +26,7 @@ function Navbar({cart}) {
     mobileView: false,
     drawerOpen: false,
   });
-    //destructuring the state
+  //destructuring the state
   const { mobileView, drawerOpen } = state;
   //when in desktop size
   const displayDesktop = () => {
@@ -52,6 +52,15 @@ function Navbar({cart}) {
             </svg>
             <span className="m-3">User</span>
           </NavLink>
+          {admin?
+          <NavLink
+            className="navlink"
+            activeClassName="active-nav-link"
+            exact
+            to="/admin"
+          >
+            <span className="m-3">Admin</span>
+          </NavLink>:null}
           <form className="navlink" method="POST" action="/logout">
             <button className="btn btn-danger">Logout</button>
           </form>
@@ -141,13 +150,20 @@ function Navbar({cart}) {
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
     };
     //Menu data and links
-    const headersData = isAuth
+    const headersData = admin
       ? [
           { label: "Home", href: "/" },
           { label: "Cart", href: "/cart" },
           { label: "User", href: "/user" },
+          { label: "Admin", href: "/admin" },
         ]
-      : [
+      : isAuth
+      ? [
+        { label: "Home", href: "/" },
+        { label: "Cart", href: "/cart" },
+        { label: "User", href: "/user" },
+        ]:
+        [
           { label: "Home", href: "/" },
           { label: "Cart", href: "/cart" },
           { label: "Login", href: "/login" },
