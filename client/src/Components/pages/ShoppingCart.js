@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
 
 function ShoppingCart({ cart, setCart, user, setUser }) {
   const { setIsAuth } = useContext(Authentication);
+  const [orderHistory, setOrderHistory] = useState(false);
   const history = useHistory();
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
@@ -116,13 +117,12 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       }),
     };
     const result = await (await fetch("/addOrder", requestOptions)).json();
-    if(result.response === false){
+    if (result.response === false) {
       alert("Could not proceed further!");
       setIsAuth(false);
       setCart([]);
       history.push("/login");
     }
-    let tempCart = cart;
     console.log("result:", result);
     if (result.response) {
       setUser({
@@ -136,6 +136,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
           },
         ],
       });
+      clearCart();
+      setOrderHistory(true);
     }
   };
 
@@ -190,6 +192,16 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
               </div>
             );
           })}
+          {orderHistory ? (
+            <button className="btn btn-warning ml-3">
+              {" "}
+              <Link to="/user" className="btn text-white">
+                Order History
+              </Link>{" "}
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>

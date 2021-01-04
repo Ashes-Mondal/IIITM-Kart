@@ -279,7 +279,7 @@ exports.cancelOrder = async (req, res) => {
   let ordersList = userDetails.orders;
   console.log("server before cancelling order:", ordersList);
   ordersList = ordersList.filter((orderElement) => {
-    if (orderElement._id !== orderId) return orderElement;
+    if (orderElement._id != orderId) return orderElement;
   });
 
   await UserDetail.findByIdAndUpdate(
