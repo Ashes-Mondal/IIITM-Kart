@@ -256,21 +256,6 @@ exports.addOrder = async (req, res) => {
   );
 };
 
-exports.clearOrders = async (req, res) => {
-  await UserDetail.findByIdAndUpdate(
-    req.body.userId,
-    {
-      orders: [],
-    },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        res.send({ response: true });
-      }
-    }
-  );
-};
-
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
   const orderId = req.body.orderId;

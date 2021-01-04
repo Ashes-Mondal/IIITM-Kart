@@ -29,26 +29,6 @@ function UserDetails({ user, setUser, setCart }) {
     }
   };
 
-  const clearOrders = async () => {
-    console.log("Clearing Orders...");
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: user._id,
-      }),
-    };
-    const result = await (await fetch("/clearOrders", requestOptions)).json();
-    console.log("response:", result.response);
-    if (result.response) {
-      setUser({
-        ...user,
-        orders: [],
-      });
-      console.log(user);
-    }
-  };
-
   const cancelOrder = async (orderId) => {
     const requestOptions = {
       method: "POST",
@@ -104,10 +84,6 @@ function UserDetails({ user, setUser, setCart }) {
                 })
               : []}
           </ul>
-
-          <button onClick={() => clearOrders()} className="btn btn-danger">
-            Clear Order History
-          </button>
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>User Details</h1>
