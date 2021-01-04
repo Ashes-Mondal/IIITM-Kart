@@ -244,6 +244,7 @@ exports.addOrder = async (req, res) => {
           _id: orderId,
           order: req.body.userCart,
           dateOfOrder: new Date().toString(),
+          totalCost: req.body.totalCost,
         },
       ],
     },
@@ -258,6 +259,10 @@ exports.addOrder = async (req, res) => {
 
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
   const orderId = req.body.orderId;
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;

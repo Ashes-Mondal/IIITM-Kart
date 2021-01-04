@@ -1,3 +1,4 @@
+import { useScrollTrigger } from "@material-ui/core";
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
@@ -48,44 +49,94 @@ function UserDetails({ user, setUser, setCart }) {
         ...user,
         orders: ordersList,
       });
+    } else {
+      alert("Could not cancel order!");
+      history.push("/login");
     }
   };
   return (
     <>
-      <div className="product flex-container">
-        <div className="flex-child1 shadow bg-white rounded">
+      <div className="product flex-container userbackground">
+        <div className="flex-child1 rounded userbackground">
           <h1>Your Orders</h1>
-          <ul>
-            {user.orders
-              ? user.orders.map((element, index) => {
+          {user.orders !== undefined && user.orders.length > 0 ? (
+            <div>
+              {user.orders
+                .slice(0)
+                .reverse()
+                .map((element, index) => {
                   return (
-                    <div key={index}>
+                    <div key={index} className="orderContainer">
                       <h3>
-                        Order #{index + 1}
+                        Order No. {index + 1}
                         <button
-                          onClick={() => cancelOrder(user.orders[index]._id)}
-                          className="btn btn-warning ml-3"
+                          onClick={() =>
+                            cancelOrder(
+                              user.orders[user.orders.length - index - 1]._id
+                            )
+                          }
+                          className="cancelOrderButton mr-5 float-right"
                         >
                           Cancel Order
                         </button>
                       </h3>
-                      <p>Date Of Order : {element.dateOfOrder.toString()}</p>
-                      <p>Order ID: {element._id}</p>
+                      <p>
+                        <b>Date Of Order : </b>
+                        {element.dateOfOrder
+                          .toString()
+                          .substring(
+                            0,
+                            element.dateOfOrder.toString().length - 30
+                          )}
+                      </p>
+                      <p>
+                        <b>Order ID : </b>
+                        {element._id}
+                      </p>
                       {element.order.map((item, i) => {
                         return (
-                          <li key={i}>
-                            Item Name: {item.item.itemName}, Cost:{" "}
-                            {item.item.cost} Qty:{item.Qty}
-                          </li>
+                          <div
+                            className="ordersList flex-container p-2"
+                            key={i}
+                          >
+                            <div className="flex-child5">
+                              <img
+                                src={item.item.imageURL}
+                                alt="item image"
+                                className="orderImgs"
+                              />
+                            </div>
+                            <div className="flex-child6">
+                              <b>{item.item.itemName}</b>, Cost :{" "}
+                              {item.item.cost}, Qty : {item.Qty}
+                              <br />
+                              <span className="text-muted">
+                                {item.item.description}
+                              </span>
+                            </div>
+                          </div>
                         );
                       })}
+                      <b>Total Cost:</b>
+                      {user.orders[user.orders.length - index - 1].totalCost}
                     </div>
                   );
-                })
-              : []}
-          </ul>
+                })}
+            </div>
+          ) : (
+            <>
+              <img
+                src="https://www.mageworx.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/6/26_extended_orders_grid.png"
+                alt="Order list empty"
+                className="mx-auto d-block"
+              />
+              <p className="text-center text-muted lead">
+                Looks like your order list is empty.
+              </p>
+            </>
+          )}
         </div>
-        <div className="flex-child2 shadow bg-white rounded sticky-top">
+        <div className="flex-child2 userdetails sticky-top">
           <h1>User Details</h1>
           <br />
           <form className="userform">

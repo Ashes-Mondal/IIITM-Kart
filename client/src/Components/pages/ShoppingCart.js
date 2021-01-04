@@ -114,6 +114,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       body: JSON.stringify({
         userCart: cart,
         userOrders: user.orders,
+        totalCost: getTotalSum(),
       }),
     };
     const result = await (await fetch("/addOrder", requestOptions)).json();
@@ -133,6 +134,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
             _id: result.orderId,
             order: JSON.parse(JSON.stringify(cart)),
             dateOfOrder: new Date().toString(),
+            totalCost: getTotalSum(),
           },
         ],
       });
