@@ -121,9 +121,7 @@ function ShoppingCart({ cart, setCart }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id }),
     };
-    const data = await (await fetch("/goToPayment", requestOptions)).then((t) =>
-      t.json()
-    );
+    const data = await (await fetch("/goToPayment", requestOptions)).json();
 
     const options = {
       key: "rzp_test_qCpeI02RHqv1vw", //secret: M6erSikCTvv58QMedTV6Ulth

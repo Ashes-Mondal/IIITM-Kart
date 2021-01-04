@@ -1,7 +1,7 @@
 //Dependencies
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const razorpay = require("razorpay");
+const Razorpay = require("razorpay");
 
 //Files
 const { ItemDetail } = require("../models/itemSchema");
