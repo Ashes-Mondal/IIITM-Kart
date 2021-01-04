@@ -5,11 +5,7 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
@@ -50,7 +46,7 @@ const App = () => {
         setAdmin(true);
       }
       //if response is true then user is logged in
-      if (userData.response !== false) {
+      if (userData.response === true) {
         //accordingly setting the states
         setIsAuth(true);
         setUser(userData);
@@ -63,22 +59,20 @@ const App = () => {
     fetchItems_fetchUser();
   }, [admin]);
 
-
   const adminComponents = () => {
-      return (
-        <>
-          <Route exact path="/admin">
-              <Admin />
-            </Route>
-        </>
-      );
+    return (
+      <>
+        <Route exact path="/admin">
+          <Admin />
+        </Route>
+      </>
+    );
   };
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} admin={admin}/>
+        <Navbar cart={cart} admin={admin} />
         <Switch>
-        
           <Route exact path="/">
             <HomePage itemList={itemList} cart={cart} setCart={setCart} />
           </Route>
@@ -99,7 +93,7 @@ const App = () => {
               setUser={setUser}
             />
           </Route>
-          {admin?adminComponents():null}
+          {admin ? adminComponents() : null}
           <Route path="*">
             <Error />
           </Route>
@@ -110,44 +104,12 @@ const App = () => {
 
   return (
     <Router>
-<<<<<<< HEAD
-      <Item.Provider value={{ setItemList: dispatch }}>
-=======
       <Item.Provider value={{ setItemList: dispatch, itemList: itemList }}>
->>>>>>> be59cffe9dfea4b5ce8b0699be510766dd4b9c19
         <User.Provider value={{ user: user, setUser: setUser }}>
           <Authentication.Provider
             value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
           >
-<<<<<<< HEAD
-            <Navbar cart={cart} />
-            <Switch>
-              <Route exact path="/">
-                <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-              </Route>
-
-              <Route exact path="/user">
-                <UserDetails user={user} setUser={setUser} />
-              </Route>
-
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-
-              <Route exact path="/cart">
-                <ShoppingCart cart={cart} setCart={setCart} />
-              </Route>
-
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
-=======
             {userComponents()}
->>>>>>> be59cffe9dfea4b5ce8b0699be510766dd4b9c19
           </Authentication.Provider>
         </User.Provider>
       </Item.Provider>
