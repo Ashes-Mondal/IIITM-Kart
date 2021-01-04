@@ -51,23 +51,23 @@ function UserDetails({ user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         orderId: orderId,
       }),
     };
+    console.log("order ID:", orderId);
+    console.log("client before cancelling order:", user.orders);
     const result = await (await fetch("/cancelOrder", requestOptions)).json();
     console.log("response:", result.response);
     if (result.response) {
       let ordersList = user.orders;
       ordersList = ordersList.filter((orderElement) => {
-        if (orderElement._id != orderId) return orderElement;
+        if (orderElement._id !== orderId) return orderElement;
       });
-
       setUser({
         ...user,
         orders: ordersList,
       });
-      console.log(user);
+      console.log("client after cancelling order:", user.orders);
     }
   };
   return (
@@ -181,6 +181,7 @@ function UserDetails({ user, setUser }) {
                       </button>
                     </h3>
                     <p>Date Of Order : {element.dateOfOrder.toString()}</p>
+                    <p>Order ID: {element._id}</p>
                     {element.order.map((item, i) => {
                       return (
                         <li key={i}>

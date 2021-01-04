@@ -227,6 +227,7 @@ exports.addItem = async (req, res) => {
 /***************************************ORDER*****************************/
 
 exports.addOrder = async (req, res) => {
+  orderId = new mongoose.Types.ObjectId();
   await UserDetail.findByIdAndUpdate(
     req.session.userId,
 
@@ -234,7 +235,7 @@ exports.addOrder = async (req, res) => {
       orders: [
         ...req.body.userOrders,
         {
-          _id: new mongoose.Types.ObjectId(),
+          _id: orderId,
           order: req.body.userCart,
           dateOfOrder: new Date().toString(),
         },
@@ -243,7 +244,7 @@ exports.addOrder = async (req, res) => {
     (err) => {
       if (err) res.send({ response: false, error: err });
       else {
-        res.send({ response: true });
+        res.send({ response: true, orderId: orderId });
       }
     }
   );
@@ -268,13 +269,12 @@ exports.clearOrders = async (req, res) => {
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
   const orderId = req.body.orderId;
-  console.log("cancelling order...", orderId);
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
+  console.log("server before cancelling order:", ordersList);
   ordersList = ordersList.filter((orderElement) => {
     if (orderElement._id != orderId) return orderElement;
   });
-  console.log("Orders List: ", ordersList);
 
   await UserDetail.findByIdAndUpdate(
     userId,
@@ -285,6 +285,7 @@ exports.cancelOrder = async (req, res) => {
       if (err) res.send({ response: false, error: err });
       else {
         res.send({ response: true });
+        console.log("server after cancelling order:", ordersList);
       }
     }
   );

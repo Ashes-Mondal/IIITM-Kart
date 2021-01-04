@@ -115,6 +115,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
         orders: [
           ...user.orders,
           {
+            _id: result.orderId,
             order: JSON.parse(JSON.stringify(cart)),
             dateOfOrder: new Date().toString(),
           },
