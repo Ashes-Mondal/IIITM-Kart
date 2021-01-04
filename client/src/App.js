@@ -5,11 +5,7 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
@@ -63,22 +59,20 @@ const App = () => {
     fetchItems_fetchUser();
   }, [admin]);
 
-
   const adminComponents = () => {
-      return (
-        <>
-          <Route exact path="/admin">
-              <Admin />
-            </Route>
-        </>
-      );
+    return (
+      <>
+        <Route exact path="/admin">
+          <Admin />
+        </Route>
+      </>
+    );
   };
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} admin={admin}/>
+        <Navbar user={user} cart={cart} admin={admin} />
         <Switch>
-        
           <Route exact path="/">
             <HomePage itemList={itemList} cart={cart} setCart={setCart} />
           </Route>
@@ -99,7 +93,7 @@ const App = () => {
               setUser={setUser}
             />
           </Route>
-          {admin?adminComponents():null}
+          {admin ? adminComponents() : null}
           <Route path="*">
             <Error />
           </Route>

@@ -257,7 +257,6 @@ exports.addOrder = async (req, res) => {
 };
 
 exports.clearOrders = async (req, res) => {
-  console.log("Emptying orders list...");
   await UserDetail.findByIdAndUpdate(
     req.body.userId,
     {
@@ -277,7 +276,6 @@ exports.cancelOrder = async (req, res) => {
   const orderId = req.body.orderId;
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
-  console.log("server before cancelling order:", ordersList);
   ordersList = ordersList.filter((orderElement) => {
     if (orderElement._id != orderId) return orderElement;
   });
@@ -291,7 +289,6 @@ exports.cancelOrder = async (req, res) => {
       if (err) res.send({ response: false, error: err });
       else {
         res.send({ response: true });
-        console.log("server after cancelling order:", ordersList);
       }
     }
   );
