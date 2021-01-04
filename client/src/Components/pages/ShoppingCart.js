@@ -123,12 +123,21 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       history.push("/login");
     }
     let tempCart = cart;
+    console.log("result:", result);
     if (result.response) {
       setUser({
         ...user,
-        orders: [...user.orders, { order: tempCart, dateOfOrder: new Date() }],
+        orders: [
+          ...user.orders,
+          {
+            order: JSON.parse(JSON.stringify(cart)),
+            dateOfOrder: new Date().toString(),
+          },
+        ],
       });
-      console.log(user);
+      console.log("userAddedOrder:", user);
+      setCart([]);
+      console.log("userAddedOrder after clearing cart:", user);
     }
   };
 

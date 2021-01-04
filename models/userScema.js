@@ -40,8 +40,14 @@ const userDetailSchema = mongoose.Schema({
   userCart: [{ item: itemDetailSchema, Qty: Number }],
   orders: [
     {
-      order: [{ item: itemDetailSchema, Qty: Number }],
-      dateOfOrder: Date,
+      order: [
+        {
+          _id: mongoose.Schema.Types.ObjectId,
+          item: itemDetailSchema,
+          Qty: Number,
+        },
+      ],
+      dateOfOrder: String,
     },
   ],
 });
