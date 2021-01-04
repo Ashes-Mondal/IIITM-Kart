@@ -286,7 +286,7 @@ exports.cancelOrder = async (req, res) => {
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
   ordersList = ordersList.filter((orderElement) => {
-    if (orderElement._id != orderId) return orderElement;
+    if (orderElement._id !== orderId) return orderElement;
   });
   console.log("Orders List: ", ordersList);
 
