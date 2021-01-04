@@ -64,7 +64,7 @@ function UserDetails({ user, setUser ,setCart}) {
     if (result.response) {
       let ordersList = user.orders;
       ordersList = ordersList.filter((orderElement) => {
-        if (orderElement._id !== orderId) return orderElement;
+        if (orderElement._id != orderId) return orderElement;
       });
 
       setUser({

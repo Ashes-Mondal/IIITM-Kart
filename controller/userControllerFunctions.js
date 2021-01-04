@@ -280,7 +280,7 @@ exports.clearOrders = async (req, res) => {
 };
 
 exports.cancelOrder = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.session.userId;
   const orderId = req.body.orderId;
   console.log("cancelling order...", orderId);
   const userDetails = await UserDetail.findById(userId).exec();

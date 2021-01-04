@@ -135,9 +135,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
           },
         ],
       });
-      console.log("userAddedOrder:", user);
-      setCart([]);
-      console.log("userAddedOrder after clearing cart:", user);
     }
   };
 
