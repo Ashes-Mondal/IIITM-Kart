@@ -1,6 +1,6 @@
 //Dependencies
-if(process.env.NODE_ENV !== "production"){
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -8,9 +8,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
+
 //Files
 const routes = require("./routes/routes");
 const mongodb = require("./config/keys");
+
 //PORT
 const port = process.env.PORT || 8000;
 
@@ -25,9 +27,9 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie:{
-      maxAge:86400000 
-    }
+    cookie: {
+      maxAge: 86400000,
+    },
   })
 );
 //Database
@@ -40,7 +42,7 @@ mongoose.connect(
     else console.log("successfully connected to Db!");
   }
 );
-mongoose.set('useFindAndModify', false);
+mongoose.set("useFindAndModify", false);
 //Routes
 app.use("/", routes);
 //serve static assets when in production

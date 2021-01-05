@@ -51,7 +51,7 @@ h1 {
 .flex-child2 {
   flex: 1;
   padding: 20px;
-  
+
   margin-bottom: auto;
   top: 6.5rem;
 }
@@ -73,6 +73,14 @@ h1 {
   font-size: 1.3rem;
 }
 
+.cartEmpty {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: auto;
+}
+
 .qtyInput {
   border-radius: 2px;
   margin-left: 15px;
@@ -80,17 +88,36 @@ h1 {
   margin-top: 10px;
 }
 
+.btnShop {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 15px;
+  border: 2px solid;
+  border-radius: 4px;
+  background-color: darkcyan;
+}
+
+.side {
+  position: absolute;
+  right: 25px;
+}
+
+.tc {
+  text-align: center;
+}
+
 .btnProceed {
   color: #fffafa;
   text-align: center;
-  color: #f1f3f6;
   font-family: "Josefin Sans", sans-serif;
   font-size: 26px;
   border: 2px solid orangered;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: orangered;
-  margin-left: 30%;
-  margin-right: 30%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 5%;
 }
 
@@ -143,11 +170,11 @@ h1 {
 }
 
 /********************************************** Login************************************/
-.login-form{
-  position:relative;
+.login-form {
+  position: relative;
   display: flex;
   justify-content: center;
-  border:solid black 2px;
+  border: solid black 2px;
   padding: 2rem;
   margin: 10vh 30%;
 }

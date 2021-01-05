@@ -9,7 +9,7 @@ const filterSearch = (itemList, Search) => {
     if (wordIndex === 0) continue;
     itemList = itemList.filter((itemObject) => {
       let flag = false;
-      let findResult = new RegExp( Search[wordIndex] , "ig");
+      let findResult = new RegExp(Search[wordIndex], "ig");
       //testing on itemName
       flag = findResult.test(itemObject.itemName);
       if (flag) return itemObject;
@@ -44,7 +44,8 @@ exports.search = async (req, res) => {
   items = Array.from(uniqueSet).map(JSON.parse);
   //filtering based on further words in search string
   let itemList = items;
-  if (Search.length > 1 && itemList.length) itemList = filterSearch(itemList, Search);
+  if (Search.length > 1 && itemList.length)
+    itemList = filterSearch(itemList, Search);
   if (itemList.length)
     return res.send({ itemList: [...itemList], response: true });
   return res.send({ response: false });

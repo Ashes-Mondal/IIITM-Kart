@@ -23,6 +23,7 @@ router.post("/deleteUser", userControllerFunctions.deleteUser);
 router.post("/addOrder", userControllerFunctions.addOrder);
 router.post("/cancelOrder", userControllerFunctions.cancelOrder);
 router.post("/search", api.search);
+router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);

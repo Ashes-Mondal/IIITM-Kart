@@ -1,9 +1,19 @@
 //Dependencies
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const shortid = require("shortid");
+const Razorpay = require("razorpay");
+const cors = require("cors");
+
 //Files
 const { ItemDetail } = require("../models/itemSchema");
 const UserDetail = require("../models/userScema");
+const keys = require("../key");
+const razorInstance = new Razorpay({
+  key_id: keys.key_id,
+  key_secret: keys.key_secret,
+});
+
 //Controller Functions
 /****************************User functions***********************************/
 //GET USER DETAILS
@@ -169,6 +179,32 @@ exports.clearCart = async (req, res) => {
     }
   });
 };
+
+exports.paymentOrder = async (req, res) => {
+  const payment_capture = 1;
+  const amount = req.body.totalAmt;
+  const currency = "INR";
+
+  const options = {
+    amount: amount * 100,
+    currency,
+    receipt: shortid.generate(),
+    payment_capture,
+  };
+
+  try {
+    const response = await razorInstance.orders.create(options);
+    console.log("response: " + response);
+    res.json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
@@ -223,7 +259,7 @@ exports.fetchItems = async (req, res) => {
     res.send({ response: false, error: err });
   }
 };
-/***************************************ORDER CRUD*****************************/
+/***************************************ORDER*****************************/
 //ADD ORDER
 exports.addOrder = async (req, res) => {
   const userId = req.session.userId;
@@ -231,7 +267,7 @@ exports.addOrder = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
-  orderId = new mongoose.Types.ObjectId();
+  const orderId = new mongoose.Types.ObjectId();
   await UserDetail.findByIdAndUpdate(
     userId,
 
@@ -241,8 +277,11 @@ exports.addOrder = async (req, res) => {
         {
           _id: orderId,
           order: req.body.userCart,
-          dateOfOrder: new Date().toString(),
+          dateOfOrder: new Date(),
           totalCost: req.body.totalCost,
+          razorpayOrderId: req.body.razorpayOrderId,
+          razorpayPaymentId: req.body.razorpayPaymentId,
+          razorpaySignature: req.body.razorpaySignature,
         },
       ],
     },

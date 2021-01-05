@@ -12,12 +12,13 @@ import Signup from "./Components/pages/Signup";
 import Dashboard from "./Components/pages/admin/Dashboard";
 import Orders from "./Components/pages/admin/Orders";
 import Users from "./Components/pages/admin/Users";
-
+import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
 const User = createContext();
 const Item = createContext();
 const Authentication = createContext();
+
 //item reducer function
 const reducer = (currState, action) => {
   switch (action.type) {
@@ -36,6 +37,7 @@ const App = () => {
     email: "",
     phone: "",
   });
+  const [loaded, setLoaded] = useState(false);
   const [admin, setAdmin] = useState(false);
   //side effect when page first time rendered
   useEffect(() => {
@@ -43,6 +45,10 @@ const App = () => {
       //fetching user data from the server side if any
       const result = await (await fetch("/getUserDetails")).json();
       console.log("result:", result);
+      //if response is true then user is logged in
+      if (result.response === true || result.error === "Not logged in") {
+        setLoaded(true);
+      }
       //if response is true then user is logged in
       if (result.response === true) {
         //accordingly setting the states
@@ -53,7 +59,7 @@ const App = () => {
       }
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
-      console.log("listOfItems",listOfItems)
+      console.log("listOfItems", listOfItems);
       dispatch({ type: "setItemList", payload: listOfItems });
     };
     fetchItems_fetchUser();
@@ -78,34 +84,46 @@ const App = () => {
     return (
       <>
         <Navbar user={user} cart={cart} admin={admin} />
-        <Switch>
-          <Route exact path="/">
-            <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-          </Route>
-          {isAuth?(<Route exact path="/user">
-            <UserDetails user={user} setUser={setUser} setCart={setCart} />
-          </Route>):null}
-          
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/signup">
-            <Signup />
-          </Route>
-          <Route exact path="/cart">
-            <ShoppingCart
-              cart={cart}
-              setCart={setCart}
-              user={user}
-              setUser={setUser}
+        {loaded === false ? (
+          <div className="container">
+            <Loader
+              className="tc"
+              type="ThreeDots"
+              color="#2BAD60"
+              height="200"
+              width="200"
             />
-          </Route>
-          {admin ? adminComponents() : null}
-          <Route path="*">
-            <Error />
-          </Route>
-          
-        </Switch>
+          </div>
+        ) : (
+          <Switch>
+            <Route exact path="/">
+              <HomePage itemList={itemList} cart={cart} setCart={setCart} />
+            </Route>
+            {isAuth ? (
+              <Route exact path="/user">
+                <UserDetails user={user} setUser={setUser} setCart={setCart} />
+              </Route>
+            ) : null}
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/cart">
+              <ShoppingCart
+                cart={cart}
+                setCart={setCart}
+                user={user}
+                setUser={setUser}
+              />
+            </Route>
+            {admin ? adminComponents() : null}
+            <Route path="*">
+              <Error />
+            </Route>
+          </Switch>
+        )}
       </>
     );
   };
