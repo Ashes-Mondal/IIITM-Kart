@@ -14,8 +14,7 @@ function Signup() {
     <div>
       <form className="box box-signup mt-5" action="/signup" method="POST">
         <h1>Sign Up</h1>
-        {/* <label htmlFor="mobile">FirstName</label> */}
-        <div className="row">
+        <div className="row field">
           <div className="col-6">
             <input
               type="text"
@@ -27,8 +26,11 @@ function Signup() {
                 setSignup({ ...signup, firstName: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="mobile">
+              First Name
+            </label>
           </div>
-          {/* <label htmlFor="mobile">LastName</label> */}
+
           <div className="col-6">
             <input
               type="text"
@@ -40,10 +42,12 @@ function Signup() {
                 setSignup({ ...signup, lastName: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="mobile">
+              Last Name
+            </label>
           </div>
         </div>
-        {/* <label htmlFor="email">Email</label> */}
-        <div className="row">
+        <div className="row field">
           <div className="col-6">
             <input
               type="text"
@@ -55,8 +59,11 @@ function Signup() {
                 setSignup({ ...signup, email: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="email">
+              Email
+            </label>
           </div>
-          {/* <label htmlFor="password">Password</label> */}
+
           <div className="col-6">
             <input
               type="password"
@@ -68,10 +75,12 @@ function Signup() {
                 setSignup({ ...signup, password: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="password">
+              Password
+            </label>
           </div>
         </div>
-        {/* <label htmlFor="mobile">Phone</label> */}
-        <div className="row">
+        <div className="row field">
           <div className="col-6">
             <input
               type="text"
@@ -83,8 +92,11 @@ function Signup() {
                 setSignup({ ...signup, phone: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="mobile">
+              Phone
+            </label>
           </div>
-          {/* <label htmlFor="address">address</label> */}
+
           <div className="col-6">
             <input
               type="text"
@@ -96,6 +108,9 @@ function Signup() {
                 setSignup({ ...signup, address: e.target.value });
               }}
             />
+            <label className="signupLabel" htmlFor="address">
+              address
+            </label>
           </div>
         </div>
         <button>Signup</button>
