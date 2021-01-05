@@ -231,6 +231,7 @@ exports.addOrder = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+  orderId = new mongoose.Types.ObjectId();
   await UserDetail.findByIdAndUpdate(
     userId,
 
@@ -238,31 +239,12 @@ exports.addOrder = async (req, res) => {
       orders: [
         ...req.body.userOrders,
         {
-          _id: new mongoose.Types.ObjectId(),
+          _id: orderId,
           order: req.body.userCart,
           dateOfOrder: new Date().toString(),
+          totalCost: req.body.totalCost,
         },
       ],
-    },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        res.send({ response: true });
-      }
-    }
-  );
-};
-
-exports.clearOrders = async (req, res) => {
-  const userId = req.session.userId;
-  if (userId === undefined) {
-    res.send({ response: false, error: "Not logged in" });
-    return;
-  }
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    {
-      orders: [],
     },
     (err) => {
       if (err) res.send({ response: false, error: err });
@@ -283,7 +265,7 @@ exports.cancelOrder = async (req, res) => {
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
   ordersList = ordersList.filter((orderElement) => {
-    if (orderElement._id !== orderId) return orderElement;
+    if (orderElement._id != orderId) return orderElement;
   });
   await UserDetail.findByIdAndUpdate(
     userId,

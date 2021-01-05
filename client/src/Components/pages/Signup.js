@@ -10,11 +10,7 @@ function Signup() {
 
   return (
     <div>
-      <form
-        className="box box-signup shadow-lg mt-5"
-        action="/signup"
-        method="POST"
-      >
+      <form className="box box-signup mt-5" action="/signup" method="POST">
         <h1>Sign Up</h1>
         {/* <label htmlFor="mobile">FirstName</label> */}
         <div className="row">

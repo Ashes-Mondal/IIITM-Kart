@@ -21,14 +21,13 @@ router.post("/logout", userControllerFunctions.logout);
 router.post("/editUserDetails", userControllerFunctions.editUserDetails);
 router.post("/deleteUser", userControllerFunctions.deleteUser);
 router.post("/addOrder", userControllerFunctions.addOrder);
-router.post("/clearOrders", userControllerFunctions.clearOrders);
 router.post("/cancelOrder", userControllerFunctions.cancelOrder);
 router.post("/search", api.search);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
 //POST REQUESTS
-router.post("/addItem",adminControllerFunctions.addItem);
+router.post("/addItem", adminControllerFunctions.addItem);
 
 //exporting
 module.exports = router;

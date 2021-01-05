@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
@@ -22,7 +22,6 @@ const Authentication = createContext();
 const reducer = (currState, action) => {
   switch (action.type) {
     case "setItemList":
-      console.log("dispatch-ItemData", action.payload);
       return action.payload;
     default:
       return currState;
@@ -42,21 +41,19 @@ const App = () => {
   useEffect(() => {
     const fetchItems_fetchUser = async () => {
       //fetching user data from the server side if any
-      const userData = await (await fetch("/getUserDetails")).json();
-      console.log("userData:", userData);
-      //if the user is admin setAdmin(true)
-      if (userData.admin === true) {
-        setAdmin(true);
-      }
+      const result = await (await fetch("/getUserDetails")).json();
+      console.log("result:", result);
       //if response is true then user is logged in
-      if (userData.response === true) {
+      if (result.response === true) {
         //accordingly setting the states
+        setAdmin(result.userDetails.admin);
         setIsAuth(true);
-        setUser(userData.userDetails);
-        setCart(userData.userDetails.userCart);
+        setUser(result.userDetails);
+        setCart(result.userDetails.userCart);
       }
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
+      console.log("listOfItems",listOfItems)
       dispatch({ type: "setItemList", payload: listOfItems });
     };
     fetchItems_fetchUser();
@@ -80,14 +77,15 @@ const App = () => {
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} admin={admin} />
+        <Navbar user={user} cart={cart} admin={admin} />
         <Switch>
           <Route exact path="/">
             <HomePage itemList={itemList} cart={cart} setCart={setCart} />
           </Route>
-          <Route exact path="/user">
+          {isAuth?(<Route exact path="/user">
             <UserDetails user={user} setUser={setUser} setCart={setCart} />
-          </Route>
+          </Route>):null}
+          
           <Route exact path="/login">
             <Login />
           </Route>
