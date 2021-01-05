@@ -196,13 +196,12 @@ exports.paymentOrder = async (req, res) => {
 
   try {
     const response = await razorInstance.orders.create(options);
-    console.log(response);
+    console.log("response: " + response);
     res.json({
       id: response.id,
       currency: response.currency,
       amount: response.amount,
     });
-    console.log(res.json());
   } catch (error) {
     console.log(error);
   }
@@ -278,6 +277,33 @@ exports.addOrder = async (req, res) => {
         ...req.body.userOrders,
         { order: req.body.userCart, dateOfOrder: new Date() },
       ],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+
+exports.cancelOrder = async (req, res) => {
+  const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
+  const orderId = req.body.orderId;
+  const userDetails = await UserDetail.findById(userId).exec();
+  let ordersList = userDetails.orders;
+  ordersList = ordersList.filter((orderElement) => {
+    if (orderElement._id != orderId) return orderElement;
+  });
+
+  await UserDetail.findByIdAndUpdate(
+    userId,
+    {
+      orders: ordersList,
     },
     (err) => {
       if (err) res.send({ response: false, error: err });

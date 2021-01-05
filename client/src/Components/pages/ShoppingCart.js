@@ -176,7 +176,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       body: JSON.stringify({ totalAmt: getTotalSum() }),
     };
     const data = await (await fetch("/paymentOrder", requestOptions)).json();
-
     const options = {
       key: "rzp_test_qCpeI02RHqv1vw", //secret: M6erSikCTvv58QMedTV6Ulth
       currency: data.currency,
@@ -190,6 +189,10 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
         alert(response.razorpay_signature);
+        console.log("response: " + JSON.stringify(response));
+        if (response.razorpay_payment_id) {
+          addOrder();
+        }
       },
       prefill: {
         email: "ashes@Rajpopat.com",
