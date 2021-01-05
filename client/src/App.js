@@ -104,44 +104,12 @@ const App = () => {
 
   return (
     <Router>
-<<<<<<< HEAD
-      <Item.Provider value={{ setItemList: dispatch }}>
-=======
       <Item.Provider value={{ setItemList: dispatch, itemList: itemList }}>
->>>>>>> 1c18f0308916e596179bab07ad391ae60a5a2a06
         <User.Provider value={{ user: user, setUser: setUser }}>
           <Authentication.Provider
             value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
           >
-<<<<<<< HEAD
-            <Navbar cart={cart} />
-            <Switch>
-              <Route exact path="/">
-                <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-              </Route>
-
-              <Route exact path="/user">
-                <UserDetails user={user} setUser={setUser} />
-              </Route>
-
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-
-              <Route exact path="/cart">
-                <ShoppingCart cart={cart} setCart={setCart} />
-              </Route>
-
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
-=======
             {userComponents()}
->>>>>>> 1c18f0308916e596179bab07ad391ae60a5a2a06
           </Authentication.Provider>
         </User.Provider>
       </Item.Provider>
