@@ -182,6 +182,32 @@ exports.clearCart = async (req, res) => {
   });
 };
 
+exports.paymentOrder = async (req, res) => {
+  const payment_capture = 1;
+  const amount = req.body.totalAmt;
+  const currency = "INR";
+
+  const options = {
+    amount: amount * 100,
+    currency,
+    receipt: shortid.generate(),
+    payment_capture,
+  };
+
+  try {
+    const response = await razorInstance.orders.create(options);
+    console.log(response);
+    res.json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+    console.log(res.json());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
