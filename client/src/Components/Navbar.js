@@ -16,11 +16,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
 });
-<<<<<<< HEAD
-function Navbar({ cart, admin }) {
-=======
 function Navbar({ user, cart, admin }) {
->>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
   const { isAuth } = useContext(Authentication);
   /****************************** hamburger Drawer Starts here********************************************/
   //usestyles
