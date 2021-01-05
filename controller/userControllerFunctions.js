@@ -265,6 +265,7 @@ exports.fetchItems = async (req, res) => {
 //ADD ORDER
 exports.addOrder = async (req, res) => {
   const userId = req.session.userId;
+  const orderId = new mongoose.Types.ObjectId();
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
@@ -276,6 +277,7 @@ exports.addOrder = async (req, res) => {
       orders: [
         ...req.body.userOrders,
         {
+          _id: orderId,
           order: req.body.userCart,
           dateOfOrder: new Date(),
           totalCost: req.body.totalCost,
@@ -288,7 +290,7 @@ exports.addOrder = async (req, res) => {
     (err) => {
       if (err) res.send({ response: false, error: err });
       else {
-        res.send({ response: true });
+        res.send({ response: true, orderId: orderId });
       }
     }
   );
