@@ -293,3 +293,31 @@ a.active-nav-link {
 .box input:focus + label {
   color: #33a;
 }
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  flex: 2;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.adminPanel {
+  flex: 9;
+}
