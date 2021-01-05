@@ -5,8 +5,8 @@ const { itemDetailSchema } = require("./itemSchema");
 //userDetailSchema
 const userDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  admin:Boolean,
-    name: {
+  admin: Boolean,
+  name: {
     firstName: {
       type: String,
       required: true,
@@ -40,8 +40,18 @@ const userDetailSchema = mongoose.Schema({
   userCart: [{ item: itemDetailSchema, Qty: Number }],
   orders: [
     {
-      order: [{ item: itemDetailSchema, Qty: Number }],
-      dateOfOrder: Date,
+      order: [
+        {
+          _id: mongoose.Schema.Types.ObjectId,
+          item: itemDetailSchema,
+          Qty: Number,
+        },
+      ],
+      dateOfOrder: String,
+      totalCost: Number,
+      razorpayPaymentId: String,
+      razorpayOrderId: String,
+      razorpaySignature: String,
     },
   ],
 });

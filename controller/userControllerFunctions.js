@@ -24,14 +24,12 @@ exports.getUserDetails = async (req, res) => {
     try {
       //user details fetched from the database
       let userDetails = await UserDetail.findById(userId).exec();
-      userDetails._doc["response"] = true;
-      userDetails._doc["admin"] = userDetails.admin;
-      res.send(userDetails);
+      res.send({ userDetails: userDetails, response: true });
     } catch (err) {
       res.send({ response: false, error: err });
     }
   } else {
-    res.send({ response: false, error: "not logged in" });
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 //EDIT USER DETAILS
@@ -52,7 +50,7 @@ exports.editUserDetails = async (req, res) => {
         name: { firstName: firstName, lastName: lastName },
       },
       (err) => {
-        if (err) res.send({ response: false });
+        if (err) res.send({ response: false, error: err });
         else {
           res.send({ response: true });
         }
@@ -107,7 +105,11 @@ exports.addToCart = async (req, res) => {
   if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
   //Finally the userCart is updated to the database
   await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
+<<<<<<< HEAD
     if (err) res.send({ response: false });
+=======
+    if (err) res.send({ response: false, error: err });
+>>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
     else {
       res.send({ response: true });
     }
@@ -180,6 +182,7 @@ exports.clearCart = async (req, res) => {
       res.send({ response: true });
     }
   });
+<<<<<<< HEAD
 };
 //PAYMENTS
 exports.paymentOrder = async (req, res) => {
@@ -208,6 +211,35 @@ exports.paymentOrder = async (req, res) => {
   }
 };
 
+=======
+};
+
+exports.paymentOrder = async (req, res) => {
+  const payment_capture = 1;
+  const amount = req.body.totalAmt;
+  const currency = "INR";
+
+  const options = {
+    amount: amount * 100,
+    currency,
+    receipt: shortid.generate(),
+    payment_capture,
+  };
+
+  try {
+    const response = await razorInstance.orders.create(options);
+    console.log("response: " + response);
+    res.json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+>>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
@@ -270,14 +302,49 @@ exports.addOrder = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+  const orderId = new mongoose.Types.ObjectId();
   await UserDetail.findByIdAndUpdate(
     userId,
 
     {
       orders: [
         ...req.body.userOrders,
-        { order: req.body.userCart, dateOfOrder: new Date() },
+        {
+          _id: orderId,
+          order: req.body.userCart,
+          dateOfOrder: new Date(),
+          totalCost: req.body.totalCost,
+          razorpayOrderId: req.body.razorpayOrderId,
+          razorpayPaymentId: req.body.razorpayPaymentId,
+          razorpaySignature: req.body.razorpaySignature,
+        },
       ],
+    },
+    (err) => {
+      if (err) res.send({ response: false, error: err });
+      else {
+        res.send({ response: true });
+      }
+    }
+  );
+};
+
+exports.cancelOrder = async (req, res) => {
+  const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
+  const orderId = req.body.orderId;
+  const userDetails = await UserDetail.findById(userId).exec();
+  let ordersList = userDetails.orders;
+  ordersList = ordersList.filter((orderElement) => {
+    if (orderElement._id != orderId) return orderElement;
+  });
+  await UserDetail.findByIdAndUpdate(
+    userId,
+    {
+      orders: ordersList,
     },
     (err) => {
       if (err) res.send({ response: false, error: err });

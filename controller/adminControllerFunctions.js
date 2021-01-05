@@ -7,12 +7,20 @@ const UserDetail = require("../models/userScema");
 /****************************Admin functions***********************************/
 //FETCH ALL USERS
 exports.fetchAllUsers = async (req, res) => {
+  if (req.session.userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
   //Fetching data from database
   const usersData = await UserDetail.find();
-  res.send(usersData);
+  res.send({response:true,usersData:usersData});
 };
 //ADD ITEM
 exports.addItem = async (req, res) => {
+  if (req.session.userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
   const itemData = req.body;
   itemData["_id"] = new mongoose.Types.ObjectId();
   try {
@@ -23,4 +31,16 @@ exports.addItem = async (req, res) => {
     console.log("Add Item error: ", error);
     res.send(`Error occurred ${error}`);
   }
+};
+//Delete ITEM
+exports.deleteItem = async (req, res) => {
+  if (req.session.userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
+  const itemId = req.body.itemID;
+  await ItemDetail.findByIdAndDelete(itemId, (err) => {
+    if (err) res.send({ response: false, error: err });
+    else res.send({ response: true });
+  });
 };

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 function Signup() {
   const [signup, setSignup] = useState({
     name: { firstName: "", lastName: "" },
@@ -10,11 +12,7 @@ function Signup() {
 
   return (
     <div>
-      <form
-        className="box box-signup shadow-lg mt-5"
-        action="/signup"
-        method="POST"
-      >
+      <form className="box box-signup mt-5" action="/signup" method="POST">
         <h1>Sign Up</h1>
         {/* <label htmlFor="mobile">FirstName</label> */}
         <div className="row">
@@ -101,6 +99,7 @@ function Signup() {
           </div>
         </div>
         <button>Signup</button>
+        Already registered? <Link to="/login">Login</Link>.
       </form>
     </div>
   );
