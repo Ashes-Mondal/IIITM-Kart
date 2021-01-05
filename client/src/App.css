@@ -125,6 +125,10 @@ h1 {
   margin-top: 5%;
 }
 
+.cartDetail {
+  font-size: auto;
+}
+
 .tc {
   text-align: center;
 }
