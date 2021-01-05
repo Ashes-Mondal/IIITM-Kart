@@ -50,32 +50,28 @@ const App = () => {
         setLoaded(true);
       }
       //if response is true then user is logged in
-<<<<<<< HEAD
       if (userData.response === true) {
-=======
-      if (result.response === true) {
->>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
-        //accordingly setting the states
-        setAdmin(result.userDetails.admin);
-        setIsAuth(true);
-        setUser(result.userDetails);
-        setCart(result.userDetails.userCart);
+        if (result.response === true) {
+          //accordingly setting the states
+          setAdmin(result.userDetails.admin);
+          setIsAuth(true);
+          setUser(result.userDetails);
+          setCart(result.userDetails.userCart);
+        }
+        //fetching item list from the server side and setting in itemList state
+        const listOfItems = await (await fetch("/fetchItems")).json();
+        console.log("listOfItems", listOfItems);
+        dispatch({ type: "setItemList", payload: listOfItems });
       }
-      //fetching item list from the server side and setting in itemList state
-      const listOfItems = await (await fetch("/fetchItems")).json();
-      console.log("listOfItems", listOfItems);
-      dispatch({ type: "setItemList", payload: listOfItems });
+      fetchItems_fetchUser();
     };
-    fetchItems_fetchUser();
   }, [admin]);
 
   const adminComponents = () => {
     return (
       <>
         <Route exact path="/admin">
-<<<<<<< HEAD
           <Admin />
-=======
           <Dashboard />
         </Route>
         <Route exact path="/admin/orders">
@@ -83,7 +79,6 @@ const App = () => {
         </Route>
         <Route exact path="/admin/users">
           <Users />
->>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
         </Route>
       </>
     );
@@ -91,7 +86,6 @@ const App = () => {
   const userComponents = () => {
     return (
       <>
-<<<<<<< HEAD
         <Navbar cart={cart} admin={admin} />
         <Switch>
           <Route exact path="/">
@@ -119,7 +113,6 @@ const App = () => {
             <Error />
           </Route>
         </Switch>
-=======
         <Navbar user={user} cart={cart} admin={admin} />
         {loaded === false ? (
           <div className="container">
@@ -161,7 +154,6 @@ const App = () => {
             </Route>
           </Switch>
         )}
->>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
       </>
     );
   };
