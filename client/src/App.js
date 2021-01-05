@@ -46,7 +46,7 @@ const App = () => {
         setAdmin(true);
       }
       //if response is true then user is logged in
-      if (userData.response === true) {
+      if (userData.response !== false) {
         //accordingly setting the states
         setIsAuth(true);
         setUser(userData);
