@@ -44,7 +44,7 @@ img {
 }
 /********************************************** Navbar ****************************************/
 .navbar {
-  background-color: blue;
+  background-color: rgb(64, 64, 231);
   width: 100%;
   justify-content: flex-start;
   align-content: center;
@@ -131,7 +131,7 @@ a.active-nav-link {
 
 .box input[type="text"]:focus,
 .box input[type="password"]:focus {
-  width: 280px;
+  width: 100%;
 }
 .box button {
   border: 0;
@@ -233,4 +233,63 @@ a.active-nav-link {
 
 .sidenav a:hover {
   color: #f1f1f1;
+}
+
+.searchButton {
+  border: 0;
+  background: rgb(245, 245, 245);
+  display: block;
+  text-align: center;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  padding: 0px 20px;
+  margin: 0px 10px;
+  cursor: pointer;
+  outline: none;
+  /* color: white; */
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.searchButton:hover {
+  box-shadow: 5px 5px 5px rgb(42, 42, 158);
+}
+.signupLabel {
+  color: transparent;
+}
+.box-signup input:focus {
+  color: black;
+}
+.field {
+  position: relative;
+  font-family: Arial;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+}
+.box label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.2s linear;
+  color: #999;
+  font-size: px;
+}
+.box input {
+  margin-top: 15px;
+  border: 1px solid #999;
+  padding: 3px 2px;
+}
+.box input:invalid + label {
+  top: 3px;
+  opacity: 0;
+}
+.box input:valid + label {
+  opacity: 1;
+  top: 0;
+}
+.box input:focus {
+  outline: none;
+}
+.box input:focus + label {
+  color: #33a;
 }
