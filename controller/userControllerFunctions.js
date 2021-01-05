@@ -1,14 +1,17 @@
 //Dependencies
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const shortid = require("shortid");
 const Razorpay = require("razorpay");
+const cors = require("cors");
 
 //Files
 const { ItemDetail } = require("../models/itemSchema");
 const UserDetail = require("../models/userScema");
-const razorpay = new Razorpay({
-  key_id: "rzp_test_qCpeI02RHqv1vw",
-  key_secret: "M6erSikCTvv58QMedTV6Ulth",
+const keys = require("../key");
+const razorInstance = new Razorpay({
+  key_id: keys.key_id,
+  key_secret: keys.key_secret,
 });
 
 //Controller Functions
@@ -56,7 +59,7 @@ exports.editUserDetails = async (req, res) => {
       }
     );
   } else {
-      res.send({ response: false,error:"Not logged in" });
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 //DELETE USER
@@ -73,7 +76,7 @@ exports.deleteUser = async (req, res) => {
       res.send({ response: false, error: err });
     }
   } else {
-    res.send({ response: false ,error:"Not logged in"});
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 /************************** CART CRUD OPERATION **********************************/
@@ -81,45 +84,41 @@ exports.deleteUser = async (req, res) => {
 exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
-    const itemId = req.body.itemId;
-    //item and user details fetched from the database
-    const itemDetails = await ItemDetail.findById(itemId).exec();
-    const userDetails = await UserDetail.findById(userId).exec();
-    //User cart details fetched
-    let userCart = userDetails.userCart;
-    //flag checks whether the item is there in cart or not,if not then added to the userCart
-    let flag = true;
-    userCart = userCart.map((itemElement) => {
-      if (itemElement.item._id == itemId) {
-        itemElement.item = itemDetails;
-        itemElement.Qty += 1;
-        flag = false;
-      }
-      return itemElement;
-    });
-    if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
-    //Finally the userCart is updated to the database
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      { userCart: userCart },
-      (err) => {
-        if (err) res.send({ response: false });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+  const itemId = req.body.itemId;
+  //item and user details fetched from the database
+  const itemDetails = await ItemDetail.findById(itemId).exec();
+  const userDetails = await UserDetail.findById(userId).exec();
+  //User cart details fetched
+  let userCart = userDetails.userCart;
+  //flag checks whether the item is there in cart or not,if not then added to the userCart
+  let flag = true;
+  userCart = userCart.map((itemElement) => {
+    if (itemElement.item._id == itemId) {
+      itemElement.item = itemDetails;
+      itemElement.Qty += 1;
+      flag = false;
+    }
+    return itemElement;
+  });
+  if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
+  //Finally the userCart is updated to the database
+  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
+    if (err) res.send({ response: false });
+    else {
+      res.send({ response: true });
+    }
+  });
 };
 //DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   const itemId = req.body.itemId;
@@ -143,8 +142,8 @@ exports.deleteFromCart = async (req, res) => {
 exports.updateQty = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   const itemId = req.body.itemId;
@@ -171,25 +170,21 @@ exports.updateQty = async (req, res) => {
 //CLEAR CART
 exports.clearCart = async (req, res) => {
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    { userCart: [] },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        res.send({ response: true });
-      }
+  await UserDetail.findByIdAndUpdate(userId, { userCart: [] }, (err) => {
+    if (err) res.send({ response: false, error: err });
+    else {
+      res.send({ response: true });
     }
-  );
+  });
 };
 //PAYMENTS
-exports.goToPayment = async (req, res) => {
+exports.paymentOrder = async (req, res) => {
   const payment_capture = 1;
-  const amount = 499;
+  const amount = req.body.totalAmt;
   const currency = "INR";
 
   const options = {
@@ -200,13 +195,14 @@ exports.goToPayment = async (req, res) => {
   };
 
   try {
-    const response = await razorpay.orders.create(options);
+    const response = await razorInstance.orders.create(options);
     console.log(response);
     res.json({
       id: response.id,
       currency: response.currency,
       amount: response.amount,
     });
+    console.log(res.json());
   } catch (error) {
     console.log(error);
   }
@@ -240,7 +236,7 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
     address: req.body.address,
     password: hashedPassword,
-    admin:false
+    admin: false,
   };
   try {
     newUser = await new UserDetail(userData);
@@ -270,8 +266,8 @@ exports.fetchItems = async (req, res) => {
 //ADD ORDER
 exports.addOrder = async (req, res) => {
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   await UserDetail.findByIdAndUpdate(

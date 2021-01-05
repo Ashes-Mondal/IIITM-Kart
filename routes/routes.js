@@ -10,6 +10,7 @@ const router = express.Router();
 //GET REQUESTS
 router.get("/fetchItems", userControllerFunctions.fetchItems);
 router.get("/getUserDetails", userControllerFunctions.getUserDetails);
+router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 //POST REQUESTS
 router.post("/addToCart", userControllerFunctions.addToCart);
 router.post("/deleteFromCart", userControllerFunctions.deleteFromCart);
@@ -22,6 +23,8 @@ router.post("/editUserDetails", userControllerFunctions.editUserDetails);
 router.post("/deleteUser", userControllerFunctions.deleteUser);
 router.post("/addOrder", userControllerFunctions.addOrder);
 router.post("/search", api.search);
+//router.post("/confirmPayment", userControllerFunctions.confirmPayment);
+
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
