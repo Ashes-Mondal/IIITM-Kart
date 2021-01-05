@@ -5,15 +5,14 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
-import Admin from "./Components/pages/Admin";
+import Dashboard from "./Components/pages/admin/Dashboard";
+import Orders from "./Components/pages/admin/Orders";
+import Users from "./Components/pages/admin/Users";
+
 
 //creating User and Authentication context
 const User = createContext();
@@ -63,22 +62,26 @@ const App = () => {
     fetchItems_fetchUser();
   }, [admin]);
 
-
   const adminComponents = () => {
-      return (
-        <>
-          <Route exact path="/admin">
-              <Admin />
-            </Route>
-        </>
-      );
+    return (
+      <>
+        <Route exact path="/admin">
+          <Dashboard />
+        </Route>
+        <Route exact path="/admin/orders">
+          <Orders />
+        </Route>
+        <Route exact path="/admin/users">
+          <Users />
+        </Route>
+      </>
+    );
   };
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} admin={admin}/>
+        <Navbar cart={cart} admin={admin} />
         <Switch>
-        
           <Route exact path="/">
             <HomePage itemList={itemList} cart={cart} setCart={setCart} />
           </Route>
@@ -99,10 +102,11 @@ const App = () => {
               setUser={setUser}
             />
           </Route>
-          {admin?adminComponents():null}
+          {admin ? adminComponents() : null}
           <Route path="*">
             <Error />
           </Route>
+          
         </Switch>
       </>
     );
