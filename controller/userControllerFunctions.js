@@ -275,7 +275,14 @@ exports.addOrder = async (req, res) => {
     {
       orders: [
         ...req.body.userOrders,
-        { order: req.body.userCart, dateOfOrder: new Date() },
+        {
+          order: req.body.userCart,
+          dateOfOrder: new Date(),
+          totalCost: req.body.totalCost,
+          razorpayOrderId: req.body.razorpayOrderId,
+          razorpayPaymentId: req.body.razorpayPaymentId,
+          razorpaySignature: req.body.razorpaySignature,
+        },
       ],
     },
     (err) => {
