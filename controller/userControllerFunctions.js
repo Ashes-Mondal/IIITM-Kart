@@ -14,14 +14,12 @@ exports.getUserDetails = async (req, res) => {
     try {
       //user details fetched from the database
       let userDetails = await UserDetail.findById(userId).exec();
-      userDetails._doc["response"] = true;
-      userDetails._doc["admin"] = userDetails.admin;
-      res.send(userDetails);
+      res.send({ userDetails: userDetails, response: true });
     } catch (err) {
       res.send({ response: false, error: err });
     }
   } else {
-    res.send({ response: false, error: "not logged in" });
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 //EDIT USER DETAILS
@@ -42,14 +40,14 @@ exports.editUserDetails = async (req, res) => {
         name: { firstName: firstName, lastName: lastName },
       },
       (err) => {
-        if (err) res.send({ response: false });
+        if (err) res.send({ response: false, error: err });
         else {
           res.send({ response: true });
         }
       }
     );
   } else {
-      res.send({ response: false,error:"Not logged in" });
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 //DELETE USER
@@ -66,7 +64,7 @@ exports.deleteUser = async (req, res) => {
       res.send({ response: false, error: err });
     }
   } else {
-    res.send({ response: false ,error:"Not logged in"});
+    res.send({ response: false, error: "Not logged in" });
   }
 };
 /************************** CART CRUD OPERATION **********************************/
@@ -74,45 +72,41 @@ exports.deleteUser = async (req, res) => {
 exports.addToCart = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
-    const itemId = req.body.itemId;
-    //item and user details fetched from the database
-    const itemDetails = await ItemDetail.findById(itemId).exec();
-    const userDetails = await UserDetail.findById(userId).exec();
-    //User cart details fetched
-    let userCart = userDetails.userCart;
-    //flag checks whether the item is there in cart or not,if not then added to the userCart
-    let flag = true;
-    userCart = userCart.map((itemElement) => {
-      if (itemElement.item._id == itemId) {
-        itemElement.item = itemDetails;
-        itemElement.Qty += 1;
-        flag = false;
-      }
-      return itemElement;
-    });
-    if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
-    //Finally the userCart is updated to the database
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      { userCart: userCart },
-      (err) => {
-        if (err) res.send({ response: false });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+  const itemId = req.body.itemId;
+  //item and user details fetched from the database
+  const itemDetails = await ItemDetail.findById(itemId).exec();
+  const userDetails = await UserDetail.findById(userId).exec();
+  //User cart details fetched
+  let userCart = userDetails.userCart;
+  //flag checks whether the item is there in cart or not,if not then added to the userCart
+  let flag = true;
+  userCart = userCart.map((itemElement) => {
+    if (itemElement.item._id == itemId) {
+      itemElement.item = itemDetails;
+      itemElement.Qty += 1;
+      flag = false;
+    }
+    return itemElement;
+  });
+  if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
+  //Finally the userCart is updated to the database
+  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
+    if (err) res.send({ response: false, error: err });
+    else {
+      res.send({ response: true });
+    }
+  });
 };
 //DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   const itemId = req.body.itemId;
@@ -136,8 +130,8 @@ exports.deleteFromCart = async (req, res) => {
 exports.updateQty = async (req, res) => {
   //body details are obtained
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   const itemId = req.body.itemId;
@@ -164,20 +158,16 @@ exports.updateQty = async (req, res) => {
 //CLEAR CART
 exports.clearCart = async (req, res) => {
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    { userCart: [] },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        res.send({ response: true });
-      }
+  await UserDetail.findByIdAndUpdate(userId, { userCart: [] }, (err) => {
+    if (err) res.send({ response: false, error: err });
+    else {
+      res.send({ response: true });
     }
-  );
+  });
 };
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
@@ -207,7 +197,7 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
     address: req.body.address,
     password: hashedPassword,
-    admin:false
+    admin: false,
   };
   try {
     newUser = await new UserDetail(userData);
@@ -237,8 +227,8 @@ exports.fetchItems = async (req, res) => {
 //ADD ORDER
 exports.addOrder = async (req, res) => {
   const userId = req.session.userId;
-  if(userId===undefined){
-    res.send({ response: false,error:"Not logged in" });
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
     return;
   }
   await UserDetail.findByIdAndUpdate(
@@ -264,9 +254,13 @@ exports.addOrder = async (req, res) => {
 };
 
 exports.clearOrders = async (req, res) => {
-  console.log("Emptying orders list...");
+  const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
   await UserDetail.findByIdAndUpdate(
-    req.body.userId,
+    userId,
     {
       orders: [],
     },
@@ -281,15 +275,16 @@ exports.clearOrders = async (req, res) => {
 
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
   const orderId = req.body.orderId;
-  console.log("cancelling order...", orderId);
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
   ordersList = ordersList.filter((orderElement) => {
     if (orderElement._id !== orderId) return orderElement;
   });
-  console.log("Orders List: ", ordersList);
-
   await UserDetail.findByIdAndUpdate(
     userId,
     {

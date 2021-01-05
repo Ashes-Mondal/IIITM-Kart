@@ -52,8 +52,8 @@ const App = () => {
       if (userData.response === true) {
         //accordingly setting the states
         setIsAuth(true);
-        setUser(userData);
-        setCart(userData.userCart);
+        setUser(userData.userDetails);
+        setCart(userData.userDetails.userCart);
       }
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
