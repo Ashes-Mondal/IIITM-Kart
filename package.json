@@ -39,10 +39,6 @@
     "passport-local-mongoose": "^6.0.1",
     "path": "^0.12.7",
     "razorpay": "^2.0.6",
-<<<<<<< HEAD
-    "shortid": "^2.2.16"
-=======
     "shortid": "2.2.16"
->>>>>>> 565c3125064e66823ef5b462719ebe2ab63b9a62
   }
 }
