@@ -5,6 +5,7 @@ const { itemDetailSchema } = require("./itemSchema");
 //userDetailSchema
 const userDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  admin: Boolean,
   name: {
     firstName: {
       type: String,
@@ -18,6 +19,7 @@ const userDetailSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
     match: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
   },
   phone: {
@@ -38,8 +40,15 @@ const userDetailSchema = mongoose.Schema({
   userCart: [{ item: itemDetailSchema, Qty: Number }],
   orders: [
     {
-      order: [{ item: itemDetailSchema, Qty: Number }],
-      dateOfOrder: Date,
+      order: [
+        {
+          _id: mongoose.Schema.Types.ObjectId,
+          item: itemDetailSchema,
+          Qty: Number,
+        },
+      ],
+      dateOfOrder: String,
+      totalCost: Number,
     },
   ],
 });

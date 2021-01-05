@@ -6,7 +6,9 @@ function Login() {
 
   return (
     <div>
-      <form className="box shadow-lg mt-5" action="/login" method="POST">
+      {/*className="login-form"*/}
+      <form className="box mt-5" action="/login" method="POST">
+        {/*box shadow-lg mt-5*/}
         <h1>Login</h1>
         {/* <label htmlFor="phone">Phone</label> */}
         <input
@@ -28,6 +30,7 @@ function Login() {
             setPassword(e.target.value);
           }}
         />
+
         <button>LogIn</button>
       </form>
     </div>

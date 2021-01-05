@@ -141,3 +141,13 @@ h1 {
     margin-bottom: -0.9375rem;
   }
 }
+
+/********************************************** Login************************************/
+.login-form{
+  position:relative;
+  display: flex;
+  justify-content: center;
+  border:solid black 2px;
+  padding: 2rem;
+  margin: 10vh 30%;
+}

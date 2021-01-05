@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
-import { User } from "../../App";
+import React, { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Authentication } from "../../App";
 
-function ShoppingCart({ cart, setCart }) {
-  const { user } = useContext(User);
-  console.log("user:", user);
+function ShoppingCart({ cart, setCart, user, setUser }) {
+  const { setIsAuth } = useContext(Authentication);
+  const [orderHistory, setOrderHistory] = useState(false);
+  const history = useHistory();
   const getTotalSum = () => {
     return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
   };
@@ -13,7 +15,7 @@ function ShoppingCart({ cart, setCart }) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id }),
+      body: JSON.stringify({}),
     };
     const result = await (await fetch("/clearCart", requestOptions)).json();
     console.log("result:", result);
@@ -21,6 +23,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart([]);
     } else {
       alert("Could not clear the cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
   // increase qty of item by 1
@@ -29,7 +34,6 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty + 1,
       }),
@@ -46,6 +50,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart(tempCart);
     } else {
       alert("Could not increase the Qty!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
 
@@ -55,7 +62,6 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty - 1,
       }),
@@ -64,7 +70,7 @@ function ShoppingCart({ cart, setCart }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product.item._id === Product.item._id && product.Qty > 0) {
+        if (product.item._id === Product.item._id && product.Qty > 1) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -72,6 +78,9 @@ function ShoppingCart({ cart, setCart }) {
       setCart(tempCart);
     } else {
       alert("Could not decrease the Qty!");
+      setCart([]);
+      setIsAuth(false);
+      history.push("/login");
     }
   };
 
@@ -81,18 +90,56 @@ function ShoppingCart({ cart, setCart }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: user._id,
         itemId: productDetail.item._id,
       }),
     };
     const result = await (
       await fetch("/deleteFromCart", requestOptions)
     ).json();
-    console.log("result:", result);
     if (result.response) {
       setCart(cart.filter((product) => product !== productDetail));
     } else {
       alert("Could not remove from cart!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
+  };
+
+  const addOrder = async () => {
+    console.log("Adding order...");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userCart: cart,
+        userOrders: user.orders,
+        totalCost: getTotalSum(),
+      }),
+    };
+    const result = await (await fetch("/addOrder", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not proceed further!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    }
+    console.log("result:", result);
+    if (result.response) {
+      setUser({
+        ...user,
+        orders: [
+          ...user.orders,
+          {
+            _id: result.orderId,
+            order: JSON.parse(JSON.stringify(cart)),
+            dateOfOrder: new Date().toString(),
+            totalCost: getTotalSum(),
+          },
+        ],
+      });
+      clearCart();
+      setOrderHistory(true);
     }
   };
 
@@ -147,11 +194,21 @@ function ShoppingCart({ cart, setCart }) {
               </div>
             );
           })}
+          {orderHistory ? (
+            <button className="btn btn-warning ml-3">
+              {" "}
+              <Link to="/user" className="btn text-white">
+                Order History
+              </Link>{" "}
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="flex-child2 shadow bg-white rounded sticky-top">
           <h1>Cart Total</h1>
           <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
-          <button className="btnProceed">
+          <button className="btnProceed" onClick={() => addOrder()}>
             <h5>Proceed To Checkout</h5>
           </button>
         </div>
