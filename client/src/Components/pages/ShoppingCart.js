@@ -106,13 +106,17 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     }
   };
 
-  const addOrder = async (props) => {
-    const {
+  const addOrder = async (
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature
+  ) => {
+    console.log(
+      "Adding order...",
       razorpay_payment_id,
       razorpay_order_id,
-      razorpay_signature,
-    } = props;
-    console.log("Adding order...");
+      razorpay_signature
+    );
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

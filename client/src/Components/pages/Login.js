@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [password, setPassword] = useState("");
@@ -30,8 +31,8 @@ function Login() {
             setPassword(e.target.value);
           }}
         />
-
         <button>LogIn</button>
+        Not registered yet? <Link to="/signup">SignUp</Link>.
       </form>
     </div>
   );

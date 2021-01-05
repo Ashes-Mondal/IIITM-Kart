@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 function Signup() {
   const [signup, setSignup] = useState({
     name: { firstName: "", lastName: "" },
@@ -97,6 +99,7 @@ function Signup() {
           </div>
         </div>
         <button>Signup</button>
+        Already registered? <Link to="/login">Login</Link>.
       </form>
     </div>
   );
