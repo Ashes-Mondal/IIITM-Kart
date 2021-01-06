@@ -50,28 +50,25 @@ const App = () => {
         setLoaded(true);
       }
       //if response is true then user is logged in
-      if (userData.response === true) {
-        if (result.response === true) {
-          //accordingly setting the states
-          setAdmin(result.userDetails.admin);
-          setIsAuth(true);
-          setUser(result.userDetails);
-          setCart(result.userDetails.userCart);
-        }
-        //fetching item list from the server side and setting in itemList state
-        const listOfItems = await (await fetch("/fetchItems")).json();
-        console.log("listOfItems", listOfItems);
-        dispatch({ type: "setItemList", payload: listOfItems });
+      if (result.response === true) {
+        //accordingly setting the states
+        setAdmin(result.userDetails.admin);
+        setIsAuth(true);
+        setUser(result.userDetails);
+        setCart(result.userDetails.userCart);
       }
-      fetchItems_fetchUser();
+      //fetching item list from the server side and setting in itemList state
+      const listOfItems = await (await fetch("/fetchItems")).json();
+      console.log("listOfItems", listOfItems);
+      dispatch({ type: "setItemList", payload: listOfItems });
     };
+    fetchItems_fetchUser();
   }, [admin]);
 
   const adminComponents = () => {
     return (
       <>
         <Route exact path="/admin">
-          <Admin />
           <Dashboard />
         </Route>
         <Route exact path="/admin/orders">
@@ -86,33 +83,6 @@ const App = () => {
   const userComponents = () => {
     return (
       <>
-        <Navbar cart={cart} admin={admin} />
-        <Switch>
-          <Route exact path="/">
-            <HomePage itemList={itemList} cart={cart} setCart={setCart} />
-          </Route>
-          <Route exact path="/user">
-            <UserDetails user={user} setUser={setUser} setCart={setCart} />
-          </Route>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/signup">
-            <Signup />
-          </Route>
-          <Route exact path="/cart">
-            <ShoppingCart
-              cart={cart}
-              setCart={setCart}
-              user={user}
-              setUser={setUser}
-            />
-          </Route>
-          {admin ? adminComponents() : null}
-          <Route path="*">
-            <Error />
-          </Route>
-        </Switch>
         <Navbar user={user} cart={cart} admin={admin} />
         {loaded === false ? (
           <div className="container">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Admin.css";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -14,10 +15,10 @@ const Admin = () => {
   return (
     <div>
       <div class="sidenav">
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Orders</a>
+        <a href="#">Users</a>
+        <a href="#">Items</a>
       </div>
       <h1>ADMIN PAGE</h1>
     </div>
