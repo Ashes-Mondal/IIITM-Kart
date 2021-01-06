@@ -1,12 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
-
-<<<<<<< HEAD
-const Orders = ({ setCart, setAdmin }) => {
-=======
 const Users = ({ setCart, setAdmin }) => {
->>>>>>> 4990f35b44484d30c9d27ab2fe3c58091b641e93
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [users, setUsers] = useState([]);
