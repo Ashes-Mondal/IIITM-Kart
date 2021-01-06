@@ -50,9 +50,6 @@ const userDetailSchema = mongoose.Schema({
       deliveryStatus:Boolean,
       dateOfOrder: String,
       totalCost: Number,
-      razorpayPaymentId: String,
-      razorpayOrderId: String,
-      razorpaySignature: String,
     },
   ],
 });

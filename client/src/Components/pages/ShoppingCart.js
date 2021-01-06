@@ -7,7 +7,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
   const [orderHistory, setOrderHistory] = useState(false);
   const history = useHistory();
   const getTotalSum = () => {
-    return cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
+    let total = cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
+    return total;
   };
 
   //clears the cart
@@ -15,7 +16,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ userId: user._id }),
     };
     const result = await (await fetch("/clearCart", requestOptions)).json();
     console.log("result:", result);
@@ -23,9 +24,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart([]);
     } else {
       alert("Could not clear the cart!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
     }
   };
   // increase qty of item by 1
@@ -34,6 +32,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty + 1,
       }),
@@ -50,9 +49,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart(tempCart);
     } else {
       alert("Could not increase the Qty!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
     }
   };
 
@@ -62,6 +58,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        userId: user._id,
         itemId: Product.item._id,
         itemQty: Product.Qty - 1,
       }),
@@ -70,7 +67,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product.item._id === Product.item._id && product.Qty > 1) {
+        if (product.item._id === Product.item._id && product.Qty > 0) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -78,9 +75,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       setCart(tempCart);
     } else {
       alert("Could not decrease the Qty!");
-      setCart([]);
-      setIsAuth(false);
-      history.push("/login");
     }
   };
 
@@ -90,19 +84,18 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        userId: user._id,
         itemId: productDetail.item._id,
       }),
     };
     const result = await (
       await fetch("/deleteFromCart", requestOptions)
     ).json();
+    console.log("result:", result);
     if (result.response) {
       setCart(cart.filter((product) => product !== productDetail));
     } else {
       alert("Could not remove from cart!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
     }
   };
 
@@ -212,8 +205,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
         }
       },
       prefill: {
-        email: "ashes@Rajpopat.com",
-        phone_number: "9899999999",
+        email: "example@email.com",
+        phone_number: "1234567890",
       },
     };
     const paymentObject = new window.Razorpay(options);

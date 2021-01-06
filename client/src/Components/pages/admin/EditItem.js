@@ -1,18 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
-const AddItem = () => {
-  const [itemDetails, setItemDetails] = useState({
-    category: "",
-    cost: "",
-    description: "",
-    imageURL: "",
-    itemName: "",
+const EditItem = ({ itemList }) => {
+  let history = useHistory();
+  const { itemId } = useParams();
+  const [itemDetails, setItemDetails] = useState(() => {
+    let item = itemList.filter((item) => {
+      return item._id == itemId;
+    });
+    return item[0];
   });
+
+  if (itemDetails == undefined) {
+    setItemDetails({
+      category: "",
+      cost: "",
+      description: "",
+      imageURL: "",
+      itemName: "",
+    });
+  }
+
+  const updateItem = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        itemId: itemDetails._id,
+        itemName: itemDetails.itemName,
+        description: itemDetails.description,
+        cost: itemDetails.cost,
+        imageURL: itemDetails.imageURL,
+      }),
+    };
+    const result = await (await fetch("/editItem", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not update! " + result.err);
+    }
+  };
+  if (itemDetails == undefined) {
+    history.push("/admin/items");
+    return;
+  }
   return (
     <div className="adminPanel">
-      <h1>Add Item</h1>
-      <form className="container p-3 m-0 ml-4" action="/addItem" method="POST">
-        <h3>Enter Item Details</h3>
+      <h1>Edit Item</h1>
+      <form className="container p-3 m-0 ml-4">
+        <h3>Edit Item Details</h3>
         <div className="row m-3">
           <div className="col-12">
             <label>Item Name: </label>
@@ -83,10 +117,17 @@ const AddItem = () => {
             ></input>
           </div>
         </div>
-        <button className="btn btn-primary">Add Item</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            updateItem();
+          }}
+        >
+          Update Item
+        </button>
       </form>
     </div>
   );
 };
 
-export default AddItem;
+export default EditItem;

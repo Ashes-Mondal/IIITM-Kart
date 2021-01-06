@@ -10,6 +10,7 @@ const router = express.Router();
 //GET REQUESTS
 router.get("/fetchItems", userControllerFunctions.fetchItems);
 router.get("/getUserDetails", userControllerFunctions.getUserDetails);
+router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 //POST REQUESTS
 router.post("/addToCart", userControllerFunctions.addToCart);
 router.post("/deleteFromCart", userControllerFunctions.deleteFromCart);
@@ -30,8 +31,11 @@ router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
 router.get("/fetchAllOrders", adminControllerFunctions.fetchAllOrders);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
-router.post("/adminEditUserDetails", adminControllerFunctions.adminEditUserDetails);
-router.post("/adminChangeDeliveryStatus", adminControllerFunctions.adminChangeDeliveryStatus);
+router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
+router.post("/adminChangeDeliveryStatus",adminControllerFunctions.adminChangeDeliveryStatus);
+router.post("/deleteItem", adminControllerFunctions.deleteItem);
+router.post("/editItem", adminControllerFunctions.editItem);
+router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
 
 //exporting
 module.exports = router;
