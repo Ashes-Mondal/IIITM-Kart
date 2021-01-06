@@ -29,7 +29,12 @@ router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
-router.post("/adminEditUserDetails", adminControllerFunctions.adminEditUserDetails);
+router.post("/deleteItem", adminControllerFunctions.deleteItem);
+router.post("/editItem", adminControllerFunctions.editItem);
+router.post(
+  "/adminEditUserDetails",
+  adminControllerFunctions.adminEditUserDetails
+);
 
 //exporting
 module.exports = router;

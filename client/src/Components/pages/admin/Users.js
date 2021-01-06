@@ -1,59 +1,56 @@
-import React, { useEffect, useState,useContext } from "react";
-import { useHistory } from "react-router-dom"
-import {Authentication} from "../../../App"
+import React, { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Authentication } from "../../../App";
 
-
-const Orders = ({setCart,setAdmin}) => {
+const Users = ({ setCart, setAdmin }) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({
-    _id:"",
+    _id: "",
     name: { firstName: "", lastName: "" },
     email: "",
     phone: "",
-    address:""
+    address: "",
   });
   const [edit, setEdit] = useState("");
   useEffect(() => {
     const fetchAllUsers = async () => {
       const result = await (await fetch("/fetchAllUsers")).json();
-      if(result.response===true){
+      if (result.response === true) {
         setUsers(result.usersData);
-      }
-      else{
-        setUsers([])
+      } else {
+        setUsers([]);
         setUserDetails({
-          _id:"",
+          _id: "",
           name: { firstName: "", lastName: "" },
           email: "",
           phone: "",
-          address:""
-        })
-        setIsAuth(false)
-        setAdmin(false)
-        history.push("/login")
+          address: "",
+        });
+        setIsAuth(false);
+        setAdmin(false);
+        history.push("/login");
       }
-      
     };
     fetchAllUsers();
-  }, [history,setIsAuth,setAdmin]);
+  }, [history, setIsAuth, setAdmin]);
 
   const toggleEdit = (user) => {
     setEdit(user.phone);
-    setUserDetails(user)
+    setUserDetails(user);
   };
-  const handleUpdate = async() => {
+  const handleUpdate = async () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId:userDetails._id,
+        userId: userDetails._id,
         firstName: userDetails.name.firstName,
         lastName: userDetails.name.lastName,
         phone: userDetails.phone,
         email: userDetails.email,
-        address:userDetails.address
+        address: userDetails.address,
       }),
     };
     const result = await (
@@ -65,13 +62,15 @@ const Orders = ({setCart,setAdmin}) => {
       setCart([]);
       history.push("/login");
     }
-    //finally resetting to normal 
-    setUsers(users.map(user=>{
-      if(edit === user.phone){
-        return userDetails;
-      }
-      return user;
-    }));
+    //finally resetting to normal
+    setUsers(
+      users.map((user) => {
+        if (edit === user.phone) {
+          return userDetails;
+        }
+        return user;
+      })
+    );
     setEdit("");
   };
 
@@ -102,19 +101,36 @@ const Orders = ({setCart,setAdmin}) => {
                   <label>Name:</label>
                   <input
                     type="text"
-                    value={user.phone === edit?userDetails.name.firstName:user.name.firstName}
-                    onChange={(e)=>{
-                      let changedUserDetails = {...userDetails,name:{...userDetails.name,firstName:e.target.value}}
-                      setUserDetails(changedUserDetails)
+                    value={
+                      user.phone === edit
+                        ? userDetails.name.firstName
+                        : user.name.firstName
+                    }
+                    onChange={(e) => {
+                      let changedUserDetails = {
+                        ...userDetails,
+                        name: {
+                          ...userDetails.name,
+                          firstName: e.target.value,
+                        },
+                      };
+                      setUserDetails(changedUserDetails);
                     }}
                     disabled={user.phone === edit ? false : true}
                   />
                   <input
                     type="text"
-                    value={user.phone === edit?userDetails.name.lastName:user.name.lastName}
-                    onChange={(e)=>{
-                      let changedUserDetails = {...userDetails,name:{...userDetails.name,lastName:e.target.value}}
-                      setUserDetails(changedUserDetails)
+                    value={
+                      user.phone === edit
+                        ? userDetails.name.lastName
+                        : user.name.lastName
+                    }
+                    onChange={(e) => {
+                      let changedUserDetails = {
+                        ...userDetails,
+                        name: { ...userDetails.name, lastName: e.target.value },
+                      };
+                      setUserDetails(changedUserDetails);
                     }}
                     disabled={user.phone === edit ? false : true}
                   />
@@ -123,10 +139,13 @@ const Orders = ({setCart,setAdmin}) => {
                   <label>Phone:</label>
                   <input
                     type="text"
-                    value={user.phone === edit?userDetails.phone:user.phone}
-                    onChange={(e)=>{
-                      let changedUserDetails = {...userDetails,phone:e.target.value}
-                      setUserDetails(changedUserDetails)
+                    value={user.phone === edit ? userDetails.phone : user.phone}
+                    onChange={(e) => {
+                      let changedUserDetails = {
+                        ...userDetails,
+                        phone: e.target.value,
+                      };
+                      setUserDetails(changedUserDetails);
                     }}
                     disabled={user.phone === edit ? false : true}
                   />
@@ -135,10 +154,13 @@ const Orders = ({setCart,setAdmin}) => {
                   <label>Email:</label>
                   <input
                     type="text"
-                    value={user.phone === edit?userDetails.email:user.email}
-                    onChange={(e)=>{
-                      let changedUserDetails = {...userDetails,email:e.target.value}
-                      setUserDetails(changedUserDetails)
+                    value={user.phone === edit ? userDetails.email : user.email}
+                    onChange={(e) => {
+                      let changedUserDetails = {
+                        ...userDetails,
+                        email: e.target.value,
+                      };
+                      setUserDetails(changedUserDetails);
                     }}
                     disabled={user.phone === edit ? false : true}
                   />
@@ -147,10 +169,15 @@ const Orders = ({setCart,setAdmin}) => {
                   <label>Address:</label>
                   <input
                     type="text"
-                    value={user.phone === edit?userDetails.address:user.address}
-                    onChange={(e)=>{
-                      let changedUserDetails = {...userDetails,address:e.target.value}
-                      setUserDetails(changedUserDetails)
+                    value={
+                      user.phone === edit ? userDetails.address : user.address
+                    }
+                    onChange={(e) => {
+                      let changedUserDetails = {
+                        ...userDetails,
+                        address: e.target.value,
+                      };
+                      setUserDetails(changedUserDetails);
                     }}
                     disabled={user.phone === edit ? false : true}
                   />
@@ -164,4 +191,4 @@ const Orders = ({setCart,setAdmin}) => {
   );
 };
 
-export default Orders;
+export default Users;

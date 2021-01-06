@@ -1,7 +1,6 @@
 //Dependencies
 const mongoose = require("mongoose");
 
-
 // itemDetailSchema
 const itemDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -27,13 +26,11 @@ const itemDetailSchema = mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    // required: true,
     max: 5,
   },
 });
 
 const ItemDetail = mongoose.model("ItemDetail", itemDetailSchema);
 
-module.exports  = {ItemDetail:ItemDetail,itemDetailSchema:itemDetailSchema} ;
-
-
+module.exports = { ItemDetail: ItemDetail, itemDetailSchema: itemDetailSchema };
