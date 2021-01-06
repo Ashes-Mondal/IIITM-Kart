@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AddItem = () => {
   const [itemDetails, setItemDetails] = useState({
@@ -9,17 +10,17 @@ const AddItem = () => {
     itemName: "",
   });
   return (
-    <div className="adminPanel">
+    <div className="adminPanel ">
       <h1>Add Item</h1>
-      <form className="container p-3 m-0 ml-4" action="/addItem" method="POST">
+      <form className="effect3D" action="/addItem" method="POST">
         <h3>Enter Item Details</h3>
-        <div className="row m-3">
+        <div className="row">
           <div className="col-12">
             <label>Item Name: </label>
             <input
               type="text"
               name="itemName"
-              placeholder="Item Name"
+              // placeholder="Item Name"
               required
               value={itemDetails.itemName}
               onChange={(e) => {
@@ -29,15 +30,16 @@ const AddItem = () => {
           </div>
           <div className="col-12">
             <label>Description: </label>
-            <textarea
+            <input
+              type="text"
               name="description"
-              placeholder="Description"
+              // placeholder="Description"
               required
               value={itemDetails.description}
               onChange={(e) => {
                 setItemDetails({ ...itemDetails, description: e.target.value });
               }}
-            ></textarea>
+            ></input>
           </div>
         </div>
         <div className="row">
@@ -46,7 +48,7 @@ const AddItem = () => {
             <input
               type="text"
               name="category"
-              placeholder="Category"
+              // placeholder="Category"
               required
               value={itemDetails.category}
               onChange={(e) => {
@@ -59,7 +61,7 @@ const AddItem = () => {
             <input
               type="text"
               name="cost"
-              placeholder="Cost"
+              // placeholder="Cost"
               required
               value={itemDetails.cost}
               onChange={(e) => {
@@ -74,7 +76,7 @@ const AddItem = () => {
             <input
               type="text"
               name="imageURL"
-              placeholder="Image URL"
+              // placeholder="Image URL"
               required
               value={itemDetails.imageURL}
               onChange={(e) => {
@@ -84,6 +86,9 @@ const AddItem = () => {
           </div>
         </div>
         <button className="btn btn-primary">Add Item</button>
+        <Link to="/admin/items" className="text-white">
+          <button className="btn btn-danger ml-3 float-right">Cancel</button>
+        </Link>
       </form>
     </div>
   );

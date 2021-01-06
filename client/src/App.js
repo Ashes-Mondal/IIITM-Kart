@@ -80,8 +80,7 @@ const App = () => {
 
           <Switch>
             <Route exact path="/admin">
-              {" "}
-              <Dashboard />
+              <Dashboard admin={user} />
             </Route>
             <Route exact path="/admin/items">
               <Items itemList={itemList} setItemList={setItemList} />
