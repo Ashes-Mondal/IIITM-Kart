@@ -14,6 +14,7 @@ import Orders from "./Components/pages/admin/Orders";
 import Users from "./Components/pages/admin/Users";
 import SideNavBar from "./Components/pages/admin/SideNavBar";
 import Items from "./Components/pages/admin/Items";
+import AddItem from "./Components/pages/admin/AddItem";
 import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
@@ -38,6 +39,8 @@ const App = () => {
     name: { firstName: "", lastName: "" },
     email: "",
     phone: "",
+    userCart:[],
+    orders:[]
   });
   const [loaded, setLoaded] = useState(false);
   const [admin, setAdmin] = useState(false);
@@ -70,21 +73,28 @@ const App = () => {
   const adminComponents = () => {
     return (
       <>
-        <div className="flex-container p-0">
+        <div>
           <SideNavBar />
 
           <Switch>
             <Route exact path="/admin">
+<<<<<<< HEAD
               <Dashboard admin={user} />
+=======
+              <Dashboard setAdmin={setAdmin}/>
+>>>>>>> 1cd43ac3d65ba012d78b93f51fc915ee77d773a7
             </Route>
             <Route exact path="/admin/items">
-              <Items itemList={itemList} />
+              <Items itemList={itemList} setAdmin={setAdmin}/>
+            </Route>
+            <Route exact path="/admin/addItem">
+              <AddItem />
             </Route>
             <Route exact path="/admin/orders">
-              <Orders />
+              <Orders setAdmin={setAdmin} />
             </Route>
             <Route exact path="/admin/users">
-              <Users />
+              <Users setCart={setCart} setAdmin={setAdmin}/>
             </Route>
           </Switch>
         </div>

@@ -215,6 +215,7 @@ h1 {
   padding: 2rem;
   margin: 10vh 30%;
 }
+<<<<<<< HEAD
 
 .column {
   float: left;
@@ -251,3 +252,12 @@ h1 {
   text-align: center;
   background-color: #f1f1f1;
 }
+=======
+/********************************************** Admin page************************************/
+.user-form{
+display: flex;
+justify-content: flex-start;
+text-align: left;
+flex-direction: column;
+}
+>>>>>>> 1cd43ac3d65ba012d78b93f51fc915ee77d773a7

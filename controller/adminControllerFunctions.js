@@ -26,10 +26,9 @@ exports.addItem = async (req, res) => {
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();
-    res.send("Item details Sucessfully saved in Database");
-  } catch (error) {
-    console.log("Add Item error: ", error);
-    res.send(`Error occurred ${error}`);
+    res.send({response:true});
+  } catch (err) {
+    res.send({response:false,error:er});
   }
 };
 //Delete ITEM
@@ -43,4 +42,35 @@ exports.deleteItem = async (req, res) => {
     if (err) res.send({ response: false, error: err });
     else res.send({ response: true });
   });
+};
+//EDIT USER DETAILS
+exports.adminEditUserDetails = async (req, res) => {
+  //body details are obtained
+  const adminId = req.session.userId;
+  if (adminId) {
+    const userId = req.body.userId;
+    const address = req.body.address;
+    const phone = req.body.phone;
+    const email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      {
+        address:address,
+        phone: phone,
+        email: email,
+        name: { firstName: firstName, lastName: lastName },
+      },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.send({ response: true });
+        }
+      }
+    );
+  } else {
+    res.send({ response: false, error: "Not logged in" });
+  }
 };
