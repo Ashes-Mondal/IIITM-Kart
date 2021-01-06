@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const shortid = require("shortid");
 const Razorpay = require("razorpay");
-const cors = require("cors");
 
 //Files
 const { ItemDetail } = require("../models/itemSchema");
-const UserDetail = require("../models/userScema");
+const {UserDetail} = require("../models/userSchema");
+const {OrderDetail} = require("../models/orderSchema");
 const keys = require("../key");
 const razorInstance = new Razorpay({
   key_id: keys.key_id,
@@ -287,12 +287,32 @@ exports.addOrder = async (req, res) => {
     (err) => {
       if (err) res.send({ response: false, error: err });
       else {
+        //funtion that adds orders in the databse
+        const addOrderToDatabase = async()=>{
+          userDetails = await UserDetail.findById(userId);
+          const order = {
+          _id:orderId,
+          orderDetails:{
+            user: userDetails,
+            order: req.body.userCart,
+            dateOfOrder: new Date(),
+            totalCost: req.body.totalCost,
+            razorpayOrderId: req.body.razorpayOrderId,
+            razorpayPaymentId: req.body.razorpayPaymentId,
+            razorpaySignature: req.body.razorpaySignature,
+          }
+        }
+        newOrder = await new OrderDetail(order);
+        await newOrder.save()
+        }
+        //function called
+        addOrderToDatabase()
         res.send({ response: true ,orderId:orderId});
       }
     }
   );
 };
-
+//CANCEL ORDER
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
   if (userId === undefined) {

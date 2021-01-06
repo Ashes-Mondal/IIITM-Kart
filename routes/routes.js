@@ -27,9 +27,11 @@ router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
+router.get("/fetchAllOrders", adminControllerFunctions.fetchAllOrders);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
 router.post("/adminEditUserDetails", adminControllerFunctions.adminEditUserDetails);
+router.post("/adminCancelOrder", adminControllerFunctions.adminCancelOrder);
 
 //exporting
 module.exports = router;

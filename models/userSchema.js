@@ -58,4 +58,4 @@ const userDetailSchema = mongoose.Schema({
 
 const UserDetail = mongoose.model("UserDetail", userDetailSchema);
 
-module.exports = UserDetail;
+module.exports = {UserDetail:UserDetail,userDetailSchema:userDetailSchema};

@@ -185,3 +185,13 @@ justify-content: flex-start;
 text-align: left;
 flex-direction: column;
 }
+.order-div{
+  display: flex;
+justify-content: space-between;
+text-align: left;
+flex-direction: column;
+}
+.order-item-div{
+  display: flex;
+  justify-content: space-between;
+}

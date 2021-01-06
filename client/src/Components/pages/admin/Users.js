@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import {Authentication} from "../../../App"
 
 
-const Orders = ({setCart,setAdmin}) => {
+const Users = ({setCart,setAdmin}) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [users, setUsers] = useState([]);
@@ -164,4 +164,4 @@ const Orders = ({setCart,setAdmin}) => {
   );
 };
 
-export default Orders;
+export default Users;
