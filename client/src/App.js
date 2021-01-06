@@ -39,8 +39,8 @@ const App = () => {
     name: { firstName: "", lastName: "" },
     email: "",
     phone: "",
-    userCart:[],
-    orders:[]
+    userCart: [],
+    orders: [],
   });
   const [loaded, setLoaded] = useState(false);
   const [admin, setAdmin] = useState(false);
@@ -78,14 +78,10 @@ const App = () => {
 
           <Switch>
             <Route exact path="/admin">
-<<<<<<< HEAD
-              <Dashboard admin={user} />
-=======
-              <Dashboard setAdmin={setAdmin}/>
->>>>>>> 1cd43ac3d65ba012d78b93f51fc915ee77d773a7
+              <Dashboard admin={user} setAdmin={setAdmin} />
             </Route>
             <Route exact path="/admin/items">
-              <Items itemList={itemList} setAdmin={setAdmin}/>
+              <Items itemList={itemList} setAdmin={setAdmin} />
             </Route>
             <Route exact path="/admin/addItem">
               <AddItem />
@@ -94,7 +90,7 @@ const App = () => {
               <Orders setAdmin={setAdmin} />
             </Route>
             <Route exact path="/admin/users">
-              <Users setCart={setCart} setAdmin={setAdmin}/>
+              <Users setCart={setCart} setAdmin={setAdmin} />
             </Route>
           </Switch>
         </div>
