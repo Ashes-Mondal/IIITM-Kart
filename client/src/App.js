@@ -12,6 +12,8 @@ import Signup from "./Components/pages/Signup";
 import Dashboard from "./Components/pages/admin/Dashboard";
 import Orders from "./Components/pages/admin/Orders";
 import Users from "./Components/pages/admin/Users";
+import SideNavBar from "./Components/pages/admin/SideNavBar";
+import Items from "./Components/pages/admin/Items";
 import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
@@ -68,15 +70,24 @@ const App = () => {
   const adminComponents = () => {
     return (
       <>
-        <Route exact path="/admin">
-          <Dashboard />
-        </Route>
-        <Route exact path="/admin/orders">
-          <Orders />
-        </Route>
-        <Route exact path="/admin/users">
-          <Users />
-        </Route>
+        <div className="flex-container p-0">
+          <SideNavBar />
+
+          <Switch>
+            <Route exact path="/admin">
+              <Dashboard />
+            </Route>
+            <Route exact path="/admin/items">
+              <Items itemList={itemList} />
+            </Route>
+            <Route exact path="/admin/orders">
+              <Orders />
+            </Route>
+            <Route exact path="/admin/users">
+              <Users />
+            </Route>
+          </Switch>
+        </div>
       </>
     );
   };
