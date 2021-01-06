@@ -8,7 +8,10 @@ const Items = ({ itemList }) => {
       {console.log("Items:", itemList)}
       {itemList.map((item, index) => {
         return (
-          <div key={index} className="container m-3 p-2 text-left row">
+          <div
+            key={index}
+            className="container shadow bg-white rounded m-3 p-2 text-left row"
+          >
             <h3>{item.itemName}</h3>
             <h5 className="m-2">ID: {item._id}</h5>
             <button className="btn btn-primary text-right">Edit</button>
