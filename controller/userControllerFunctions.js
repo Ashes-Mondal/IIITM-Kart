@@ -6,8 +6,8 @@ const Razorpay = require("razorpay");
 
 //Files
 const { ItemDetail } = require("../models/itemSchema");
-const {UserDetail} = require("../models/userSchema");
-const {OrderDetail} = require("../models/orderSchema");
+const { UserDetail } = require("../models/userSchema");
+const { OrderDetail } = require("../models/orderSchema");
 const keys = require("../key");
 const razorInstance = new Razorpay({
   key_id: keys.key_id,
@@ -276,6 +276,7 @@ exports.addOrder = async (req, res) => {
         {
           _id: orderId,
           order: req.body.userCart,
+          deliveryStatus: false,
           dateOfOrder: new Date(),
           totalCost: req.body.totalCost,
           razorpayOrderId: req.body.razorpayOrderId,
@@ -288,26 +289,31 @@ exports.addOrder = async (req, res) => {
       if (err) res.send({ response: false, error: err });
       else {
         //funtion that adds orders in the databse
-        const addOrderToDatabase = async()=>{
-          userDetails = await UserDetail.findById(userId);
+        const addOrderToDatabase = async () => {
+          const userDetails = await UserDetail.findById(userId);
           const order = {
-          _id:orderId,
-          orderDetails:{
-            user: userDetails,
+            _id: orderId,
+            deliveryStatus: false,
+            user: {
+              _id:userDetails._id,
+              name:{...userDetails.name},
+              phone:userDetails.phone,
+              email:userDetails.email,
+              address:userDetails.address,
+            },
             order: req.body.userCart,
             dateOfOrder: new Date(),
             totalCost: req.body.totalCost,
             razorpayOrderId: req.body.razorpayOrderId,
             razorpayPaymentId: req.body.razorpayPaymentId,
             razorpaySignature: req.body.razorpaySignature,
-          }
-        }
-        newOrder = await new OrderDetail(order);
-        await newOrder.save()
-        }
+          };
+          const ord = await new OrderDetail(order);
+          await ord.save();
+        };
         //function called
-        addOrderToDatabase()
-        res.send({ response: true ,orderId:orderId});
+        addOrderToDatabase();
+        res.send({ response: true, orderId: orderId });
       }
     }
   );
@@ -322,7 +328,7 @@ exports.cancelOrder = async (req, res) => {
   const orderId = req.body.orderId;
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
-  ordersList = ordersList.filter(orderElement => orderElement._id != orderId);
+  ordersList = ordersList.filter((orderElement) => orderElement._id != orderId);
   await UserDetail.findByIdAndUpdate(
     userId,
     {

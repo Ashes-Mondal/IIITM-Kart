@@ -92,34 +92,45 @@ exports.fetchAllOrders = async (req, res) => {
     res.send({ response: false, error: err });
   }
 };
-//CANCEL ORDER
-exports.adminCancelOrder = async (req, res) => {
-  const adminId = req.session.userId;
-  if (adminId === undefined) {
+//Order Delivery status toggle
+exports.adminChangeDeliveryStatus = async (req,res) => {
+  if (req.session.userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+  const customerId = req.body.customerId;
   const orderId = req.body.orderId;
-  const userId = req.body.customerId;
-
-  let orders = await OrderDetail.find();
-  orders = orders.filter(order=>order._id!==orderId);
-  OrderDetail.findByIdAndUpdate()
-
-
-  const userDetails = await UserDetail.findById(userId).exec();
-  let ordersList = userDetails.orders;
-  ordersList = ordersList.filter(orderElement => orderElement._id != orderId);
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    {
-      orders: ordersList,
-    },
+  const tempOrder = await OrderDetail.findById(orderId);
+  await OrderDetail.findByIdAndUpdate(
+    orderId,
+    { deliveryStatus: !tempOrder.deliveryStatus },
     (err) => {
       if (err) res.send({ response: false, error: err });
       else {
-        res.send({ response: true });
+        //updating customer's database
+        const updateCustomer = async()=>{
+          let user = await UserDetail.findById(customerId);
+          
+          let userOrders = user.orders.map((order) => {
+            if (orderId == order._id) {
+              order.deliveryStatus = !order.deliveryStatus;
+            }
+            return order;
+          });
+          await UserDetail.findByIdAndUpdate(
+            customerId,
+            { orders: userOrders },
+            (err) => {
+              if (err) res.send({ response: false, error: err });
+              else {
+                res.send({ response: true });
+              }
+            }
+          );
+        }
+        updateCustomer();
       }
     }
   );
+
 };

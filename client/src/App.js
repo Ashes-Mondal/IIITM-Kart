@@ -87,7 +87,7 @@ const App = () => {
               <AddItem />
             </Route>
             <Route exact path="/admin/orders">
-              <Orders setAdmin={setAdmin} />
+              <Orders setAdmin={setAdmin} setCart={setCart}/>
             </Route>
             <Route exact path="/admin/users">
               <Users setCart={setCart} setAdmin={setAdmin}/>

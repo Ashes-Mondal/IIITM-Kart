@@ -47,6 +47,7 @@ const userDetailSchema = mongoose.Schema({
           Qty: Number,
         },
       ],
+      deliveryStatus:Boolean,
       dateOfOrder: String,
       totalCost: Number,
       razorpayPaymentId: String,

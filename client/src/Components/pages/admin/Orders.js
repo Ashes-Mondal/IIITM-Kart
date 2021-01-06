@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 
-const Orders = ({ setAdmin }) => {
+const Orders = ({ setAdmin ,setCart }) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [orders, setOrders] = useState([]);
@@ -21,29 +21,31 @@ const Orders = ({ setAdmin }) => {
     fetchAllOrders();
   }, [history, setIsAuth, setAdmin]);
 
-
-//  const handleCancel = async (order) =>{
-//   const customerId = order.orderDetails.user._id;
-//   const orderId = order._id;
-//   //cancelling the order
-//   const requestOptions = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({
-//       customerId:customerId,
-//       orderId:orderId
-//     }),
-//   };
-//   const result = await (await fetch("/adminCancelOrder", requestOptions)).json();
-
-//   if (result.response === true) {
-//     setOrders(result.ordersData);
-//   } else {
-//     setOrders([]);
-//     setIsAuth(false);
-//     setAdmin(false);
-//     history.push("/login");
-//   }}
+ const handleDeliveryStatus = async(order)=>{
+  const customerId = order.user._id;
+  const orderId = order._id;
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      customerId:customerId,
+      orderId:orderId
+    }),
+  };
+  const result = await (await fetch("/adminChangeDeliveryStatus", requestOptions)).json();
+  if (result.response === false) {
+    alert("Could not proceed further!");
+    setIsAuth(false);
+    setCart([]);
+    history.push("/login");
+  }else{
+    let ordersData = orders.map(orderdetails=>{
+      if(orderdetails._id === orderId)order.deliveryStatus = !order.deliveryStatus;
+      return orderdetails;
+    })
+    setOrders(ordersData);
+  }
+  }
 
   return (
     <div className="adminPanel">
@@ -65,23 +67,23 @@ const Orders = ({ setAdmin }) => {
                   </div>
                   <div>
                     <strong>First Name:</strong>
-                    {order.orderDetails.user.name.firstName}
+                    {order.user.name.firstName}
                   </div>
                   <div>
                     <strong>Last Name:</strong>
-                    {order.orderDetails.user.name.lastName}
+                    {order.user.name.lastName}
                   </div>
                   <div>
                     <strong>Phone:</strong>
-                    {order.orderDetails.user.phone}
+                    {order.user.phone}
                   </div>
                   <div>
                     <strong style={{ textAlign: "center" }}>Email:</strong>
-                    {order.orderDetails.user.email}
+                    {order.user.email}
                   </div>
                   <div>
                     <strong>Address:</strong>
-                    {order.orderDetails.user.address}
+                    {order.user.address}
                   </div>
                 </div>
                 {/* PAYMENT DETAILS */}
@@ -91,23 +93,23 @@ const Orders = ({ setAdmin }) => {
                   </div>
                   <div>
                     <strong>Date Of Order:</strong>
-                    {order.orderDetails.dateOfOrder}
+                    {order.dateOfOrder}
                   </div>
                   <div>
                     <strong>Total Cost:</strong>
-                    {order.orderDetails.totalCost}
+                    {order.totalCost}
                   </div>
                   <div>
                     <strong>razorpay PaymentId:</strong>
-                    {order.orderDetails.razorpayPaymentId}
+                    {order.razorpayPaymentId}
                   </div>
                   <div>
                     <strong>razorpay OrderId:</strong>
-                    {order.orderDetails.razorpayOrderId}
+                    {order.razorpayOrderId}
                   </div>
                   <div>
                     <strong>razorpay Signature:</strong>
-                    {order.orderDetails.razorpaySignature}
+                    {order.razorpaySignature}
                   </div>
                 </div>
                 {/* ORDER */}
@@ -115,7 +117,7 @@ const Orders = ({ setAdmin }) => {
                 <div style={{ textAlign: "center" }}>
                     <strong>Order Details</strong>
                   </div>
-                  {order.orderDetails.order.map((itemDetails) => {
+                  {order.order.map((itemDetails) => {
                     return (
                       <div className="order-item-div ">
                         <div>
@@ -135,7 +137,7 @@ const Orders = ({ setAdmin }) => {
                   })}
                 </div>
               </div>
-              {/* <button onClick={()=>{handleCancel(order)}}>Cancel Order</button> */}
+              <button onClick={()=>{handleDeliveryStatus(order)}}><strong>{order.deliveryStatus?"DELIVERED":"PENDING"}</strong></button>
             </div>
           );
         })}

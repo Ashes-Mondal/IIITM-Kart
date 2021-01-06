@@ -31,7 +31,7 @@ router.get("/fetchAllOrders", adminControllerFunctions.fetchAllOrders);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
 router.post("/adminEditUserDetails", adminControllerFunctions.adminEditUserDetails);
-router.post("/adminCancelOrder", adminControllerFunctions.adminCancelOrder);
+router.post("/adminChangeDeliveryStatus", adminControllerFunctions.adminChangeDeliveryStatus);
 
 //exporting
 module.exports = router;
