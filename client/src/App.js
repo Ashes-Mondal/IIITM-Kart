@@ -36,6 +36,8 @@ const App = () => {
     name: { firstName: "", lastName: "" },
     email: "",
     phone: "",
+    userCart:[],
+    orders:[]
   });
   const [loaded, setLoaded] = useState(false);
   const [admin, setAdmin] = useState(false);

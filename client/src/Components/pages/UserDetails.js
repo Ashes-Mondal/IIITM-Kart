@@ -1,4 +1,4 @@
-import { useScrollTrigger } from "@material-ui/core";
+
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
@@ -39,12 +39,11 @@ function UserDetails({ user, setUser, setCart }) {
       }),
     };
     const result = await (await fetch("/cancelOrder", requestOptions)).json();
-    console.log("response:", result.response);
+    console.log("CO_response:", result.response);
     if (result.response) {
       let ordersList = user.orders;
-      ordersList = ordersList.filter((orderElement) => {
-        if (orderElement._id !== orderId) return orderElement;
-      });
+      ordersList = ordersList.filter(orderElement => orderElement._id !== orderId);
+      console.log("ordersList",ordersList)
       setUser({
         ...user,
         orders: ordersList,
@@ -102,7 +101,7 @@ function UserDetails({ user, setUser, setCart }) {
                             <div className="flex-child5">
                               <img
                                 src={item.item.imageURL}
-                                alt="item image"
+                                alt="item"
                                 className="orderImgs"
                               />
                             </div>

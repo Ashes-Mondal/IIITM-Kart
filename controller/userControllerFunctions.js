@@ -194,7 +194,6 @@ exports.paymentOrder = async (req, res) => {
 
   try {
     const response = await razorInstance.orders.create(options);
-    console.log("response: " + response);
     res.json({
       id: response.id,
       currency: response.currency,
@@ -288,7 +287,7 @@ exports.addOrder = async (req, res) => {
     (err) => {
       if (err) res.send({ response: false, error: err });
       else {
-        res.send({ response: true });
+        res.send({ response: true ,orderId:orderId});
       }
     }
   );
@@ -303,9 +302,7 @@ exports.cancelOrder = async (req, res) => {
   const orderId = req.body.orderId;
   const userDetails = await UserDetail.findById(userId).exec();
   let ordersList = userDetails.orders;
-  ordersList = ordersList.filter((orderElement) => {
-    if (orderElement._id != orderId) return orderElement;
-  });
+  ordersList = ordersList.filter(orderElement => orderElement._id != orderId);
   await UserDetail.findByIdAndUpdate(
     userId,
     {
