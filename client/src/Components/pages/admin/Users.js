@@ -80,11 +80,14 @@ const Users = ({ setCart, setAdmin }) => {
         <main>
           {users.map((user) => {
             return (
-              <div className="container shadow user-form">
+              <div className="user-form effect3D effect3D-users">
                 {user.phone === edit ? (
-                  <span onClick={handleUpdate}>UPDATE</span>
+                  <span className="edituser" onClick={handleUpdate}>
+                    UPDATE
+                  </span>
                 ) : (
                   <span
+                    className="edituser"
                     onClick={() => {
                       toggleEdit(user);
                     }}

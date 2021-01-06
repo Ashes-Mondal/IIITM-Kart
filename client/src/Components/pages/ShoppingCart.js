@@ -229,11 +229,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
                 src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
                 alt="Cart is empty"
               />
-              <button className="btnShop">
-                <Link to="/" className="text-white">
-                  Start Shopping Now
-                </Link>
-              </button>
+              <Link to="/" className="text-white">
+                <button className="btnShop">Start Shopping Now</button>
+              </Link>
             </div>
           )}
           {cart.map((productDetail, index) => {
@@ -280,12 +278,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
             );
           })}
           {orderHistory ? (
-            <button className="btn btn-warning ml-3">
-              {" "}
-              <Link to="/user" className="btn text-white">
-                Order History
-              </Link>{" "}
-            </button>
+            <Link to="/user" className="btn text-white">
+              <button className="btn btn-warning ml-3">Order History</button>
+            </Link>
           ) : (
             <></>
           )}

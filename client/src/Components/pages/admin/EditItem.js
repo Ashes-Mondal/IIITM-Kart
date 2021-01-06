@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useHistory, Link } from "react-router-dom";
 
 const EditItem = ({ itemList }) => {
   let history = useHistory();
@@ -45,9 +45,9 @@ const EditItem = ({ itemList }) => {
   return (
     <div className="adminPanel">
       <h1>Edit Item</h1>
-      <form className="container p-3 m-0 ml-4">
+      <form className="effect3D">
         <h3>Edit Item Details</h3>
-        <div className="row m-3">
+        <div className="row">
           <div className="col-12">
             <label>Item Name: </label>
             <input
@@ -63,7 +63,8 @@ const EditItem = ({ itemList }) => {
           </div>
           <div className="col-12">
             <label>Description: </label>
-            <textarea
+            <input
+              type="text"
               name="description"
               placeholder="Description"
               required
@@ -71,7 +72,7 @@ const EditItem = ({ itemList }) => {
               onChange={(e) => {
                 setItemDetails({ ...itemDetails, description: e.target.value });
               }}
-            ></textarea>
+            ></input>
           </div>
         </div>
         <div className="row">
@@ -125,6 +126,9 @@ const EditItem = ({ itemList }) => {
         >
           Update Item
         </button>
+        <Link to="/admin/items" className="text-white">
+          <button className="btn btn-danger ml-3 float-right">Cancel</button>
+        </Link>
       </form>
     </div>
   );
