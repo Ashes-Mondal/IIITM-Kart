@@ -15,6 +15,7 @@ import Users from "./Components/pages/admin/Users";
 import SideNavBar from "./Components/pages/admin/SideNavBar";
 import Items from "./Components/pages/admin/Items";
 import AddItem from "./Components/pages/admin/AddItem";
+import EditItem from "./Components/pages/admin/EditItem";
 import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
@@ -23,16 +24,16 @@ const Item = createContext();
 const Authentication = createContext();
 
 //item reducer function
-const reducer = (currState, action) => {
-  switch (action.type) {
-    case "setItemList":
-      return action.payload;
-    default:
-      return currState;
-  }
-};
+// const reducer = (currState, action) => {
+//   switch (action.type) {
+//     case "setItemList":
+//       return action.payload;
+//     default:
+//       return currState;
+//   }
+// };
 const App = () => {
-  const [itemList, dispatch] = useReducer(reducer, []);
+  const [itemList, setItemList] = useState([]);
   const [cart, setCart] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({
@@ -65,7 +66,8 @@ const App = () => {
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
       console.log("listOfItems", listOfItems);
-      dispatch({ type: "setItemList", payload: listOfItems });
+      // dispatch({ type: "setItemList", payload: listOfItems });
+      setItemList(listOfItems);
     };
     fetchItems_fetchUser();
   }, [admin]);
@@ -78,16 +80,26 @@ const App = () => {
 
           <Switch>
             <Route exact path="/admin">
+<<<<<<< HEAD
               <Dashboard admin={user} setAdmin={setAdmin} />
             </Route>
             <Route exact path="/admin/items">
               <Items itemList={itemList} setAdmin={setAdmin} />
+=======
+              <Dashboard />
+            </Route>
+            <Route exact path="/admin/items">
+              <Items itemList={itemList} setItemList={setItemList} />
+>>>>>>> 4990f35b44484d30c9d27ab2fe3c58091b641e93
             </Route>
             <Route exact path="/admin/addItem">
               <AddItem />
             </Route>
+            <Route exact path="/admin/editItem/:itemId">
+              <EditItem itemList={itemList} />
+            </Route>
             <Route exact path="/admin/orders">
-              <Orders setAdmin={setAdmin} />
+              <Orders />
             </Route>
             <Route exact path="/admin/users">
               <Users setCart={setCart} setAdmin={setAdmin} />
@@ -147,7 +159,7 @@ const App = () => {
 
   return (
     <Router>
-      <Item.Provider value={{ setItemList: dispatch, itemList: itemList }}>
+      <Item.Provider value={{ setItemList: setItemList, itemList: itemList }}>
         <User.Provider value={{ user: user, setUser: setUser }}>
           <Authentication.Provider
             value={{ isAuth: isAuth, setIsAuth: setIsAuth }}

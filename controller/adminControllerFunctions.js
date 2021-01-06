@@ -13,22 +13,25 @@ exports.fetchAllUsers = async (req, res) => {
   }
   //Fetching data from database
   const usersData = await UserDetail.find();
-  res.send({response:true,usersData:usersData});
+  res.send({ response: true, usersData: usersData });
 };
 //ADD ITEM
 exports.addItem = async (req, res) => {
   if (req.session.userId === undefined) {
-    res.send({ response: false, error: "Not logged in" });
+    res.redirect("/login");
     return;
   }
   const itemData = req.body;
+  console.log("Item Data:", itemData);
   itemData["_id"] = new mongoose.Types.ObjectId();
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();
-    res.send({response:true});
+    // res.send({ response: true });
+    res.redirect("/admin/items");
   } catch (err) {
-    res.send({response:false,error:er});
+    // res.send({ response: false, error: err });
+    res.redirect("/login");
   }
 };
 //Delete ITEM
@@ -37,11 +40,36 @@ exports.deleteItem = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
-  const itemId = req.body.itemID;
+  const itemId = req.body.itemId;
   await ItemDetail.findByIdAndDelete(itemId, (err) => {
     if (err) res.send({ response: false, error: err });
     else res.send({ response: true });
   });
+};
+exports.editItem = async (req, res) => {
+  //body details are obtained
+  const adminId = req.session.userId;
+  if (adminId) {
+    console.log("Updating Item...");
+    await ItemDetail.findByIdAndUpdate(
+      req.body.itemId,
+      {
+        itemId: req.body._id,
+        itemName: req.body.itemName,
+        description: req.body.description,
+        cost: req.body.cost,
+        imageURL: req.body.imageURL,
+      },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.redirect("/admin/items");
+        }
+      }
+    );
+  } else {
+    res.send({ response: false, error: "Not logged in" });
+  }
 };
 //EDIT USER DETAILS
 exports.adminEditUserDetails = async (req, res) => {
@@ -58,7 +86,7 @@ exports.adminEditUserDetails = async (req, res) => {
     await UserDetail.findByIdAndUpdate(
       userId,
       {
-        address:address,
+        address: address,
         phone: phone,
         email: email,
         name: { firstName: firstName, lastName: lastName },

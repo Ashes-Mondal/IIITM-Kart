@@ -26,7 +26,7 @@ const itemDetailSchema = mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    // required: true,
     max: 5,
   },
 });
