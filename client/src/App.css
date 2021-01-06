@@ -178,3 +178,10 @@ h1 {
   padding: 2rem;
   margin: 10vh 30%;
 }
+/********************************************** Admin page************************************/
+.user-form{
+display: flex;
+justify-content: flex-start;
+text-align: left;
+flex-direction: column;
+}
