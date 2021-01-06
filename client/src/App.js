@@ -65,7 +65,6 @@ const App = () => {
       }
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
-      console.log("listOfItems", listOfItems);
       // dispatch({ type: "setItemList", payload: listOfItems });
       setItemList(listOfItems);
     };
@@ -80,7 +79,7 @@ const App = () => {
 
           <Switch>
             <Route exact path="/admin">
-              <Dashboard user={user}/>
+              <Dashboard user={user} />
             </Route>
             <Route exact path="/admin/items">
               <Items itemList={itemList} setItemList={setItemList} />
@@ -92,7 +91,7 @@ const App = () => {
               <EditItem itemList={itemList} />
             </Route>
             <Route exact path="/admin/orders">
-              <Orders setAdmin={setAdmin} setCart={setCart}/>
+              <Orders setAdmin={setAdmin} setCart={setCart} />
             </Route>
             <Route exact path="/admin/users">
               <Users setCart={setCart} setAdmin={setAdmin} />

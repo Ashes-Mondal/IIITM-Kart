@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
@@ -42,8 +41,10 @@ function UserDetails({ user, setUser, setCart }) {
     console.log("CO_response:", result.response);
     if (result.response) {
       let ordersList = user.orders;
-      ordersList = ordersList.filter(orderElement => orderElement._id !== orderId);
-      console.log("ordersList",ordersList)
+      ordersList = ordersList.filter(
+        (orderElement) => orderElement._id !== orderId
+      );
+      console.log("ordersList", ordersList);
       setUser({
         ...user,
         orders: ordersList,
@@ -118,6 +119,15 @@ function UserDetails({ user, setUser, setCart }) {
                       })}
                       <b>Total Cost:</b>
                       {user.orders[user.orders.length - index - 1].totalCost}
+                      <p>
+                        <b>Delivery Status : </b>
+                        {user.orders[user.orders.length - index - 1]
+                          .deliveryStatus == true ? (
+                          <span className="delivered">Delivered.</span>
+                        ) : (
+                          <span className="pending">Pending...</span>
+                        )}
+                      </p>
                     </div>
                   );
                 })}

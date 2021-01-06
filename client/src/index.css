@@ -338,3 +338,11 @@ a.active-nav-link {
 .effect3D-users {
   width: 70%;
 }
+.delivered {
+  color: rgb(3, 97, 3);
+  font-weight: bold;
+}
+.pending {
+  color: rgb(187, 144, 3);
+  font-weight: bold;
+}
