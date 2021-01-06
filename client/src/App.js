@@ -14,6 +14,7 @@ import Orders from "./Components/pages/admin/Orders";
 import Users from "./Components/pages/admin/Users";
 import SideNavBar from "./Components/pages/admin/SideNavBar";
 import Items from "./Components/pages/admin/Items";
+import AddItem from "./Components/pages/admin/AddItem";
 import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
@@ -72,7 +73,7 @@ const App = () => {
   const adminComponents = () => {
     return (
       <>
-        <div className="flex-container p-0">
+        <div>
           <SideNavBar />
 
           <Switch>
@@ -81,6 +82,9 @@ const App = () => {
             </Route>
             <Route exact path="/admin/items">
               <Items itemList={itemList} setAdmin={setAdmin}/>
+            </Route>
+            <Route exact path="/admin/addItem">
+              <AddItem />
             </Route>
             <Route exact path="/admin/orders">
               <Orders setAdmin={setAdmin} />

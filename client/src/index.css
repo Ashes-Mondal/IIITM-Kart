@@ -211,29 +211,6 @@ a.active-nav-link {
   border-radius: 10px;
   padding: 10px;
 }
-.sidenav {
-  height: 100%;
-  width: 200px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 6px 6px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
 
 .searchButton {
   border: 0;
@@ -294,16 +271,16 @@ a.active-nav-link {
   color: #33a;
 }
 .sidenav {
+  min-height: 800px;
   height: 100%;
   width: 200px;
-  position: relative;
+  position: fixed;
   z-index: 1;
-  top: 0;
+  top: auto;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
   padding-top: 20px;
-  flex: 2;
 }
 
 .sidenav a {
@@ -319,5 +296,13 @@ a.active-nav-link {
 }
 
 .adminPanel {
-  flex: 9;
+  margin-left: 200px;
+}
+.itemDetails {
+  display: flex;
+  flex: 8;
+}
+.itemButtons {
+  display: flex;
+  flex: 2;
 }
