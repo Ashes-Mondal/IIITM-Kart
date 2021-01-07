@@ -77,7 +77,10 @@ function UserDetails({ user, setUser, setCart }) {
                           }
                           className="cancelOrderButton mr-5 float-right"
                         >
-                          Cancel Order
+                          {user.orders[user.orders.length - index - 1]
+                            .deliveryStatus == true
+                            ? "Return Product"
+                            : "Cancel Order"}
                         </button>
                       </h3>
                       <p>
