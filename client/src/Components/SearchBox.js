@@ -17,7 +17,7 @@ const SearchBox = () => {
     if (result.response === false) {
       alert("Could not find the result!!");
     } else {
-      setItemList({ type: "setItemList", payload: result.itemList });
+      setItemList( result.itemList );
     }
   };
   return (
