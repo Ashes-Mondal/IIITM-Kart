@@ -54,9 +54,9 @@ const Orders = ({ setAdmin, setCart }) => {
     <div className="adminPanel">
       <h1>Orders</h1>
       <main>
-        {orders.map((order) => {
+        {orders.map((order, index) => {
           return (
-            <div className=" box box-orders user-form">
+            <div className=" box box-orders user-form" key={index}>
               {/* ORDER ID */}
               <div>
                 <strong>orderId:</strong>
@@ -125,9 +125,9 @@ const Orders = ({ setAdmin, setCart }) => {
                     <strong>Order Details</strong>
                   </div>
                   <div className="orderbox">
-                    {order.order.map((itemDetails) => {
+                    {order.order.map((itemDetails, index) => {
                       return (
-                        <div className="order-item-div ">
+                        <div className="order-item-div " key={index}>
                           <div>
                             <strong>Item Id:</strong>
                             {itemDetails.item._id}

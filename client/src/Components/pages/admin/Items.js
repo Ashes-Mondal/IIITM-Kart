@@ -11,10 +11,8 @@ const Items = ({ itemList, setItemList }) => {
       }),
     };
     const result = await (await fetch("/deleteItem", requestOptions)).json();
-    //console.log("response:", result.response);
     if (result.response) {
       itemList = itemList.filter((itemElement) => itemElement._id !== itemId);
-      //console.log("itemsList", itemList);
       setItemList(itemList);
     } else {
       alert("Could not delete Item");
@@ -27,40 +25,46 @@ const Items = ({ itemList, setItemList }) => {
         <button className="btn btn-primary addItemButton">+ Add an Item</button>
       </Link>
       <table>
-        <tr>
-          <th>Item Name</th>
-          <th>Item ID</th>
-          <th></th>
-          <th></th>
-        </tr>
-        {console.log("Items:", itemList)}
+        <tbody>
+          <tr>
+            <th>Item Name</th>
+            <th>Item ID</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </tbody>
         {itemList.map((item, index) => {
           return (
-            <tr>
-              <td>
-                <h3>{item.itemName}</h3>
-              </td>
-              <td>
-                <h5 className="m-2"> {item._id}</h5>
-              </td>
-              <td>
-                <Link to={`/admin/editItem/${item._id}`} className="text-white">
-                  <button className="btn btn-primary float-right mr-3 shadow">
-                    Edit
+            <tbody key={index}>
+              <tr>
+                <td>
+                  <h3>{item.itemName}</h3>
+                </td>
+                <td>
+                  <h5 className="m-2"> {item._id}</h5>
+                </td>
+                <td>
+                  <Link
+                    to={`/admin/editItem/${item._id}`}
+                    className="text-white"
+                  >
+                    <button className="btn btn-primary float-right mr-3 shadow">
+                      Edit
+                    </button>
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger float-right shadow"
+                    onClick={() => {
+                      deleteItem(item._id);
+                    }}
+                  >
+                    Delete
                   </button>
-                </Link>
-              </td>
-              <td>
-                <button
-                  className="btn btn-danger float-right shadow"
-                  onClick={() => {
-                    deleteItem(item._id);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            </tbody>
           );
         })}
       </table>

@@ -1,66 +1,67 @@
 import React, { useState } from "react";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
-function Login({setLoaded}) {
+function Login({ setLoaded }) {
   const [error, setError] = useState("");
-	const [password, setPassword] = useState("");
-	const [phone, setPhone] = useState("");
-	const history = useHistory();
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const history = useHistory();
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		//POSTING THE FORM
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ password: password, phone: phone }),
-		};
-		const result = await (await fetch("/login", requestOptions)).json();
-		if (result.response) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //POSTING THE FORM
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: password, phone: phone }),
+    };
+    const result = await (await fetch("/login", requestOptions)).json();
+    if (result.response) {
       setLoaded(true);
       history.push("/");
       history.go();
       setLoaded(false);
-		} else {
-			setError(result.error);
-		}
-	};
+    } else {
+      setError(result.error);
+    }
+  };
 
-	return (
-		<div>
-      {error!==""?(<Alert variant="danger" >
-				<Alert.Heading><h5 style={{textAlign:"center"}}>{error}</h5></Alert.Heading>
-			</Alert>):null}
-			{/*className="login-form"*/}
-			<form className="box mt-5">
-				{/*box shadow-lg mt-5*/}
-				<h1>Login</h1>
-				{/* <label htmlFor="phone">Phone</label> */}
-				<input
-					type="text"
-					name="phone"
-					placeholder="Phone"
-					value={phone}
-					onChange={(e) => {
-						setPhone(e.target.value);
-					}}
-				/>
-				{/* <label htmlFor="password">Password</label> */}
-				<input
-					type="password"
-					name="password"
-					placeholder="password"
-					value={password}
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-				/>
-				<button onClick={handleSubmit}>LogIn</button>
-				Not registered yet? <Link to="/signup">SignUp</Link>.
-			</form>
-		</div>
-	);
+  return (
+    <div>
+      {error !== "" ? (
+        <Alert variant="danger">
+          <Alert.Heading>
+            <h5 style={{ textAlign: "center" }}>{error}</h5>
+          </Alert.Heading>
+        </Alert>
+      ) : null}
+
+      <form className="box mt-5">
+        <h1>Login</h1>
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => {
+            setPhone(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <button onClick={handleSubmit}>LogIn</button>
+        Not registered yet? <Link to="/signup">SignUp</Link>.
+      </form>
+    </div>
+  );
 }
 
 export default Login;

@@ -121,14 +121,14 @@ function UserDetails({ user, setUser, setCart }) {
                               {/* {user.orders[user.orders.length - index - 1]
                                 .deliveryStatus == true ? (
                                 <>
-                                  <div class="slidecontainer">
+                                  <div className="slidecontainer">
                                     Give a rating: 1
                                     <input
                                       type="range"
                                       min={1}
                                       max={5}
                                       defaultValue={item.item.rating}
-                                      class="slider"
+                                      className="slider"
                                       onChange={(e) => {
                                         let tempUser = user;
                                         tempUser.orders[

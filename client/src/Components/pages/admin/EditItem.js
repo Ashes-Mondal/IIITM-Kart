@@ -1,23 +1,11 @@
 import React, { useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 
-const EditItem = ({ itemList }) => {
+const EditItem = ({ itemList, setItemList }) => {
   let history = useHistory();
   const { itemId } = useParams();
-  const [itemDetails, setItemDetails] = useState(() => {
-    let item = itemList.filter((item) => item._id === itemId);
-    return item[0];
-  });
-
-  if (itemDetails === undefined) {
-    setItemDetails({
-      category: "",
-      cost: "",
-      description: "",
-      imageURL: "",
-      itemName: "",
-    });
-  }
+  let item = itemList.filter((item) => item._id === itemId);
+  const [itemDetails, setItemDetails] = useState(item[0]);
 
   const updateItem = async () => {
     const requestOptions = {
@@ -34,12 +22,17 @@ const EditItem = ({ itemList }) => {
     const result = await (await fetch("/editItem", requestOptions)).json();
     if (result.response === false) {
       alert("Could not update! " + result.err);
+    } else {
+      let tempItemList = itemList.map((item) => {
+        if (item._id === itemId) {
+          item = itemDetails;
+        }
+        return item;
+      });
+      setItemList(tempItemList);
+      history.push("/admin/items");
     }
   };
-  if (itemDetails === undefined) {
-    history.push("/admin/items");
-    return;
-  }
   return (
     <div className="adminPanel">
       <h1>Edit Item</h1>
@@ -118,7 +111,8 @@ const EditItem = ({ itemList }) => {
         </div>
         <button
           className="btn btn-primary"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             updateItem();
           }}
         >

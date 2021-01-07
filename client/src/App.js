@@ -88,7 +88,7 @@ const App = () => {
               <AddItem />
             </Route>
             <Route exact path="/admin/editItem/:itemId">
-              <EditItem itemList={itemList} />
+              <EditItem itemList={itemList} setItemList={setItemList} />
             </Route>
             <Route exact path="/admin/orders">
               <Orders setAdmin={setAdmin} setCart={setCart} />
@@ -126,7 +126,7 @@ const App = () => {
               </Route>
             ) : null}
             <Route exact path="/login">
-              <Login setLoaded={setLoaded}/>
+              <Login setLoaded={setLoaded} />
             </Route>
             <Route exact path="/signup">
               <Signup />

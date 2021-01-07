@@ -69,9 +69,9 @@ const Dashboard = ({ user, setAdmin }) => {
           {orders
             .reverse()
             .slice(0, 5)
-            .map((order) => {
+            .map((order, index) => {
               return (
-                <div>
+                <div key={index}>
                   <h6>
                     orderId:{" "}
                     <span>

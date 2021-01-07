@@ -7,7 +7,7 @@ function Error() {
       <br />
       <h1>Error Page</h1>
 
-      <div class="lead mt-5">
+      <div className="lead mt-5">
         Go to the <Link to="/login">Login</Link> Page.
       </div>
     </div>

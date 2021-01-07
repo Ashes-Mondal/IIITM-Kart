@@ -79,9 +79,9 @@ const Users = ({ setCart, setAdmin }) => {
       <div className="adminPanel">
         <h1>Users</h1>
         <main>
-          {users.map((user) => {
+          {users.map((user, index) => {
             return (
-              <div className="user-form effect3D effect3D-users">
+              <div className="user-form effect3D effect3D-users" key={index}>
                 {user.phone === edit ? (
                   <span className="edituser" onClick={handleUpdate}>
                     UPDATE
