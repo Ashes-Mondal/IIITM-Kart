@@ -5,13 +5,11 @@ const EditItem = ({ itemList }) => {
   let history = useHistory();
   const { itemId } = useParams();
   const [itemDetails, setItemDetails] = useState(() => {
-    let item = itemList.filter((item) => {
-      return item._id == itemId;
-    });
+    let item = itemList.filter((item) => item._id === itemId);
     return item[0];
   });
 
-  if (itemDetails == undefined) {
+  if (itemDetails === undefined) {
     setItemDetails({
       category: "",
       cost: "",
@@ -38,7 +36,7 @@ const EditItem = ({ itemList }) => {
       alert("Could not update! " + result.err);
     }
   };
-  if (itemDetails == undefined) {
+  if (itemDetails === undefined) {
     history.push("/admin/items");
     return;
   }

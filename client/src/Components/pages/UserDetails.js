@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
 
@@ -80,7 +80,7 @@ function UserDetails({ user, setUser, setCart }) {
                           className="cancelOrderButton mr-5 float-right"
                         >
                           {user.orders[user.orders.length - index - 1]
-                            .deliveryStatus == true
+                            .deliveryStatus === true
                             ? "Return Product"
                             : "Cancel Order"}
                         </button>
@@ -169,7 +169,7 @@ function UserDetails({ user, setUser, setCart }) {
                       <p>
                         <b>Delivery Status : </b>
                         {user.orders[user.orders.length - index - 1]
-                          .deliveryStatus == true ? (
+                          .deliveryStatus === true ? (
                           <span className="delivered">Delivered.</span>
                         ) : (
                           <span className="pending">Pending...</span>
