@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Authentication } from "../../../App";
 
-const Dashboard = ({user}) => {
+const Dashboard = ({ user, setAdmin }) => {
+  const history = useHistory();
+  const { setIsAuth } = useContext(Authentication);
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    const fetchAllOrders = async () => {
+      const result = await (await fetch("/fetchAllOrders")).json();
+      if (result.response === true) {
+        setOrders(result.ordersData);
+      } else {
+        setOrders([]);
+        setIsAuth(false);
+        setAdmin(false);
+        history.push("/login");
+      }
+    };
+    fetchAllOrders();
+  }, [history, setIsAuth, setAdmin]);
+  console.log("orders: ", orders);
+
+  const pending = () => {
+    var count = 0;
+    orders.map((order) => {
+      if (order.deliveryStatus == false) {
+        count++;
+      }
+    });
+    console.log(count);
+    return count;
+  };
   return (
     <div className="adminPanel">
       <h1>Dashboard</h1>
@@ -19,11 +50,11 @@ const Dashboard = ({user}) => {
           <h5>Admin Email: {user.email}</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-success text-light m-3">
-          <p>83</p>
+          <p>{orders.length}</p>
           <h5>Registered Users</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-warning text-light m-3">
-          <p>104</p>
+          <p>{pending()}</p>
           <h5>Pending Orders</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-danger text-light m-3">
@@ -34,14 +65,59 @@ const Dashboard = ({user}) => {
       <div className="flex-container">
         <div className="flex-childA3 shadow rounded bg-white m-3">
           <p>Recent Orders</p>
+          {orders
+            .reverse()
+            .slice(0, 5)
+            .map((order) => {
+              return (
+                <div>
+                  <h6>
+                    orderId:{" "}
+                    <span>
+                      {order._id} User: {order.user.name.firstName}{" "}
+                      {order.user.name.lastName}
+                    </span>
+                  </h6>
+                </div>
+              );
+            })}
         </div>
+      </div>
+      <div className="flex-container">
         <div className="flex-childA3 shadow rounded bg-white m-3">
           <p>Current Issues</p>
         </div>
       </div>
-      {console.log("Admin is: ", user)}
     </div>
   );
 };
 
 export default Dashboard;
+
+/*
+<div className="flex-container">
+        <div className="flex-childA3 shadow rounded bg-white m-3">
+          <p>Recent Orders</p>
+          {orders.map((order) => {
+            return (
+              <div>
+                <strong>orderId:</strong>
+                <span>{order._id}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+<div className="flex-childA3 shadow rounded bg-white m-3">
+          <p>Current Issues</p>
+        </div>
+   
+var count = 0;        
+for (let i = 0; i < orders.length; i++) {
+      if (orders[i].deliveryStatus == false) {
+        count++;
+      }
+    }
+      return count
+        */

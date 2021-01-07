@@ -11,10 +11,10 @@ const Items = ({ itemList, setItemList }) => {
       }),
     };
     const result = await (await fetch("/deleteItem", requestOptions)).json();
-    console.log("response:", result.response);
+    //console.log("response:", result.response);
     if (result.response) {
       itemList = itemList.filter((itemElement) => itemElement._id !== itemId);
-      console.log("itemsList", itemList);
+      //console.log("itemsList", itemList);
       setItemList(itemList);
     } else {
       alert("Could not delete Item");
