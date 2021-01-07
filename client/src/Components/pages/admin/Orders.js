@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 
-const Orders = ({ setAdmin ,setCart }) => {
+const Orders = ({ setAdmin, setCart }) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [orders, setOrders] = useState([]);
@@ -21,31 +21,34 @@ const Orders = ({ setAdmin ,setCart }) => {
     fetchAllOrders();
   }, [history, setIsAuth, setAdmin]);
 
- const handleDeliveryStatus = async(order)=>{
-  const customerId = order.user._id;
-  const orderId = order._id;
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      customerId:customerId,
-      orderId:orderId
-    }),
+  const handleDeliveryStatus = async (order) => {
+    const customerId = order.user._id;
+    const orderId = order._id;
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerId: customerId,
+        orderId: orderId,
+      }),
+    };
+    const result = await (
+      await fetch("/adminChangeDeliveryStatus", requestOptions)
+    ).json();
+    if (result.response === false) {
+      alert("Could not proceed further!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
+    } else {
+      let ordersData = orders.map((orderdetails) => {
+        if (orderdetails._id === orderId)
+          order.deliveryStatus = !order.deliveryStatus;
+        return orderdetails;
+      });
+      setOrders(ordersData);
+    }
   };
-  const result = await (await fetch("/adminChangeDeliveryStatus", requestOptions)).json();
-  if (result.response === false) {
-    alert("Could not proceed further!");
-    setIsAuth(false);
-    setCart([]);
-    history.push("/login");
-  }else{
-    let ordersData = orders.map(orderdetails=>{
-      if(orderdetails._id === orderId)order.deliveryStatus = !order.deliveryStatus;
-      return orderdetails;
-    })
-    setOrders(ordersData);
-  }
-  }
 
   return (
     <div className="adminPanel">
@@ -114,7 +117,7 @@ const Orders = ({ setAdmin ,setCart }) => {
                 </div>
                 {/* ORDER */}
                 <div className="order-div">
-                <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center" }}>
                     <strong>Order Details</strong>
                   </div>
                   {order.order.map((itemDetails) => {
@@ -137,7 +140,15 @@ const Orders = ({ setAdmin ,setCart }) => {
                   })}
                 </div>
               </div>
-              <button onClick={()=>{handleDeliveryStatus(order)}}><strong>{order.deliveryStatus?"DELIVERED":"PENDING"}</strong></button>
+              <button
+                onClick={() => {
+                  handleDeliveryStatus(order);
+                }}
+              >
+                <strong>
+                  {order.deliveryStatus ? "DELIVERED" : "PENDING"}
+                </strong>
+              </button>
             </div>
           );
         })}
