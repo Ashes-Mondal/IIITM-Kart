@@ -118,7 +118,7 @@ function UserDetails({ user, setUser, setCart }) {
                               <span className="text-muted">
                                 {item.item.description}
                               </span>
-                              {user.orders[user.orders.length - index - 1]
+                              {/* {user.orders[user.orders.length - index - 1]
                                 .deliveryStatus == true &&
                               user.orders[user.orders.length - index - 1].order[
                                 i
@@ -159,7 +159,7 @@ function UserDetails({ user, setUser, setCart }) {
                                 </>
                               ) : (
                                 <></>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         );
