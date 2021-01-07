@@ -56,7 +56,7 @@ const Orders = ({ setAdmin, setCart }) => {
       <main>
         {orders.map((order) => {
           return (
-            <div className="container user-form">
+            <div className=" box box-orders user-form">
               {/* ORDER ID */}
               <div>
                 <strong>orderId:</strong>
@@ -68,25 +68,27 @@ const Orders = ({ setAdmin, setCart }) => {
                   <div style={{ textAlign: "center" }}>
                     <strong>User Details</strong>
                   </div>
-                  <div>
-                    <strong>First Name:</strong>
-                    {order.user.name.firstName}
-                  </div>
-                  <div>
-                    <strong>Last Name:</strong>
-                    {order.user.name.lastName}
-                  </div>
-                  <div>
-                    <strong>Phone:</strong>
-                    {order.user.phone}
-                  </div>
-                  <div>
-                    <strong style={{ textAlign: "center" }}>Email:</strong>
-                    {order.user.email}
-                  </div>
-                  <div>
-                    <strong>Address:</strong>
-                    {order.user.address}
+                  <div className="orderbox">
+                    <div>
+                      <strong>First Name:</strong>
+                      {order.user.name.firstName}
+                    </div>
+                    <div>
+                      <strong>Last Name:</strong>
+                      {order.user.name.lastName}
+                    </div>
+                    <div>
+                      <strong>Phone:</strong>
+                      {order.user.phone}
+                    </div>
+                    <div>
+                      <strong style={{ textAlign: "center" }}>Email:</strong>
+                      {order.user.email}
+                    </div>
+                    <div>
+                      <strong>Address:</strong>
+                      {order.user.address}
+                    </div>
                   </div>
                 </div>
                 {/* PAYMENT DETAILS */}
@@ -94,25 +96,27 @@ const Orders = ({ setAdmin, setCart }) => {
                   <div style={{ textAlign: "center" }}>
                     <strong>Payment Details</strong>
                   </div>
-                  <div>
-                    <strong>Date Of Order:</strong>
-                    {order.dateOfOrder}
-                  </div>
-                  <div>
-                    <strong>Total Cost:</strong>
-                    {order.totalCost}
-                  </div>
-                  <div>
-                    <strong>razorpay PaymentId:</strong>
-                    {order.razorpayPaymentId}
-                  </div>
-                  <div>
-                    <strong>razorpay OrderId:</strong>
-                    {order.razorpayOrderId}
-                  </div>
-                  <div>
-                    <strong>razorpay Signature:</strong>
-                    {order.razorpaySignature}
+                  <div className="orderbox">
+                    <div>
+                      <strong>Date Of Order:</strong>
+                      {order.dateOfOrder}
+                    </div>
+                    <div>
+                      <strong>Total Cost:</strong>
+                      {order.totalCost}
+                    </div>
+                    <div>
+                      <strong>razorpay PaymentId:</strong>
+                      {order.razorpayPaymentId}
+                    </div>
+                    <div>
+                      <strong>razorpay OrderId:</strong>
+                      {order.razorpayOrderId}
+                    </div>
+                    <div>
+                      <strong>razorpay Signature:</strong>
+                      {order.razorpaySignature}
+                    </div>
                   </div>
                 </div>
                 {/* ORDER */}
@@ -120,24 +124,26 @@ const Orders = ({ setAdmin, setCart }) => {
                   <div style={{ textAlign: "center" }}>
                     <strong>Order Details</strong>
                   </div>
-                  {order.order.map((itemDetails) => {
-                    return (
-                      <div className="order-item-div ">
-                        <div>
-                          <strong>Item Id:</strong>
-                          {itemDetails.item._id}
+                  <div className="orderbox">
+                    {order.order.map((itemDetails) => {
+                      return (
+                        <div className="order-item-div ">
+                          <div>
+                            <strong>Item Id:</strong>
+                            {itemDetails.item._id}
+                          </div>
+                          <div>
+                            <strong>Item Name:</strong>
+                            {itemDetails.item.itemName}
+                          </div>
+                          <div>
+                            <strong>Qty:</strong>
+                            {itemDetails.Qty}
+                          </div>
                         </div>
-                        <div>
-                          <strong>Item Name:</strong>
-                          {itemDetails.item.itemName}
-                        </div>
-                        <div>
-                          <strong>Qty:</strong>
-                          {itemDetails.Qty}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
               <button
@@ -146,7 +152,15 @@ const Orders = ({ setAdmin, setCart }) => {
                 }}
               >
                 <strong>
+<<<<<<< HEAD
                   {order.deliveryStatus ? "DELIVERED" : "PENDING"}
+=======
+                  {order.deliveryStatus ? (
+                    <span className="delivered">DELIVERED</span>
+                  ) : (
+                    <span className="pending">PENDING</span>
+                  )}
+>>>>>>> 3cd7bece0348c6c589f37f2c1a8db762b34b13c0
                 </strong>
               </button>
             </div>

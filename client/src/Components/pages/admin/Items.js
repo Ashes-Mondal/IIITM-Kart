@@ -24,37 +24,46 @@ const Items = ({ itemList, setItemList }) => {
     <div className="adminPanel">
       <h1>Items</h1>
       <Link to="/admin/addItem" className="text-white">
-        <button className="btn btn-primary ml-5">Add an Item</button>
+        <button className="btn btn-primary addItemButton">+ Add an Item</button>
       </Link>
-      {console.log("Items:", itemList)}
-      {itemList.map((item, index) => {
-        return (
-          <div
-            key={index}
-            className="flex-container m-3 ml-5 mr-5 p-2 pl-5 bg-white "
-          >
-            <div className="itemDetails">
-              <h3>{item.itemName}</h3>
-              <h5 className="m-2">ID: {item._id}</h5>
-            </div>
-            <div className="itemButtons">
-              <Link to={`/admin/editItem/${item._id}`} className="text-white">
-                <button className="btn btn-primary float-right mr-3">
-                  Edit
+      <table>
+        <tr>
+          <th>Item Name</th>
+          <th>Item ID</th>
+          <th></th>
+          <th></th>
+        </tr>
+        {console.log("Items:", itemList)}
+        {itemList.map((item, index) => {
+          return (
+            <tr>
+              <td>
+                <h3>{item.itemName}</h3>
+              </td>
+              <td>
+                <h5 className="m-2"> {item._id}</h5>
+              </td>
+              <td>
+                <Link to={`/admin/editItem/${item._id}`} className="text-white">
+                  <button className="btn btn-primary float-right mr-3 shadow">
+                    Edit
+                  </button>
+                </Link>
+              </td>
+              <td>
+                <button
+                  className="btn btn-danger float-right shadow"
+                  onClick={() => {
+                    deleteItem(item._id);
+                  }}
+                >
+                  Delete
                 </button>
-              </Link>
-              <button
-                className="btn btn-danger float-right"
-                onClick={() => {
-                  deleteItem(item._id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        );
-      })}
+              </td>
+            </tr>
+          );
+        })}
+      </table>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
 
@@ -16,6 +16,7 @@ function UserDetails({ user, setUser, setCart }) {
         lastName: user.name.lastName,
         phone: user.phone,
         email: user.email,
+        orders: user.orders,
       }),
     };
     const result = await (
@@ -54,6 +55,7 @@ function UserDetails({ user, setUser, setCart }) {
       history.push("/login");
     }
   };
+
   return (
     <>
       <div className="product flex-container userbackground">
@@ -77,7 +79,10 @@ function UserDetails({ user, setUser, setCart }) {
                           }
                           className="cancelOrderButton mr-5 float-right"
                         >
-                          Cancel Order
+                          {user.orders[user.orders.length - index - 1]
+                            .deliveryStatus == true
+                            ? "Return Product"
+                            : "Cancel Order"}
                         </button>
                       </h3>
                       <p>
@@ -113,6 +118,48 @@ function UserDetails({ user, setUser, setCart }) {
                               <span className="text-muted">
                                 {item.item.description}
                               </span>
+                              {/* {user.orders[user.orders.length - index - 1]
+                                .deliveryStatus == true &&
+                              user.orders[user.orders.length - index - 1].order[
+                                i
+                              ].rated == false ? (
+                                <>
+                                  <div class="slidecontainer">
+                                    Give a rating: 1
+                                    <input
+                                      type="range"
+                                      min={1}
+                                      max={5}
+                                      defaultValue={item.item.rating}
+                                      class="slider"
+                                      onChange={(e) => {
+                                        let tempUser = user;
+                                        tempUser.orders[
+                                          tempUser.orders.length - index - 1
+                                        ].order[i].item.rating = parseInt(
+                                          e.target.value
+                                        );
+                                        setUser(tempUser);
+                                      }}
+                                    />
+                                    5{" "}
+                                    <button
+                                      onClick={() => {
+                                        let tempUser = user;
+                                        tempUser.orders[
+                                          tempUser.orders.length - index - 1
+                                        ].order.rated = true;
+                                        setUser(tempUser);
+                                        updateUser();
+                                      }}
+                                    >
+                                      Post rating
+                                    </button>
+                                  </div>
+                                </>
+                              ) : (
+                                <></>
+                              )} */}
                             </div>
                           </div>
                         );
@@ -154,7 +201,7 @@ function UserDetails({ user, setUser, setCart }) {
                 className="edituser"
                 onClick={() => {
                   setEditable(false);
-                  updateUser(user);
+                  updateUser();
                 }}
               >
                 Update

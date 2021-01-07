@@ -18,7 +18,7 @@ const razorInstance = new Razorpay({
 /****************************User functions***********************************/
 //GET USER DETAILS
 exports.getUserDetails = async (req, res) => {
-  //body details are obtained
+  //checking is user logged in or not
   const userId = req.session.userId;
   if (userId) {
     try {
@@ -41,6 +41,7 @@ exports.editUserDetails = async (req, res) => {
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
+    const orders = req.body.orders;
 
     await UserDetail.findByIdAndUpdate(
       userId,
@@ -48,6 +49,7 @@ exports.editUserDetails = async (req, res) => {
         phone: phone,
         email: email,
         name: { firstName: firstName, lastName: lastName },
+        orders: orders,
       },
       (err) => {
         if (err) res.send({ response: false, error: err });
@@ -62,14 +64,13 @@ exports.editUserDetails = async (req, res) => {
 };
 //DELETE USER
 exports.deleteUser = async (req, res) => {
-  //body details are obtained
+  //checking is user logged in or not
   const userId = req.session.userId;
   if (userId) {
     try {
       //user details fetched from the database
       let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
-      userDetails["response"] = true;
-      res.redirect("/login");
+      res.redirect("/");
     } catch (err) {
       res.send({ response: false, error: err });
     }
@@ -80,94 +81,126 @@ exports.deleteUser = async (req, res) => {
 /************************** CART CRUD OPERATION **********************************/
 //ADD TO CART
 exports.addToCart = async (req, res) => {
-  //body details are obtained
   const userId = req.session.userId;
+  //checking is user logged in or not
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+
+  //body details are obtained
   const itemId = req.body.itemId;
   //item and user details fetched from the database
-  const itemDetails = await ItemDetail.findById(itemId).exec();
-  const userDetails = await UserDetail.findById(userId).exec();
-  //User cart details fetched
-  let userCart = userDetails.userCart;
-  //flag checks whether the item is there in cart or not,if not then added to the userCart
-  let flag = true;
-  userCart = userCart.map((itemElement) => {
-    if (itemElement.item._id == itemId) {
-      itemElement.item = itemDetails;
-      itemElement.Qty += 1;
-      flag = false;
-    }
-    return itemElement;
-  });
-  if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
-  //Finally the userCart is updated to the database
-  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
-    if (err) res.send({ response: false, error: err });
-    else {
-      res.send({ response: true });
-    }
-  });
+  try {
+    const itemDetails = await ItemDetail.findById(itemId).exec();
+    const userDetails = await UserDetail.findById(userId).exec();
+    //User cart details fetched
+    let userCart = userDetails.userCart;
+    //flag checks whether the item is there in cart or not,if not then added to the userCart
+    let flag = true;
+    userCart = userCart.map((itemElement) => {
+      if (itemElement.item._id == itemId) {
+        itemElement.item = itemDetails;
+        itemElement.Qty += 1;
+        flag = false;
+      }
+      return itemElement;
+    });
+    if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
+    //Finally the userCart is updated to the database
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      { userCart: userCart },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.send({ response: true });
+        }
+      }
+    );
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };
 //DELETE FROM CART
 exports.deleteFromCart = async (req, res) => {
-  //body details are obtained
   const userId = req.session.userId;
+  //checking is user logged in or not
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+
+  //body details are obtained
   const itemId = req.body.itemId;
   //user details fetched from the database
-  const userDetails = await UserDetail.findById(userId).exec();
-  //User cart details fetched
-  let userCart = userDetails.userCart;
-  //userCart is filtered and that item is removed
-  userCart = userCart.filter((itemElement) => {
-    if (itemElement.item._id != itemId) return itemElement;
-  });
-  //Finally the userCart is updated to the database
-  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
-    if (err) res.send({ response: false, error: err });
-    else {
-      res.send({ response: true });
-    }
-  });
+  try {
+    const userDetails = await UserDetail.findById(userId).exec();
+    //User cart details fetched
+    let userCart = userDetails.userCart;
+    //userCart is filtered and that item is removed
+    userCart = userCart.filter((itemElement) => {
+      if (itemElement.item._id != itemId) return itemElement;
+    });
+    //Finally the userCart is updated to the database
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      { userCart: userCart },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.send({ response: true });
+        }
+      }
+    );
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };
+
 //UPDATE CART QTY
 exports.updateQty = async (req, res) => {
-  //body details are obtained
   const userId = req.session.userId;
+  //checking is user logged in or not
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
+
+  //body details are obtained
   const itemId = req.body.itemId;
   const itemQty = req.body.itemQty;
   //user details fetched from the database
-  const userDetails = await UserDetail.findById(userId).exec();
-  //User cart details fetched
-  let userCart = userDetails.userCart;
-  //userCart is filtered and that item is removed
-  userCart = userCart.map((itemElement) => {
-    if (itemElement.item._id == itemId) {
-      itemElement.Qty = itemQty;
-    }
-    return itemElement;
-  });
-  //Finally the userCart is updated to the database
-  await UserDetail.findByIdAndUpdate(userId, { userCart: userCart }, (err) => {
-    if (err) res.send({ response: false, error: err });
-    else {
-      res.send({ response: true });
-    }
-  });
+  try {
+    const userDetails = await UserDetail.findById(userId).exec();
+    let userCart = userDetails.userCart;
+    //userCart is filtered and that item is removed
+    userCart = userCart.map((itemElement) => {
+      if (itemElement.item._id == itemId) {
+        itemElement.Qty = itemQty;
+      }
+      return itemElement;
+    });
+    //Finally the userCart is updated to the database
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      { userCart: userCart },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.send({ response: true });
+        }
+      }
+    );
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };
+
 //CLEAR CART
 exports.clearCart = async (req, res) => {
   const userId = req.session.userId;
+  //checking is user logged in or not
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
@@ -181,6 +214,14 @@ exports.clearCart = async (req, res) => {
 };
 
 exports.paymentOrder = async (req, res) => {
+  //checking is user logged in or not
+  const userId = req.session.userId;
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
+
+  //razorpay
   const payment_capture = 1;
   const amount = req.body.totalAmt;
   const currency = "INR";
@@ -200,7 +241,7 @@ exports.paymentOrder = async (req, res) => {
       amount: response.amount,
     });
   } catch (error) {
-    console.log(error);
+    res.send({ response: false, error: err });
   }
 };
 
@@ -208,38 +249,48 @@ exports.paymentOrder = async (req, res) => {
 //LOGIN
 exports.login = async (req, res) => {
   const { phone, password } = req.body;
-
-  const user = await UserDetail.findOne({ phone: phone }).exec();
-  if (!user) {
-    res.redirect("/login");
-  }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (isMatch) {
-    req.session.userId = user._id;
-    res.redirect("/");
-  } else {
-    res.redirect("/login");
+  //finding the user in the database
+  try {
+    const user = await UserDetail.findOne({ phone: phone }).exec();
+    if (user == null) {
+      res.send({ response: false, error: "invalid user" });
+      return;
+    }
+    //checking users password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      req.session.userId = user._id;
+      res.send({ response: true });
+    } else {
+      res.send({ response: false, error: "password invalid" });
+    }
+  } catch (error) {
+    res.send({ response: false, error: error });
+    return;
   }
 };
 //SIGNUP
 exports.signup = async (req, res) => {
   //_id is added then updated to the database
-  const hashedPassword = await bcrypt.hash(req.body.password, 12);
-  const userData = {
-    _id: new mongoose.Types.ObjectId(),
-    name: { firstName: req.body.firstName, lastName: req.body.lastName },
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address,
-    password: hashedPassword,
-    admin: false,
-  };
   try {
+    //hashing the password
+    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+    const userData = {
+      _id: new mongoose.Types.ObjectId(),
+      name: { firstName: req.body.firstName, lastName: req.body.lastName },
+      email: req.body.email,
+      phone: req.body.phone,
+      address: req.body.address,
+      password: hashedPassword,
+      admin: false,
+    };
+
+    //storing in database
     newUser = await new UserDetail(userData);
     await newUser.save();
     res.redirect("/login");
   } catch (error) {
-    res.redirect("/signup");
+    res.send({ response: false, error: error });
   }
 };
 //LOGOUT
@@ -290,30 +341,38 @@ exports.addOrder = async (req, res) => {
       else {
         //funtion that adds orders in the databse
         const addOrderToDatabase = async () => {
-          const userDetails = await UserDetail.findById(userId);
-          const order = {
-            _id: orderId,
-            deliveryStatus: false,
-            user: {
-              _id:userDetails._id,
-              name:{...userDetails.name},
-              phone:userDetails.phone,
-              email:userDetails.email,
-              address:userDetails.address,
-            },
-            order: req.body.userCart,
-            dateOfOrder: new Date(),
-            totalCost: req.body.totalCost,
-            razorpayOrderId: req.body.razorpayOrderId,
-            razorpayPaymentId: req.body.razorpayPaymentId,
-            razorpaySignature: req.body.razorpaySignature,
-          };
-          const ord = await new OrderDetail(order);
-          await ord.save();
+          try {
+            const userDetails = await UserDetail.findById(userId);
+            const order = {
+              _id: orderId,
+              deliveryStatus: false,
+              user: {
+                _id: userDetails._id,
+                name: { ...userDetails.name },
+                phone: userDetails.phone,
+                email: userDetails.email,
+                address: userDetails.address,
+              },
+              order: req.body.userCart,
+              dateOfOrder: new Date(),
+              totalCost: req.body.totalCost,
+              razorpayOrderId: req.body.razorpayOrderId,
+              razorpayPaymentId: req.body.razorpayPaymentId,
+              razorpaySignature: req.body.razorpaySignature,
+            };
+            const theOrder = await new OrderDetail(order);
+            await theOrder.save();
+          } catch (error) {
+            throw new Error(error);
+          }
         };
         //function called
-        addOrderToDatabase();
-        res.send({ response: true, orderId: orderId });
+        try {
+          addOrderToDatabase();
+          res.send({ response: true, orderId: orderId });
+        } catch (error) {
+          res.send({ response: false, error: error, orderId: orderId });
+        }
       }
     }
   );
@@ -325,20 +384,27 @@ exports.cancelOrder = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
-  const orderId = req.body.orderId;
-  const userDetails = await UserDetail.findById(userId).exec();
-  let ordersList = userDetails.orders;
-  ordersList = ordersList.filter((orderElement) => orderElement._id != orderId);
-  await UserDetail.findByIdAndUpdate(
-    userId,
-    {
-      orders: ordersList,
-    },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        res.send({ response: true });
+
+  try {
+    const orderId = req.body.orderId;
+    const userDetails = await UserDetail.findById(userId).exec();
+    let ordersList = userDetails.orders;
+    ordersList = ordersList.filter(
+      (orderElement) => orderElement._id != orderId
+    );
+    await UserDetail.findByIdAndUpdate(
+      userId,
+      {
+        orders: ordersList,
+      },
+      (err) => {
+        if (err) res.send({ response: false, error: err });
+        else {
+          res.send({ response: true });
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };

@@ -126,7 +126,7 @@ const App = () => {
               </Route>
             ) : null}
             <Route exact path="/login">
-              <Login />
+              <Login setLoaded={setLoaded}/>
             </Route>
             <Route exact path="/signup">
               <Signup />
