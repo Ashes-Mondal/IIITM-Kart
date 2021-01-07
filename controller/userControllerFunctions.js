@@ -215,6 +215,7 @@ exports.clearCart = async (req, res) => {
 
 exports.paymentOrder = async (req, res) => {
   //checking is user logged in or not
+  const userId = req.session.userId;
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
