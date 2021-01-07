@@ -190,7 +190,7 @@ a.active-nav-link {
   background: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 20px 40px;
-  margin: 20px 20px;
+  margin: 40px 20px;
 }
 .flex-child5 {
   flex: 1;
@@ -337,6 +337,7 @@ a.active-nav-link {
 }
 .effect3D-users {
   width: 70%;
+  margin-bottom: 40px;
 }
 .delivered {
   color: rgb(3, 97, 3);
@@ -345,4 +346,38 @@ a.active-nav-link {
 .pending {
   color: rgb(187, 144, 3);
   font-weight: bold;
+}
+
+table {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+tr:nth-child(even) {
+  background: white;
+}
+td,
+th {
+  padding: 5px 20px;
+}
+th {
+  background: rgb(216, 216, 216);
+  font-size: xx-large;
+  font-weight: 500;
+}
+.addItemButton {
+  margin-left: 40px;
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+}
+.box-orders {
+  width: 60%;
+  margin-bottom: 20px;
+}
+.orderbox {
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 24px;
+  margin-bottom: 20px;
+  padding: 10px;
 }
