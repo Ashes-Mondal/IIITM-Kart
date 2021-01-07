@@ -205,8 +205,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
         }
       },
       prefill: {
-        email: "example@email.com",
-        phone_number: "1234567890",
+        email: user.email,
+        contact: user.phone,
       },
     };
     const paymentObject = new window.Razorpay(options);

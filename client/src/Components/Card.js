@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Authentication, User } from "../App";
+import { Authentication } from "../App";
 
 const Card = (props) => {
   const history = useHistory();
   const { isAuth, setIsAuth } = useContext(Authentication);
-  const { user } = useContext(User);
+  // const { user } = useContext(User);
   const { product, cart, setCart } = props;
   const { itemName, _id: id, description, cost, imageURL, rating } = product;
   const [buttonState, setButtonState] = useState(false);

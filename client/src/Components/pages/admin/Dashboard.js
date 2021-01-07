@@ -25,9 +25,10 @@ const Dashboard = ({ user, setAdmin }) => {
   const pending = () => {
     var count = 0;
     orders.map((order) => {
-      if (order.deliveryStatus == false) {
+      if (order.deliveryStatus === false) {
         count++;
       }
+      return count;
     });
     console.log(count);
     return count;
