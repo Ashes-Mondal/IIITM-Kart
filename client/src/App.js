@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./Components/pages/HomePage";
 import Navbar from "./Components/Navbar";
@@ -65,7 +65,6 @@ const App = () => {
       }
       //fetching item list from the server side and setting in itemList state
       const listOfItems = await (await fetch("/fetchItems")).json();
-      console.log("listOfItems", listOfItems);
       // dispatch({ type: "setItemList", payload: listOfItems });
       setItemList(listOfItems);
     };
@@ -80,7 +79,11 @@ const App = () => {
 
           <Switch>
             <Route exact path="/admin">
+<<<<<<< HEAD
               <Dashboard admin={user} />
+=======
+              <Dashboard user={user} />
+>>>>>>> 9b51b695851a0f42b4e15be471267eec241747b3
             </Route>
             <Route exact path="/admin/items">
               <Items itemList={itemList} setItemList={setItemList} />
@@ -92,7 +95,7 @@ const App = () => {
               <EditItem itemList={itemList} />
             </Route>
             <Route exact path="/admin/orders">
-              <Orders />
+              <Orders setAdmin={setAdmin} setCart={setCart} />
             </Route>
             <Route exact path="/admin/users">
               <Users setCart={setCart} setAdmin={setAdmin} />

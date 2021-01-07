@@ -23,25 +23,26 @@ const Items = ({ itemList, setItemList }) => {
   return (
     <div className="adminPanel">
       <h1>Items</h1>
-      <button className="btn btn-primary m-3">
-        <Link to="/admin/addItem" className="text-white">
-          Add an Item
-        </Link>
-      </button>
+      <Link to="/admin/addItem" className="text-white">
+        <button className="btn btn-primary ml-5">Add an Item</button>
+      </Link>
       {console.log("Items:", itemList)}
       {itemList.map((item, index) => {
         return (
-          <div key={index} className="flex-container m-3 p-2 bg-white ">
+          <div
+            key={index}
+            className="flex-container m-3 ml-5 mr-5 p-2 pl-5 bg-white "
+          >
             <div className="itemDetails">
               <h3>{item.itemName}</h3>
               <h5 className="m-2">ID: {item._id}</h5>
             </div>
             <div className="itemButtons">
-              <button className="btn btn-primary float-right mr-2">
-                <Link to={`/admin/editItem/${item._id}`} className="text-white">
+              <Link to={`/admin/editItem/${item._id}`} className="text-white">
+                <button className="btn btn-primary float-right mr-3">
                   Edit
-                </Link>
-              </button>
+                </button>
+              </Link>
               <button
                 className="btn btn-danger float-right"
                 onClick={() => {

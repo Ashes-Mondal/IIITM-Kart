@@ -47,6 +47,7 @@ const userDetailSchema = mongoose.Schema({
           Qty: Number,
         },
       ],
+      deliveryStatus:Boolean,
       dateOfOrder: String,
       totalCost: Number,
     },
@@ -55,4 +56,4 @@ const userDetailSchema = mongoose.Schema({
 
 const UserDetail = mongoose.model("UserDetail", userDetailSchema);
 
-module.exports = UserDetail;
+module.exports = {UserDetail:UserDetail,userDetailSchema:userDetailSchema};

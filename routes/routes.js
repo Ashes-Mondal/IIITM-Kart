@@ -28,14 +28,14 @@ router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
+router.get("/fetchAllOrders", adminControllerFunctions.fetchAllOrders);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
+router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
+router.post("/adminChangeDeliveryStatus",adminControllerFunctions.adminChangeDeliveryStatus);
 router.post("/deleteItem", adminControllerFunctions.deleteItem);
 router.post("/editItem", adminControllerFunctions.editItem);
-router.post(
-  "/adminEditUserDetails",
-  adminControllerFunctions.adminEditUserDetails
-);
+router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
 
 //exporting
 module.exports = router;

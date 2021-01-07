@@ -1,6 +1,6 @@
 import React from "react";
 
-const Dashboard = (admin) => {
+const Dashboard = ({user}) => {
   return (
     <div className="adminPanel">
       <h1>Dashboard</h1>
@@ -12,11 +12,11 @@ const Dashboard = (admin) => {
         />
         <div className="flex-childA2 shadow rounded bg-info text-dark m-3">
           <h3>
-            Welcome, {admin.admin.name.firstName} {admin.admin.name.lastName}
+            Welcome, {user.name.firstName} {user.name.lastName}
           </h3>
           <br />
-          <h5>Admin ID: {admin.admin._id}</h5>
-          <h5>Admin Email: {admin.admin.email}</h5>
+          <h5>Admin ID: {user._id}</h5>
+          <h5>Admin Email: {user.email}</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-success text-light m-3">
           <p>83</p>
@@ -39,7 +39,7 @@ const Dashboard = (admin) => {
           <p>Current Issues</p>
         </div>
       </div>
-      {console.log("Admin is: ", admin)}
+      {console.log("Admin is: ", user)}
     </div>
   );
 };
