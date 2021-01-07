@@ -41,6 +41,7 @@ exports.editUserDetails = async (req, res) => {
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
+    const orders = req.body.orders;
 
     await UserDetail.findByIdAndUpdate(
       userId,
@@ -48,6 +49,7 @@ exports.editUserDetails = async (req, res) => {
         phone: phone,
         email: email,
         name: { firstName: firstName, lastName: lastName },
+        orders: orders,
       },
       (err) => {
         if (err) res.send({ response: false, error: err });
@@ -295,11 +297,11 @@ exports.addOrder = async (req, res) => {
             _id: orderId,
             deliveryStatus: false,
             user: {
-              _id:userDetails._id,
-              name:{...userDetails.name},
-              phone:userDetails.phone,
-              email:userDetails.email,
-              address:userDetails.address,
+              _id: userDetails._id,
+              name: { ...userDetails.name },
+              phone: userDetails.phone,
+              email: userDetails.email,
+              address: userDetails.address,
             },
             order: req.body.userCart,
             dateOfOrder: new Date(),
