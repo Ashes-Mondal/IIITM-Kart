@@ -152,15 +152,11 @@ const Orders = ({ setAdmin, setCart }) => {
                 }}
               >
                 <strong>
-<<<<<<< HEAD
-                  {order.deliveryStatus ? "DELIVERED" : "PENDING"}
-=======
                   {order.deliveryStatus ? (
                     <span className="delivered">DELIVERED</span>
                   ) : (
                     <span className="pending">PENDING</span>
                   )}
->>>>>>> 3cd7bece0348c6c589f37f2c1a8db762b34b13c0
                 </strong>
               </button>
             </div>

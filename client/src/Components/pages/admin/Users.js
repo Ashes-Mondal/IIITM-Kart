@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
+
 const Users = ({ setCart, setAdmin }) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
