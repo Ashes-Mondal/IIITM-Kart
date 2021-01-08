@@ -10,7 +10,6 @@ const router = express.Router();
 //GET REQUESTS
 router.get("/fetchItems", userControllerFunctions.fetchItems);
 router.get("/getUserDetails", userControllerFunctions.getUserDetails);
-router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 //POST REQUESTS
 router.post("/addToCart", userControllerFunctions.addToCart);
 router.post("/deleteFromCart", userControllerFunctions.deleteFromCart);

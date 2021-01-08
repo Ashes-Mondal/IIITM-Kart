@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-const Users = ({ setCart, setAdmin }) => {
+const Users = ({ setCart, setAdmin}) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [users, setUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [userDetails, setUserDetails] = useState({
     _id: "",
     name: { firstName: "", lastName: "" },
@@ -32,6 +35,7 @@ const Users = ({ setCart, setAdmin }) => {
         setAdmin(false);
         history.push("/login");
       }
+      
     };
     fetchAllUsers();
   }, [history, setIsAuth, setAdmin]);
@@ -56,13 +60,8 @@ const Users = ({ setCart, setAdmin }) => {
     const result = await (
       await fetch("/adminEditUserDetails", requestOptions)
     ).json();
-    if (result.response === false) {
-      alert("Could not update!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
-    }
-    //finally resetting to normal
+    if(result.response){
+      //finally resetting to normal
     setUsers(
       users.map((user) => {
         if (edit === user.phone) {
@@ -72,11 +71,31 @@ const Users = ({ setCart, setAdmin }) => {
       })
     );
     setEdit("");
+    }
+    else if (result.error === "Not logged in") {
+      setShowModal(true);
+    }else{
+      alert("DataBase Error occurred!!")
+    }
+    
   };
-
+  const handleClose = () => {
+		setShowModal(false);
+	};
   return (
     <>
       <div className="adminPanel">
+      <Modal show={showModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>OOPS!!</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Session Timeout</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose} href="/login">
+						Login
+					</Button>
+				</Modal.Footer>
+			</Modal>
         <h1>Users</h1>
         <main>
           {users.map((user, index) => {
