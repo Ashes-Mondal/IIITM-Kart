@@ -64,6 +64,8 @@ exports.deleteUser = async (req, res) => {
 	if (userId) {
 		try {
 			//user details fetched from the database
+			console.log("userId",userId)
+			await OrderDetail.deleteMany({'user._id': userId});
 			let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
 			req.session.destroy();
 			res.send({ response: true });

@@ -8,6 +8,7 @@ function UserDetails({ user, setUser, setLoaded }) {
 	const history = useHistory();
 	const [editable, setEditable] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 	const updateUser = async () => {
 		const requestOptions = {
@@ -56,10 +57,18 @@ function UserDetails({ user, setUser, setLoaded }) {
 
 	const handleClose = () => {
 		setShowModal(false);
+		setShowDeleteModal(false);
 	};
 
 	const handleUserDelete = async (e) => {
 		e.preventDefault();
+		let orders = user.orders;
+		for (let i = 0; i < orders.length; i++) {
+			if (orders[i].deliveryStatus === false) {
+				setShowDeleteModal(true);
+				return;
+			}
+		}
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -84,6 +93,17 @@ function UserDetails({ user, setUser, setLoaded }) {
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose} href="/login">
 						Login
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			<Modal show={showDeleteModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Failed To Delete !</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>You have Pending Orders</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						close
 					</Button>
 				</Modal.Footer>
 			</Modal>

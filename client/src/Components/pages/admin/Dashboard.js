@@ -52,7 +52,7 @@ const Dashboard = ({ user, setAdmin }) => {
         </div>
         <div className="flex-childA3 shadow rounded bg-success text-light m-3">
           <p>{orders.length}</p>
-          <h5>Registered Users</h5>
+          <h5>Total Orders</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-warning text-light m-3">
           <p>{pending()}</p>
