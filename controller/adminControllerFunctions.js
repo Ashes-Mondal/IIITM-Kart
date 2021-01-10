@@ -120,7 +120,7 @@ exports.addItem = async (req, res) => {
   try {
     newItem = await new ItemDetail(itemData);
     await newItem.save();
-    res.send({ response: true });
+    res.redirect("/admin/items");
   } catch (err) {
     res.send({ response: false, error: err });
   }
@@ -131,7 +131,7 @@ exports.deleteItem = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
-  const itemId = req.body.itemID;
+  const itemId = req.body.itemId;
   await ItemDetail.findByIdAndDelete(itemId, (err) => {
     if (err) res.send({ response: false, error: err });
     else res.send({ response: true });

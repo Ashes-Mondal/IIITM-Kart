@@ -2,39 +2,72 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/********************************************** card ************************************/
-.card {
+/********************************************** NAVBAR2 *******************************************/
+.navbar2 {
+  position: relative;
+  padding: 0.5rem 1rem;
+  background: white;
+  width: 100%;
+  justify-content: space-evenly;
+  align-content: center;
+  display: flex;
+}
+.dropbtn {
+  background: white;
+  border: 2px solid black;
+  border-radius: 2px;
+}
+.dropbtn:hover {
+  background: black;
+  color: white;
+}
+.dropdown-content1 {
+  display: none;
+  z-index: 1;
+  background: black;
+  color: white;
+  opacity: 90%;
+}
+.dropdown-content1 li {
+  list-style-type: none;
+  padding: 10px;
+}
+.dropdown-content1 li:hover {
+  background: rgb(68, 68, 68);
+  cursor: pointer;
+}
+.dropdown1:hover .dropdown-content1 {
+  display: block;
+  position: absolute;
+  width: auto;
   height: auto;
-  width: 21rem;
+}
+.categories {
+  padding: 5px 30px;
+  align-self: center;
+  margin: auto;
+}
+.categories:hover {
+  background: rgb(218, 218, 218);
+  cursor: pointer;
+}
+/********************************************** HOMEPAGE, CARD ************************************/
+/* .homePageImg {
+  background-image: url("https://media.wired.com/photos/5c9040ee4950d24718d6da99/16:9/w_2400,h_1350,c_limit/shoppingcart-1066110386.jpg");
+} */
+.homeCard {
+  height: auto;
+  width: 20rem;
   min-height: 32rem;
-  margin: 2rem;
   text-align: center;
-  animation-name: shrink;
-  animation-duration: 0.5s;
   padding: 1rem;
+  box-shadow: 5px 5px 5px rgb(200, 200, 200);
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
-
-.card:hover {
-  animation-name: grow;
-  animation-duration: 0.5s;
-  animation-fill-mode: both;
-}
-
-@keyframes grow {
-  from {
-    transform: scale(1, 1);
-  }
-  to {
-    transform: scale(1.1, 1.1);
-  }
-}
-@keyframes shrink {
-  from {
-    transform: scale(1.1, 1.1);
-  }
-  to {
-    transform: scale(1, 1);
-  }
+.cardButton {
+  margin-top: auto;
 }
 img {
   margin: 1rem;
@@ -43,7 +76,7 @@ img {
   object-fit: contain;
 }
 /********************************************** Navbar ****************************************/
-.navbar {
+.navbar1 {
   background-color: rgb(64, 64, 231);
   width: 100%;
   justify-content: flex-start;
@@ -60,6 +93,9 @@ img {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+.site-name:hover {
+  cursor: pointer;
 }
 .search-box {
   width: 32%;
@@ -96,6 +132,7 @@ a.active-nav-link {
 .userform {
   text-align: start;
 }
+/*********************SIGNUP, LOGIN*******************************************/
 .box {
   width: 350px;
   padding: 40px;
@@ -154,6 +191,7 @@ a.active-nav-link {
 .box-signup {
   width: 40%;
 }
+/*****************************************USER DETAILS**********************************/
 .edituser {
   color: blue;
   cursor: pointer;
@@ -162,7 +200,8 @@ a.active-nav-link {
   background: rgb(245, 245, 245);
 }
 .orderImgs {
-  max-height: 80px;
+  max-height: 120px;
+  margin-left: 30px;
 }
 .ordersList {
   background: rgb(245, 245, 245);
@@ -196,7 +235,7 @@ a.active-nav-link {
   flex: 1;
 }
 .flex-child6 {
-  flex: 6;
+  flex: 5;
   padding: 20px;
 }
 .userdetails {
@@ -270,6 +309,7 @@ a.active-nav-link {
 .box input:focus + label {
   color: #33a;
 }
+/*****************************************ADMIN***********************************/
 .sidenav {
   min-height: 800px;
   height: 100%;
@@ -380,4 +420,52 @@ th {
   border-radius: 24px;
   margin-bottom: 20px;
   padding: 10px;
+  overflow: auto;
+}
+.reactStars {
+  margin: 5px;
+}
+.giveRating {
+  margin: 10px;
+  margin-left: 0px;
+}
+.postRating {
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+.postRating:hover {
+  background: black;
+  color: white;
+}
+.ordersH1 {
+  margin-left: 20%;
+}
+.buttons3D {
+  margin: 10px;
+  border: 0;
+  outline: 0;
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  font-weight: bold;
+}
+.buttons3D-selected {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+}
+.rating1 {
+  background: #ff3d37;
+  padding: 5px;
+  border-radius: 5px;
+}
+.rating2 {
+  background: #ffc72c;
+  padding: 5px;
+  border-radius: 5px;
+}
+.rating3 {
+  background: #4ec219;
+  padding: 5px;
+  border-radius: 5px;
 }

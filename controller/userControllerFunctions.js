@@ -42,7 +42,6 @@ exports.editUserDetails = async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const orders = req.body.orders;
-
     await UserDetail.findByIdAndUpdate(
       userId,
       {
@@ -74,6 +73,44 @@ exports.deleteUser = async (req, res) => {
     } catch (err) {
       res.send({ response: false, error: err });
     }
+  } else {
+    res.send({ response: false, error: "Not logged in" });
+  }
+};
+exports.addRating = async (req, res) => {
+  const userId = req.session.userId;
+  const itemId = req.body.itemId;
+  const userRating = req.body.userRating;
+  if (userId) {
+    let itemDetails = await ItemDetail.findById(itemId).exec();
+    if (itemDetails.numberOfRatings == undefined) {
+      itemDetails.numberOfRatings = 0;
+    }
+    if (itemDetails.rating) {
+      itemDetails.rating =
+        (itemDetails.rating * itemDetails.numberOfRatings + userRating) /
+        (itemDetails.numberOfRatings + 1);
+    } else {
+      itemDetails.rating = userRating;
+    }
+    itemDetails.rating = itemDetails.rating.toFixed(1);
+    itemDetails.numberOfRatings += 1;
+    console.log("itemDetails:", itemDetails);
+
+    await ItemDetail.findByIdAndUpdate(
+      itemId,
+      {
+        rating: itemDetails.rating,
+        numberOfRatings: itemDetails.numberOfRatings,
+      },
+      (err) => {
+        if (err) {
+          res.send({ response: false, error: err });
+        } else {
+          res.send({ response: true });
+        }
+      }
+    );
   } else {
     res.send({ response: false, error: "Not logged in" });
   }

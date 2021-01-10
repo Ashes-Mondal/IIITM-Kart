@@ -5,7 +5,12 @@ import Navbar from "./Components/Navbar";
 import UserDetails from "./Components/pages/UserDetails";
 import ShoppingCart from "./Components/pages/ShoppingCart";
 import Error from "./Components/pages/Error";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import "./App.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
@@ -96,7 +101,7 @@ const App = () => {
             <Route exact path="/admin/users">
               <Users setCart={setCart} setAdmin={setAdmin} />
             </Route>
-            <Redirect to="/"/>
+            <Redirect to="/" />
           </Switch>
         </div>
       </>
@@ -119,7 +124,12 @@ const App = () => {
         ) : (
           <Switch>
             <Route exact path="/">
-              <HomePage itemList={itemList} cart={cart} setCart={setCart} />
+              <HomePage
+                itemList={itemList}
+                cart={cart}
+                setCart={setCart}
+                setItemList={setItemList}
+              />
             </Route>
             {isAuth ? (
               <Route exact path="/user">

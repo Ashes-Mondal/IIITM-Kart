@@ -21,6 +21,7 @@ router.post("/signup", userControllerFunctions.signup);
 router.post("/logout", userControllerFunctions.logout);
 router.post("/editUserDetails", userControllerFunctions.editUserDetails);
 router.post("/deleteUser", userControllerFunctions.deleteUser);
+router.post("/addRating", userControllerFunctions.addRating);
 router.post("/addOrder", userControllerFunctions.addOrder);
 router.post("/cancelOrder", userControllerFunctions.cancelOrder);
 router.post("/search", api.search);
@@ -31,11 +32,20 @@ router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
 router.get("/fetchAllOrders", adminControllerFunctions.fetchAllOrders);
 //POST REQUESTS
 router.post("/addItem", adminControllerFunctions.addItem);
-router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
-router.post("/adminChangeDeliveryStatus",adminControllerFunctions.adminChangeDeliveryStatus);
+router.post(
+  "/adminEditUserDetails",
+  adminControllerFunctions.adminEditUserDetails
+);
+router.post(
+  "/adminChangeDeliveryStatus",
+  adminControllerFunctions.adminChangeDeliveryStatus
+);
 router.post("/deleteItem", adminControllerFunctions.deleteItem);
 router.post("/editItem", adminControllerFunctions.editItem);
-router.post("/adminEditUserDetails",adminControllerFunctions.adminEditUserDetails);
+router.post(
+  "/adminEditUserDetails",
+  adminControllerFunctions.adminEditUserDetails
+);
 
 //exporting
 module.exports = router;
