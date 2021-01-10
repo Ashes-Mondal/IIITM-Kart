@@ -1,12 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Authentication } from "../../App";
 import ReactStars from "react-rating-stars-component";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-function UserDetails({ user, setUser, setCart }) {
-  const { setIsAuth } = useContext(Authentication);
+function UserDetails({ user, setUser, setLoaded }) {
   const history = useHistory();
   const [editable, setEditable] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const updateUser = async () => {
     const requestOptions = {
       method: "POST",
@@ -23,10 +26,7 @@ function UserDetails({ user, setUser, setCart }) {
       await fetch("/editUserDetails", requestOptions)
     ).json();
     if (result.response === false) {
-      alert("Could not update!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
+      setShowModal(true);
     }
   };
 
@@ -50,8 +50,7 @@ function UserDetails({ user, setUser, setCart }) {
         orders: ordersList,
       });
     } else {
-      alert("Could not cancel order!");
-      history.push("/login");
+      setShowModal(true);
     }
   };
   const addRating = async (itemId, userRating) => {
@@ -66,13 +65,62 @@ function UserDetails({ user, setUser, setCart }) {
     const result = await (await fetch("/addRating", requestOptions)).json();
     if (result.response === false) {
       alert("Could not update!");
-      setIsAuth(false);
-      setCart([]);
       history.push("/login");
+    }
+  };
+  const handleClose = () => {
+    setShowModal(false);
+    setShowDeleteModal(false);
+  };
+
+  const handleUserDelete = async (e) => {
+    e.preventDefault();
+    let orders = user.orders;
+    for (let i = 0; i < orders.length; i++) {
+      if (orders[i].deliveryStatus === false) {
+        setShowDeleteModal(true);
+        return;
+      }
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    };
+    const result = await (await fetch("/deleteUser", requestOptions)).json();
+    if (result.response === false) {
+      setShowModal(true);
+    } else {
+      setLoaded(false);
+      history.push("/login");
+      history.go();
     }
   };
   return (
     <>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Session Timeout</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/login">
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showDeleteModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Failed To Delete !</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You have Pending Orders</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className="product flex-container userbackground">
         <div className="flex-child1 rounded userbackground">
           <h1>Your Orders</h1>
@@ -309,9 +357,9 @@ function UserDetails({ user, setUser, setCart }) {
                 }}
               />
             </div>
-          </form>
-          <form action="/deleteUser" method="POST">
-            <button className="btn btn-danger">Delete User</button>
+            <button className="btn btn-danger" onClick={handleUserDelete}>
+              Delete User
+            </button>
           </form>
         </div>
       </div>

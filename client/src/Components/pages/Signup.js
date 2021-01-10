@@ -1,22 +1,60 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
 
-function Signup() {
+function Signup({setLoaded}) {
+  const history = useHistory();
   const [signup, setSignup] = useState({
-    name: { firstName: "", lastName: "" },
+    firstName: "", 
+    lastName: "" ,
     phone: "",
     email: "",
     password: "",
     address: "",
   });
+  const [error, setError] = useState("");
 
+
+const handleSignUp = async(e)=>{
+  e.preventDefault();
+    //POSTING THE FORM
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        password: signup.password, 
+        firstName: signup.firstName,
+        lastName: signup.lastName,
+        address: signup.address,
+        phone: signup.phone,
+        email: signup.email
+      }),
+    };
+    const result = await (await fetch("/signup", requestOptions)).json();
+    if (result.response) {
+      setLoaded(false);
+      history.push("/login");
+      history.go();
+    } else {
+      console.log ("SUP_result",result)
+      setError(result.error._message);
+    }
+}
   return (
     <div>
-      <form className="box box-signup mt-5" action="/signup" method="POST">
+      {error !== "" ? (
+        <Alert variant="danger">
+          <Alert.Heading>
+            <h5 style={{ textAlign: "center" }}>{error}</h5>
+          </Alert.Heading>
+        </Alert>
+      ) : null}
+      <form className="box box-signup mt-5">
         <h1>Sign Up</h1>
         <div className="row field">
           <div className="col-6">
             <input
+            
               type="text"
               name="firstName"
               placeholder="First Name"
@@ -113,7 +151,7 @@ function Signup() {
             </label>
           </div>
         </div>
-        <button>Signup</button>
+        <button onClick={handleSignUp}>Signup</button>
         Already registered? <Link to="/login">Login</Link>.
       </form>
     </div>

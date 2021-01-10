@@ -18,10 +18,9 @@ function Login({ setLoaded }) {
     };
     const result = await (await fetch("/login", requestOptions)).json();
     if (result.response) {
-      setLoaded(true);
+      setLoaded(false);
       history.push("/");
       history.go();
-      setLoaded(false);
     } else {
       setError(result.error);
     }

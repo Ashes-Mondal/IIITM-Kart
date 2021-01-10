@@ -1,12 +1,16 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const Orders = ({ setAdmin, setCart }) => {
   const history = useHistory();
   const { setIsAuth } = useContext(Authentication);
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [error, setError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const fetchAllOrders = async () => {
       const result = await (await fetch("/fetchAllOrders")).json();
@@ -36,23 +40,51 @@ const Orders = ({ setAdmin, setCart }) => {
     const result = await (
       await fetch("/adminChangeDeliveryStatus", requestOptions)
     ).json();
-    if (result.response === false) {
-      alert("Could not proceed further!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
-    } else {
+    console.log("PD_result", result);
+    if (result.response) {
       let ordersData = orders.map((orderdetails) => {
         if (orderdetails._id === orderId)
           order.deliveryStatus = !order.deliveryStatus;
         return orderdetails;
       });
       setOrders(ordersData);
+    } else if (result.error === "Not logged in") {
+      setShowModal(true);
+    } else {
+      console.log("ELSEresult", result);
+      setError(true);
     }
+  };
+  const handleClose = () => {
+    setShowModal(false);
+    setError(false);
   };
 
   return (
     <div className="adminPanel">
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Session Timeout</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/login">
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={error} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Customer Does Not Exist!!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className="row ml-5">
         <input
           type="button"
