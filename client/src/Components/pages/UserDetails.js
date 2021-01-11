@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import { use } from "passport";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { Authentication } from "../../App";
 
-function UserDetails({ user, setUser, setLoaded }) {
+function UserDetails({ user, setUser, setCart }) {
+  const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
   const [editable, setEditable] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateUser = async () => {
     const requestOptions = {
@@ -26,7 +24,10 @@ function UserDetails({ user, setUser, setLoaded }) {
       await fetch("/editUserDetails", requestOptions)
     ).json();
     if (result.response === false) {
-      setShowModal(true);
+      alert("Could not update!");
+      setIsAuth(false);
+      setCart([]);
+      history.push("/login");
     }
   };
 
@@ -39,6 +40,7 @@ function UserDetails({ user, setUser, setLoaded }) {
       }),
     };
     const result = await (await fetch("/cancelOrder", requestOptions)).json();
+    console.log("CO_response:", result.response);
     if (result.response) {
       let ordersList = user.orders;
       ordersList = ordersList.filter(
@@ -50,84 +52,15 @@ function UserDetails({ user, setUser, setLoaded }) {
         orders: ordersList,
       });
     } else {
-      setShowModal(true);
-    }
-  };
-  const addRating = async (itemId, userRating) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        itemId: itemId,
-        userRating: userRating,
-      }),
-    };
-    const result = await (await fetch("/addRating", requestOptions)).json();
-    if (result.response === false) {
-      alert("Could not update!");
+      alert("Could not cancel order!");
       history.push("/login");
     }
-  };
-  const handleClose = () => {
-    setShowModal(false);
-    setShowDeleteModal(false);
   };
 
-  const handleUserDelete = async (e) => {
-    e.preventDefault();
-    let orders = user.orders;
-    for (let i = 0; i < orders.length; i++) {
-      if (orders[i].deliveryStatus === false) {
-        setShowDeleteModal(true);
-        return;
-      }
-    }
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    };
-    const result = await (await fetch("/deleteUser", requestOptions)).json();
-    if (result.response === false) {
-      setShowModal(true);
-    } else {
-      setLoaded(false);
-      history.push("/login");
-      history.go();
-    }
-  };
   return (
     <>
-<<<<<<< HEAD
       <div className="product flex-container md-0 userbackground">
         <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
-=======
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>OOPS!!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Session Timeout</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} href="/login">
-            Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showDeleteModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Failed To Delete !</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>You have Pending Orders</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <div className="product flex-container userbackground">
-        <div className="flex-child1 rounded userbackground">
->>>>>>> b20f8429d4809b267995d3e7048184475f55ed46
           <h1>Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
             <div>
@@ -148,14 +81,19 @@ function UserDetails({ user, setUser, setLoaded }) {
                           className="cancelOrderButton mr-5 float-right"
                         >
                           {user.orders[user.orders.length - index - 1]
-                            .deliveryStatus === true
+                            .deliveryStatus == true
                             ? "Return Product"
                             : "Cancel Order"}
                         </button>
                       </h3>
                       <p>
                         <b>Date Of Order : </b>
-                        {element.dateOfOrder}
+                        {element.dateOfOrder
+                          .toString()
+                          .substring(
+                            0,
+                            element.dateOfOrder.toString().length - 30
+                          )}
                       </p>
                       <p>
                         <b>Order ID : </b>
@@ -181,68 +119,48 @@ function UserDetails({ user, setUser, setLoaded }) {
                               <span className="text-muted">
                                 {item.item.description}
                               </span>
-                              {user.orders[user.orders.length - index - 1]
-                                .deliveryStatus === true &&
+                              {/* {user.orders[user.orders.length - index - 1]
+                                .deliveryStatus == true &&
                               user.orders[user.orders.length - index - 1].order[
                                 i
-                              ].rated !== true ? (
+                              ].rated == false ? (
                                 <>
-                                  <div className="flex-container p-0">
-                                    <div className="giveRating">
-                                      Give a rating:
-                                    </div>
-                                    <div className="reactStars">
-                                      <ReactStars
-                                        count={5}
-                                        onChange={(newValue) => {
-                                          let tempUser = user;
-                                          tempUser.orders[
-                                            tempUser.orders.length - index - 1
-                                          ].order[i].userRating = newValue;
-                                          setUser(tempUser);
-                                        }}
-                                        size={24}
-                                        activeColor="#ffd700"
-                                      />
-                                    </div>
-                                    <div>
-                                      <button
-                                        className="postRating"
-                                        onClick={() => {
-                                          if (
-                                            user.orders[
-                                              user.orders.length - index - 1
-                                            ].order[i].userRating
-                                          ) {
-                                            let tempUser = user;
-                                            tempUser.orders[
-                                              tempUser.orders.length - index - 1
-                                            ].order[i].rated = true;
-                                            setUser(tempUser);
-                                            updateUser();
-                                            addRating(
-                                              user.orders[
-                                                user.orders.length - index - 1
-                                              ].order[i].item._id,
-                                              user.orders[
-                                                user.orders.length - index - 1
-                                              ].order[i].userRating
-                                            );
-                                            setEditable(!editable);
-                                            setEditable(!editable);
-                                          } else {
-                                            alert("select a rating first");
-                                          }
-                                        }}
-                                      >
-                                        Post Rating
-                                      </button>
-                                    </div>
+                                  <div class="slidecontainer">
+                                    Give a rating: 1
+                                    <input
+                                      type="range"
+                                      min={1}
+                                      max={5}
+                                      defaultValue={item.item.rating}
+                                      class="slider"
+                                      onChange={(e) => {
+                                        let tempUser = user;
+                                        tempUser.orders[
+                                          tempUser.orders.length - index - 1
+                                        ].order[i].item.rating = parseInt(
+                                          e.target.value
+                                        );
+                                        setUser(tempUser);
+                                      }}
+                                    />
+                                    5{" "}
+                                    <button
+                                      onClick={() => {
+                                        let tempUser = user;
+                                        tempUser.orders[
+                                          tempUser.orders.length - index - 1
+                                        ].order.rated = true;
+                                        setUser(tempUser);
+                                        updateUser();
+                                      }}
+                                    >
+                                      Post rating
+                                    </button>
                                   </div>
                                 </>
                               ) : (
                                 <></>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         );
@@ -252,7 +170,7 @@ function UserDetails({ user, setUser, setLoaded }) {
                       <p>
                         <b>Delivery Status : </b>
                         {user.orders[user.orders.length - index - 1]
-                          .deliveryStatus === true ? (
+                          .deliveryStatus == true ? (
                           <span className="delivered">Delivered.</span>
                         ) : (
                           <span className="pending">Pending...</span>
@@ -362,9 +280,9 @@ function UserDetails({ user, setUser, setLoaded }) {
                 }}
               />
             </div>
-            <button className="btn btn-danger" onClick={handleUserDelete}>
-              Delete User
-            </button>
+          </form>
+          <form action="/deleteUser" method="POST">
+            <button className="btn btn-danger">Delete User</button>
           </form>
         </div>
       </div>
@@ -396,6 +314,7 @@ function UserDetails({ user, setUser, setLoaded }) {
               alt="insta"
             />
           </span>
+          {console.log(item)}
         </div>
       </div>
     </>
