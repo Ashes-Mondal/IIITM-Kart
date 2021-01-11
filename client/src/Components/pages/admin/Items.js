@@ -58,8 +58,8 @@ const Items = ({ itemList, setItemList }) => {
 			<table>
 				<tbody>
 					<tr>
-						<th>Item Name</th>
-						<th>Item ID</th>
+						<th><h4><strong>Item Name</strong></h4></th>
+						<th><h4><strong>Item ID</strong></h4></th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -69,7 +69,7 @@ const Items = ({ itemList, setItemList }) => {
 						<tbody key={index}>
 							<tr>
 								<td>
-									<h3>{item.itemName}</h3>
+									<h5>{item.itemName}</h5>
 								</td>
 								<td>
 									<h5 className="m-2"> {item._id}</h5>

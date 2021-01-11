@@ -21,6 +21,7 @@ import SideNavBar from "./Components/pages/admin/SideNavBar";
 import Items from "./Components/pages/admin/Items";
 import AddItem from "./Components/pages/admin/AddItem";
 import EditItem from "./Components/pages/admin/EditItem";
+// import EditUser from "./Components/pages/admin/EditUser";
 import Loader from "react-loader-spinner";
 
 //creating User and Authentication context
