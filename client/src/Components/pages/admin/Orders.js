@@ -105,7 +105,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 				</List>
 				<Divider />
 				<List>
-				<h4>
+					<h4>
 						<strong>Items ordered</strong>
 					</h4>
 					<TableContainer component={Paper}>
@@ -121,7 +121,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 							<TableBody>
 								{orderDetails.order.map((item, index) => (
 									<TableRow key={index}>
-										<TableCell  scope="row" align="center">
+										<TableCell scope="row" align="center">
 											{item.item.itemName}
 										</TableCell>
 										<TableCell align="center">{item.item._id}</TableCell>
@@ -170,7 +170,6 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 					</ListItem>
 				</List>
 				<Divider />
-				
 			</Dialog>
 		</div>
 	);
@@ -183,7 +182,21 @@ const Orders = ({ setAdmin }) => {
 	const { setIsAuth } = useContext(Authentication);
 	const [orders, setOrders] = useState([]);
 	const [showMore, setShowMore] = useState(false);
-	const [orderDetails, setOrderDetails] = useState({});
+	const [orderDetails, setOrderDetails] = useState({
+		_id: "",
+		user: {
+			name: { firstName: "", lastName: "" },
+			phone: "",
+			email: "",
+			address: "",
+		},
+		order: [],
+		dateOfOrder: "",
+		totalCost: 0,
+		razorpayPaymentId: "",
+		razorpayOrderId: "",
+		razorpaySignature: "",
+	});
 	useEffect(() => {
 		const fetchAllOrders = async () => {
 			const result = await (await fetch("/fetchAllOrders")).json();
@@ -233,13 +246,12 @@ const Orders = ({ setAdmin }) => {
 	};
 	return (
 		<div className="adminPanel">
-			{showMore ? (
-				<OrderDetails
-					orderDetails={orderDetails}
-					showMore={showMore}
-					setShowMore={setShowMore}
-				/>
-			) : null}
+			<OrderDetails
+				orderDetails={orderDetails}
+				showMore={showMore}
+				setShowMore={setShowMore}
+			/>
+
 			<Modal show={showModal} onHide={handleClose}>
 				<Modal.Header closeButton>
 					<Modal.Title>OOPS!!</Modal.Title>
@@ -291,48 +303,51 @@ const Orders = ({ setAdmin }) => {
 							<th></th>
 						</tr>
 					</tbody>
-					{orders.slice(0).reverse().map((order, index) => {
-						return (
-							<tbody key={index}>
-								<tr>
-									<td>
-										<h5 className="m-2"> {order._id}</h5>
-									</td>
-									<td>
-										<h5>
-											{order.user.name.firstName} {order.user.name.lastName}
-										</h5>
-									</td>
+					{orders
+						.slice(0)
+						.reverse()
+						.map((order, index) => {
+							return (
+								<tbody key={index}>
+									<tr>
+										<td>
+											<h5 className="m-2"> {order._id}</h5>
+										</td>
+										<td>
+											<h5>
+												{order.user.name.firstName} {order.user.name.lastName}
+											</h5>
+										</td>
 
-									<td>
-										<h5 className="m-2"> {order.user.phone}</h5>
-									</td>
-									<td>
-										<h5 className="m-2"> Rs {order.totalCost}</h5>
-									</td>
-									<td>
-										<button
-											className="btn btn-primary float-right mr-3 shadow"
-											onClick={() => {
-												setOrderDetails(order);
-												setShowMore(true);
-											}}
-										>
-											More
-										</button>
-										<button
-											className={`btn ${
-												order.deliveryStatus ? "btn-success" : "btn-warning"
-											} float-right mr-3 shadow`}
-											onClick={() => handleDeliveryStatus(order)}
-										>
-											{order.deliveryStatus ? "DELIVERED" : "PENDING"}
-										</button>
-									</td>
-								</tr>
-							</tbody>
-						);
-					})}
+										<td>
+											<h5 className="m-2"> {order.user.phone}</h5>
+										</td>
+										<td>
+											<h5 className="m-2"> Rs {order.totalCost}</h5>
+										</td>
+										<td>
+											<button
+												className="btn btn-primary float-right mr-3 shadow"
+												onClick={() => {
+													setOrderDetails(order);
+													setShowMore(true);
+												}}
+											>
+												More
+											</button>
+											<button
+												className={`btn ${
+													order.deliveryStatus ? "btn-success" : "btn-warning"
+												} float-right mr-3 shadow`}
+												onClick={() => handleDeliveryStatus(order)}
+											>
+												{order.deliveryStatus ? "DELIVERED" : "PENDING"}
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							);
+						})}
 				</table>
 			</main>
 		</div>

@@ -2,10 +2,9 @@ import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Authentication } from "../App";
 
-const Card = (props) => {
+const Card = ({ product, cart, setCart }) => {
   const history = useHistory();
   const { isAuth, setIsAuth } = useContext(Authentication);
-  const { product, cart, setCart } = props;
   const {
     itemName,
     _id: id,
