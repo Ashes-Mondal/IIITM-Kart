@@ -205,7 +205,13 @@ h1 {
   }
 }
 
-/**********************************************Login************************************/
+/**********************************************User Details************************************/
+.footer {
+  display: block;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
 /********************************************** Login************************************/
 .login-form {
   position: relative;
@@ -230,13 +236,13 @@ h1 {
   text-align: left;
   flex-direction: column;
 }
-.order-div{
+.order-div {
   display: flex;
-justify-content: space-between;
-text-align: left;
-flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  flex-direction: column;
 }
-.order-item-div{
+.order-item-div {
   display: flex;
   justify-content: space-between;
 }
@@ -270,4 +276,16 @@ flex-direction: column;
 }
 .flex-childA3 p {
   font-size: 3vw;
+}
+
+.smallImage {
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+}
+
+.logo {
+  padding: 3px;
+  width: 20%;
+  height: 20%;
 }
