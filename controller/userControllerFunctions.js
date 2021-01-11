@@ -42,22 +42,17 @@ exports.editUserDetails = async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const orders = req.body.orders;
-
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      {
+    try {
+      await UserDetail.findByIdAndUpdate(userId, {
         phone: phone,
         email: email,
         name: { firstName: firstName, lastName: lastName },
         orders: orders,
-      },
-      (err) => {
-        if (err) res.send({ response: false, error: err });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+      });
+      res.send({ response: true });
+    } catch (error) {
+      res.send({ response: false, error: error });
+    }
   } else {
     res.send({ response: false, error: "Not logged in" });
   }
@@ -69,11 +64,52 @@ exports.deleteUser = async (req, res) => {
   if (userId) {
     try {
       //user details fetched from the database
+      console.log("userId", userId);
+      await OrderDetail.deleteMany({ "user._id": userId });
       let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
-      res.redirect("/");
+      req.session.destroy();
+      res.send({ response: true });
     } catch (err) {
       res.send({ response: false, error: err });
     }
+  } else {
+    res.send({ response: false, error: "Not logged in" });
+  }
+};
+exports.addRating = async (req, res) => {
+  const userId = req.session.userId;
+  const itemId = req.body.itemId;
+  const userRating = req.body.userRating;
+  if (userId) {
+    let itemDetails = await ItemDetail.findById(itemId).exec();
+    if (itemDetails.numberOfRatings == undefined) {
+      itemDetails.numberOfRatings = 0;
+    }
+    if (itemDetails.rating) {
+      itemDetails.rating =
+        (itemDetails.rating * itemDetails.numberOfRatings + userRating) /
+        (itemDetails.numberOfRatings + 1);
+    } else {
+      itemDetails.rating = userRating;
+    }
+    itemDetails.rating = itemDetails.rating.toFixed(1);
+    itemDetails.numberOfRatings += 1;
+    console.log("itemDetails:", itemDetails);
+
+    await ItemDetail.findByIdAndUpdate(
+      itemId,
+      {
+        rating: itemDetails.rating,
+        numberOfRatings: itemDetails.numberOfRatings,
+      },
+      (err) => {
+        if (err) {
+          res.send({ response: false, error: err });
+        } else {
+          res.send({ response: true });
+        }
+      }
+    );
   } else {
     res.send({ response: false, error: "Not logged in" });
   }
@@ -108,16 +144,8 @@ exports.addToCart = async (req, res) => {
     });
     if (flag) userCart = [...userCart, { item: itemDetails, Qty: 1 }];
     //Finally the userCart is updated to the database
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      { userCart: userCart },
-      (err) => {
-        if (err) res.send({ response: false, error: err });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+    await UserDetail.findByIdAndUpdate(userId, { userCart: userCart });
+    res.send({ response: true });
   } catch (error) {
     res.send({ response: false, error: error });
   }
@@ -143,16 +171,8 @@ exports.deleteFromCart = async (req, res) => {
       if (itemElement.item._id != itemId) return itemElement;
     });
     //Finally the userCart is updated to the database
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      { userCart: userCart },
-      (err) => {
-        if (err) res.send({ response: false, error: err });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+    await UserDetail.findByIdAndUpdate(userId, { userCart: userCart });
+    res.send({ response: true });
   } catch (error) {
     res.send({ response: false, error: error });
   }
@@ -182,16 +202,8 @@ exports.updateQty = async (req, res) => {
       return itemElement;
     });
     //Finally the userCart is updated to the database
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      { userCart: userCart },
-      (err) => {
-        if (err) res.send({ response: false, error: err });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+    await UserDetail.findByIdAndUpdate(userId, { userCart: userCart });
+    res.send({ response: true });
   } catch (error) {
     res.send({ response: false, error: error });
   }
@@ -205,12 +217,12 @@ exports.clearCart = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
     return;
   }
-  await UserDetail.findByIdAndUpdate(userId, { userCart: [] }, (err) => {
-    if (err) res.send({ response: false, error: err });
-    else {
-      res.send({ response: true });
-    }
-  });
+  try {
+    await UserDetail.findByIdAndUpdate(userId, { userCart: [] });
+    res.send({ response: true });
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };
 
 exports.paymentOrder = async (req, res) => {
@@ -288,7 +300,7 @@ exports.signup = async (req, res) => {
     //storing in database
     newUser = await new UserDetail(userData);
     await newUser.save();
-    res.redirect("/login");
+    res.send({ response: true });
   } catch (error) {
     res.send({ response: false, error: error });
   }
@@ -318,65 +330,62 @@ exports.addOrder = async (req, res) => {
     return;
   }
   const orderId = new mongoose.Types.ObjectId();
-  await UserDetail.findByIdAndUpdate(
-    userId,
 
-    {
-      orders: [
-        ...req.body.userOrders,
-        {
+  try {
+    await UserDetail.findByIdAndUpdate(
+      userId,
+
+      {
+        orders: [
+          ...req.body.userOrders,
+          {
+            _id: orderId,
+            order: req.body.userCart,
+            deliveryStatus: false,
+            dateOfOrder: new Date(),
+            totalCost: req.body.totalCost,
+            razorpayOrderId: req.body.razorpayOrderId,
+            razorpayPaymentId: req.body.razorpayPaymentId,
+            razorpaySignature: req.body.razorpaySignature,
+          },
+        ],
+      }
+    );
+    //funtion that adds orders in the databse
+    const addOrderToDatabase = async () => {
+      try {
+        const userDetails = await UserDetail.findById(userId);
+        const order = {
           _id: orderId,
-          order: req.body.userCart,
           deliveryStatus: false,
+          user: {
+            _id: userDetails._id,
+            name: { ...userDetails.name },
+            phone: userDetails.phone,
+            email: userDetails.email,
+            address: userDetails.address,
+          },
+          order: req.body.userCart,
           dateOfOrder: new Date(),
           totalCost: req.body.totalCost,
           razorpayOrderId: req.body.razorpayOrderId,
           razorpayPaymentId: req.body.razorpayPaymentId,
           razorpaySignature: req.body.razorpaySignature,
-        },
-      ],
-    },
-    (err) => {
-      if (err) res.send({ response: false, error: err });
-      else {
-        //funtion that adds orders in the databse
-        const addOrderToDatabase = async () => {
-          try {
-            const userDetails = await UserDetail.findById(userId);
-            const order = {
-              _id: orderId,
-              deliveryStatus: false,
-              user: {
-                _id: userDetails._id,
-                name: { ...userDetails.name },
-                phone: userDetails.phone,
-                email: userDetails.email,
-                address: userDetails.address,
-              },
-              order: req.body.userCart,
-              dateOfOrder: new Date(),
-              totalCost: req.body.totalCost,
-              razorpayOrderId: req.body.razorpayOrderId,
-              razorpayPaymentId: req.body.razorpayPaymentId,
-              razorpaySignature: req.body.razorpaySignature,
-            };
-            const theOrder = await new OrderDetail(order);
-            await theOrder.save();
-          } catch (error) {
-            throw new Error(error);
-          }
         };
-        //function called
-        try {
-          addOrderToDatabase();
-          res.send({ response: true, orderId: orderId });
-        } catch (error) {
-          res.send({ response: false, error: error, orderId: orderId });
-        }
+        const theOrder = await new OrderDetail(order);
+        await theOrder.save();
+      } catch (error) {
+        throw new Error(error);
       }
-    }
-  );
+    };
+    //function called
+    addOrderToDatabase();
+    res.send({ response: true, orderId: orderId });
+  } catch (error) {
+    res.send({ response: false, error: error, orderId: orderId });
+  }
 };
+
 //CANCEL ORDER
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
@@ -392,18 +401,10 @@ exports.cancelOrder = async (req, res) => {
     ordersList = ordersList.filter(
       (orderElement) => orderElement._id != orderId
     );
-    await UserDetail.findByIdAndUpdate(
-      userId,
-      {
-        orders: ordersList,
-      },
-      (err) => {
-        if (err) res.send({ response: false, error: err });
-        else {
-          res.send({ response: true });
-        }
-      }
-    );
+    await UserDetail.findByIdAndUpdate(userId, {
+      orders: ordersList,
+    });
+    res.send({ response: true });
   } catch (error) {
     res.send({ response: false, error: error });
   }

@@ -4,8 +4,8 @@ const { ItemDetail } = require("../models/itemSchema");
 
 const filterSearch = (itemList, Search) => {
   for (let wordIndex = 1; wordIndex < Search.length; wordIndex++) {
-    console.log("itemList:", itemList);
-    console.log(`Search[${wordIndex}]:`, Search[wordIndex]);
+    // console.log("itemList:", itemList);
+    // console.log(`Search[${wordIndex}]:`, Search[wordIndex]);
     if (wordIndex === 0) continue;
     itemList = itemList.filter((itemObject) => {
       let flag = false;
