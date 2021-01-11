@@ -23,23 +23,22 @@ const SearchBox = () => {
 		}
 	};
 	return (
-		<form className="search-box-form" onSubmit={handleSearchSubmit}>
-			<input
-				className="form-control"
-				type="search"
-				placeholder="search product"
-				value={Search}
-				onChange={(e) => {
-					setSearch(e.target.value);
-				}}
-			/>
-			<Button
-				variant="contained"
-				color="default"
-				onClick={(e) => handleSearchSubmit(e)}
-				startIcon={<SearchIcon />}
-			></Button>
-		</form>
+		<>
+			<form onSubmit={handleSearchSubmit} className="search-box-form ">
+				<input
+					className="form-control"
+					type="search"
+					placeholder="search product"
+					value={Search}
+					onChange={(e) => {
+						setSearch(e.target.value);
+					}}
+				/>
+			</form>
+			<button type="button" class="btn btn-warning btn-circle btn-lg">
+				<SearchIcon onClick={handleSearchSubmit} />
+			</button>
+		</>
 	);
 };
 export default SearchBox;

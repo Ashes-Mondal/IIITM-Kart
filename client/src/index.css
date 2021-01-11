@@ -57,15 +57,41 @@ code {
 } */
 .homeCard {
   height: auto;
-  width: 20rem;
-  min-height: 32rem;
+  min-height: max-content;
   text-align: center;
   padding: 1rem;
   box-shadow: 5px 5px 5px rgb(200, 200, 200);
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 1rem 0.3rem 0 0.3rem;
 }
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
 .cardButton {
   margin-top: auto;
 }
@@ -89,7 +115,7 @@ img {
 }
 .site-name {
   text-align: center;
-  width: 30%;
+  width: 32%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -104,6 +130,8 @@ img {
 .search-box-form {
   width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-control {
