@@ -55,7 +55,6 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Admin Email: {user.email}</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-success text-light m-3">
-<<<<<<< HEAD
           <p>
             {orders.length}{" "}
             <span>
@@ -66,10 +65,6 @@ const Dashboard = ({ user, setAdmin }) => {
             </span>
           </p>
           <h5>Registered Users</h5>
-=======
-          <p>{orders.length}</p>
-          <h5>Total Orders</h5>
->>>>>>> b20f8429d4809b267995d3e7048184475f55ed46
         </div>
         <div className="flex-childA3 shadow rounded bg-warning text-light m-3">
           <p>
@@ -97,7 +92,6 @@ const Dashboard = ({ user, setAdmin }) => {
         </div>
       </div>
       <div className="flex-container">
-<<<<<<< HEAD
         <div className="flex-childA3 shadow rounded bg-white">
           <p className="tc">Recent Orders</p>
           <table>
@@ -125,24 +119,6 @@ const Dashboard = ({ user, setAdmin }) => {
                     <h5>{status(order.deliveryStatus)}</h5>
                   </td>
                 </tr>
-=======
-        <div className="flex-childA3 shadow rounded bg-white m-3">
-          <p>Recent Orders</p>
-          {orders
-            .reverse()
-            .slice(0, 5)
-            .map((order, index) => {
-              return (
-                <div key={index}>
-                  <h6>
-                    orderId:{" "}
-                    <span>
-                      {order._id} User: {order.user.name.firstName}{" "}
-                      {order.user.name.lastName}
-                    </span>
-                  </h6>
-                </div>
->>>>>>> b20f8429d4809b267995d3e7048184475f55ed46
               );
             })}
           </table>
