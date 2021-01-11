@@ -58,5 +58,4 @@ const SearchBox = () => {
     </form>
   );
 };
-
 export default SearchBox;

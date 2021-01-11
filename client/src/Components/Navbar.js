@@ -233,8 +233,13 @@ function Navbar({ user, cart, admin }) {
   }, []);
 
   return (
-    <nav className="navbar sticky-top">
-      <div className="site-name">
+    <nav className="navbar navbar1 sticky-top">
+      <div
+        className="site-name"
+        onClick={() => {
+          window.location.href = "/";
+        }}
+      >
         <span className="text1">IIITM-Kart</span>
         <span className="text2">A Shopping site for IIITM students</span>
       </div>
