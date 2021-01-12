@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { Item } from "../App";
 import SearchIcon from "@material-ui/icons/Search";
@@ -34,10 +33,10 @@ const SearchBox = () => {
 						setSearch(e.target.value);
 					}}
 				/>
+				<button type="submit" class="btn btn-warning btn-circle btn-lg">
+					<SearchIcon />
+				</button>
 			</form>
-			<button type="button" class="btn btn-warning btn-circle btn-lg">
-				<SearchIcon onClick={handleSearchSubmit} />
-			</button>
 		</>
 	);
 };

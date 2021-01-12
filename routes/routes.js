@@ -3,7 +3,8 @@ const express = require("express");
 //Files
 const userControllerFunctions = require("../controller/userControllerFunctions");
 const adminControllerFunctions = require("../controller/adminControllerFunctions");
-const api = require("../api/search");
+const api_search = require("../api/search");
+const api_forgotPassword = require("../api/forgotPassword");
 
 const router = express.Router();
 /************************************** User routes *******************************************/
@@ -23,8 +24,10 @@ router.post("/deleteUser", userControllerFunctions.deleteUser);
 router.post("/addRating", userControllerFunctions.addRating);
 router.post("/addOrder", userControllerFunctions.addOrder);
 router.post("/cancelOrder", userControllerFunctions.cancelOrder);
-router.post("/search", api.search);
+router.post("/search", api_search.search);
 router.post("/paymentOrder", userControllerFunctions.paymentOrder);
+router.post("/emailValidation", api_forgotPassword.emailValidation);
+router.post("/resetPassword", api_forgotPassword.resetPassword);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
