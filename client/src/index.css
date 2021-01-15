@@ -3,6 +3,7 @@ code {
     monospace;
 }
 /********************************************** NAVBAR2 *******************************************/
+
 .navbar2 {
   position: relative;
   padding: 0.5rem 1rem;
@@ -43,7 +44,7 @@ code {
   height: auto;
 }
 .categories {
-  padding: 5px 30px;
+  padding: 0.4rem 1.875rem;
   align-self: center;
   margin: auto;
 }

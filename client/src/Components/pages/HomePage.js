@@ -1,14 +1,14 @@
 import React from "react";
-import Card from "../Card";
+import ProductCard from "../ProductCard";
 import Navbar2 from "../Navbar2";
 
 const HomePage = ({ itemList, cart, setCart, setItemList }) => {
 	return (
 		<>
-			<Navbar2 itemList={itemList} setItemList={setItemList} />
-			<div className="row  justify-content-md-center justify-content-lg-center justify-content-sm-center">
+			{/* <Navbar2 itemList={itemList} setItemList={setItemList} /> */}
+			<div className="row justify-content-center canvas">
 				{itemList.map((item, i) => {
-					return <Card key={i} cart={cart} setCart={setCart} product={item} />;
+					return <ProductCard key={i} cart={cart} setCart={setCart} product={item} />;
 				})}
 			</div>
 		</>
