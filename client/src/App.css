@@ -227,10 +227,10 @@ h1 {
  align-items: center;
 }
 .canvas{
-  margin:2rem 5rem;
+  /* margin:2rem 5rem; */
 }
 .product-card{
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 /********************************************** Admin page************************************/
 .user-form {

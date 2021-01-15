@@ -12,15 +12,20 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
 	root: {
-		// margin: "auto 1.5rem",
-    width: "auto",
-    height:"auto",
+		margin: "auto",
+		marginTop:10,
+		marginBottom:10,
+		width: "20vw",
 		flexDirection: "column",
 		justifyContent: "center",
 	},
 	img: {
 		margin: "1rem 0 0 0",
+		width: "20vw",
 		objectFit: "scale-down",
+	},
+	fontSize: {
+		fontSize: "calc(14px +1vw)",
 	},
 });
 
@@ -79,7 +84,7 @@ const ProductCard = ({ product, cart, setCart }) => {
 
 	/*****************************DEBUG******************************** */
 	return (
-		<div className="col-lg-4 col-md-6 col-sm-6 product-card">
+		<div className="col-lg-3 col-md-4 col-sm-6 product-card">
 			<Card className={classes.root}>
 				<CardActionArea>
 					<CardMedia
@@ -94,6 +99,7 @@ const ProductCard = ({ product, cart, setCart }) => {
 							style={{ textAlign: "center" }}
 							variant="h5"
 							component="h2"
+							className={classes.fontSize}
 						>
 							{itemName}
 						</Typography>
@@ -101,6 +107,7 @@ const ProductCard = ({ product, cart, setCart }) => {
 							style={{ textAlign: "center" }}
 							variant="h6"
 							component="h2"
+							className={classes.fontSize}
 						>
 							Rating:{" "}
 							{rating ? (
@@ -133,6 +140,7 @@ const ProductCard = ({ product, cart, setCart }) => {
 							style={{ textAlign: "center" }}
 							variant="h6"
 							component="h2"
+							className={classes.fontSize}
 						>
 							Rs {cost}
 						</Typography>
