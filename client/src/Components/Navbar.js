@@ -233,7 +233,7 @@ function Navbar({ user, cart, admin }) {
   }, []);
 
   return (
-    <nav className="navbar navbar1 sticky-top">
+    <nav className=" navbar1 sticky-top">
       <div
         className="site-name"
         onClick={() => {

@@ -224,6 +224,13 @@ h1 {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+ align-items: center;
+}
+.canvas{
+  margin:2rem 5rem;
+}
+.product-card{
+  margin-bottom: 2rem;
 }
 /********************************************** Admin page************************************/
 .user-form {
