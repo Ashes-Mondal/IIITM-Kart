@@ -18,7 +18,7 @@ function Copyright() {
 		<Typography variant="body2" color="textSecondary" align="center">
 			{"Copyright © "}
 			<Link color="inherit" href="https://material-ui.com/">
-				Your Website
+				IIITM Kart
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}
@@ -88,7 +88,7 @@ export default function Login({ setLoaded }) {
 				<Typography component="h1" variant="h5">
 					Sign in
 				</Typography>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} onSubmit={handleSubmit} >
 					<TextField
 						variant="outlined"
 						margin="normal"
@@ -125,7 +125,7 @@ export default function Login({ setLoaded }) {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-						onClick={(e)=>{handleSubmit(e)}}
+						
 					>
 						Sign In
 					</Button>

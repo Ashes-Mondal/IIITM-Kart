@@ -52,7 +52,7 @@ const Card = ({ product, cart, setCart }) => {
 
   return (
     <>
-      <div className="homeCard bg-white flex-container">
+      <div className="homeCard bg-white flex-container col-lg-3">
         <img className="itemImg" alt={itemName} src={imageURL} />
         <div className="justify-content-center">
           <h2>{product.itemName}</h2>
