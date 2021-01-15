@@ -3,42 +3,42 @@ import { Item } from "../App";
 import SearchIcon from "@material-ui/icons/Search";
 
 const SearchBox = () => {
-	const [Search, setSearch] = useState("");
-	const { setItemList } = useContext(Item);
-	//handleSearchSubmit
-	const handleSearchSubmit = async (e) => {
-		e.preventDefault();
-		//requesting server to fetch Search data
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ Search: Search }),
-		};
-		const result = await (await fetch("/search", requestOptions)).json();
-		if (result.response === false) {
-			alert("Could not find the result!!");
-		} else {
-			setItemList(result.itemList);
-		}
-	};
-	return (
-		<>
-			<form onSubmit={handleSearchSubmit} className="search-box-form ">
-				<input
-					className="form-control"
-					type="search"
-					placeholder="search product"
-					value={Search}
-					onChange={(e) => {
-						setSearch(e.target.value);
-					}}
-				/>
-				<button type="submit" class="btn btn-warning btn-circle btn-lg">
-					<SearchIcon />
-				</button>
-			</form>
-		</>
-	);
+  const [Search, setSearch] = useState("");
+  const { setItemList } = useContext(Item);
+  //handleSearchSubmit
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    //requesting server to fetch Search data
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ Search: Search }),
+    };
+    const result = await (await fetch("/search", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not find the result!!");
+    } else {
+      setItemList(result.itemList);
+    }
+  };
+  return (
+    <>
+      <form onSubmit={handleSearchSubmit} className="search-box-form ">
+        <input
+          className="form-control"
+          type="search"
+          placeholder="search product"
+          value={Search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
+        <button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
+          <SearchIcon />
+        </button>
+      </form>
+    </>
+  );
 };
 export default SearchBox;
 

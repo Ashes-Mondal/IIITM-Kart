@@ -267,6 +267,9 @@ a.active-nav-link {
   padding: 20px;
 }
 .userdetails {
+  padding: 20px;
+  margin-bottom: auto;
+  top: 6.5rem;
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
