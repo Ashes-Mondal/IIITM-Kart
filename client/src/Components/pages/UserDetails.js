@@ -314,7 +314,6 @@ function UserDetails({ user, setUser, setCart }) {
               alt="insta"
             />
           </span>
-          {console.log(item)}
         </div>
       </div>
     </>
