@@ -12,6 +12,7 @@ code {
   justify-content: space-evenly;
   align-content: center;
   display: flex;
+  border-bottom: 2px solid rgb(223, 223, 223);
 }
 .dropbtn {
   background: white;
@@ -55,6 +56,16 @@ code {
 .categoriesClicked {
   background: rgb(218, 218, 218);
 }
+.clearFilters {
+  padding: 0.4rem 1.875rem;
+  align-self: center;
+  margin: auto;
+  font-weight: bold;
+  color: rgb(255, 72, 72);
+}
+.clearFilters:hover {
+  cursor: pointer;
+}
 /********************************************** HOMEPAGE, CARD ************************************/
 /* .homePageImg {
   background-image: url("https://media.wired.com/photos/5c9040ee4950d24718d6da99/16:9/w_2400,h_1350,c_limit/shoppingcart-1066110386.jpg");
@@ -74,6 +85,7 @@ code {
 }
 .homeCard:hover {
   box-shadow: 0px 0px 20px rgb(228, 228, 228);
+  cursor: pointer;
 }
 
 .btn-circle {
@@ -101,15 +113,15 @@ code {
   line-height: 1.33;
   border-radius: 35px;
 }
-.cardBtn {
+/* .cardBtn {
   position: absolute;
   display: none;
-  margin-top: 100%;
+  bottom: 0;
   margin-left: 1rem;
-}
-.homeCard:hover .cardBtn {
+} */
+/* .homeCard:hover .cardBtn {
   display: inline;
-}
+} */
 
 img {
   margin: 1rem;
@@ -527,4 +539,43 @@ th {
 }
 .buttons3D-selected {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+}
+/****************************************PRODUCT DETAILS***********************************/
+.productDetails {
+  margin: 1rem;
+  padding: 2rem;
+}
+.productDetailsImg {
+  display: block;
+  margin: auto;
+  height: 400px;
+}
+.biggerFont {
+  font-size: x-large;
+}
+.addToCart {
+  float: left;
+}
+.backButton {
+  margin: 0;
+  border-radius: 3px;
+  border: 2px solid royalblue;
+  background: none;
+  font-weight: bold;
+}
+.similarItems {
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: horizontal;
+  flex-wrap: nowrap;
+}
+.similarItem {
+  display: inline;
+  flex: 0 0 auto;
+}
+.similarItemDescription {
+  max-width: 300px;
+  overflow: hidden;
 }
