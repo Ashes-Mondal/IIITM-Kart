@@ -343,7 +343,7 @@ const Orders = ({ setAdmin }) => {
                       <button
                         className={`btn ${
                           order.deliveryStatus ? "btn-success" : "btn-warning"
-                        } float-right mr-3 shadow`}
+                        } float-right mr-2 shadow`}
                         onClick={() => handleDeliveryStatus(order)}
                       >
                         {order.deliveryStatus ? "DELIVERED" : "PENDING"}

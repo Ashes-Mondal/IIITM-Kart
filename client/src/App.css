@@ -10,7 +10,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f1f3f6;
 }
 
 h1 {
@@ -230,14 +229,12 @@ h1 {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
- align-items: center;
+  align-items: center;
 }
-.canvas{
-  margin:2rem 5rem;
+.canvas {
+  margin: 2rem 5rem;
 }
-.product-card{
-  margin-bottom: 2rem;
-}
+
 /********************************************** Admin page************************************/
 .user-form {
   display: flex;
