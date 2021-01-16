@@ -193,7 +193,7 @@ function UserDetails({ user, setUser, setCart }) {
             </>
           )}
         </div>
-        <div className="flex-child2 sticky-top">
+        <div className="flex-child2">
           <div className="userdetails">
             <h1>User Details</h1>
             <br />
