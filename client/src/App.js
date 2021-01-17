@@ -23,6 +23,7 @@ import AddItem from "./Components/pages/admin/AddItem";
 import EditItem from "./Components/pages/admin/EditItem";
 // import EditUser from "./Components/pages/admin/EditUser";
 import Loader from "react-loader-spinner";
+import ProductDetails from "./Components/pages/ProductDetails";
 
 //creating User and Authentication context
 const User = createContext();
@@ -130,6 +131,14 @@ const App = () => {
               <Switch>
                 <Route exact path="/">
                   <HomePage
+                    itemList={itemList}
+                    cart={cart}
+                    setCart={setCart}
+                    setItemList={setItemList}
+                  />
+                </Route>
+                <Route exact path="/productDetails/:itemId">
+                  <ProductDetails
                     itemList={itemList}
                     cart={cart}
                     setCart={setCart}

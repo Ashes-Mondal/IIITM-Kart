@@ -72,7 +72,9 @@ const Navbar2 = ({ itemList, setItemList }) => {
         </div>
         <span
           className={
-            category == "Mobile" ? "categories categoriesClicked" : "categories"
+            category === "Mobile"
+              ? "categories categoriesClicked"
+              : "categories"
           }
           onClick={() => {
             setCategory("Mobile");
@@ -83,7 +85,7 @@ const Navbar2 = ({ itemList, setItemList }) => {
         </span>
         <span
           className={
-            category == "Men clothing"
+            category === "Men clothing"
               ? "categories categoriesClicked"
               : "categories"
           }
@@ -96,7 +98,7 @@ const Navbar2 = ({ itemList, setItemList }) => {
         </span>
         <span
           className={
-            category == "Women Clothing"
+            category === "Women Clothing"
               ? "categories categoriesClicked"
               : "categories"
           }
@@ -106,6 +108,14 @@ const Navbar2 = ({ itemList, setItemList }) => {
           }}
         >
           Women's Clothing
+        </span>
+        <span
+          className="clearFilters"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Clear Filters
         </span>
       </nav>
     </div>
