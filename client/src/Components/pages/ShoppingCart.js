@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function ShoppingCart({ cart, setCart, user, setUser }) {
-	const { setIsAuth } = useContext(Authentication);
+	const { isAuth,setIsAuth } = useContext(Authentication);
 	const [orderHistory, setOrderHistory] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [showCartModal, setShowCartModal] = useState(false);
@@ -361,9 +361,10 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 						);
 					})}
 					<h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
-					<button className="btnProceed" onClick={proceedPayment}>
+					{isAuth?(<button className="btnProceed" onClick={proceedPayment}>
 						Proceed To Checkout
-					</button>
+					</button>):null}
+					
 				</div>
 			</div>
 		</>
