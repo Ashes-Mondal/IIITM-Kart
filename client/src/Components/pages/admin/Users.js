@@ -18,290 +18,291 @@ import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
-	appBar: {
-		position: "relative",
-	},
-	title: {
-		marginLeft: theme.spacing(2),
-		flex: 1,
-	},
+  appBar: {
+    position: "relative",
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const EditCustomer = ({
-	Customer,
-	setCustomer,
-	edit,
-	setEdit,
-	users,
-	setUsers,
-	setShowModal,
+  Customer,
+  setCustomer,
+  edit,
+  setEdit,
+  users,
+  setUsers,
+  setShowModal,
 }) => {
-	const classes = useStyles();
-	const history = useHistory();
-	const handleClose = () => {
-		setEdit(false);
-	};
-	const handleEdit = async () => {
-		setEdit(false);
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				userId: Customer._id,
-				firstName: Customer.firstName,
-				lastName: Customer.lastName,
-				phone: Customer.phone,
-				email: Customer.email,
-				address: Customer.address,
-			}),
-		};
-		const result = await (
-			await fetch("/adminEditUserDetails", requestOptions)
-		).json();
-		if (result.response) {
-			//finally resetting to normal
-			setUsers(
-				users.map((user) => {
-					if (edit === user.phone) {
-						return Customer;
-					}
-					return user;
-				})
-			);
-			history.go();
-		} else if (result.error === "Not logged in") {
-			setShowModal(true);
-		} else {
-			alert("DataBase Error occurred!!");
-		}
-	};
-	return (
-		<div>
-			<Dialog
-				fullScreen
-				open={edit}
-				onClose={handleClose}
-				TransitionComponent={Transition}
-			>
-				<AppBar className={classes.appBar}>
-					<Toolbar>
-						<IconButton
-							edge="start"
-							color="inherit"
-							onClick={handleClose}
-							aria-label="close"
-						>
-							<CloseIcon />
-						</IconButton>
-						<Typography variant="h6" className={classes.title}>
-							User Id: {Customer._id}
-						</Typography>
-						<Button autoFocus color="inherit" onClick={handleEdit}>
-							save
-						</Button>
-					</Toolbar>
-				</AppBar>
-				<List>
-					<ListItem >
-						<TextField
-							autoFocus
-							margin="dense"
-							id="firstName"
-							label="First Name"
-							type="text"
-							fullWidth
-							value={Customer.firstName}
-							onChange={(e) =>
-								setCustomer({ ...Customer, firstName: e.target.value })
-							}
-						/>
-					</ListItem>
-					<ListItem >
-						<TextField
-							autoFocus
-							margin="dense"
-							id="firstName"
-							label="Last Name"
-							type="text"
-							fullWidth
-							value={Customer.lastName}
-							onChange={(e) =>
-								setCustomer({ ...Customer, lastName: e.target.value })
-							}
-						/>
-					</ListItem>
-					<ListItem>
-						<TextField
-							autoFocus
-							margin="dense"
-							id="phone"
-							label="Phone"
-							type="text"
-							value={Customer.phone}
-							onChange={(e) =>
-								setCustomer({ ...Customer, phone: e.target.value })
-							}
-						/>
-					</ListItem>
-					<ListItem >
-						<TextField
-							autoFocus
-							margin="dense"
-							id="email"
-							label="email"
-							type="email"
-							fullWidth
-							value={Customer.email}
-							onChange={(e) =>
-								setCustomer({ ...Customer, email: e.target.value })
-							}
-						/>
-					</ListItem>
-					<ListItem >
-						<TextField
-							autoFocus
-							margin="dense"
-							id="address"
-							label="Address"
-							type="address"
-							fullWidth
-							value={Customer.address}
-							onChange={(e) =>
-								setCustomer({ ...Customer, address: e.target.value })
-							}
-						/>
-					</ListItem>
-				</List>
-			</Dialog>
-		</div>
-	);
+  const classes = useStyles();
+  const history = useHistory();
+  const handleClose = () => {
+    setEdit(false);
+  };
+  const handleEdit = async () => {
+    setEdit(false);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: Customer._id,
+        firstName: Customer.firstName,
+        lastName: Customer.lastName,
+        phone: Customer.phone,
+        email: Customer.email,
+        address: Customer.address,
+      }),
+    };
+    const result = await (
+      await fetch("/adminEditUserDetails", requestOptions)
+    ).json();
+    if (result.response) {
+      //finally resetting to normal
+      setUsers(
+        users.map((user) => {
+          if (edit === user.phone) {
+            return Customer;
+          }
+          return user;
+        })
+      );
+      history.go();
+    } else if (result.error === "Not logged in") {
+      setShowModal(true);
+    } else {
+      alert("DataBase Error occurred!!");
+    }
+  };
+  return (
+    <div>
+      <Dialog
+        fullScreen
+        open={edit}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              User Id: {Customer._id}
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleEdit}>
+              save
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <List>
+          <ListItem>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="firstName"
+              label="First Name"
+              type="text"
+              fullWidth
+              value={Customer.firstName}
+              onChange={(e) =>
+                setCustomer({ ...Customer, firstName: e.target.value })
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="firstName"
+              label="Last Name"
+              type="text"
+              fullWidth
+              value={Customer.lastName}
+              onChange={(e) =>
+                setCustomer({ ...Customer, lastName: e.target.value })
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="phone"
+              label="Phone"
+              type="text"
+              value={Customer.phone}
+              onChange={(e) =>
+                setCustomer({ ...Customer, phone: e.target.value })
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="email"
+              type="email"
+              fullWidth
+              value={Customer.email}
+              onChange={(e) =>
+                setCustomer({ ...Customer, email: e.target.value })
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="address"
+              label="Address"
+              type="address"
+              fullWidth
+              value={Customer.address}
+              onChange={(e) =>
+                setCustomer({ ...Customer, address: e.target.value })
+              }
+            />
+          </ListItem>
+        </List>
+      </Dialog>
+    </div>
+  );
 };
 
 const Users = ({ setAdmin }) => {
-	const history = useHistory();
-	const { setIsAuth } = useContext(Authentication);
-	const [users, setUsers] = useState([]);
-	const [Customer, setCustomer] = useState({
-		_id: "",
-		firstName: "",
-		lastName: "",
-		phone: "",
-		address: "",
-		email: "",
-	});
-	const [edit, setEdit] = useState(false);
-	const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
+  const { setIsAuth } = useContext(Authentication);
+  const [users, setUsers] = useState([]);
+  const [Customer, setCustomer] = useState({
+    _id: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: "",
+    email: "",
+  });
+  const [edit, setEdit] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  console.log("Users: ", users);
 
-	useEffect(() => {
-		const fetchAllUsers = async () => {
-			const result = await (await fetch("/fetchAllUsers")).json();
-			if (result.response === true) {
-				setUsers(result.usersData);
-			} else {
-				setUsers([]);
-				setIsAuth(false);
-				setAdmin(false);
-				history.push("/login");
-			}
-		};
-		fetchAllUsers();
-	}, [history, setIsAuth, setAdmin]);
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      const result = await (await fetch("/fetchAllUsers")).json();
+      if (result.response === true) {
+        setUsers(result.usersData);
+      } else {
+        setUsers([]);
+        setIsAuth(false);
+        setAdmin(false);
+        history.push("/login");
+      }
+    };
+    fetchAllUsers();
+  }, [history, setIsAuth, setAdmin]);
 
-	const handleClose = () => {
-		setShowModal(false);
-	};
-	return (
-		<>
-			<div className="adminPanel">
-				<Modal show={showModal} onHide={handleClose}>
-					<Modal.Header closeButton>
-						<Modal.Title>OOPS!!</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>Session Timeout</Modal.Body>
-					<Modal.Footer>
-						<Button variant="secondary" onClick={handleClose} href="/login">
-							Login
-						</Button>
-					</Modal.Footer>
-				</Modal>
-				<EditCustomer
-					Customer={Customer}
-					setCustomer={setCustomer}
-					edit={edit}
-					setEdit={setEdit}
-					users={users}
-					setUsers={setUsers}
-					setShowModal={setShowModal}
-				/>
-				<h1>Users</h1>
-				<main>
-					<table>
-						<tbody>
-							<tr>
-								<th>
-									<h4>
-										<strong>Customer Name</strong>
-									</h4>
-								</th>
-								<th>
-									<h4>
-										<strong>Customer ID</strong>
-									</h4>
-								</th>
-								<th>
-									<h4>
-										<strong>Customer Phone</strong>
-									</h4>
-								</th>
-								<th></th>
-							</tr>
-						</tbody>
-						{users.map((user, index) => {
-							return (
-								<tbody key={index}>
-									<tr>
-										<td>
-											<h5>
-												{user.name.firstName} {user.name.lastName}
-											</h5>
-										</td>
-										<td>
-											<h5 className="m-2"> {user._id}</h5>
-										</td>
-										<td>
-											<h5 className="m-2"> {user.phone}</h5>
-										</td>
-										<td>
-											<button
-												className="btn btn-primary float-right mr-3 shadow"
-												onClick={() => {
-													setCustomer({
-														_id: user._id,
-														firstName: user.name.firstName,
-														lastName: user.name.lastName,
-														phone: user.phone,
-														address: user.address,
-														email: user.email,
-													});
-													setEdit(true);
-												}}
-											>
-												Edit
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							);
-						})}
-					</table>
-				</main>
-			</div>
-		</>
-	);
+  const handleClose = () => {
+    setShowModal(false);
+  };
+  return (
+    <>
+      <div className="adminPanel">
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>OOPS!!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Session Timeout</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose} href="/login">
+              Login
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <EditCustomer
+          Customer={Customer}
+          setCustomer={setCustomer}
+          edit={edit}
+          setEdit={setEdit}
+          users={users}
+          setUsers={setUsers}
+          setShowModal={setShowModal}
+        />
+        <h1>Users</h1>
+        <main>
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  <h4>
+                    <strong>Customer Name</strong>
+                  </h4>
+                </th>
+                <th>
+                  <h4>
+                    <strong>Customer ID</strong>
+                  </h4>
+                </th>
+                <th>
+                  <h4>
+                    <strong>Customer Phone</strong>
+                  </h4>
+                </th>
+                <th></th>
+              </tr>
+            </tbody>
+            {users.map((user, index) => {
+              return (
+                <tbody key={index}>
+                  <tr>
+                    <td>
+                      <h5>
+                        {user.name.firstName} {user.name.lastName}
+                      </h5>
+                    </td>
+                    <td>
+                      <h5 className="m-2"> {user._id}</h5>
+                    </td>
+                    <td>
+                      <h5 className="m-2"> {user.phone}</h5>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-primary float-right mr-3 shadow"
+                        onClick={() => {
+                          setCustomer({
+                            _id: user._id,
+                            firstName: user.name.firstName,
+                            lastName: user.name.lastName,
+                            phone: user.phone,
+                            address: user.address,
+                            email: user.email,
+                          });
+                          setEdit(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
+          </table>
+        </main>
+      </div>
+    </>
+  );
 };
 
 export default Users;
