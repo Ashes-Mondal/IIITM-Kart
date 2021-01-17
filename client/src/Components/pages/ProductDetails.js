@@ -178,7 +178,6 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
                 className="m-3 similarItem homeCard"
                 onClick={() => {
                   console.log("Product Details:", product);
-                  //   history.push(`/productDetails/${product._id}`);
                   window.location.href = `/productDetails/${product._id}`;
                 }}
               >
