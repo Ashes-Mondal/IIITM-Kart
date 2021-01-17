@@ -279,11 +279,12 @@ const Orders = ({ setAdmin }) => {
 			(order) =>
 				search === order.user.name.firstName ||
 				search === order.user.name.lastName ||
+				search === `${order.user.name.firstName} ${order.user.name.lastName}` ||
 				search === order._id ||
 				search === order.user.phone ||
 				search === order.user.email ||
-				search === order.pay_GQJgcEqUJhBoXM ||
-				search === order.order_GQJgY3B1KbkHn7 ||
+				search === order.razorpayPaymentId||
+				search === order.razorpayOrderId ||
 				search === order.razorpaySignature
 		);
 		if (filteredList.length<1) {

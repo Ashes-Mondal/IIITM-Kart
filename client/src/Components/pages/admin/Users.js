@@ -312,6 +312,7 @@ const Users = ({ setAdmin }) => {
 			(user) =>
 				search === user.name.firstName ||
 				search === user.name.lastName ||
+				search === `${user.name.firstName} ${user.name.lastName}` ||
 				search === user._id ||
 				search === user.phone ||
 				search === user.email ||
