@@ -16,6 +16,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -44,10 +47,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 	form: {
 		marginLeft: "2rem",
-		width: "50%",
+		width: "60%",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	tabRoot: {
+		backgroundColor:"#ede7f6",
+		display:"flex",
+		flexGrow: 1,
 	},
 }));
 
@@ -225,6 +233,11 @@ const EditCustomer = ({
 const Users = ({ setAdmin }) => {
 	const history = useHistory();
 	const classes = useStyles();
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 	const { setIsAuth } = useContext(Authentication);
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState([]);
@@ -304,6 +317,7 @@ const Users = ({ setAdmin }) => {
 	};
 
 	const handleFilter = () => {
+		setValue(0);
 		if (search === "") {
 			setSelectedUsers(users);
 			return;
@@ -349,7 +363,45 @@ const Users = ({ setAdmin }) => {
 					setShowModal={setShowModal}
 				/>
 				<h1>Users</h1>
-				<nav style={{ display: "flex" }}>
+				<nav>
+				<Paper className={classes.tabRoot}>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						centered
+					>
+						<Tab onClick={showAllUsers} label="All Orders" />
+						<Tab onClick={showNormalUsers} label="Pending" />
+						<Tab onClick={showAdminUsers} label="Delivered" />
+					</Tabs>
+					<form
+						className={classes.form}
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleFilter();
+						}}
+					>
+						<input
+							className="form-control"
+							type="search"
+							placeholder="search"
+							value={search}
+							onChange={(e) => {
+								setSearch(e.target.value);
+							}}
+						/>
+						<button
+							type="submit"
+							class="btn btn-warning btn-circle btn-lg ml-1"
+						>
+							<SearchIcon />
+						</button>
+					</form>
+				</Paper>
+			</nav>
+				{/* <nav style={{ display: "flex" }}>
 					<ButtonGroup
 						variant="contained"
 						color="primary"
@@ -382,7 +434,7 @@ const Users = ({ setAdmin }) => {
 							<SearchIcon />
 						</button>
 					</form>
-				</nav>
+				</nav> */}
 
 				<main>
 					<table>
