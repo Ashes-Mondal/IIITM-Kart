@@ -46,6 +46,24 @@ exports.adminEditUserDetails = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
   }
 };
+exports.adminToggleAdminPrivilege = async (req, res) => {
+  //body details are obtained
+  const adminId = req.session.userId;
+  if (adminId) {
+    const userId = req.body.userId;
+    const admin = req.body.admin;
+    try {
+      await UserDetail.findByIdAndUpdate(userId, {
+        admin:admin
+      });
+      res.send({ response: true });
+    } catch (error) {
+      res.send({ response: false, error: error });
+    }
+  } else {
+    res.send({ response: false, error: "Not logged in" });
+  }
+};
 /****************************************************************ITEM ************************************************** */
 //ADD ITEM
 exports.addItem = async (req, res) => {

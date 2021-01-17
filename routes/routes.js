@@ -48,6 +48,11 @@ router.post(
   "/adminEditUserDetails",
   adminControllerFunctions.adminEditUserDetails
 );
+router.post(
+  "/adminToggleAdminPrivilege",
+  adminControllerFunctions.adminToggleAdminPrivilege
+);
+
 
 //exporting
 module.exports = router;

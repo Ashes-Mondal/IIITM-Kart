@@ -66,7 +66,7 @@ const EditCustomer = ({
       //finally resetting to normal
       setUsers(
         users.map((user) => {
-          if (edit === user.phone) {
+          if (user.phone === Customer.phone) {
             return Customer;
           }
           return user;
@@ -215,6 +215,37 @@ const Users = ({ setAdmin }) => {
   const handleClose = () => {
     setShowModal(false);
   };
+
+  const toggleAdminPrivilege = async (id, privilege) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: id,
+        admin: privilege,
+      }),
+    };
+    const result = await (
+      await fetch("/adminToggleAdminPrivilege", requestOptions)
+    ).json();
+    if (result.response) {
+      //finally resetting to normal
+      setUsers(
+        users.map((user) => {
+          if (user.phone === Customer.phone) {
+            let temp = { ...Customer, admin: privilege };
+            return temp;
+          }
+          return user;
+        })
+      );
+      history.go();
+    } else if (result.error === "Not logged in") {
+      setShowModal(true);
+    } else {
+      alert("DataBase Error occurred!!");
+    }
+  };
   return (
     <>
       <div className="adminPanel">
@@ -259,6 +290,7 @@ const Users = ({ setAdmin }) => {
                   </h4>
                 </th>
                 <th></th>
+                <th></th>
               </tr>
             </tbody>
             {users.map((user, index) => {
@@ -275,6 +307,18 @@ const Users = ({ setAdmin }) => {
                     </td>
                     <td>
                       <h5 className="m-2"> {user.phone}</h5>
+                    </td>
+                    <td>
+                      <button
+                        className={`btn btn-${
+                          user.admin ? "danger" : "warning"
+                        } float-right mr-3 shadow`}
+                        onClick={() => {
+                          toggleAdminPrivilege(user._id, !user.admin);
+                        }}
+                      >
+                        {user.admin ? "Revoke admin" : "Make Admin"}
+                      </button>
                     </td>
                     <td>
                       <button

@@ -46,7 +46,16 @@ const Dashboard = ({ user, setAdmin }) => {
       }
       return count;
     });
-    console.log(count);
+    return count;
+  };
+  const DeliveredOrders = () => {
+    var count = 0;
+    orders.map((order) => {
+      if (order.deliveryStatus === true) {
+        count++;
+      }
+      return count;
+    });
     return count;
   };
 
