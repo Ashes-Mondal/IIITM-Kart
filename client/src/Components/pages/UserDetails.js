@@ -9,25 +9,37 @@ function UserDetails({ user, setUser, setCart }) {
   const [editable, setEditable] = useState(false);
 
   const updateUser = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName: user.name.firstName,
-        lastName: user.name.lastName,
-        phone: user.phone,
-        email: user.email,
-        orders: user.orders,
-      }),
-    };
-    const result = await (
-      await fetch("/editUserDetails", requestOptions)
-    ).json();
-    if (result.response === false) {
-      alert("Could not update!");
-      setIsAuth(false);
-      setCart([]);
-      history.push("/login");
+    if (
+      user.name.firstName == "" ||
+      user.name.lastName == "" ||
+      user.email == "" ||
+      user.phone == ""
+    ) {
+      alert("cannot be empty");
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: user.name.firstName,
+          lastName: user.name.lastName,
+          phone: user.phone,
+          email: user.email,
+          orders: user.orders,
+        }),
+      };
+      const result = await (
+        await fetch("/editUserDetails", requestOptions)
+      ).json();
+      if (result.response === false) {
+        alert("Could not update!");
+        setIsAuth(false);
+        setCart([]);
+        history.push("/login");
+      } else {
+        //setEditable(false);
+        window.location.reload();
+      }
     }
   };
 
@@ -202,7 +214,6 @@ function UserDetails({ user, setUser, setCart }) {
                 <h6
                   className="edituser"
                   onClick={() => {
-                    setEditable(false);
                     updateUser();
                   }}
                 >
