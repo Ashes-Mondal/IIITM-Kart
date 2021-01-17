@@ -67,7 +67,10 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 				</Alert>
 			) : null}
 			<h1>Edit Item</h1>
-			<form className="effect3D">
+			<form className="effect3D" onSubmit={(e) => {
+						e.preventDefault();
+						updateItem();
+					}}>
 				<h3>Edit Item Details</h3>
 				<div className="row">
 					<div className="col-12">
@@ -115,9 +118,9 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 						<label>Cost: </label>
 						<input
 							type="text"
+							required
 							name="cost"
 							placeholder="Cost"
-							required
 							value={itemDetails.cost}
 							onChange={(e) => {
 								setItemDetails({ ...itemDetails, cost: e.target.value });
@@ -142,10 +145,6 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 				</div>
 				<button
 					className="btn btn-primary"
-					onClick={(e) => {
-						e.preventDefault();
-						updateItem();
-					}}
 				>
 					Update Item
 				</button>

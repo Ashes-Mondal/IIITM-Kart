@@ -2,13 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
-// import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
-// import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -24,6 +24,30 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		marginLeft: theme.spacing(2),
 		flex: 1,
+	},
+	root: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		"& > *": {
+			margin: theme.spacing(1),
+		},
+	},
+	searchRoot: {
+		"& > *": {
+			margin: theme.spacing(1),
+			width: "100ch",
+		},
+	},
+	margin: {
+		margin: theme.spacing(1),
+	},
+	form: {
+		marginLeft: "2rem",
+		width: "50%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 }));
 
@@ -41,11 +65,21 @@ const EditCustomer = ({
 	setShowModal,
 }) => {
 	const classes = useStyles();
-	const history = useHistory();
 	const handleClose = () => {
 		setEdit(false);
 	};
 	const handleEdit = async () => {
+		if (
+			Customer.firstName === "" ||
+			Customer.lastName === "" ||
+			Customer.firstName === "" ||
+			Customer.phone === "" ||
+			Customer.email === "" ||
+			Customer.address === ""
+		) {
+			alert("Empty field found!");
+			return;
+		}
 		setEdit(false);
 		const requestOptions = {
 			method: "POST",
@@ -76,16 +110,15 @@ const EditCustomer = ({
 				}
 				return user;
 			});
-			console.log("tempUsers",tempUsers);
+			console.log("tempUsers", tempUsers);
 			setUsers(tempUsers);
-			console.log("users",users);
-			history.go();
 		} else if (result.error === "Not logged in") {
 			setShowModal(true);
 		} else {
 			alert("DataBase Error occurred!!");
 		}
 	};
+
 	return (
 		<div>
 			<Dialog
@@ -117,6 +150,7 @@ const EditCustomer = ({
 						<TextField
 							autoFocus
 							margin="dense"
+							required
 							id="firstName"
 							label="First Name"
 							type="text"
@@ -129,9 +163,9 @@ const EditCustomer = ({
 					</ListItem>
 					<ListItem>
 						<TextField
-							autoFocus
+							required
 							margin="dense"
-							id="firstName"
+							id="lastName"
 							label="Last Name"
 							type="text"
 							fullWidth
@@ -143,7 +177,7 @@ const EditCustomer = ({
 					</ListItem>
 					<ListItem>
 						<TextField
-							autoFocus
+							required
 							margin="dense"
 							id="phone"
 							label="Phone"
@@ -156,7 +190,7 @@ const EditCustomer = ({
 					</ListItem>
 					<ListItem>
 						<TextField
-							autoFocus
+							required
 							margin="dense"
 							id="email"
 							label="email"
@@ -170,7 +204,7 @@ const EditCustomer = ({
 					</ListItem>
 					<ListItem>
 						<TextField
-							autoFocus
+							required
 							margin="dense"
 							id="address"
 							label="Address"
@@ -190,8 +224,11 @@ const EditCustomer = ({
 
 const Users = ({ setAdmin }) => {
 	const history = useHistory();
+	const classes = useStyles();
 	const { setIsAuth } = useContext(Authentication);
 	const [users, setUsers] = useState([]);
+	const [search, setSearch] = useState([]);
+	const [selectedUsers, setSelectedUsers] = useState([]);
 	const [Customer, setCustomer] = useState({
 		_id: "",
 		firstName: "",
@@ -208,6 +245,7 @@ const Users = ({ setAdmin }) => {
 			const result = await (await fetch("/fetchAllUsers")).json();
 			if (result.response === true) {
 				setUsers(result.usersData);
+				setSelectedUsers(result.usersData);
 			} else {
 				setUsers([]);
 				setIsAuth(false);
@@ -252,6 +290,40 @@ const Users = ({ setAdmin }) => {
 			alert("DataBase Error occurred!!");
 		}
 	};
+
+	const showAdminUsers = () => {
+		let adminUser = users.filter((user) => user.admin);
+		setSelectedUsers(adminUser);
+	};
+	const showNormalUsers = () => {
+		let normalUser = users.filter((user) => !user.admin);
+		setSelectedUsers(normalUser);
+	};
+	const showAllUsers = () => {
+		setSelectedUsers(users);
+	};
+
+	const handleFilter = () => {
+		if (search === "") {
+			setSelectedUsers(users);
+			return;
+		}
+		let filteredList = users.filter(
+			(user) =>
+				search === user.name.firstName ||
+				search === user.name.lastName ||
+				search === user._id ||
+				search === user.phone ||
+				search === user.email ||
+				search === user.address
+			
+		);
+		if(filteredList.length<1){
+			alert("No result found!");
+			return;
+		}
+		setSelectedUsers(filteredList);
+	};
 	return (
 		<>
 			<div className="adminPanel">
@@ -276,6 +348,41 @@ const Users = ({ setAdmin }) => {
 					setShowModal={setShowModal}
 				/>
 				<h1>Users</h1>
+				<nav style={{ display: "flex" }}>
+					<ButtonGroup
+						variant="contained"
+						color="primary"
+						aria-label="contained primary button group"
+					>
+						<Button onClick={showAllUsers}>All Users</Button>
+						<Button onClick={showNormalUsers}>Normal Users</Button>
+						<Button onClick={showAdminUsers}>Admin Users</Button>
+					</ButtonGroup>
+					<form
+						className={classes.form}
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleFilter();
+						}}
+					>
+						<input
+							className="form-control"
+							type="search"
+							placeholder="search"
+							value={search}
+							onChange={(e) => {
+								setSearch(e.target.value);
+							}}
+						/>
+						<button
+							type="submit"
+							class="btn btn-warning btn-circle btn-lg ml-1"
+						>
+							<SearchIcon />
+						</button>
+					</form>
+				</nav>
+
 				<main>
 					<table>
 						<tbody>
@@ -299,7 +406,7 @@ const Users = ({ setAdmin }) => {
 								<th></th>
 							</tr>
 						</tbody>
-						{users.map((user, index) => {
+						{selectedUsers.map((user, index) => {
 							return (
 								<tbody key={index}>
 									<tr>
@@ -316,10 +423,14 @@ const Users = ({ setAdmin }) => {
 										</td>
 										<td>
 											<button
-												className={`btn btn-${user.admin?"danger":"warning"} float-right mr-3 shadow`}
-												onClick={() => {toggleAdminPrivilege(user._id,!user.admin)}}
+												className={`btn btn-${
+													user.admin ? "danger" : "warning"
+												} float-right mr-3 shadow`}
+												onClick={() => {
+													toggleAdminPrivilege(user._id, !user.admin);
+												}}
 											>
-												{user.admin?"Revoke admin":"Make Admin"}
+												{user.admin ? "Revoke admin" : "Make Admin"}
 											</button>
 										</td>
 										<td>

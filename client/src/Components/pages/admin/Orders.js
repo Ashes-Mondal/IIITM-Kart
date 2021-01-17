@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -22,6 +23,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -33,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		minWidth: 650,
+	},
+	form: {
+		marginLeft: "2rem",
+		width: "50%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 }));
 
@@ -176,11 +185,14 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 };
 
 const Orders = ({ setAdmin }) => {
+	const classes = useStyles();
 	const [error, setError] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const history = useHistory();
+	const [search, setSearch] = useState("");
 	const { setIsAuth } = useContext(Authentication);
 	const [orders, setOrders] = useState([]);
+	const [displayOrders, setDisplayOrders] = useState([]);
 	const [showMore, setShowMore] = useState(false);
 	const [orderDetails, setOrderDetails] = useState({
 		_id: "",
@@ -202,8 +214,10 @@ const Orders = ({ setAdmin }) => {
 			const result = await (await fetch("/fetchAllOrders")).json();
 			if (result.response === true) {
 				setOrders(result.ordersData);
+				setDisplayOrders(result.ordersData);
 			} else {
 				setOrders([]);
+				setDisplayOrders([]);
 				setIsAuth(false);
 				setAdmin(false);
 				history.push("/login");
@@ -243,6 +257,41 @@ const Orders = ({ setAdmin }) => {
 		setShowModal(false);
 		setError(false);
 	};
+
+	const showDeliveredOrders = () => {
+		let adminUser = orders.filter((order) => order.deliveryStatus);
+		setDisplayOrders(adminUser);
+	};
+	const showPendingOrders = () => {
+		let normalUser = orders.filter((order) => !order.deliveryStatus);
+		setDisplayOrders(normalUser);
+	};
+	const showAllOrders = () => {
+		setDisplayOrders(orders);
+	};
+
+	const handleFilter = () => {
+		if (search === "") {
+			setDisplayOrders(orders);
+			return;
+		}
+		let filteredList = orders.filter(
+			(order) =>
+				search === order.user.name.firstName ||
+				search === order.user.name.lastName ||
+				search === order._id ||
+				search === order.user.phone ||
+				search === order.user.email ||
+				search === order.pay_GQJgcEqUJhBoXM ||
+				search === order.order_GQJgY3B1KbkHn7 ||
+				search === order.razorpaySignature
+		);
+		if (filteredList.length<1) {
+			alert("No result found!");
+			return;
+		}
+		setDisplayOrders(filteredList);
+	};
 	return (
 		<div className="adminPanel">
 			<OrderDetails
@@ -275,6 +324,37 @@ const Orders = ({ setAdmin }) => {
 			</Modal>
 
 			<h1>Orders</h1>
+			<nav style={{ display: "flex" }}>
+				<ButtonGroup
+					variant="contained"
+					color="primary"
+					aria-label="contained primary button group"
+				>
+					<Button onClick={showAllOrders}>All Orders</Button>
+					<Button onClick={showPendingOrders}>Pending</Button>
+					<Button onClick={showDeliveredOrders}>Delivered</Button>
+				</ButtonGroup>
+				<form
+					className={classes.form}
+					onSubmit={(e) => {
+						e.preventDefault();
+						handleFilter();
+					}}
+				>
+					<input
+						className="form-control"
+						type="search"
+						placeholder="search"
+						value={search}
+						onChange={(e) => {
+							setSearch(e.target.value);
+						}}
+					/>
+					<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
+						<SearchIcon />
+					</button>
+				</form>
+			</nav>
 			<main>
 				<table>
 					<tbody>
@@ -307,7 +387,7 @@ const Orders = ({ setAdmin }) => {
 							<th></th>
 						</tr>
 					</tbody>
-					{orders
+					{displayOrders
 						.slice(0)
 						.reverse()
 						.map((order, index) => {
