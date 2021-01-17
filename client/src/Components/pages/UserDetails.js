@@ -2,6 +2,7 @@ import { use } from "passport";
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
+import ReactStars from "react-rating-stars-component";
 
 function UserDetails({ user, setUser, setCart }) {
   const { setIsAuth } = useContext(Authentication);
@@ -34,7 +35,6 @@ function UserDetails({ user, setUser, setCart }) {
       if (result.response === false) {
         alert("Could not update!");
         setIsAuth(false);
-        setCart([]);
         history.push("/login");
       } else {
         //setEditable(false);
@@ -68,7 +68,22 @@ function UserDetails({ user, setUser, setCart }) {
       history.push("/login");
     }
   };
-
+  const addRating = async (itemId, userRating) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        itemId: itemId,
+        userRating: userRating,
+      }),
+    };
+    const result = await (await fetch("/addRating", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not update!");
+      setIsAuth(false);
+      history.push("/login");
+    }
+  };
   return (
     <>
       <div className="product flex-container md-0 userbackground">
@@ -100,12 +115,7 @@ function UserDetails({ user, setUser, setCart }) {
                       </h3>
                       <p>
                         <b>Date Of Order : </b>
-                        {element.dateOfOrder
-                          .toString()
-                          .substring(
-                            0,
-                            element.dateOfOrder.toString().length - 30
-                          )}
+                        {element.dateOfOrder}
                       </p>
                       <p>
                         <b>Order ID : </b>
@@ -131,48 +141,66 @@ function UserDetails({ user, setUser, setCart }) {
                               <span className="text-muted">
                                 {item.item.description}
                               </span>
-                              {/* {user.orders[user.orders.length - index - 1]
-                                .deliveryStatus == true &&
+                              {user.orders[user.orders.length - index - 1]
+                                .deliveryStatus === true &&
                               user.orders[user.orders.length - index - 1].order[
                                 i
-                              ].rated == false ? (
+                              ].rated !== true ? (
                                 <>
-                                  <div class="slidecontainer">
-                                    Give a rating: 1
-                                    <input
-                                      type="range"
-                                      min={1}
-                                      max={5}
-                                      defaultValue={item.item.rating}
-                                      class="slider"
-                                      onChange={(e) => {
-                                        let tempUser = user;
-                                        tempUser.orders[
-                                          tempUser.orders.length - index - 1
-                                        ].order[i].item.rating = parseInt(
-                                          e.target.value
-                                        );
-                                        setUser(tempUser);
-                                      }}
-                                    />
-                                    5{" "}
-                                    <button
-                                      onClick={() => {
-                                        let tempUser = user;
-                                        tempUser.orders[
-                                          tempUser.orders.length - index - 1
-                                        ].order.rated = true;
-                                        setUser(tempUser);
-                                        updateUser();
-                                      }}
-                                    >
-                                      Post rating
-                                    </button>
+                                  <div className="flex-container p-0">
+                                    <div className="giveRating">
+                                      Give a rating:
+                                    </div>
+                                    <div className="reactStars">
+                                      <ReactStars
+                                        count={5}
+                                        onChange={(newValue) => {
+                                          let tempUser = user;
+                                          tempUser.orders[
+                                            tempUser.orders.length - index - 1
+                                          ].order[i].userRating = newValue;
+                                          setUser(tempUser);
+                                        }}
+                                        size={24}
+                                        activeColor="#ffd700"
+                                      />
+                                    </div>
+                                    <div>
+                                      <button
+                                        className="postRating"
+                                        onClick={() => {
+                                          if (
+                                            user.orders[
+                                              user.orders.length - index - 1
+                                            ].order[i].userRating
+                                          ) {
+                                            let tempUser = user;
+                                            tempUser.orders[
+                                              tempUser.orders.length - index - 1
+                                            ].order[i].rated = true;
+                                            setUser(tempUser);
+                                            updateUser();
+                                            addRating(
+                                              user.orders[
+                                                user.orders.length - index - 1
+                                              ].order[i].item._id,
+                                              user.orders[
+                                                user.orders.length - index - 1
+                                              ].order[i].userRating
+                                            );
+                                            setEditable(!editable);
+                                            setEditable(!editable);
+                                          } else {
+                                            alert("select a rating first");
+                                          }
+                                        }}
+                                      >
+                                        Post Rating
+                                      </button>
+                                    </div>
                                   </div>
                                 </>
-                              ) : (
-                                <></>
-                              )} */}
+                              ) : null}
                             </div>
                           </div>
                         );
