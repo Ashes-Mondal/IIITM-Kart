@@ -64,14 +64,21 @@ const EditCustomer = ({
 		).json();
 		if (result.response) {
 			//finally resetting to normal
-			setUsers(
-				users.map((user) => {
-					if (user.phone === Customer.phone) {
-						return Customer;
-					}
-					return user;
-				})
-			);
+			const tempUsers = users.map((user) => {
+				if (user.phone === Customer.phone) {
+					let custUser = user;
+					custUser.name.firstName = Customer.firstName;
+					custUser.name.lastName = Customer.lastName;
+					custUser.phone = Customer.phone;
+					custUser.email = Customer.email;
+					custUser.address = Customer.address;
+					return custUser;
+				}
+				return user;
+			});
+			console.log("tempUsers",tempUsers);
+			setUsers(tempUsers);
+			console.log("users",users);
 			history.go();
 		} else if (result.error === "Not logged in") {
 			setShowModal(true);

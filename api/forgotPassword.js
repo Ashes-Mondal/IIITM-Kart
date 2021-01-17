@@ -22,6 +22,7 @@ exports.emailValidation = async (req, res) => {
 	const otp = otpGenerator.generate(6, {
 		upperCase: false,
 		specialChars: false,
+		alphabets: false,
 	});
 	const html = `
 	<h2>Dear,<strong>${customer.name.firstName} ${customer.name.lastName}</strong> </h2>
@@ -51,6 +52,8 @@ exports.emailValidation = async (req, res) => {
 exports.resetPassword = async (req, res) => {
 	const newPassword = await bcrypt.hash(req.body.password, 12);
 	const userId = req.body.userId;
+
+	console.log(userId, " \n", req.body.password);
 	await UserDetail.findByIdAndUpdate(
 		userId,
 		{ password: newPassword },

@@ -236,7 +236,6 @@ const Orders = ({ setAdmin }) => {
 		} else if (result.error === "Not logged in") {
 			setShowModal(true);
 		} else {
-			console.log("ELSEresult", result);
 			setError(true);
 		}
 	};
