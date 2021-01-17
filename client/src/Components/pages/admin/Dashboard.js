@@ -33,6 +33,10 @@ const Dashboard = ({ user, setAdmin }) => {
     console.log(count);
     return count;
   };
+
+  const status = (deliveryStatus) => {
+    return deliveryStatus ? "Delivered" : "Order Pending";
+  };
   return (
     <div className="adminPanel">
       <h1>Dashboard</h1>
@@ -51,37 +55,73 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Admin Email: {user.email}</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-success text-light m-3">
-          <p>{orders.length}</p>
-          <h5>Total Orders</h5>
+          <p>
+            {orders.length}{" "}
+            <span>
+              <img
+                className="smallImage"
+                src="https://www.pluribusnetworks.com/assets/icon-partners-registered.png"
+              />
+            </span>
+          </p>
+          <h5>Registered Users</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-warning text-light m-3">
-          <p>{pending()}</p>
+          <p>
+            {pending()}
+            <span>
+              <img
+                className="smallImage"
+                src="https://cdn.onlinewebfonts.com/svg/img_110930.png"
+              />
+            </span>
+          </p>
           <h5>Pending Orders</h5>
         </div>
         <div className="flex-childA3 shadow rounded bg-danger text-light m-3">
-          <p>23</p>
+          <p>
+            23
+            <span>
+              <img
+                className="smallImage"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Page_issue_icon_-_medium.svg/1200px-Page_issue_icon_-_medium.svg.png"
+              />
+            </span>
+          </p>
           <h5>User Issues</h5>
         </div>
       </div>
       <div className="flex-container">
-        <div className="flex-childA3 shadow rounded bg-white m-3">
-          <p>Recent Orders</p>
-          {orders
-            .reverse()
-            .slice(0, 5)
-            .map((order, index) => {
+        <div className="flex-childA3 shadow rounded bg-white">
+          <p className="tc">Recent Orders</p>
+          <table>
+            <tr>
+              <th>Order_ID</th>
+              <th>User_Name</th>
+              <th>Date/Time</th>
+              <th>Delivery_Status</th>
+            </tr>
+            {orders.slice(0, 5).map((order, index) => {
               return (
-                <div key={index}>
-                  <h6>
-                    orderId:{" "}
-                    <span>
-                      {order._id} User: {order.user.name.firstName}{" "}
-                      {order.user.name.lastName}
-                    </span>
-                  </h6>
-                </div>
+                <tr>
+                  <td>
+                    <h5>{order._id}</h5>
+                  </td>
+                  <td>
+                    <h5>
+                      {order.user.name.firstName} {order.user.name.lastName}
+                    </h5>
+                  </td>
+                  <td>
+                    <h5>{order.dateOfOrder.slice(0, 33)}</h5>
+                  </td>
+                  <td>
+                    <h5>{status(order.deliveryStatus)}</h5>
+                  </td>
+                </tr>
               );
             })}
+          </table>
         </div>
       </div>
       <div className="flex-container">
@@ -95,30 +135,20 @@ const Dashboard = ({ user, setAdmin }) => {
 
 export default Dashboard;
 
-/*
-<div className="flex-container">
-        <div className="flex-childA3 shadow rounded bg-white m-3">
-          <p>Recent Orders</p>
-          {orders.map((order) => {
-            return (
-              <div>
-                <strong>orderId:</strong>
-                <span>{order._id}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-<div className="flex-childA3 shadow rounded bg-white m-3">
-          <p>Current Issues</p>
-        </div>
-   
-var count = 0;        
-for (let i = 0; i < orders.length; i++) {
-      if (orders[i].deliveryStatus == false) {
-        count++;
-      }
-    }
-      return count
-        */
+// {orders
+//   .reverse()
+//   .slice(0, 5)
+//   .map((order) => {
+//     return (
+//       <div>
+//         <h6>
+//           orderId:{" "}
+//           <span>
+//             {order._id} User: {order.user.name.firstName}{" "}
+//             {order.user.name.lastName} Delivery_Status:{" "}
+//             {status(order.deliveryStatus)}
+//           </span>
+//         </h6>
+//       </div>
+//     );
+//   })}

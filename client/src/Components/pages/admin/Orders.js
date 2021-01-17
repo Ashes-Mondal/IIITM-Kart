@@ -300,7 +300,11 @@ const Orders = ({ setAdmin }) => {
 									<strong>Order Cost</strong>
 								</h4>
 							</th>
-							<th></th>
+							<th>
+								<h4>
+									<strong>Delivery Status</strong>
+								</h4>
+							</th>
 							<th></th>
 						</tr>
 					</tbody>

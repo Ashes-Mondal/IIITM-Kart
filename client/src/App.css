@@ -206,8 +206,14 @@ h1 {
     margin-bottom: -0.9375rem;
   }
 }
+/****************************************User Details************************************/
+.footer {
+  display: block;
+  margin-right: 50px;
+  margin-left: 50px;
+}
 
-/**********************************************Login************************************/
+/***************************************** Login************************************/
 .login-form {
   position: relative;
   display: flex;
@@ -276,4 +282,16 @@ h1 {
 }
 .flex-childA3 p {
   font-size: 3vw;
+}
+
+.smallImage {
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+}
+
+.logo {
+  padding: 3px;
+  width: 20%;
+  height: 20%;
 }
