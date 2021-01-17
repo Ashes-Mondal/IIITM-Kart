@@ -1,501 +1,581 @@
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 /********************************************** NAVBAR2 *******************************************/
 
-
 .navbar2 {
-	position: relative;
-	padding: 0.5rem 1rem;
-	background: white;
-	width: 100%;
-	justify-content: space-evenly;
-	align-content: center;
-	display: flex;
+  position: relative;
+  padding: 0.5rem 1rem;
+  background: white;
+  width: 100%;
+  justify-content: space-evenly;
+  align-content: center;
+  display: flex;
+  border-bottom: 2px solid rgb(223, 223, 223);
 }
 .dropbtn {
-	background: white;
-	border: 2px solid black;
-	border-radius: 2px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 2px;
 }
 .dropbtn:hover {
-	background: black;
-	color: white;
+  background: black;
+  color: white;
 }
 .dropdown-content1 {
-	display: none;
-	z-index: 1;
-	background: black;
-	color: white;
-	opacity: 90%;
+  display: none;
+  z-index: 1;
+  background: black;
+  color: white;
+  opacity: 90%;
 }
 .dropdown-content1 li {
-	list-style-type: none;
-	padding: 10px;
+  list-style-type: none;
+  padding: 10px;
 }
 .dropdown-content1 li:hover {
-	background: rgb(68, 68, 68);
-	cursor: pointer;
+  background: rgb(68, 68, 68);
+  cursor: pointer;
 }
 .dropdown1:hover .dropdown-content1 {
-	display: block;
-	position: absolute;
-	width: auto;
-	height: auto;
+  display: block;
+  position: absolute;
+  width: auto;
+  height: auto;
 }
 .categories {
-	padding: 0.4rem 1.875rem;
-	align-self: center;
-	margin: auto;
+  padding: 0.4rem 1.875rem;
+  align-self: center;
+  margin: auto;
 }
 .categories:hover {
-	background: rgb(218, 218, 218);
-	cursor: pointer;
+  background: rgb(218, 218, 218);
+  cursor: pointer;
+}
+.categoriesClicked {
+  background: rgb(218, 218, 218);
+}
+.clearFilters {
+  padding: 0.4rem 1.875rem;
+  align-self: center;
+  margin: auto;
+  font-weight: bold;
+  color: rgb(255, 72, 72);
+}
+.clearFilters:hover {
+  cursor: pointer;
 }
 /********************************************** HOMEPAGE, CARD ************************************/
 /* .homePageImg {
   background-image: url("https://media.wired.com/photos/5c9040ee4950d24718d6da99/16:9/w_2400,h_1350,c_limit/shoppingcart-1066110386.jpg");
+  background-position: center;
+  height: 550px;
+  background-size: cover;
+  margin-left: 10%;
+  margin-right: 10%;
 } */
 .homeCard {
-	height: auto;
-	min-height: max-content;
-	text-align: center;
-	padding: 1rem;
-	box-shadow: 5px 5px 5px rgb(200, 200, 200);
-	display: flex;
-	flex-direction: column;
-	margin: 1rem 0.3rem 0 0.3rem;
+  height: auto;
+  min-height: max-content;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0.3rem 0 0.3rem;
+}
+.homeCard:hover {
+  box-shadow: 0px 0px 20px rgb(228, 228, 228);
+  cursor: pointer;
 }
 
 .btn-circle {
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	padding: 6px 0;
-	font-size: 12px;
-	line-height: 1.428571429;
-	border-radius: 15px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
 }
 .btn-circle.btn-lg {
-	width: 50px;
-	height: 50px;
-	padding: 10px 16px;
-	font-size: 18px;
-	line-height: 1.33;
-	border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
 }
 .btn-circle.btn-xl {
-	width: 70px;
-	height: 70px;
-	padding: 10px 16px;
-	font-size: 24px;
-	line-height: 1.33;
-	border-radius: 35px;
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+/* .cardBtn {
+  position: absolute;
+  display: none;
+  bottom: 0;
+  margin-left: 1rem;
+} */
+/* .homeCard:hover .cardBtn {
+  display: inline;
+} */
+
+img {
+  margin: 1rem;
+  position: relative;
+  height: 200px;
+  object-fit: contain;
+}
+.rating1 {
+  background: #ff3d37;
+  padding: 2px;
+  border-radius: 5px;
+}
+.rating2 {
+  background: #ffc72c;
+  padding: 2px;
+  border-radius: 5px;
+}
+.rating3 {
+  background: #4ec219;
+  padding: 2px;
+  border-radius: 5px;
+}
+.numRatings {
+  display: inline-block;
+}
+.originalCost {
+  text-decoration: line-through;
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: smaller;
+}
+.discount {
+  font-size: smaller;
+  display: inline-block;
+  color: rgb(224, 68, 68);
 }
 
-.cardButton {
-	margin-top: auto;
-}
-img {
-	margin: 1rem;
-	position: relative;
-	height: 200px;
-	object-fit: contain;
-}
 /********************************************** Navbar ****************************************/
 .navbar1 {
-	background-color: rgb(64, 64, 231);
-	width: 100%;
-	justify-content: flex-start;
-	align-content: center;
-	display: flex;
+  background-color: rgb(64, 64, 231);
+  width: 100%;
+  justify-content: flex-start;
+  align-content: center;
+  display: flex;
 }
 .drawer-logout {
-	width: 100%;
-	font-size: 2rem;
+  width: 100%;
+  font-size: 2rem;
 }
 .site-name {
-	text-align: center;
-	width: 32%;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+  text-align: center;
+  width: 32%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 .site-name:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 .search-box {
-	width: 32%;
-	display: flex;
+  width: 32%;
+  display: flex;
 }
 .search-box-form {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-control {
-	width: 100%;
+  width: 100%;
 }
 .navlink-container {
-	width: 32%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
+  width: 32%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .navlink {
-	color: white;
-	font-weight: bold;
-	margin-bottom: 1rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 .navlink:hover {
-	color: #d3d3d3;
-	text-decoration: none;
+  color: #d3d3d3;
+  text-decoration: none;
 }
 a.active-nav-link {
-	font-weight: bolder;
-	border-bottom: 2px solid red;
+  font-weight: bolder;
+  border-bottom: 2px solid red;
 }
 .userform {
-	text-align: start;
+  text-align: start;
 }
 /*********************SIGNUP, LOGIN*******************************************/
 .box {
-	width: 350px;
-	padding: 40px;
-	margin: auto;
-	text-align: center;
-	background: rgb(245, 245, 245);
-	border-radius: 40px;
-	box-shadow: 10px 10px 10px rgb(200, 200, 200),
-		-10px -10px 10px rgb(255, 255, 255);
+  width: 350px;
+  padding: 40px;
+  margin: auto;
+  text-align: center;
+  background: rgb(245, 245, 245);
+  border-radius: 40px;
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
 }
 .box h1 {
-	/* color: white; */
-	text-transform: uppercase;
-	font-weight: 500;
-	font-family: sans-serif;
+  /* color: white; */
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: sans-serif;
 }
 .box input[type="text"],
 .box input[type="password"] {
-	border: 0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	padding: 14px 10px;
-	width: 200px;
-	outline: none;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	/* color: white; */
-	border-radius: 24px;
-	transition: 0.25s;
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  /* color: white; */
+  border-radius: 24px;
+  transition: 0.25s;
 }
 
 .box input[type="text"]:focus,
 .box input[type="password"]:focus {
-	width: 100%;
+  width: 100%;
 }
 .box button {
-	border: 0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	padding: 14px 40px;
-	cursor: pointer;
-	outline: none;
-	/* color: white; */
-	border-radius: 24px;
-	transition: 0.25s;
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  padding: 14px 40px;
+  cursor: pointer;
+  outline: none;
+  /* color: white; */
+  border-radius: 24px;
+  transition: 0.25s;
 }
 .box button:hover {
-	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
 }
 .box-signup {
-	width: 40%;
+  width: 40%;
 }
 /*****************************************USER DETAILS**********************************/
 .edituser {
-	color: blue;
-	cursor: pointer;
+  color: blue;
+  cursor: pointer;
 }
 .userbackground {
-	background: rgb(245, 245, 245);
+  background: rgb(245, 245, 245);
 }
 .orderImgs {
-	max-height: 120px;
-	margin-left: 30px;
+  max-height: 120px;
+  margin-left: 30px;
 }
 .ordersList {
-	background: rgb(245, 245, 245);
-	border-radius: 10px;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	margin: 15px;
+  background: rgb(245, 245, 245);
+  border-radius: 10px;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  margin: 15px;
 }
 .cancelOrderButton {
-	box-shadow: inset 5px 5px 5px rgb(206, 196, 173),
-		inset -5px -5px 5px rgb(252, 248, 238);
-	border-radius: 10px;
-	border-width: 0px;
-	background: rgb(255, 243, 213);
-	padding: 10px;
+  box-shadow: inset 5px 5px 5px rgb(206, 196, 173),
+    inset -5px -5px 5px rgb(252, 248, 238);
+  border-radius: 10px;
+  border-width: 0px;
+  background: rgb(255, 243, 213);
+  padding: 10px;
 }
 .cancelOrderButton:hover {
-	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-	padding: 11px;
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  padding: 11px;
 }
 .orderContainer {
-	text-align: left;
-	box-shadow: 10px 10px 10px rgb(200, 200, 200),
-		-10px -10px 10px rgb(255, 255, 255);
-	background: rgb(245, 245, 245);
-	border-radius: 10px;
-	padding: 20px 40px;
-	margin: 40px 20px;
+  text-align: left;
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
+  background: rgb(245, 245, 245);
+  border-radius: 10px;
+  padding: 20px 40px;
+  margin: 40px 20px;
 }
 .flex-child5 {
-	flex: 1;
+  flex: 1;
 }
 .flex-child6 {
-	flex: 5;
-	padding: 20px;
+  flex: 5;
+  padding: 20px;
 }
 .userdetails {
-	box-shadow: 10px 10px 10px rgb(200, 200, 200),
-		-10px -10px 10px rgb(255, 255, 255);
-	border-radius: 10px;
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
+  border-radius: 10px;
 }
 .userdetails input {
-	border: 0;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	border-radius: 10px;
-	padding: 10px;
+  border: 0;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .searchButton {
-	border: 0;
-	background: rgb(245, 245, 245);
-	display: block;
-	text-align: center;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	padding: 0px 20px;
-	margin: 0px 10px;
-	cursor: pointer;
-	outline: none;
-	/* color: white; */
-	border-radius: 24px;
-	transition: 0.25s;
+  border: 0;
+  background: rgb(245, 245, 245);
+  display: block;
+  text-align: center;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  padding: 0px 20px;
+  margin: 0px 10px;
+  cursor: pointer;
+  outline: none;
+  /* color: white; */
+  border-radius: 24px;
+  transition: 0.25s;
 }
 .searchButton:hover {
-	box-shadow: 5px 5px 5px rgb(42, 42, 158);
+  box-shadow: 5px 5px 5px rgb(42, 42, 158);
 }
 .signupLabel {
-	color: transparent;
+  color: transparent;
 }
 .box-signup input:focus {
-	color: black;
+  color: black;
 }
 .field {
-	position: relative;
-	font-family: Arial;
-	text-transform: uppercase;
-	font-weight: 500;
-	display: inline-block;
+  position: relative;
+  font-family: Arial;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
 }
 .box label {
-	position: absolute;
-	left: 0;
-	top: 0;
-	transition: all 0.2s linear;
-	color: #999;
-	font-size: px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.2s linear;
+  color: #999;
+  font-size: px;
 }
 .box input {
-	margin-top: 15px;
-	border: 1px solid #999;
-	padding: 3px 2px;
+  margin-top: 15px;
+  border: 1px solid #999;
+  padding: 3px 2px;
 }
 .box input:invalid + label {
-	top: 3px;
-	opacity: 0;
+  top: 3px;
+  opacity: 0;
 }
 .box input:valid + label {
-	opacity: 1;
-	top: 0;
+  opacity: 1;
+  top: 0;
 }
 .box input:focus {
-	outline: none;
+  outline: none;
 }
 .box input:focus + label {
-	color: #33a;
+  color: #33a;
 }
 /*****************************************ADMIN***********************************/
 .sidenav {
-	min-height: 800px;
-	height: 100%;
-	width: 200px;
-	position: fixed;
-	z-index: 1;
-	top: auto;
-	left: 0;
-	background-color: #111;
-	overflow-x: hidden;
-	padding-top: 20px;
+  min-height: 800px;
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: auto;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
 
 .sidenav a {
-	padding: 6px 6px 6px 32px;
-	text-decoration: none;
-	font-size: 25px;
-	color: #818181;
-	display: block;
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
 }
 
 .sidenav a:hover {
-	color: #f1f1f1;
+  color: #f1f1f1;
 }
 
 .adminPanel {
-	margin-left: 200px;
+  margin-left: 200px;
 }
 .itemDetails {
-	display: flex;
-	flex: 8;
+  display: flex;
+  flex: 8;
 }
 .itemButtons {
-	display: flex;
-	flex: 2;
+  display: flex;
+  flex: 2;
 }
 .effect3D {
-	margin: auto;
-	margin-bottom: 100px;
-	width: 50%;
-	padding: 40px 10%;
-	background: rgb(245, 245, 245);
-	border-radius: 40px;
-	box-shadow: 10px 10px 10px rgb(200, 200, 200),
-		-10px -10px 10px rgb(255, 255, 255);
+  margin: auto;
+  margin-bottom: 100px;
+  width: 50%;
+  padding: 40px 10%;
+  background: rgb(245, 245, 245);
+  border-radius: 40px;
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
 }
 .effect3D input {
-	border: 0;
-	background: none;
-	margin: 20px 10px;
-	left: 30%;
-	text-align: center;
-	padding: 14px 10px;
-	width: 200px;
-	outline: none;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	border-radius: 24px;
+  border: 0;
+  background: none;
+  margin: 20px 10px;
+  left: 30%;
+  text-align: center;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 24px;
 }
 .effect3D label {
-	margin-right: 20px;
-	width: 150px;
-	display: inline-block;
-	font-size: large;
+  margin-right: 20px;
+  width: 150px;
+  display: inline-block;
+  font-size: large;
 }
 .effect3D-users {
-	width: 70%;
-	margin-bottom: 40px;
+  width: 70%;
+  margin-bottom: 40px;
 }
 .delivered {
-	color: rgb(3, 97, 3);
-	font-weight: bold;
+  color: rgb(3, 97, 3);
+  font-weight: bold;
 }
 .pending {
-	color: rgb(187, 144, 3);
-	font-weight: bold;
+  color: rgb(187, 144, 3);
+  font-weight: bold;
 }
 
 table {
-	width: 90%;
-	margin: auto;
-	margin-top: 20px;
-	margin-left: 40px;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  margin-left: 40px;
 }
 tr:nth-child(even) {
-	background: white;
+  background: white;
 }
 td,
 th {
-	padding: 5px 20px;
+  padding: 5px 20px;
 }
 th {
-	background: rgb(216, 216, 216);
-	font-size: xx-large;
-	font-weight: 500;
+  background: rgb(216, 216, 216);
+  font-size: xx-large;
+  font-weight: 500;
 }
 .addItemButton {
-	margin-left: 40px;
-	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  margin-left: 40px;
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
 }
 .box-orders {
-	width: 60%;
-	margin-bottom: 20px;
+  width: 60%;
+  margin-bottom: 20px;
 }
 .orderbox {
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	border-radius: 24px;
-	margin-bottom: 20px;
-	padding: 10px;
-	overflow: auto;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 24px;
+  margin-bottom: 20px;
+  padding: 10px;
+  overflow: auto;
 }
 .reactStars {
-	margin: 5px;
+  margin: 5px;
 }
 .giveRating {
-	margin: 10px;
-	margin-left: 0px;
+  margin: 10px;
+  margin-left: 0px;
 }
 .postRating {
-	margin: 10px;
-	border-radius: 5px;
-	border: 2px solid black;
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
 }
 .postRating:hover {
-	background: black;
-	color: white;
+  background: black;
+  color: white;
 }
 .ordersH1 {
-	margin-left: 20%;
+  margin-left: 20%;
 }
 .buttons3D {
-	margin: 10px;
-	border: 0;
-	outline: 0;
-	border-radius: 24px;
-	padding: 10px;
-	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-		inset -5px -5px 5px rgb(255, 255, 255);
-	font-weight: bold;
+  margin: 10px;
+  border: 0;
+  outline: 0;
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  font-weight: bold;
 }
 .buttons3D-selected {
-	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
 }
-.rating1 {
-	background: #ff3d37;
-	padding: 5px;
-	border-radius: 5px;
+/****************************************PRODUCT DETAILS***********************************/
+.productDetails {
+  margin: 1rem;
+  padding: 2rem;
 }
-.rating2 {
-	background: #ffc72c;
-	padding: 5px;
-	border-radius: 5px;
+.productDetailsImg {
+  display: block;
+  margin: auto;
+  height: 400px;
 }
-.rating3 {
-	background: #4ec219;
-	padding: 5px;
-	border-radius: 5px;
+.biggerFont {
+  font-size: x-large;
+}
+.addToCart {
+  float: left;
+}
+.backButton {
+  margin: 0;
+  border-radius: 3px;
+  border: 2px solid royalblue;
+  background: none;
+  font-weight: bold;
+}
+.similarItems {
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: horizontal;
+  flex-wrap: nowrap;
+}
+.similarItem {
+  display: inline;
+  flex: 0 0 auto;
+}
+.similarItemDescription {
+  max-width: 300px;
+  overflow: hidden;
 }

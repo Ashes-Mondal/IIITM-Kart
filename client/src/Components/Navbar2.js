@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 const Navbar2 = ({ itemList, setItemList }) => {
   const [sortBy, setSortBy] = useState("Category");
+  const [category, setCategory] = useState("");
   const handleSearchSubmit = async (search) => {
     const requestOptions = {
       method: "POST",
@@ -70,28 +71,51 @@ const Navbar2 = ({ itemList, setItemList }) => {
           </div>
         </div>
         <span
-          className="categories"
+          className={
+            category === "Mobile"
+              ? "categories categoriesClicked"
+              : "categories"
+          }
           onClick={() => {
+            setCategory("Mobile");
             handleSearchSubmit("Mobile");
           }}
         >
           Mobiles
         </span>
         <span
-          className="categories"
+          className={
+            category === "Men clothing"
+              ? "categories categoriesClicked"
+              : "categories"
+          }
           onClick={() => {
+            setCategory("Men clothing");
             handleSearchSubmit("Men clothing");
           }}
         >
           Men's Clothing
         </span>
         <span
-          className="categories"
+          className={
+            category === "Women Clothing"
+              ? "categories categoriesClicked"
+              : "categories"
+          }
           onClick={() => {
+            setCategory("Women Clothing");
             handleSearchSubmit("Women Clothing");
           }}
         >
           Women's Clothing
+        </span>
+        <span
+          className="clearFilters"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Clear Filters
         </span>
       </nav>
     </div>

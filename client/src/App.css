@@ -10,7 +10,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f1f3f6;
 }
 
 h1 {
@@ -24,9 +23,9 @@ h1 {
   text-align: center;
   background-color: #fffafa;
   position: relative;
-  -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
-  box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+  box-shadow: 3px 3px 5px 6px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
 
 .itemImg {
@@ -224,14 +223,12 @@ h1 {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
- align-items: center;
+  align-items: center;
 }
-.canvas{
-  /* margin:2rem 5rem; */
+.canvas {
+  margin: 2rem 5rem;
 }
-.product-card{
-  /* margin-bottom: 2rem; */
-}
+
 /********************************************** Admin page************************************/
 .user-form {
   display: flex;
@@ -239,13 +236,13 @@ h1 {
   text-align: left;
   flex-direction: column;
 }
-.order-div{
+.order-div {
   display: flex;
-justify-content: space-between;
-text-align: left;
-flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  flex-direction: column;
 }
-.order-item-div{
+.order-item-div {
   display: flex;
   justify-content: space-between;
 }
