@@ -27,438 +27,451 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles((theme) => ({
-	appBar: {
-		position: "relative",
-	},
-	title: {
-		marginLeft: theme.spacing(2),
-		flex: 1,
-	},
-	table: {
-		minWidth: 650,
-	},
-	form: {
-		marginLeft: "2rem",
-		width: "60%",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	root: {
-		backgroundColor:"#ede7f6",
-		display:"flex",
-		flexGrow: 1,
-	},
+  appBar: {
+    position: "relative",
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+  table: {
+    minWidth: 650,
+  },
+  form: {
+    marginLeft: "2rem",
+    width: "60%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  root: {
+    backgroundColor: "#ede7f6",
+    display: "flex",
+    flexGrow: 1,
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
-	const classes = useStyles();
-	const handleClose = () => {
-		setShowMore(false);
-	};
+  const classes = useStyles();
+  const handleClose = () => {
+    setShowMore(false);
+  };
 
-	return (
-		<div>
-			<Dialog
-				fullScreen
-				open={showMore}
-				onClose={handleClose}
-				TransitionComponent={Transition}
-			>
-				<AppBar className={classes.appBar}>
-					<Toolbar>
-						<IconButton
-							edge="start"
-							color="inherit"
-							onClick={handleClose}
-							aria-label="close"
-						>
-							<CloseIcon />
-						</IconButton>
-						<Typography variant="h6" className={classes.title}>
-							Order Id: {orderDetails._id}
-						</Typography>
-					</Toolbar>
-				</AppBar>
-				<List>
-					<h4>
-						<strong>User Details</strong>
-					</h4>
-					<ListItem>
-						<ListItemText
-							primary="User Id:"
-							secondary={orderDetails.user._id}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Customer Name:"
-							secondary={`${orderDetails.user.name.firstName} ${orderDetails.user.name.lastName}`}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Phone:"
-							secondary={orderDetails.user.phone}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Email:"
-							secondary={orderDetails.user.email}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Address"
-							secondary={orderDetails.user.address}
-						/>
-					</ListItem>
-				</List>
-				<Divider />
-				<List>
-					<h4>
-						<strong>Items ordered</strong>
-					</h4>
-					<TableContainer component={Paper}>
-						<Table className={classes.table} aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell align="center">Item Name</TableCell>
-									<TableCell align="center">Item ID</TableCell>
-									<TableCell align="center">Cost</TableCell>
-									<TableCell align="center">Qty</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{orderDetails.order.map((item, index) => (
-									<TableRow key={index}>
-										<TableCell scope="row" align="center">
-											{item.item.itemName}
-										</TableCell>
-										<TableCell align="center">{item.item._id}</TableCell>
-										<TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
-										<TableCell align="center">{item.Qty}</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</List>
-				<Divider />
-				<List>
-					<h4>
-						<strong>Payment Details</strong>
-					</h4>
-					<ListItem>
-						<ListItemText
-							primary="Date Of Order:"
-							secondary={orderDetails.dateOfOrder}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Total Cost:"
-							secondary={`Rs ${orderDetails.totalCost}`}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpayPaymentId:"
-							secondary={orderDetails.razorpayPaymentId}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpayOrderId"
-							secondary={orderDetails.razorpayOrderId}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpaySignature"
-							secondary={orderDetails.razorpaySignature}
-						/>
-					</ListItem>
-				</List>
-				<Divider />
-			</Dialog>
-		</div>
-	);
+  return (
+    <div>
+      <Dialog
+        fullScreen
+        open={showMore}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Order Id: {orderDetails._id}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <List>
+          <h4>
+            <strong>User Details</strong>
+          </h4>
+          <ListItem>
+            <ListItemText
+              primary="User Id:"
+              secondary={orderDetails.user._id}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Customer Name:"
+              secondary={`${orderDetails.user.name.firstName} ${orderDetails.user.name.lastName}`}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Phone:"
+              secondary={orderDetails.user.phone}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Email:"
+              secondary={orderDetails.user.email}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Address"
+              secondary={orderDetails.user.address}
+            />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <h4>
+            <strong>Items ordered</strong>
+          </h4>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Item Name</TableCell>
+                  <TableCell align="center">Item ID</TableCell>
+                  <TableCell align="center">Cost</TableCell>
+                  <TableCell align="center">Qty</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderDetails.order.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell scope="row" align="center">
+                      {item.item.itemName}
+                    </TableCell>
+                    <TableCell align="center">{item.item._id}</TableCell>
+                    <TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
+                    <TableCell align="center">{item.Qty}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </List>
+        <Divider />
+        <List>
+          <h4>
+            <strong>Shipping Address:</strong>
+          </h4>
+          <ListItem>
+            <ListItemText
+              primary={
+                orderDetails.shippingAddress || orderDetails.user.address
+              }
+            />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <h4>
+            <strong>Payment Details</strong>
+          </h4>
+          <ListItem>
+            <ListItemText
+              primary="Date Of Order:"
+              secondary={orderDetails.dateOfOrder}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Total Cost:"
+              secondary={`Rs ${orderDetails.totalCost}`}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="razorpayPaymentId:"
+              secondary={orderDetails.razorpayPaymentId}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="razorpayOrderId"
+              secondary={orderDetails.razorpayOrderId}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="razorpaySignature"
+              secondary={orderDetails.razorpaySignature}
+            />
+          </ListItem>
+        </List>
+        <Divider />
+      </Dialog>
+    </div>
+  );
 };
 
 const Orders = ({ setAdmin }) => {
-	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
-	const [error, setError] = useState(false);
-	const [showModal, setShowModal] = useState(false);
-	const history = useHistory();
-	const [search, setSearch] = useState("");
-	const { setIsAuth } = useContext(Authentication);
-	const [orders, setOrders] = useState([]);
-	const [displayOrders, setDisplayOrders] = useState([]);
-	const [showMore, setShowMore] = useState(false);
-	const [orderDetails, setOrderDetails] = useState({
-		_id: "",
-		user: {
-			name: { firstName: "", lastName: "" },
-			phone: "",
-			email: "",
-			address: "",
-		},
-		order: [],
-		dateOfOrder: "",
-		totalCost: 0,
-		razorpayPaymentId: "",
-		razorpayOrderId: "",
-		razorpaySignature: "",
-	});
-	useEffect(() => {
-		const fetchAllOrders = async () => {
-			const result = await (await fetch("/fetchAllOrders")).json();
-			if (result.response === true) {
-				setOrders(result.ordersData);
-				setDisplayOrders(result.ordersData);
-			} else {
-				setOrders([]);
-				setDisplayOrders([]);
-				setIsAuth(false);
-				setAdmin(false);
-				history.push("/login");
-			}
-		};
-		fetchAllOrders();
-	}, [history, setIsAuth, setAdmin]);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const [error, setError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
+  const [search, setSearch] = useState("");
+  const { setIsAuth } = useContext(Authentication);
+  const [orders, setOrders] = useState([]);
+  const [displayOrders, setDisplayOrders] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({
+    _id: "",
+    user: {
+      name: { firstName: "", lastName: "" },
+      phone: "",
+      email: "",
+      address: "",
+    },
+    order: [],
+    dateOfOrder: "",
+    totalCost: 0,
+    razorpayPaymentId: "",
+    razorpayOrderId: "",
+    razorpaySignature: "",
+  });
+  useEffect(() => {
+    const fetchAllOrders = async () => {
+      const result = await (await fetch("/fetchAllOrders")).json();
+      if (result.response === true) {
+        setOrders(result.ordersData);
+        setDisplayOrders(result.ordersData);
+      } else {
+        setOrders([]);
+        setDisplayOrders([]);
+        setIsAuth(false);
+        setAdmin(false);
+        history.push("/login");
+      }
+    };
+    fetchAllOrders();
+  }, [history, setIsAuth, setAdmin]);
 
-	const handleDeliveryStatus = async (order) => {
-		const customerId = order.user._id;
-		const orderId = order._id;
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				customerId: customerId,
-				orderId: orderId,
-			}),
-		};
-		const result = await (
-			await fetch("/adminChangeDeliveryStatus", requestOptions)
-		).json();
-		if (result.response) {
-			let ordersData = orders.map((orderdetails) => {
-				if (orderdetails._id === orderId)
-					order.deliveryStatus = !order.deliveryStatus;
-				return orderdetails;
-			});
-			setOrders(ordersData);
-		} else if (result.error === "Not logged in") {
-			setShowModal(true);
-		} else {
-			setError(true);
-		}
-	};
-	const handleClose = () => {
-		setShowModal(false);
-		setError(false);
-	};
+  const handleDeliveryStatus = async (order) => {
+    const customerId = order.user._id;
+    const orderId = order._id;
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerId: customerId,
+        orderId: orderId,
+      }),
+    };
+    const result = await (
+      await fetch("/adminChangeDeliveryStatus", requestOptions)
+    ).json();
+    if (result.response) {
+      let ordersData = orders.map((orderdetails) => {
+        if (orderdetails._id === orderId)
+          order.deliveryStatus = !order.deliveryStatus;
+        return orderdetails;
+      });
+      setOrders(ordersData);
+    } else if (result.error === "Not logged in") {
+      setShowModal(true);
+    } else {
+      setError(true);
+    }
+  };
+  const handleClose = () => {
+    setShowModal(false);
+    setError(false);
+  };
 
-	const showDeliveredOrders = () => {
-		let adminUser = orders.filter((order) => order.deliveryStatus);
-		setDisplayOrders(adminUser);
-	};
-	const showPendingOrders = () => {
-		let normalUser = orders.filter((order) => !order.deliveryStatus);
-		setDisplayOrders(normalUser);
-	};
-	const showAllOrders = () => {
-		setDisplayOrders(orders);
-	};
+  const showDeliveredOrders = () => {
+    let adminUser = orders.filter((order) => order.deliveryStatus);
+    setDisplayOrders(adminUser);
+  };
+  const showPendingOrders = () => {
+    let normalUser = orders.filter((order) => !order.deliveryStatus);
+    setDisplayOrders(normalUser);
+  };
+  const showAllOrders = () => {
+    setDisplayOrders(orders);
+  };
 
-	const handleFilter = () => {
-		setValue(0);
-		if (search === "") {
-			setDisplayOrders(orders);
-			return;
-		}
-		let filteredList = orders.filter(
-			(order) =>
-				search === order.user.name.firstName ||
-				search === order.user.name.lastName ||
-				search === `${order.user.name.firstName} ${order.user.name.lastName}` ||
-				search === order._id ||
-				search === order.user.phone ||
-				search === order.user.email ||
-				search === order.razorpayPaymentId ||
-				search === order.razorpayOrderId ||
-				search === order.razorpaySignature
-		);
-		if (filteredList.length < 1) {
-			alert("No result found!");
-			return;
-		}
-		setDisplayOrders(filteredList);
-	};
-	return (
-		<div className="adminPanel">
-			<OrderDetails
-				orderDetails={orderDetails}
-				showMore={showMore}
-				setShowMore={setShowMore}
-			/>
+  const handleFilter = () => {
+    setValue(0);
+    if (search === "") {
+      setDisplayOrders(orders);
+      return;
+    }
+    let filteredList = orders.filter(
+      (order) =>
+        search === order.user.name.firstName ||
+        search === order.user.name.lastName ||
+        search === `${order.user.name.firstName} ${order.user.name.lastName}` ||
+        search === order._id ||
+        search === order.user.phone ||
+        search === order.user.email ||
+        search === order.razorpayPaymentId ||
+        search === order.razorpayOrderId ||
+        search === order.razorpaySignature
+    );
+    if (filteredList.length < 1) {
+      alert("No result found!");
+      return;
+    }
+    setDisplayOrders(filteredList);
+  };
+  return (
+    <div className="adminPanel">
+      <OrderDetails
+        orderDetails={orderDetails}
+        showMore={showMore}
+        setShowMore={setShowMore}
+      />
 
-			<Modal show={showModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>OOPS!!</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Session Timeout</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose} href="/login">
-						Login
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			<Modal show={error} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>OOPS!!</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Customer Does Not Exist!!</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						close
-					</Button>
-				</Modal.Footer>
-			</Modal>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Session Timeout</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/login">
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={error} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Customer Does Not Exist!!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-			<h1>Orders</h1>
-			<nav>
-				<Paper className={classes.root}>
-					<Tabs
-						value={value}
-						onChange={handleChange}
-						indicatorColor="primary"
-						textColor="primary"
-						centered
-					>
-						<Tab onClick={showAllOrders} label="All Orders" />
-						<Tab onClick={showPendingOrders} label="Pending" />
-						<Tab onClick={showDeliveredOrders} label="Delivered" />
-					</Tabs>
-					<form
-						className={classes.form}
-						onSubmit={(e) => {
-							e.preventDefault();
-							handleFilter();
-						}}
-					>
-						<input
-							className="form-control"
-							type="search"
-							placeholder="search"
-							value={search}
-							onChange={(e) => {
-								setSearch(e.target.value);
-							}}
-						/>
-						<button
-							type="submit"
-							class="btn btn-warning btn-circle btn-lg ml-1"
-						>
-							<SearchIcon />
-						</button>
-					</form>
-				</Paper>
-			</nav>
-			<main>
-				<table>
-					<tbody>
-						<tr>
-							<th>
-								<h4>
-									<strong>Order ID</strong>
-								</h4>
-							</th>
-							<th>
-								<h4>
-									<strong>Customer Name</strong>
-								</h4>
-							</th>
-							<th>
-								<h4>
-									<strong>Customer Phone</strong>
-								</h4>
-							</th>
-							<th>
-								<h4>
-									<strong>Order Cost</strong>
-								</h4>
-							</th>
-							<th>
-								<h4>
-									<strong>Delivery Status</strong>
-								</h4>
-							</th>
-							<th></th>
-						</tr>
-					</tbody>
-					{displayOrders
-						.slice(0)
-						.reverse()
-						.map((order, index) => {
-							return (
-								<tbody key={index}>
-									<tr>
-										<td>
-											<h5 className="m-2"> {order._id}</h5>
-										</td>
-										<td>
-											<h5>
-												{order.user.name.firstName} {order.user.name.lastName}
-											</h5>
-										</td>
+      <h1>Orders</h1>
+      <nav>
+        <Paper className={classes.root}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab onClick={showAllOrders} label="All Orders" />
+            <Tab onClick={showPendingOrders} label="Pending" />
+            <Tab onClick={showDeliveredOrders} label="Delivered" />
+          </Tabs>
+          <form
+            className={classes.form}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleFilter();
+            }}
+          >
+            <input
+              className="form-control"
+              type="search"
+              placeholder="search"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+            <button
+              type="submit"
+              class="btn btn-warning btn-circle btn-lg ml-1"
+            >
+              <SearchIcon />
+            </button>
+          </form>
+        </Paper>
+      </nav>
+      <main>
+        <table>
+          <tbody>
+            <tr>
+              <th>
+                <h4>
+                  <strong>Order ID</strong>
+                </h4>
+              </th>
+              <th>
+                <h4>
+                  <strong>Customer Name</strong>
+                </h4>
+              </th>
+              <th>
+                <h4>
+                  <strong>Customer Phone</strong>
+                </h4>
+              </th>
+              <th>
+                <h4>
+                  <strong>Order Cost</strong>
+                </h4>
+              </th>
+              <th>
+                <h4>
+                  <strong>Delivery Status</strong>
+                </h4>
+              </th>
+              <th></th>
+            </tr>
+          </tbody>
+          {displayOrders
+            .slice(0)
+            .reverse()
+            .map((order, index) => {
+              return (
+                <tbody key={index}>
+                  <tr>
+                    <td>
+                      <h5 className="m-2"> {order._id}</h5>
+                    </td>
+                    <td>
+                      <h5>
+                        {order.user.name.firstName} {order.user.name.lastName}
+                      </h5>
+                    </td>
 
-										<td>
-											<h5 className="m-2"> {order.user.phone}</h5>
-										</td>
-										<td>
-											<h5 className="m-2"> Rs {order.totalCost}</h5>
-										</td>
-										<td>
-											<button
-												className={`btn ${
-													order.deliveryStatus ? "btn-success" : "btn-warning"
-												} float-right mr-2 shadow`}
-												onClick={() => handleDeliveryStatus(order)}
-											>
-												{order.deliveryStatus ? "DELIVERED" : "PENDING"}
-											</button>
-										</td>
-										<td>
-											<button
-												className="btn btn-primary float-right mr-3 shadow"
-												onClick={() => {
-													setOrderDetails(order);
-													setShowMore(true);
-												}}
-											>
-												More
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							);
-						})}
-				</table>
-			</main>
-		</div>
-	);
+                    <td>
+                      <h5 className="m-2"> {order.user.phone}</h5>
+                    </td>
+                    <td>
+                      <h5 className="m-2"> Rs {order.totalCost}</h5>
+                    </td>
+                    <td>
+                      <button
+                        className={`btn ${
+                          order.deliveryStatus ? "btn-success" : "btn-warning"
+                        } float-right mr-2 shadow`}
+                        onClick={() => handleDeliveryStatus(order)}
+                      >
+                        {order.deliveryStatus ? "DELIVERED" : "PENDING"}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-primary float-right mr-3 shadow"
+                        onClick={() => {
+                          setOrderDetails(order);
+                          setShowMore(true);
+                        }}
+                      >
+                        More
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
+        </table>
+      </main>
+    </div>
+  );
 };
 
 export default Orders;
