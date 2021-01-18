@@ -113,26 +113,29 @@ const Dashboard = ({ user, setAdmin }) => {
 							<th>Date/Time</th>
 							<th>Delivery_Status</th>
 						</tr>
-						{orders.slice(0, 5).map((order, index) => {
-							return (
-								<tr>
-									<td>
-										<h5>{order._id}</h5>
-									</td>
-									<td>
-										<h5>
-											{order.user.name.firstName} {order.user.name.lastName}
-										</h5>
-									</td>
-									<td>
-										<h5>{order.dateOfOrder.slice(0, 33)}</h5>
-									</td>
-									<td>
-										<h5>{status(order.deliveryStatus)}</h5>
-									</td>
-								</tr>
-							);
-						})}
+						{orders
+							.slice(-5)
+							.reverse()
+							.map((order, index) => {
+								return (
+									<tr>
+										<td>
+											<h5>{order._id}</h5>
+										</td>
+										<td>
+											<h5>
+												{order.user.name.firstName} {order.user.name.lastName}
+											</h5>
+										</td>
+										<td>
+											<h5>{order.dateOfOrder.slice(0, 33)}</h5>
+										</td>
+										<td>
+											<h5>{status(order.deliveryStatus)}</h5>
+										</td>
+									</tr>
+								);
+							})}
 					</table>
 				</div>
 			</div>
