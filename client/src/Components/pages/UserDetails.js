@@ -22,7 +22,8 @@ function UserDetails({ user, setUser, setCart }) {
 			user.name.firstName === "" ||
 			user.name.lastName === "" ||
 			user.email === "" ||
-			user.phone === ""
+			user.phone === "" ||
+			user.address === ""
 		) {
 			alert("cannot be empty");
 		} else {
@@ -129,7 +130,8 @@ function UserDetails({ user, setUser, setCart }) {
 				</Modal.Header>
 				<Modal.Body>
 					Do you want to
-					{cancelOrderDetails.deliveryStatus ? " Return" : " Cancel"} your order?
+					{cancelOrderDetails.deliveryStatus ? " Return" : " Cancel"} your
+					order?
 				</Modal.Body>
 				<Modal.Footer>
 					<Button
@@ -364,37 +366,39 @@ function UserDetails({ user, setUser, setCart }) {
 
 							<div className="form-group">
 								<h5>Personal Information</h5>
-								<input
-									type="text"
-									className="mr-2"
-									value={user.name.firstName || ""}
-									name="FirstName"
-									disabled={editable ? "" : "disabled"}
-									onChange={(e) => {
-										setUser({
-											...user,
-											name: {
-												firstName: e.target.value,
-												lastName: user.name.lastName,
-											},
-										});
-									}}
-								/>
-								<input
-									type="text"
-									value={user.name.lastName || ""}
-									name="LastName"
-									disabled={editable ? "" : "disabled"}
-									onChange={(e) => {
-										setUser({
-											...user,
-											name: {
-												firstName: user.name.firstName,
-												lastName: e.target.value,
-											},
-										});
-									}}
-								/>
+								<div style={{ display: "flex" }}>
+									<input
+										type="text"
+										className="mr-2"
+										value={user.name.firstName || ""}
+										name="FirstName"
+										disabled={editable ? "" : "disabled"}
+										onChange={(e) => {
+											setUser({
+												...user,
+												name: {
+													firstName: e.target.value,
+													lastName: user.name.lastName,
+												},
+											});
+										}}
+									/>
+									<input
+										type="text"
+										value={user.name.lastName || ""}
+										name="LastName"
+										disabled={editable ? "" : "disabled"}
+										onChange={(e) => {
+											setUser({
+												...user,
+												name: {
+													firstName: user.name.firstName,
+													lastName: e.target.value,
+												},
+											});
+										}}
+									/>
+								</div>
 							</div>
 							<br />
 							<div className="form-group">
@@ -421,6 +425,19 @@ function UserDetails({ user, setUser, setCart }) {
 									disabled={editable ? "" : "disabled"}
 									onChange={(e) => {
 										setUser({ ...user, phone: e.target.value });
+									}}
+								/>
+							</div>
+							<div className="form-group">
+								<h5>Address</h5>
+
+								<input
+									type="text"
+									value={user.address || ""}
+									name="Address"
+									disabled={editable ? "" : "disabled"}
+									onChange={(e) => {
+										setUser({ ...user, address: e.target.value });
 									}}
 								/>
 							</div>
