@@ -42,10 +42,12 @@ exports.editUserDetails = async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const orders = req.body.orders;
+    const address = req.body.address;
     try {
       await UserDetail.findByIdAndUpdate(userId, {
         phone: phone,
         email: email,
+        address: address,
         name: { firstName: firstName, lastName: lastName },
         orders: orders,
       });
@@ -57,6 +59,24 @@ exports.editUserDetails = async (req, res) => {
     res.send({ response: false, error: "Not logged in" });
   }
 };
+// //EDIT USER ADDRESS
+// exports.editUserDetails = async (req, res) => {
+//   //address details are obtained
+//   const userId = req.session.userId;
+//   if (userId) {
+//     const address = req.body.address;
+//     try {
+//       await UserDetail.findByIdAndUpdate(userId, {
+//         address: address,
+//       });
+//       res.send({ response: true });
+//     } catch (error) {
+//       res.send({ response: false, error: error });
+//     }
+//   } else {
+//     res.send({ response: false, error: "Not logged in" });
+//   }
+// };
 //DELETE USER
 exports.deleteUser = async (req, res) => {
   //checking is user logged in or not
@@ -368,6 +388,7 @@ exports.addOrder = async (req, res) => {
           order: req.body.userCart,
           dateOfOrder: new Date(),
           totalCost: req.body.totalCost,
+          shippingAddress: req.body.shippingAddress,
           razorpayOrderId: req.body.razorpayOrderId,
           razorpayPaymentId: req.body.razorpayPaymentId,
           razorpaySignature: req.body.razorpaySignature,
