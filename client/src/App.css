@@ -283,6 +283,9 @@ h1 {
 .flex-childA3 p {
   font-size: 3vw;
 }
+.flex-childA3:hover {
+  cursor: pointer;
+}
 
 .smallImage {
   width: 40%;
