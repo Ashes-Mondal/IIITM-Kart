@@ -6,6 +6,7 @@ const { itemDetailSchema } = require("./itemSchema");
 const orderDetailSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId, //orderId
   deliveryStatus: Boolean,
+  cancelledStatus: Boolean,
   user: {
     _id: mongoose.Schema.Types.ObjectId, //userId
     name: { firstName: String, lastName: String },

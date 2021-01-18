@@ -32,14 +32,13 @@ const AddItem = ({ setLoaded }) => {
 		};
 		const result = await (await fetch("/addItem", requestOptions)).json();
 		if (result.response) {
-			setLoaded(false);
 			history.push("/admin/items");
 			history.go();
 		} else if (result.error === "Not logged in") {
 			setShowModal(true);
-		}else{
-      setError(result.error._message);
-    }
+		} else {
+			setError(result.error._message);
+		}
 	};
 
 	const handleClose = () => {

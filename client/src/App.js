@@ -21,7 +21,6 @@ import SideNavBar from "./Components/pages/admin/SideNavBar";
 import Items from "./Components/pages/admin/Items";
 import AddItem from "./Components/pages/admin/AddItem";
 import EditItem from "./Components/pages/admin/EditItem";
-// import EditUser from "./Components/pages/admin/EditUser";
 import Loader from "react-loader-spinner";
 import ProductDetails from "./Components/pages/ProductDetails";
 import ForgotPassword from "./Components/pages/ForgotPassword";

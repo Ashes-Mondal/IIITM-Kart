@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,6 +15,15 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -44,10 +52,15 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     marginLeft: "2rem",
-    width: "50%",
+    width: "60%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  tabRoot: {
+    backgroundColor: "#ede7f6",
+    display: "flex",
+    flexGrow: 1,
   },
 }));
 
@@ -67,7 +80,15 @@ const EditCustomer = ({
   const classes = useStyles();
   const handleClose = () => {
     setEdit(false);
+    setState({ open: false, vertical: "top", horizontal: "center" });
   };
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const { vertical, horizontal, open } = state;
   const handleEdit = async () => {
     if (
       Customer.firstName === "" ||
@@ -121,6 +142,17 @@ const EditCustomer = ({
 
   return (
     <div>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={4000}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Sucessfully updated
+        </Alert>
+      </Snackbar>
       <Dialog
         fullScreen
         open={edit}
@@ -140,7 +172,14 @@ const EditCustomer = ({
             <Typography variant="h6" className={classes.title}>
               User Id: {Customer._id}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleEdit}>
+            <Button
+              autoFocus
+              color="inherit"
+              onClick={() => {
+                handleEdit();
+                setState({ open: true, vertical: "top", horizontal: "center" });
+              }}
+            >
               save
             </Button>
           </Toolbar>
@@ -225,6 +264,16 @@ const EditCustomer = ({
 const Users = ({ setAdmin }) => {
   const history = useHistory();
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+  const [makeUserAdmin, setMakeUserAdmin] = useState({
+    _id: "",
+    admin: false,
+  });
+  const [showAdminModal, setShowAdminModal] = useState(false);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const { setIsAuth } = useContext(Authentication);
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState([]);
@@ -258,15 +307,17 @@ const Users = ({ setAdmin }) => {
 
   const handleClose = () => {
     setShowModal(false);
+    setShowAdminModal(false);
   };
 
-  const toggleAdminPrivilege = async (id, privilege) => {
+  const toggleAdminPrivilege = async () => {
+    setShowAdminModal(false);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: id,
-        admin: privilege,
+        userId: makeUserAdmin._id,
+        admin: makeUserAdmin.admin,
       }),
     };
     const result = await (
@@ -277,7 +328,7 @@ const Users = ({ setAdmin }) => {
       setUsers(
         users.map((user) => {
           if (user.phone === Customer.phone) {
-            let temp = { ...Customer, admin: privilege };
+            let temp = { ...Customer, admin: makeUserAdmin.admin };
             return temp;
           }
           return user;
@@ -304,6 +355,7 @@ const Users = ({ setAdmin }) => {
   };
 
   const handleFilter = () => {
+    setValue(0);
     if (search === "") {
       setSelectedUsers(users);
       return;
@@ -312,6 +364,7 @@ const Users = ({ setAdmin }) => {
       (user) =>
         search === user.name.firstName ||
         search === user.name.lastName ||
+        search === `${user.name.firstName} ${user.name.lastName}` ||
         search === user._id ||
         search === user.phone ||
         search === user.email ||
@@ -326,6 +379,31 @@ const Users = ({ setAdmin }) => {
   return (
     <>
       <div className="adminPanel">
+        {/* TOGGLE ADMIN PERMISSION */}
+        <Modal show={showAdminModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Are you Sure?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Do you want to {makeUserAdmin.admin ? "Give" : "Revoke"} the user{" "}
+            {makeUserAdmin.admin ? null : "from"} admin privileges?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="warning"
+              onClick={() => {
+                handleClose();
+                toggleAdminPrivilege();
+              }}
+            >
+              Yes
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              No
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* SESSION TIMEOUT */}
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>OOPS!!</Modal.Title>
@@ -347,39 +425,43 @@ const Users = ({ setAdmin }) => {
           setShowModal={setShowModal}
         />
         <h1>Users</h1>
-        <nav style={{ display: "flex" }}>
-          <ButtonGroup
-            variant="contained"
-            color="primary"
-            aria-label="contained primary button group"
-          >
-            <Button onClick={showAllUsers}>All Users</Button>
-            <Button onClick={showNormalUsers}>Normal Users</Button>
-            <Button onClick={showAdminUsers}>Admin Users</Button>
-          </ButtonGroup>
-          <form
-            className={classes.form}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleFilter();
-            }}
-          >
-            <input
-              className="form-control"
-              type="search"
-              placeholder="search"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-            <button
-              type="submit"
-              class="btn btn-warning btn-circle btn-lg ml-1"
+        <nav>
+          <Paper className={classes.tabRoot}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
             >
-              <SearchIcon />
-            </button>
-          </form>
+              <Tab onClick={showAllUsers} label="All Users" />
+              <Tab onClick={showNormalUsers} label="Customers" />
+              <Tab onClick={showAdminUsers} label="Admin Users" />
+            </Tabs>
+            <form
+              className={classes.form}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleFilter();
+              }}
+            >
+              <input
+                className="form-control"
+                type="search"
+                placeholder="search"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <button
+                type="submit"
+                class="btn btn-warning btn-circle btn-lg ml-1"
+              >
+                <SearchIcon />
+              </button>
+            </form>
+          </Paper>
         </nav>
 
         <main>
@@ -426,7 +508,11 @@ const Users = ({ setAdmin }) => {
                           user.admin ? "danger" : "warning"
                         } float-right mr-3 shadow`}
                         onClick={() => {
-                          toggleAdminPrivilege(user._id, !user.admin);
+                          setMakeUserAdmin({
+                            _id: user._id,
+                            admin: !user.admin,
+                          });
+                          setShowAdminModal(true);
                         }}
                       >
                         {user.admin ? "Revoke admin" : "Make Admin"}

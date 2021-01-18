@@ -25,17 +25,23 @@ const Items = ({ itemList, setItemList }) => {
 	const [productItems,setProductItems] = useState(itemList);
 	const [search,setSearch] = useState("");
 	const [error, setError] = useState("");
-	const deleteItem = async (itemId) => {
+	const [DeleteItem, setDeleteItem] = useState({
+		_id:"",
+		itemName:""
+	});
+	const [confirmDeleteItemModal, setConfirmDeleteItemModal] = useState(false);
+	const deleteItem = async () => {
+		setConfirmDeleteItemModal(false);
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				itemId: itemId,
+				itemId: DeleteItem._id,
 			}),
 		};
 		const result = await (await fetch("/deleteItem", requestOptions)).json();
 		if (result.response) {
-			itemList = itemList.filter((itemElement) => itemElement._id !== itemId);
+			itemList = itemList.filter((itemElement) => itemElement._id !== DeleteItem._id);
 			setItemList(itemList);
 		} else if (result.error === "Not logged in") {
 			setShowModal(true);
@@ -46,6 +52,7 @@ const Items = ({ itemList, setItemList }) => {
 
 	const handleClose = () => {
 		setShowModal(false);
+		setConfirmDeleteItemModal(false);
 	};
 
 	const handleReset = ()=>{
@@ -70,6 +77,25 @@ const Items = ({ itemList, setItemList }) => {
 	};
 	return (
 		<div className="adminPanel">
+			{/* DELETE ITEM MODAL */}
+			<Modal show={confirmDeleteItemModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Are you sure?</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Do yo want to delete {DeleteItem.itemName} item</Modal.Body>
+				<Modal.Footer>
+					<Button variant="danger" onClick={()=>{
+						handleClose();
+						deleteItem();
+					}}>
+						Yes
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						No
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			{/* SESSION */}
 			<Modal show={showModal} onHide={handleClose}>
 				<Modal.Header closeButton>
 					<Modal.Title>OOPS!!</Modal.Title>
@@ -159,7 +185,9 @@ const Items = ({ itemList, setItemList }) => {
 									<button
 										className="btn btn-danger float-right shadow"
 										onClick={() => {
-											deleteItem(item._id);
+											setDeleteItem(item);
+											setConfirmDeleteItemModal(true);
+											// deleteItem(item._id);
 										}}
 									>
 										Delete

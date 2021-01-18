@@ -1,19 +1,29 @@
-import { use } from "passport";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
+import ReactStars from "react-rating-stars-component";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 function UserDetails({ user, setUser, setCart }) {
   const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
   const [editable, setEditable] = useState(false);
+  const [deleteModal, showDeleteModal] = useState(false);
+  const [confirmDeleteUserModal, setConfirmDeleteUserModal] = useState(false);
+  const [confirmCancelModal, setConfirmCancelModal] = useState(false);
+  const [cancelOrderDetails, setCancelOrderDetails] = useState({
+    _id: "",
+    deliveryStatus: false,
+  });
 
   const updateUser = async () => {
     if (
-      user.name.firstName == "" ||
-      user.name.lastName == "" ||
-      user.email == "" ||
-      user.phone == ""
+      user.name.firstName === "" ||
+      user.name.lastName === "" ||
+      user.email === "" ||
+      user.phone === "" ||
+      user.address === ""
     ) {
       alert("This field cannot be empty");
     } else {
@@ -25,6 +35,7 @@ function UserDetails({ user, setUser, setCart }) {
           lastName: user.name.lastName,
           phone: user.phone,
           email: user.email,
+          address: user.address,
           orders: user.orders,
         }),
       };
@@ -43,12 +54,12 @@ function UserDetails({ user, setUser, setCart }) {
     }
   };
 
-  const cancelOrder = async (orderId) => {
+  const cancelOrder = async () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        orderId: orderId,
+        orderId: cancelOrderDetails._id,
       }),
     };
     const result = await (await fetch("/cancelOrder", requestOptions)).json();
@@ -56,9 +67,9 @@ function UserDetails({ user, setUser, setCart }) {
     if (result.response) {
       let ordersList = user.orders;
       ordersList = ordersList.filter(
-        (orderElement) => orderElement._id !== orderId
+        (orderElement) => orderElement._id !== cancelOrderDetails._id
       );
-      console.log("ordersList", ordersList);
+      console.log("ordersList is ", ordersList);
       setUser({
         ...user,
         orders: ordersList,
@@ -69,8 +80,119 @@ function UserDetails({ user, setUser, setCart }) {
     }
   };
 
+  const addRating = async (itemId, userRating) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        itemId: itemId,
+        userRating: userRating,
+      }),
+    };
+    const result = await (await fetch("/addRating", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not update!");
+      setIsAuth(false);
+      history.push("/login");
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    };
+    const result = await (await fetch("/deleteUser", requestOptions)).json();
+    if (result.response === false) {
+      alert("Could not delete!");
+      setIsAuth(false);
+      history.push("/login");
+    } else {
+      history.push("/");
+      history.go(0);
+    }
+  };
+
+  const checkPendingOrders = () => {
+    for (let i = 0; i < user.orders.length; i++) {
+      if (user.orders[i].deliveryStatus === false) return true;
+    }
+    return false;
+  };
   return (
     <>
+      {/* CONFIRM CANCEL/RETURN PRODUCT*/}
+      <Modal
+        show={confirmCancelModal}
+        onHide={() => setConfirmCancelModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Are you Sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Do you want to
+          {cancelOrderDetails.deliveryStatus ? " Return" : " Cancel"} your
+          order?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setConfirmCancelModal(false);
+              cancelOrder();
+              setCancelOrderDetails({ id: "", deliveryStatus: false });
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setConfirmCancelModal(false)}
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* CONFIRM Delete USER */}
+      <Modal
+        show={confirmDeleteUserModal}
+        onHide={() => setConfirmDeleteUserModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Are you Sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you want to delete your account?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setConfirmDeleteUserModal(false);
+              handleDeleteUser();
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setConfirmDeleteUserModal(false)}
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Show could not delete modal */}
+      <Modal show={deleteModal} onHide={() => showDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Could not Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You got pending orders</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => showDeleteModal(false)}>
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="product flex-container md-0 userbackground">
         <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
           <h1>Your Orders</h1>
@@ -85,11 +207,12 @@ function UserDetails({ user, setUser, setCart }) {
                       <h3>
                         Order No. {index + 1}
                         <button
-                          onClick={() =>
-                            cancelOrder(
-                              user.orders[user.orders.length - index - 1]._id
-                            )
-                          }
+                          onClick={() => {
+                            setCancelOrderDetails(
+                              user.orders[user.orders.length - index - 1]
+                            );
+                            setConfirmCancelModal(true);
+                          }}
                           className="cancelOrderButton mr-5 float-right"
                         >
                           {user.orders[user.orders.length - index - 1]
@@ -100,12 +223,7 @@ function UserDetails({ user, setUser, setCart }) {
                       </h3>
                       <p>
                         <b>Date Of Order : </b>
-                        {element.dateOfOrder
-                          .toString()
-                          .substring(
-                            0,
-                            element.dateOfOrder.toString().length - 30
-                          )}
+                        {element.dateOfOrder}
                       </p>
                       <p>
                         <b>Order ID : </b>
@@ -131,48 +249,66 @@ function UserDetails({ user, setUser, setCart }) {
                               <span className="text-muted">
                                 {item.item.description}
                               </span>
-                              {/* {user.orders[user.orders.length - index - 1]
-                                .deliveryStatus == true &&
+                              {user.orders[user.orders.length - index - 1]
+                                .deliveryStatus === true &&
                               user.orders[user.orders.length - index - 1].order[
                                 i
-                              ].rated == false ? (
+                              ].rated !== true ? (
                                 <>
-                                  <div class="slidecontainer">
-                                    Give a rating: 1
-                                    <input
-                                      type="range"
-                                      min={1}
-                                      max={5}
-                                      defaultValue={item.item.rating}
-                                      class="slider"
-                                      onChange={(e) => {
-                                        let tempUser = user;
-                                        tempUser.orders[
-                                          tempUser.orders.length - index - 1
-                                        ].order[i].item.rating = parseInt(
-                                          e.target.value
-                                        );
-                                        setUser(tempUser);
-                                      }}
-                                    />
-                                    5{" "}
-                                    <button
-                                      onClick={() => {
-                                        let tempUser = user;
-                                        tempUser.orders[
-                                          tempUser.orders.length - index - 1
-                                        ].order.rated = true;
-                                        setUser(tempUser);
-                                        updateUser();
-                                      }}
-                                    >
-                                      Post rating
-                                    </button>
+                                  <div className="flex-container p-0">
+                                    <div className="giveRating">
+                                      Give a rating:
+                                    </div>
+                                    <div className="reactStars">
+                                      <ReactStars
+                                        count={5}
+                                        onChange={(newValue) => {
+                                          let tempUser = user;
+                                          tempUser.orders[
+                                            tempUser.orders.length - index - 1
+                                          ].order[i].userRating = newValue;
+                                          setUser(tempUser);
+                                        }}
+                                        size={24}
+                                        activeColor="#ffd700"
+                                      />
+                                    </div>
+                                    <div>
+                                      <button
+                                        className="postRating"
+                                        onClick={() => {
+                                          if (
+                                            user.orders[
+                                              user.orders.length - index - 1
+                                            ].order[i].userRating
+                                          ) {
+                                            let tempUser = user;
+                                            tempUser.orders[
+                                              tempUser.orders.length - index - 1
+                                            ].order[i].rated = true;
+                                            setUser(tempUser);
+                                            updateUser();
+                                            addRating(
+                                              user.orders[
+                                                user.orders.length - index - 1
+                                              ].order[i].item._id,
+                                              user.orders[
+                                                user.orders.length - index - 1
+                                              ].order[i].userRating
+                                            );
+                                            setEditable(!editable);
+                                            setEditable(!editable);
+                                          } else {
+                                            alert("select a rating first");
+                                          }
+                                        }}
+                                      >
+                                        Post Rating
+                                      </button>
+                                    </div>
                                   </div>
                                 </>
-                              ) : (
-                                <></>
-                              )} */}
+                              ) : null}
                             </div>
                           </div>
                         );
@@ -232,37 +368,39 @@ function UserDetails({ user, setUser, setCart }) {
 
               <div className="form-group">
                 <h5>Personal Information</h5>
-                <input
-                  type="text"
-                  className="mr-2"
-                  value={user.name.firstName || ""}
-                  name="FirstName"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({
-                      ...user,
-                      name: {
-                        firstName: e.target.value,
-                        lastName: user.name.lastName,
-                      },
-                    });
-                  }}
-                />
-                <input
-                  type="text"
-                  value={user.name.lastName || ""}
-                  name="LastName"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({
-                      ...user,
-                      name: {
-                        firstName: user.name.firstName,
-                        lastName: e.target.value,
-                      },
-                    });
-                  }}
-                />
+                <div className="d-flex">
+                  <input
+                    type="text"
+                    className="mr-2"
+                    value={user.name.firstName || ""}
+                    name="FirstName"
+                    disabled={editable ? "" : "disabled"}
+                    onChange={(e) => {
+                      setUser({
+                        ...user,
+                        name: {
+                          firstName: e.target.value,
+                          lastName: user.name.lastName,
+                        },
+                      });
+                    }}
+                  />
+                  <input
+                    type="text"
+                    value={user.name.lastName || ""}
+                    name="LastName"
+                    disabled={editable ? "" : "disabled"}
+                    onChange={(e) => {
+                      setUser({
+                        ...user,
+                        name: {
+                          firstName: user.name.firstName,
+                          lastName: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </div>
               </div>
               <br />
               <div className="form-group">
@@ -292,10 +430,30 @@ function UserDetails({ user, setUser, setCart }) {
                   }}
                 />
               </div>
+              <div className="form-group">
+                <h5>Address</h5>
+
+                <input
+                  type="text"
+                  value={user.address || ""}
+                  name="Address"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({ ...user, address: e.target.value });
+                  }}
+                />
+              </div>
             </form>
-            <form action="/deleteUser" method="POST">
-              <button className="btn btn-danger">Delete User</button>
-            </form>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                if (checkPendingOrders()) {
+                  showDeleteModal(true);
+                } else setConfirmDeleteUserModal(true);
+              }}
+            >
+              Delete User
+            </button>
           </div>
           <div className="userdetails">
             <h2>Feel free to Contact us</h2>

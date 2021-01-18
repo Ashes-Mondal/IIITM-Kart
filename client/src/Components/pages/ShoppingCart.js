@@ -3,8 +3,21 @@ import { Link, useHistory } from "react-router-dom";
 import { Authentication } from "../../App";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function ShoppingCart({ cart, setCart, user, setUser }) {
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const { vertical, horizontal, open } = state;
   const { isAuth, setIsAuth } = useContext(Authentication);
   const [orderHistory, setOrderHistory] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -13,6 +26,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [editable, setEditable] = useState(false);
+  const [confirmClearCartModal, setConfirmClearCartModal] = useState(false);
   const history = useHistory();
   const getTotalSum = () => {
     let total = cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
@@ -21,6 +35,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 
   //clears the cart
   const clearCart = async () => {
+    setConfirmClearCartModal(false);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -63,6 +78,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 
   // decrease qty of item
   const minusItemQuantity = async (Product) => {
+    if (Product.Qty === 1) return;
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,7 +92,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     console.log("result:", result);
     if (result.response) {
       let tempCart = cart.map((product) => {
-        if (product.item._id === Product.item._id && product.Qty > 0) {
+        if (product.item._id === Product.item._id && product.Qty > 1) {
           product.Qty = product.Qty - 1;
         }
         return product;
@@ -103,6 +119,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     console.log("result:", result);
     if (result.response) {
       setCart(cart.filter((product) => product !== productDetail));
+      setState({ open: true, vertical: "top", horizontal: "center" });
     } else {
       setShowModal(true);
       // alert("Could not remove from cart!");
@@ -260,6 +277,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     setShowModal(false);
     setShowCartModal(false);
     setShowAddressModal(false);
+    setState({ open: false, vertical: "top", horizontal: "center" });
+    setConfirmClearCartModal(false);
   };
 
   const addClass = () => {
@@ -270,6 +289,17 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
   };
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={4000}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Sucessfully removed from the cart
+        </Alert>
+      </Snackbar>
       {/* MODALS */}
       {/* PAYMENT  */}
       <Modal show={showPaymentModal} onHide={handleClose}>
@@ -362,13 +392,34 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
           </span>
         </Modal.Footer>
       </Modal>
+      {/* CONFIRM CLEAR CART */}
+      <Modal show={confirmClearCartModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you Sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you want to delete your cart items?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={clearCart}>
+            Yes
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setConfirmClearCartModal(false)}
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       {/* MAIN CODE */}
       <div className="product flex-container">
         <div className={addClass()}>
           <h1>My Cart</h1>
           {cart.length ? (
-            <button className="btn btn-danger" onClick={clearCart}>
+            <button
+              className="btn btn-danger"
+              onClick={() => setConfirmClearCartModal(true)}
+            >
               Clear Cart
             </button>
           ) : (
@@ -391,8 +442,16 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
                 key={index}
               >
                 <div className="flex-child3">
-                  <h3>{item.itemName}</h3>
-                  <img src={item.imageURL} alt={item.itemName} />
+                  <a
+                    style={{
+                      color: "#696969",
+                      textDecoration: "none",
+                    }}
+                    href={`/productDetails/${item._id}`}
+                  >
+                    <h3>{item.itemName}</h3>
+                    <img src={item.imageURL} alt={item.itemName} />
+                  </a>
                 </div>
                 <div className="flex-child4">
                   <h5>{item.description}</h5>

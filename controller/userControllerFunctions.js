@@ -42,10 +42,12 @@ exports.editUserDetails = async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const orders = req.body.orders;
+    const address = req.body.address;
     try {
       await UserDetail.findByIdAndUpdate(userId, {
         phone: phone,
         email: email,
+        address: address,
         name: { firstName: firstName, lastName: lastName },
         orders: orders,
       });

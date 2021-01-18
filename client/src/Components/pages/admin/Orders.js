@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -24,6 +23,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import SearchIcon from "@material-ui/icons/Search";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -38,10 +39,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 	form: {
 		marginLeft: "2rem",
-		width: "50%",
+		width: "60%",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	root: {
+		backgroundColor:"#ede7f6",
+		display:"flex",
+		flexGrow: 1,
 	},
 }));
 
@@ -54,6 +60,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 	const handleClose = () => {
 		setShowMore(false);
 	};
+
 	return (
 		<div>
 			<Dialog
@@ -186,6 +193,11 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 
 const Orders = ({ setAdmin }) => {
 	const classes = useStyles();
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 	const [error, setError] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const history = useHistory();
@@ -271,6 +283,7 @@ const Orders = ({ setAdmin }) => {
 	};
 
 	const handleFilter = () => {
+		setValue(0);
 		if (search === "") {
 			setDisplayOrders(orders);
 			return;
@@ -279,14 +292,15 @@ const Orders = ({ setAdmin }) => {
 			(order) =>
 				search === order.user.name.firstName ||
 				search === order.user.name.lastName ||
+				search === `${order.user.name.firstName} ${order.user.name.lastName}` ||
 				search === order._id ||
 				search === order.user.phone ||
 				search === order.user.email ||
-				search === order.pay_GQJgcEqUJhBoXM ||
-				search === order.order_GQJgY3B1KbkHn7 ||
+				search === order.razorpayPaymentId ||
+				search === order.razorpayOrderId ||
 				search === order.razorpaySignature
 		);
-		if (filteredList.length<1) {
+		if (filteredList.length < 1) {
 			alert("No result found!");
 			return;
 		}
@@ -324,36 +338,43 @@ const Orders = ({ setAdmin }) => {
 			</Modal>
 
 			<h1>Orders</h1>
-			<nav style={{ display: "flex" }}>
-				<ButtonGroup
-					variant="contained"
-					color="primary"
-					aria-label="contained primary button group"
-				>
-					<Button onClick={showAllOrders}>All Orders</Button>
-					<Button onClick={showPendingOrders}>Pending</Button>
-					<Button onClick={showDeliveredOrders}>Delivered</Button>
-				</ButtonGroup>
-				<form
-					className={classes.form}
-					onSubmit={(e) => {
-						e.preventDefault();
-						handleFilter();
-					}}
-				>
-					<input
-						className="form-control"
-						type="search"
-						placeholder="search"
-						value={search}
-						onChange={(e) => {
-							setSearch(e.target.value);
+			<nav>
+				<Paper className={classes.root}>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						centered
+					>
+						<Tab onClick={showAllOrders} label="All Orders" />
+						<Tab onClick={showPendingOrders} label="Pending" />
+						<Tab onClick={showDeliveredOrders} label="Delivered" />
+					</Tabs>
+					<form
+						className={classes.form}
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleFilter();
 						}}
-					/>
-					<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
-						<SearchIcon />
-					</button>
-				</form>
+					>
+						<input
+							className="form-control"
+							type="search"
+							placeholder="search"
+							value={search}
+							onChange={(e) => {
+								setSearch(e.target.value);
+							}}
+						/>
+						<button
+							type="submit"
+							class="btn btn-warning btn-circle btn-lg ml-1"
+						>
+							<SearchIcon />
+						</button>
+					</form>
+				</Paper>
 			</nav>
 			<main>
 				<table>
