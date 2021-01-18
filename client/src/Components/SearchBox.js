@@ -1,13 +1,31 @@
 import React, { useContext, useState } from "react";
 import { Item } from "../App";
 import SearchIcon from "@material-ui/icons/Search";
+import { useHistory } from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const SearchBox = () => {
+  const [state, setState] = useState({
+		open: false,
+		vertical: "top",
+		horizontal: "center",
+  });
+  const handleClose = () => {
+		setState({ open: false, vertical: "top", horizontal: "center" });
+	};
+  const { vertical, horizontal, open } = state;
+  const history = useHistory();
   const [Search, setSearch] = useState("");
   const { setItemList } = useContext(Item);
   //handleSearchSubmit
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
+    history.push("/")
     //requesting server to fetch Search data
     const requestOptions = {
       method: "POST",
@@ -16,13 +34,24 @@ const SearchBox = () => {
     };
     const result = await (await fetch("/search", requestOptions)).json();
     if (result.response === false) {
-      alert("Could not find the result!!");
+      setState({ open: true, vertical: "top", horizontal: "center" });
     } else {
       setItemList(result.itemList);
     }
   };
   return (
     <>
+    <Snackbar
+				anchorOrigin={{ vertical, horizontal }}
+				open={open}
+				onClose={handleClose}
+				autoHideDuration={4000}
+				key={vertical + horizontal}
+			>
+				<Alert onClose={handleClose} severity="error">
+					Could not find anything!
+				</Alert>
+			</Snackbar>
       <form onSubmit={handleSearchSubmit} className="search-box-form ">
         <input
           className="form-control"
