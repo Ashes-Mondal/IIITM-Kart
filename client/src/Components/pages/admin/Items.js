@@ -4,9 +4,26 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
+import SearchIcon from "@material-ui/icons/Search";
+import { makeStyles } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+	form: {
+		marginLeft: "2rem",
+		width: "50%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+}));
+
 
 const Items = ({ itemList, setItemList }) => {
+	const classes = useStyles();
 	const [showModal, setShowModal] = useState(false);
+	const [productItems,setProductItems] = useState(itemList);
+	const [search,setSearch] = useState("");
 	const [error, setError] = useState("");
 	const deleteItem = async (itemId) => {
 		const requestOptions = {
@@ -20,15 +37,36 @@ const Items = ({ itemList, setItemList }) => {
 		if (result.response) {
 			itemList = itemList.filter((itemElement) => itemElement._id !== itemId);
 			setItemList(itemList);
-		} else if(result.error === "Not logged in") {
-			setShowModal(true)
-		}else{
-			setError("result.error._message")
+		} else if (result.error === "Not logged in") {
+			setShowModal(true);
+		} else {
+			setError("result.error._message");
 		}
 	};
 
 	const handleClose = () => {
 		setShowModal(false);
+	};
+
+	const handleReset = ()=>{
+		setProductItems(itemList)
+	}
+
+	const handleFilter = () => {
+		if (search === "") {
+			setProductItems(itemList);
+			return;
+		}
+		let filteredList = itemList.filter(
+			(item) =>
+				search === item.itemName ||
+				search === item._id 
+		);
+		if (filteredList.length<1) {
+			alert("No result found!");
+			return;
+		}
+		setProductItems(filteredList);
 	};
 	return (
 		<div className="adminPanel">
@@ -52,19 +90,52 @@ const Items = ({ itemList, setItemList }) => {
 			) : null}
 
 			<h1>Items</h1>
-			<Link to="/admin/addItem" className="text-white">
-				<button className="btn btn-primary addItemButton">+ Add an Item</button>
-			</Link>
+			<nav style={{ display: "flex",alignItems:"center" }}>
+				<Link to="/admin/addItem" className="text-white">
+					<button className="btn btn-primary addItemButton">
+						+ Add an Item
+					</button>
+				</Link>
+				<Button style={{margin:"10px"}} onClick={handleReset}>Reset</Button>
+				<form
+					className={classes.form}
+					onSubmit={(e) => {
+						e.preventDefault();
+						handleFilter();
+					}}
+				>
+					<input
+						className="form-control"
+						type="search"
+						placeholder="search"
+						value={search}
+						onChange={(e) => {
+							setSearch(e.target.value);
+						}}
+					/>
+					<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
+						<SearchIcon />
+					</button>
+				</form>
+			</nav>
 			<table>
 				<tbody>
 					<tr>
-						<th><h4><strong>Item Name</strong></h4></th>
-						<th><h4><strong>Item ID</strong></h4></th>
+						<th>
+							<h4>
+								<strong>Item Name</strong>
+							</h4>
+						</th>
+						<th>
+							<h4>
+								<strong>Item ID</strong>
+							</h4>
+						</th>
 						<th></th>
 						<th></th>
 					</tr>
 				</tbody>
-				{itemList.map((item, index) => {
+				{productItems.map((item, index) => {
 					return (
 						<tbody key={index}>
 							<tr>

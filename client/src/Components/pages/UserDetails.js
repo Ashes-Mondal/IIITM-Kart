@@ -15,7 +15,7 @@ function UserDetails({ user, setUser, setCart }) {
       user.email == "" ||
       user.phone == ""
     ) {
-      alert("cannot be empty");
+      alert("This field cannot be empty");
     } else {
       const requestOptions = {
         method: "POST",

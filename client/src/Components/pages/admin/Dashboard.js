@@ -126,7 +126,7 @@ const Dashboard = ({ user, setAdmin }) => {
               />
             </span>
           </p>
-          <h5>User Issues</h5>
+          <h5>Cancelled Orders</h5>
         </div>
       </div>
       <div className="flex-container">
@@ -160,11 +160,6 @@ const Dashboard = ({ user, setAdmin }) => {
               );
             })}
           </table>
-        </div>
-      </div>
-      <div className="flex-container">
-        <div className="flex-childA3 shadow rounded bg-white m-3">
-          <p>Current Issues</p>
         </div>
       </div>
     </div>

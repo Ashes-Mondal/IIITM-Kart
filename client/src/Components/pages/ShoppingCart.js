@@ -8,8 +8,11 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
   const { isAuth, setIsAuth } = useContext(Authentication);
   const [orderHistory, setOrderHistory] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState(user.address);
   const [showCartModal, setShowCartModal] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [editable, setEditable] = useState(false);
   const history = useHistory();
   const getTotalSum = () => {
     let total = cart.reduce((sum, { item, Qty }) => sum + item.cost * Qty, 0);
@@ -124,6 +127,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
         userCart: cart,
         userOrders: user.orders,
         totalCost: getTotalSum(),
+        shippingAddress: shippingAddress,
         razorpayOrderId: razorpay_order_id,
         razorpayPaymentId: razorpay_payment_id,
         razorpaySignature: razorpay_signature,
@@ -155,6 +159,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     setOrderHistory(true);
   };
 
+  const placeOrder = () => {};
+
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -170,6 +176,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
   }
 
   const proceedPayment = async () => {
+    setShowAddressModal(false);
     if (cart.length < 1) {
       setShowCartModal(true);
       return;
@@ -222,10 +229,37 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     paymentObject.open();
   };
 
+  const updateUser = async () => {
+    if (user.address == "") {
+      alert("This field cannot be empty");
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address: user.address,
+        }),
+      };
+      const result = await (
+        await fetch("/editUserAddress", requestOptions)
+      ).json();
+      if (result.response === false) {
+        alert("Could not update!");
+        setIsAuth(false);
+        setCart([]);
+        history.push("/login");
+      } else {
+        //setEditable(false);
+        window.location.reload();
+      }
+    }
+  };
+
   const handleClose = () => {
     setShowPaymentModal(false);
     setShowModal(false);
     setShowCartModal(false);
+    setShowAddressModal(false);
   };
 
   const addClass = () => {
@@ -271,6 +305,61 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
           <Button variant="secondary" onClick={handleClose} href="/">
             Start shopping
           </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Change Address */}
+      <Modal
+        show={showAddressModal}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Confirm Delivery Address
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editable ? (
+            <h6
+              className="edituser"
+              onClick={() => {
+                setEditable(false);
+              }}
+            >
+              Update Address
+            </h6>
+          ) : (
+            <h6
+              className="edituser"
+              onClick={() => {
+                setEditable(true);
+              }}
+            >
+              Change Address
+            </h6>
+          )}
+          <input
+            type="text"
+            className="mr-2"
+            value={shippingAddress || ""}
+            name="Address"
+            disabled={editable ? "" : "disabled"}
+            onChange={(e) => {
+              setShippingAddress(e.target.value);
+            }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn btn-danger" onClick={handleClose}>
+            Close
+          </Button>
+          <span>
+            <Button className="btn btn-success" onClick={proceedPayment}>
+              Proceed to Payment
+            </Button>
+          </span>
         </Modal.Footer>
       </Modal>
 
@@ -370,7 +459,10 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
             })}
             <h4 className="tc">Total Cost: Rs. {getTotalSum()}</h4>
             {isAuth ? (
-              <button className="btnProceed" onClick={proceedPayment}>
+              <button
+                className="btnProceed"
+                onClick={() => setShowAddressModal(true)}
+              >
                 Place this Order
               </button>
             ) : null}

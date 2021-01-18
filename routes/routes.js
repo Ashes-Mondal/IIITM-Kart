@@ -53,6 +53,5 @@ router.post(
   adminControllerFunctions.adminToggleAdminPrivilege
 );
 
-
 //exporting
 module.exports = router;
