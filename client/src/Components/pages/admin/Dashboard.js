@@ -163,7 +163,7 @@ const Dashboard = ({ user, setAdmin }) => {
       </div>
       <div className="flex-container">
         <div className="flex-childA3 shadow rounded bg-white">
-          <p className="tc">Recent Orders</p>
+          <h1>Recent Orders</h1>
           <table>
             <tr>
               <th>Order_ID</th>
