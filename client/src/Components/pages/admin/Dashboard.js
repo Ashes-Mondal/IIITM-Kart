@@ -70,9 +70,8 @@ const Dashboard = ({ user, setAdmin }) => {
   };
 
   const status = (deliveryStatus, cancelledStatus) => {
-    if (cancelledStatus) {
-      return "Order Cancelled";
-    }
+    if (cancelledStatus && deliveryStatus) return "Order Returned";
+    if (cancelledStatus) return "Order Cancelled";
     return deliveryStatus ? "Delivered" : "Order Pending";
   };
   return (
@@ -92,7 +91,12 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Admin ID: {user._id}</h5>
           <h5>Admin Email: {user.email}</h5>
         </div>
-        <div className="flex-childA3 shadow rounded bg-success text-light m-3">
+        <div
+          className="flex-childA3 shadow rounded bg-success text-light m-3"
+          onClick={() => {
+            history.push("/admin/users");
+          }}
+        >
           <p>
             {users.length}{" "}
             <span>
@@ -104,7 +108,12 @@ const Dashboard = ({ user, setAdmin }) => {
           </p>
           <h5>Registered Users</h5>
         </div>
-        <div className="flex-childA3 shadow rounded bg-info text-light m-3">
+        <div
+          className="flex-childA3 shadow rounded bg-info text-light m-3"
+          onClick={() => {
+            history.push("/admin/orders");
+          }}
+        >
           <p>
             {DeliveredOrders()}{" "}
             <span>
@@ -117,7 +126,12 @@ const Dashboard = ({ user, setAdmin }) => {
           </p>
           <h5>Delivered Orders</h5>
         </div>
-        <div className="flex-childA3 shadow rounded bg-warning text-light m-3">
+        <div
+          className="flex-childA3 shadow rounded bg-warning text-light m-3"
+          onClick={() => {
+            history.push("/admin/orders");
+          }}
+        >
           <p>
             {pending()}
             <span>
@@ -129,7 +143,12 @@ const Dashboard = ({ user, setAdmin }) => {
           </p>
           <h5>Pending Orders</h5>
         </div>
-        <div className="flex-childA3 shadow rounded bg-danger text-light m-3">
+        <div
+          className="flex-childA3 shadow rounded bg-danger text-light m-3"
+          onClick={() => {
+            history.push("/admin/orders");
+          }}
+        >
           <p>
             {cancelledOrders()}
             <span>
@@ -139,7 +158,7 @@ const Dashboard = ({ user, setAdmin }) => {
               />
             </span>
           </p>
-          <h5>Cancelled Orders</h5>
+          <h5>Orders Lost</h5>
         </div>
       </div>
       <div className="flex-container">

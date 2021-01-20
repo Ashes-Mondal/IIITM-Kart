@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     marginLeft: "2rem",
-    width: "60%",
+    width: "40%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -148,6 +148,19 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
               </TableBody>
             </Table>
           </TableContainer>
+        </List>
+        <Divider />
+        <List>
+          <h4>
+            <strong>Shipping Address:</strong>
+          </h4>
+          <ListItem>
+            <ListItemText
+              primary={
+                orderDetails.shippingAddress || orderDetails.user.address
+              }
+            />
+          </ListItem>
         </List>
         <Divider />
         <List>
@@ -270,6 +283,12 @@ const Orders = ({ setAdmin }) => {
     setError(false);
   };
 
+  const showDeliveryStatus = (cancelledStatus, deliveryStatus) => {
+    if (cancelledStatus && deliveryStatus) return "Returned";
+    if (cancelledStatus) return "Cancelled";
+    if (deliveryStatus) return "Delivered";
+    else return "Pending";
+  };
   const showDeliveredOrders = () => {
     let adminUser = orders.filter((order) => order.deliveryStatus);
     setDisplayOrders(adminUser);
@@ -280,6 +299,18 @@ const Orders = ({ setAdmin }) => {
   };
   const showAllOrders = () => {
     setDisplayOrders(orders);
+  };
+  const showCancelledOrders = () => {
+    let adminUser = orders.filter(
+      (order) => order.cancelledStatus && !order.deliveryStatus
+    );
+    setDisplayOrders(adminUser);
+  };
+  const showReturnedOrders = () => {
+    let adminUser = orders.filter(
+      (order) => order.cancelledStatus && order.deliveryStatus
+    );
+    setDisplayOrders(adminUser);
   };
 
   const handleFilter = () => {
@@ -350,6 +381,8 @@ const Orders = ({ setAdmin }) => {
             <Tab onClick={showAllOrders} label="All Orders" />
             <Tab onClick={showPendingOrders} label="Pending" />
             <Tab onClick={showDeliveredOrders} label="Delivered" />
+            <Tab onClick={showCancelledOrders} label="Cancelled" />
+            <Tab onClick={showReturnedOrders} label="Returned" />
           </Tabs>
           <form
             className={classes.form}
@@ -359,7 +392,7 @@ const Orders = ({ setAdmin }) => {
             }}
           >
             <input
-              className="form-control"
+              className="form-control col-xs-4"
               type="search"
               placeholder="search"
               value={search}
@@ -433,13 +466,24 @@ const Orders = ({ setAdmin }) => {
                     <td>
                       <button
                         className={`btn ${
-                          order.deliveryStatus ? "btn-success" : "btn-warning"
+                          order.cancelledStatus
+                            ? "btn-danger"
+                            : order.deliveryStatus
+                            ? "btn-success"
+                            : "btn-warning"
                         } float-right mr-2 shadow`}
                         disabled={order.cancelledStatus ? "disabled" : ""}
                         onClick={() => handleDeliveryStatus(order)}
                       >
-                        {order.deliveryStatus ? "DELIVERED" : "PENDING"}
-                        {order.cancelledStatus ? "(Order Cancelled)" : ""}
+                        {showDeliveryStatus(
+                          order.cancelledStatus,
+                          order.deliveryStatus
+                        )}
+                        {/* {order.cancelledStatus
+                          ? "(Order Cancelled/Returned)"
+                          : order.deliveryStatus
+                          ? "DELIVERED"
+                          : "PENDING"} */}
                       </button>
                     </td>
                     <td>
