@@ -410,6 +410,7 @@ exports.addOrder = async (req, res) => {
 //CANCEL ORDER
 exports.cancelOrder = async (req, res) => {
   const userId = req.session.userId;
+
   if (userId === undefined) {
     res.send({ response: false, error: "Not logged in" });
     return;
@@ -418,7 +419,14 @@ exports.cancelOrder = async (req, res) => {
   try {
     const orderId = req.body.orderId;
     const userDetails = await UserDetail.findById(userId).exec();
+    const orderDetails = await OrderDetail.findById(orderId);
+    console.log("status: ", orderDetails.cancelledStatus); // before update
     let ordersList = userDetails.orders;
+    //update cancelled status
+    await OrderDetail.findByIdAndUpdate(orderId, {
+      cancelledStatus: !orderDetails.cancelledStatus,
+    });
+    console.log("status: ", orderDetails.cancelledStatus); // after update
     ordersList = ordersList.filter(
       (orderElement) => orderElement._id != orderId
     );

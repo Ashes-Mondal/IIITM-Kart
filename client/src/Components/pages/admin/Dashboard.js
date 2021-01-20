@@ -58,8 +58,21 @@ const Dashboard = ({ user, setAdmin }) => {
     });
     return count;
   };
+  const cancelledOrders = () => {
+    var count = 0;
+    orders.map((order) => {
+      if (order.cancelledStatus === true) {
+        count++;
+      }
+      return count;
+    });
+    return count;
+  };
 
-  const status = (deliveryStatus) => {
+  const status = (deliveryStatus, cancelledStatus) => {
+    if (cancelledStatus) {
+      return "Order Cancelled";
+    }
     return deliveryStatus ? "Delivered" : "Order Pending";
   };
   return (
@@ -118,11 +131,11 @@ const Dashboard = ({ user, setAdmin }) => {
         </div>
         <div className="flex-childA3 shadow rounded bg-danger text-light m-3">
           <p>
-            23
+            {cancelledOrders()}
             <span>
               <img
                 className="smallImage"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Page_issue_icon_-_medium.svg/1200px-Page_issue_icon_-_medium.svg.png"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQra5iNDCJPXhYHMtQ-G50fw7RyWU27ejwXQ&usqp=CAU"
               />
             </span>
           </p>
@@ -157,7 +170,9 @@ const Dashboard = ({ user, setAdmin }) => {
                       <h5>{order.dateOfOrder.slice(0, 33)}</h5>
                     </td>
                     <td>
-                      <h5>{status(order.deliveryStatus)}</h5>
+                      <h5>
+                        {status(order.deliveryStatus, order.cancelledStatus)}
+                      </h5>
                     </td>
                   </tr>
                 );

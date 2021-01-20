@@ -246,32 +246,6 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     paymentObject.open();
   };
 
-  const updateUser = async () => {
-    if (user.address == "") {
-      alert("This field cannot be empty");
-    } else {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          address: user.address,
-        }),
-      };
-      const result = await (
-        await fetch("/editUserAddress", requestOptions)
-      ).json();
-      if (result.response === false) {
-        alert("Could not update!");
-        setIsAuth(false);
-        setCart([]);
-        history.push("/login");
-      } else {
-        //setEditable(false);
-        window.location.reload();
-      }
-    }
-  };
-
   const handleClose = () => {
     setShowPaymentModal(false);
     setShowModal(false);
@@ -347,7 +321,9 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Confirm Delivery Address
+            <h3>Total Cost: Rs. {getTotalSum()}</h3>
+            <br />
+            Please confirm your Shipping Address
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -370,16 +346,18 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
               Change Address
             </h6>
           )}
-          <input
-            type="text"
-            className="mr-2"
-            value={shippingAddress || ""}
-            name="Address"
-            disabled={editable ? "" : "disabled"}
-            onChange={(e) => {
-              setShippingAddress(e.target.value);
-            }}
-          />
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              value={shippingAddress || ""}
+              name="Address"
+              disabled={editable ? "" : "disabled"}
+              onChange={(e) => {
+                setShippingAddress(e.target.value);
+              }}
+            />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn btn-danger" onClick={handleClose}>
