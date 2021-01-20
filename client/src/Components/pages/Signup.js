@@ -63,7 +63,7 @@ export default function SignUp({ setLoaded }) {
   const handleSignUp = async (e) => {
     e.preventDefault();
     //POSTING THE FORM
-    if (signup.confirmPassword != signup.password) {
+    if (signup.confirmPassword !==signup.password) {
       alert("Passwords are not matched...");
     } else {
       const requestOptions = {
@@ -83,8 +83,9 @@ export default function SignUp({ setLoaded }) {
         setLoaded(false);
         history.push("/login");
         history.go();
-      } else {
-        console.log("SUP_result", result);
+      } else if(result.error._message === undefined){
+        setError(result.error);
+      }else{
         setError(result.error._message);
       }
     }

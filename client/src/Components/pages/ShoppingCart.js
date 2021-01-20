@@ -240,174 +240,149 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
 		paymentObject.open();
 	};
 
-	const updateUser = async () => {
-		if (user.address === "") {
-			alert("This field cannot be empty");
-		} else {
-			const requestOptions = {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					address: user.address,
-				}),
-			};
-			const result = await (
-				await fetch("/editUserAddress", requestOptions)
-			).json();
-			if (result.response === false) {
-				alert("Could not update!");
-				setIsAuth(false);
-				setCart([]);
-				history.push("/login");
-			} else {
-				//setEditable(false);
-				window.location.reload();
-			}
-		}
-	};
+  const handleClose = () => {
+    setShowPaymentModal(false);
+    setShowModal(false);
+    setShowCartModal(false);
+    setShowAddressModal(false);
+    setState({ open: false, vertical: "top", horizontal: "center" });
+    setConfirmClearCartModal(false);
+  };
 
-	const handleClose = () => {
-		setShowPaymentModal(false);
-		setShowModal(false);
-		setShowCartModal(false);
-		setShowAddressModal(false);
-		setState({ open: false, vertical: "top", horizontal: "center" });
-		setConfirmClearCartModal(false);
-	};
-
-	const addClass = () => {
-		if (cart.length) {
-			return "flex-child1 shadow bg-white rounded";
-		}
-		return "container shadow bg-white rounded p-3";
-	};
-	return (
-		<>
-    
-			{showProcessing?<LinearProgress color="secondary" />:null}
-			<Snackbar
-				anchorOrigin={{ vertical, horizontal }}
-				open={open}
-				onClose={handleClose}
-				autoHideDuration={4000}
-				key={vertical + horizontal}
-			>
-				<Alert onClose={handleClose} severity="success">
-					Sucessfully removed from the cart
-				</Alert>
-			</Snackbar>
-			{/* MODALS */}
-			{/* PAYMENT  */}
-			<Modal show={showPaymentModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Payment Result</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Your Order has been placed</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose} href="/user">
-						See Your Order
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			{/* CART CRUD */}
-			<Modal show={showModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>OOPS!!</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Session Timeout</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose} href="/login">
-						Login
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			{/* EMPTY CART */}
-			<Modal show={showCartModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>OOPS!!</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Your cart looks empty</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose} href="/">
-						Start shopping
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			{/* Change Address */}
-			<Modal
-				show={showAddressModal}
-				onHide={handleClose}
-				size="lg"
-				aria-labelledby="contained-modal-title-vcenter"
-				centered
-			>
-				<Modal.Header closeButton>
-					<Modal.Title id="contained-modal-title-vcenter">
-						Confirm Delivery Address
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					{editable ? (
-						<h6
-							className="edituser"
-							onClick={() => {
-								setEditable(false);
-							}}
-						>
-							Update Address
-						</h6>
-					) : (
-						<h6
-							className="edituser"
-							onClick={() => {
-								setEditable(true);
-							}}
-						>
-							Change Address
-						</h6>
-					)}
-					<input
-						type="text"
-						className="mr-2"
-						value={shippingAddress || ""}
-						name="Address"
-						disabled={editable ? "" : "disabled"}
-						onChange={(e) => {
-							setShippingAddress(e.target.value);
-						}}
-					/>
-				</Modal.Body>
-				<Modal.Footer>
-					<Button className="btn btn-danger" onClick={handleClose}>
-						Close
-					</Button>
-					<span>
-						<Button className="btn btn-success" onClick={proceedPayment}>
-							Proceed to Payment
-						</Button>
-					</span>
-				</Modal.Footer>
-			</Modal>
-			{/* CONFIRM CLEAR CART */}
-			<Modal show={confirmClearCartModal} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Are you Sure?</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Do you want to delete your cart items?</Modal.Body>
-				<Modal.Footer>
-					<Button variant="danger" onClick={clearCart}>
-						Yes
-					</Button>
-					<Button
-						variant="primary"
-						onClick={() => setConfirmClearCartModal(false)}
-					>
-						No
-					</Button>
-				</Modal.Footer>
-			</Modal>
-
-			{/* MAIN CODE */}
+  const addClass = () => {
+    if (cart.length) {
+      return "flex-child1 shadow bg-white rounded";
+    }
+    return "container shadow bg-white rounded p-3";
+  };
+  return (
+    <>
+    {showProcessing?<LinearProgress color="secondary" />:null}
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={4000}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Sucessfully removed from the cart
+        </Alert>
+      </Snackbar>
+      {/* MODALS */}
+      {/* PAYMENT  */}
+      <Modal show={showPaymentModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Payment Result</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Your Order has been placed</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/user">
+            See Your Order
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* CART CRUD */}
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Session Timeout</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/login">
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* EMPTY CART */}
+      <Modal show={showCartModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OOPS!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Your cart looks empty</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} href="/">
+            Start shopping
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Change Address */}
+      <Modal
+        show={showAddressModal}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3>Total Cost: Rs. {getTotalSum()}</h3>
+            <br />
+            Please confirm your Shipping Address
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editable ? (
+            <h6
+              className="edituser"
+              onClick={() => {
+                setEditable(false);
+              }}
+            >
+              Update Address
+            </h6>
+          ) : (
+            <h6
+              className="edituser"
+              onClick={() => {
+                setEditable(true);
+              }}
+            >
+              Change Address
+            </h6>
+          )}
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              value={shippingAddress || ""}
+              name="Address"
+              disabled={editable ? "" : "disabled"}
+              onChange={(e) => {
+                setShippingAddress(e.target.value);
+              }}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn btn-danger" onClick={handleClose}>
+            Close
+          </Button>
+          <span>
+            <Button className="btn btn-success" onClick={proceedPayment}>
+              Proceed to Payment
+            </Button>
+          </span>
+        </Modal.Footer>
+      </Modal>
+      {/* CONFIRM CLEAR CART */}
+      <Modal show={confirmClearCartModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you Sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you want to delete your cart items?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={clearCart}>
+            Yes
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setConfirmClearCartModal(false)}
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
 			<div className="product flex-container">
 				<div className={addClass()}>

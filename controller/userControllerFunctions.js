@@ -304,8 +304,24 @@ exports.login = async (req, res) => {
 };
 //SIGNUP
 exports.signup = async (req, res) => {
-	//_id is added then updated to the database
+	//validation of email and phone
+	function validateEmail(email) {
+		const re = /\S+@\S+\.\S+/;
+		return re.test(email);
+	  }
+	  function validatePhone(phone) {
+		const re = /\d{10}/;
+		return re.test(phone);
+	  }
+	  if(!validateEmail(req.body.email)) {
+		res.send({response:false,error:"Email not in valid format ( example@example.com)"});
+		return ;
+	  } else if(!validatePhone(req.body.phone)) {
+		res.send({response:false,error:"phone not in valid format ( 10 digits)"});
+		return ;
+	  }
 	try {
+		//_id is added then updated to the database
 		//hashing the password
 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
 		const userData = {
@@ -418,24 +434,32 @@ exports.addOrder = async (req, res) => {
 
 //CANCEL ORDER
 exports.cancelOrder = async (req, res) => {
-	const userId = req.session.userId;
-	if (userId === undefined) {
-		res.send({ response: false, error: "Not logged in" });
-		return;
-	}
+  const userId = req.session.userId;
 
-	try {
-		const orderId = req.body.orderId;
-		const userDetails = await UserDetail.findById(userId).exec();
-		let ordersList = userDetails.orders;
-		ordersList = ordersList.filter(
-			(orderElement) => orderElement._id != orderId
-		);
-		await UserDetail.findByIdAndUpdate(userId, {
-			orders: ordersList,
-		});
-		res.send({ response: true });
-	} catch (error) {
-		res.send({ response: false, error: error });
-	}
+  if (userId === undefined) {
+    res.send({ response: false, error: "Not logged in" });
+    return;
+  }
+
+  try {
+    const orderId = req.body.orderId;
+    const userDetails = await UserDetail.findById(userId).exec();
+    const orderDetails = await OrderDetail.findById(orderId);
+    console.log("status: ", orderDetails.cancelledStatus); // before update
+    let ordersList = userDetails.orders;
+    //update cancelled status
+    await OrderDetail.findByIdAndUpdate(orderId, {
+      cancelledStatus: !orderDetails.cancelledStatus,
+    });
+    console.log("status: ", orderDetails.cancelledStatus); // after update
+    ordersList = ordersList.filter(
+      (orderElement) => orderElement._id != orderId
+    );
+    await UserDetail.findByIdAndUpdate(userId, {
+      orders: ordersList,
+    });
+    res.send({ response: true });
+  } catch (error) {
+    res.send({ response: false, error: error });
+  }
 };

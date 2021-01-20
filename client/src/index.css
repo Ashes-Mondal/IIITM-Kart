@@ -50,7 +50,7 @@ code {
   margin: auto;
 }
 .categories:hover {
-  background: rgb(218, 218, 218);
+  /* background: rgb(218, 218, 218); */
   cursor: pointer;
 }
 .categoriesClicked {
