@@ -151,6 +151,7 @@ const App = () => {
 										setCart={setCart}
 										user={user}
 										setUser={setUser}
+										setLoaded={setLoaded}
 									/>
 								</Route>
 								{isAuth ? (

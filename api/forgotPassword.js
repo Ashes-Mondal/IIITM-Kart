@@ -14,13 +14,11 @@ let mailtransport = nodemailer.createTransport({
 
 exports.emailValidation = async (req, res) => {
   const customerEmail = req.body.email;
-  console.log("mail: ", customerEmail);
   const customer = await UserDetail.findOne({ email: customerEmail });
   if (customer === null) {
     res.send({ response: false, error: "Could not find the email address" });
     return;
   }
-  console.log("customer:", customer);
   const otp = otpGenerator.generate(6, {
     upperCase: false,
     specialChars: false,
@@ -55,7 +53,6 @@ exports.resetPassword = async (req, res) => {
   const newPassword = await bcrypt.hash(req.body.password, 12);
   const userId = req.body.userId;
 
-  console.log(userId, " \n", req.body.password);
   await UserDetail.findByIdAndUpdate(
     userId,
     { password: newPassword },
