@@ -28,7 +28,7 @@ code {
   z-index: 1;
   background: black;
   color: white;
-  opacity: 90%;
+  opacity: 0.9;
 }
 .dropdown-content1 li {
   list-style-type: none;
@@ -50,7 +50,7 @@ code {
   margin: auto;
 }
 .categories:hover {
-  /* background: rgb(218, 218, 218); */
+  background: rgb(218, 218, 218);
   cursor: pointer;
 }
 .categoriesClicked {
@@ -67,14 +67,6 @@ code {
   cursor: pointer;
 }
 /********************************************** HOMEPAGE, CARD ************************************/
-/* .homePageImg {
-  background-image: url("https://media.wired.com/photos/5c9040ee4950d24718d6da99/16:9/w_2400,h_1350,c_limit/shoppingcart-1066110386.jpg");
-  background-position: center;
-  height: 550px;
-  background-size: cover;
-  margin-left: 10%;
-  margin-right: 10%;
-} */
 .homeCard {
   height: auto;
   min-height: max-content;
@@ -113,16 +105,6 @@ code {
   line-height: 1.33;
   border-radius: 35px;
 }
-/* .cardBtn {
-  position: absolute;
-  display: none;
-  bottom: 0;
-  margin-left: 1rem;
-} */
-/* .homeCard:hover .cardBtn {
-  display: inline;
-} */
-
 img {
   margin: 1rem;
   position: relative;
