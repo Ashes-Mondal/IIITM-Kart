@@ -8,10 +8,9 @@ const Razorpay = require("razorpay");
 const { ItemDetail } = require("../models/itemSchema");
 const { UserDetail } = require("../models/userSchema");
 const { OrderDetail } = require("../models/orderSchema");
-const keys = require("../key");
 const razorInstance = new Razorpay({
-	key_id: keys.key_id,
-	key_secret: keys.key_secret,
+	key_id: process.env.RAZORPAY_KEY_ID,
+	key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 const {
 	paymentCompletionMail,
