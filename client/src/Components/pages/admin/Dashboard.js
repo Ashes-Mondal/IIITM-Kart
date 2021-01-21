@@ -164,7 +164,8 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Orders Lost</h5>
         </div>
       </div>
-      <div className="flex-container bg-light shadow">
+
+      <div className="flex-childA3 shadow rounded bg-white">
         <a href="/admin/orders" style={{ textDecoration: "none" }}>
           <div className="flex-childA3 shadow rounded bg-white">
             <h1>Recent Orders</h1>

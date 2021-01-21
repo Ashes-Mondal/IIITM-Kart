@@ -290,11 +290,15 @@ const Orders = ({ setAdmin }) => {
     else return "Pending";
   };
   const showDeliveredOrders = () => {
-    let adminUser = orders.filter((order) => (!order.cancelledStatus && order.deliveryStatus));
+    let adminUser = orders.filter(
+      (order) => !order.cancelledStatus && order.deliveryStatus
+    );
     setDisplayOrders(adminUser);
   };
   const showPendingOrders = () => {
-    let normalUser = orders.filter((order) => (!order.cancelledStatus && !order.deliveryStatus));
+    let normalUser = orders.filter(
+      (order) => !order.cancelledStatus && !order.deliveryStatus
+    );
     setDisplayOrders(normalUser);
   };
   const showAllOrders = () => {
