@@ -1,8 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Dashboard = ({ user, setAdmin }) => {
+	const [showProcessing, setShowProcessing] = useState(true);
 	const history = useHistory();
 	const { setIsAuth } = useContext(Authentication);
 	const [orders, setOrders] = useState([]);
@@ -13,6 +15,7 @@ const Dashboard = ({ user, setAdmin }) => {
 			const result = await (await fetch("/fetchAllOrders")).json();
 			if (result.response === true) {
 				setOrders(result.ordersData);
+				setShowProcessing(false);
 			} else {
 				setOrders([]);
 				setIsAuth(false);
@@ -170,6 +173,7 @@ const Dashboard = ({ user, setAdmin }) => {
 					style={{ textDecoration: "none", color: "black" }}
 				>
 					<h1>Recent Orders</h1>
+					{showProcessing ? <LinearProgress color="secondary" /> : null}
 					<table>
 						<tr>
 							<th>Order_ID</th>
@@ -177,6 +181,7 @@ const Dashboard = ({ user, setAdmin }) => {
 							<th>Date/Time</th>
 							<th>Delivery_Status</th>
 						</tr>
+
 						{orders
 							.slice(-5)
 							.reverse()
@@ -210,4 +215,3 @@ const Dashboard = ({ user, setAdmin }) => {
 };
 
 export default Dashboard;
-
