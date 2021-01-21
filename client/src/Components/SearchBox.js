@@ -10,38 +10,38 @@ function Alert(props) {
 }
 
 const SearchBox = () => {
-  const [state, setState] = useState({
+	const [state, setState] = useState({
 		open: false,
 		vertical: "top",
 		horizontal: "center",
-  });
-  const handleClose = () => {
+	});
+	const handleClose = () => {
 		setState({ open: false, vertical: "top", horizontal: "center" });
 	};
-  const { vertical, horizontal, open } = state;
-  const history = useHistory();
-  const [Search, setSearch] = useState("");
-  const { setItemList } = useContext(Item);
-  //handleSearchSubmit
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    history.push("/")
-    //requesting server to fetch Search data
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ Search: Search }),
-    };
-    const result = await (await fetch("/search", requestOptions)).json();
-    if (result.response === false) {
-      setState({ open: true, vertical: "top", horizontal: "center" });
-    } else {
-      setItemList(result.itemList);
-    }
-  };
-  return (
-    <>
-    <Snackbar
+	const { vertical, horizontal, open } = state;
+	const history = useHistory();
+	const [Search, setSearch] = useState("");
+	const { setItemList } = useContext(Item);
+	//handleSearchSubmit
+	const handleSearchSubmit = async (e) => {
+		e.preventDefault();
+		history.push("/");
+		//requesting server to fetch Search data
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ Search: Search }),
+		};
+		const result = await (await fetch("/search", requestOptions)).json();
+		if (result.response === false) {
+			setState({ open: true, vertical: "top", horizontal: "center" });
+		} else {
+			setItemList(result.itemList);
+		}
+	};
+	return (
+		<>
+			<Snackbar
 				anchorOrigin={{ vertical, horizontal }}
 				open={open}
 				onClose={handleClose}
@@ -52,22 +52,22 @@ const SearchBox = () => {
 					Could not find anything!
 				</Alert>
 			</Snackbar>
-      <form onSubmit={handleSearchSubmit} className="search-box-form ">
-        <input
-          className="form-control"
-          type="search"
-          placeholder="search product"
-          value={Search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
-        <button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
-          <SearchIcon />
-        </button>
-      </form>
-    </>
-  );
+			<form onSubmit={handleSearchSubmit} className="search-box-form ">
+				<input
+					className="form-control"
+					type="search"
+					placeholder="search product"
+					value={Search}
+					onChange={(e) => {
+						setSearch(e.target.value);
+					}}
+				/>
+				<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
+					<SearchIcon />
+				</button>
+			</form>
+		</>
+	);
 };
 export default SearchBox;
 
