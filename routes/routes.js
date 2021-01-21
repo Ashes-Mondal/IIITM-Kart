@@ -5,6 +5,7 @@ const userControllerFunctions = require("../controller/userControllerFunctions")
 const adminControllerFunctions = require("../controller/adminControllerFunctions");
 const api_search = require("../api/search");
 const api_forgotPassword = require("../api/forgotPassword");
+const chatbot = require("../api/chatbot");
 
 const router = express.Router();
 /************************************** User routes *******************************************/
@@ -28,6 +29,7 @@ router.post("/search", api_search.search);
 router.post("/paymentOrder", userControllerFunctions.paymentOrder);
 router.post("/emailValidation", api_forgotPassword.emailValidation);
 router.post("/resetPassword", api_forgotPassword.resetPassword);
+router.post("/chatbotQuery", chatbot.runSample);
 /*************************************** Admin routes ***************************************/
 //GET REQUESTS
 router.get("/fetchAllUsers", adminControllerFunctions.fetchAllUsers);
