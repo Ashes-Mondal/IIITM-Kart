@@ -4,6 +4,7 @@ import { Authentication } from "../../App";
 import ReactStars from "react-rating-stars-component";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function UserDetails({ user, setUser, setCart }) {
   const { setIsAuth } = useContext(Authentication);
@@ -16,7 +17,15 @@ function UserDetails({ user, setUser, setCart }) {
     _id: "",
     deliveryStatus: false,
   });
-
+  const [showProcessing, setShowProcessing] = useState(false);
+  function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+  function validatePhone(phone) {
+    const re = /\d{10}/;
+    return re.test(phone);
+  }
   const updateUser = async () => {
     if (
       user.name.firstName === "" ||
@@ -26,6 +35,10 @@ function UserDetails({ user, setUser, setCart }) {
       user.address === ""
     ) {
       alert("This field cannot be empty");
+    } else if (!validateEmail(user.email)) {
+      alert("Email not in valid format (example@example.com)");
+    } else if (!validatePhone(user.phone)) {
+      alert("phone not in valid format (10 digits)");
     } else {
       const requestOptions = {
         method: "POST",
@@ -63,8 +76,6 @@ function UserDetails({ user, setUser, setCart }) {
       }),
     };
     const result = await (await fetch("/cancelOrder", requestOptions)).json();
-    console.log("result: ", result);
-    console.log("CO_response:", result.response);
     if (result.response) {
       let ordersList = user.orders;
       ordersList = ordersList.filter(
@@ -74,6 +85,7 @@ function UserDetails({ user, setUser, setCart }) {
         ...user,
         orders: ordersList,
       });
+      setShowProcessing(false);
     } else {
       alert("Could not cancel order!");
       history.push("/login");
@@ -140,6 +152,7 @@ function UserDetails({ user, setUser, setCart }) {
             variant="danger"
             onClick={() => {
               setConfirmCancelModal(false);
+              setShowProcessing(true);
               cancelOrder();
               setCancelOrderDetails({ id: "", deliveryStatus: false });
             }}
@@ -193,6 +206,7 @@ function UserDetails({ user, setUser, setCart }) {
           </Button>
         </Modal.Footer>
       </Modal>
+      {showProcessing ? <LinearProgress color="secondary" /> : null}
       <div className="product flex-container md-0 userbackground">
         <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
           <h1>Your Orders</h1>
@@ -207,6 +221,7 @@ function UserDetails({ user, setUser, setCart }) {
                       <h3>
                         Order No. {index + 1}
                         <button
+                          disabled={showProcessing}
                           onClick={() => {
                             setCancelOrderDetails(
                               user.orders[user.orders.length - index - 1]

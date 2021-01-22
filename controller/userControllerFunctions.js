@@ -8,12 +8,16 @@ const Razorpay = require("razorpay");
 const { ItemDetail } = require("../models/itemSchema");
 const { UserDetail } = require("../models/userSchema");
 const { OrderDetail } = require("../models/orderSchema");
-const keys = require("../key");
 const razorInstance = new Razorpay({
-	key_id: keys.key_id,
-	key_secret: keys.key_secret,
+	key_id: process.env.RAZORPAY_KEY_ID,
+	key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-const { paymentCompletionMail } = require("../api/sendMail");
+const {
+	paymentCompletionMail,
+	WelcomeMail,
+	returnOrderMail,
+	cancelOrderMail,
+} = require("../api/sendMail");
 
 //Controller Functions
 /****************************User functions***********************************/
@@ -60,24 +64,7 @@ exports.editUserDetails = async (req, res) => {
 		res.send({ response: false, error: "Not logged in" });
 	}
 };
-// //EDIT USER ADDRESS
-// exports.editUserDetails = async (req, res) => {
-//   //address details are obtained
-//   const userId = req.session.userId;
-//   if (userId) {
-//     const address = req.body.address;
-//     try {
-//       await UserDetail.findByIdAndUpdate(userId, {
-//         address: address,
-//       });
-//       res.send({ response: true });
-//     } catch (error) {
-//       res.send({ response: false, error: error });
-//     }
-//   } else {
-//     res.send({ response: false, error: "Not logged in" });
-//   }
-// };
+
 //DELETE USER
 exports.deleteUser = async (req, res) => {
 	//checking is user logged in or not
@@ -85,7 +72,6 @@ exports.deleteUser = async (req, res) => {
 	if (userId) {
 		try {
 			//user details fetched from the database
-			console.log("userId", userId);
 			await OrderDetail.deleteMany({ "user._id": userId });
 			let userDetails = await UserDetail.findByIdAndDelete(userId).exec();
 			req.session.destroy();
@@ -115,7 +101,6 @@ exports.addRating = async (req, res) => {
 		}
 		itemDetails.rating = itemDetails.rating.toFixed(1);
 		itemDetails.numberOfRatings += 1;
-		console.log("itemDetails:", itemDetails);
 
 		await ItemDetail.findByIdAndUpdate(
 			itemId,
@@ -308,18 +293,24 @@ exports.signup = async (req, res) => {
 	function validateEmail(email) {
 		const re = /\S+@\S+\.\S+/;
 		return re.test(email);
-	  }
-	  function validatePhone(phone) {
+	}
+	function validatePhone(phone) {
 		const re = /\d{10}/;
 		return re.test(phone);
-	  }
-	  if(!validateEmail(req.body.email)) {
-		res.send({response:false,error:"Email not in valid format ( example@example.com)"});
-		return ;
-	  } else if(!validatePhone(req.body.phone)) {
-		res.send({response:false,error:"phone not in valid format ( 10 digits)"});
-		return ;
-	  }
+	}
+	if (!validateEmail(req.body.email)) {
+		res.send({
+			response: false,
+			error: "Email not in valid format ( example@example.com)",
+		});
+		return;
+	} else if (!validatePhone(req.body.phone)) {
+		res.send({
+			response: false,
+			error: "phone not in valid format ( 10 digits)",
+		});
+		return;
+	}
 	try {
 		//_id is added then updated to the database
 		//hashing the password
@@ -337,7 +328,8 @@ exports.signup = async (req, res) => {
 		//storing in database
 		newUser = await new UserDetail(userData);
 		await newUser.save();
-		res.send({ response: true });
+		WelcomeMail(userData, res);
+		// res.send({ response: true });
 	} catch (error) {
 		res.send({ response: false, error: error });
 	}
@@ -415,8 +407,8 @@ exports.addOrder = async (req, res) => {
 				const theOrder = await new OrderDetail(order);
 				await theOrder.save();
 			} catch (error) {
-        res.send({ response: false, orderId: orderId, error: result.error });
-        return;
+				res.send({ response: false, orderId: orderId, error: result.error });
+				return;
 			}
 		};
 
@@ -424,9 +416,9 @@ exports.addOrder = async (req, res) => {
 		addOrderToDatabase();
 
 		//Sending mail of confirmation to customer
-    const result = await paymentCompletionMail(order,res);
-    
-    // res.send({ response: true, orderId: orderId });
+		const result = await paymentCompletionMail(order, res);
+
+		// res.send({ response: true, orderId: orderId });
 	} catch (error) {
 		res.send({ response: false, error: error, orderId: orderId });
 	}
@@ -434,32 +426,34 @@ exports.addOrder = async (req, res) => {
 
 //CANCEL ORDER
 exports.cancelOrder = async (req, res) => {
-  const userId = req.session.userId;
+	const userId = req.session.userId;
 
-  if (userId === undefined) {
-    res.send({ response: false, error: "Not logged in" });
-    return;
-  }
+	if (userId === undefined) {
+		res.send({ response: false, error: "Not logged in" });
+		return;
+	}
 
-  try {
-    const orderId = req.body.orderId;
-    const userDetails = await UserDetail.findById(userId).exec();
-    const orderDetails = await OrderDetail.findById(orderId);
-    console.log("status: ", orderDetails.cancelledStatus); // before update
-    let ordersList = userDetails.orders;
-    //update cancelled status
-    await OrderDetail.findByIdAndUpdate(orderId, {
-      cancelledStatus: !orderDetails.cancelledStatus,
-    });
-    console.log("status: ", orderDetails.cancelledStatus); // after update
-    ordersList = ordersList.filter(
-      (orderElement) => orderElement._id != orderId
-    );
-    await UserDetail.findByIdAndUpdate(userId, {
-      orders: ordersList,
-    });
-    res.send({ response: true });
-  } catch (error) {
-    res.send({ response: false, error: error });
-  }
+	try {
+		const orderId = req.body.orderId;
+		const userDetails = await UserDetail.findById(userId).exec();
+		const orderDetails = await OrderDetail.findById(orderId);
+		// before update
+		let ordersList = userDetails.orders;
+		//update cancelled status
+		await OrderDetail.findByIdAndUpdate(orderId, {
+			cancelledStatus: !orderDetails.cancelledStatus,
+		});
+		// after update
+		ordersList = ordersList.filter(
+			(orderElement) => orderElement._id != orderId
+		);
+		await UserDetail.findByIdAndUpdate(userId, {
+			orders: ordersList,
+		});
+		if (orderDetails.deliveryStatus) returnOrderMail(orderDetails, res);
+		else cancelOrderMail(orderDetails, res);
+		// res.send({ response: true });
+	} catch (error) {
+		res.send({ response: false, error: error });
+	}
 };
