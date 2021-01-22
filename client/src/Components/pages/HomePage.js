@@ -11,7 +11,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
       <Navbar2 itemList={itemList} setItemList={setItemList} />
       <br />
       <Carousel>
-        <Carousel.Item interval={1000}>
+        <Carousel.Item interval={5000}>
           <img
             className="advertise"
             src="https://images-eu.ssl-images-amazon.com/images/G/31/img20/Wireless/JanART21/Renewed/1500x300_refurbished_PC.jpg"
@@ -21,7 +21,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             }}
           />
         </Carousel.Item>
-        <Carousel.Item interval={1000}>
+        <Carousel.Item interval={5000}>
           <img
             className="advertise"
             src="https://images-eu.ssl-images-amazon.com/images/G/31/img18/Fashion/March/WRS/GW/Bunks/1500by300_WRS._CB499915175_.jpg"
@@ -31,7 +31,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             }}
           />
         </Carousel.Item>
-        <Carousel.Item interval={1000}>
+        <Carousel.Item interval={5000}>
           <img
             className="advertise"
             src="https://images-eu.ssl-images-amazon.com/images/G/31/img20/SNS/Jan21ART/Baby_1500x300.jpg"
@@ -41,7 +41,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             }}
           />
         </Carousel.Item>
-        <Carousel.Item interval={1000}>
+        <Carousel.Item interval={5000}>
           <img
             className="advertise"
             src="https://images-eu.ssl-images-amazon.com/images/G/31/img16/men-apparel/201708/GW/GW_PC_Hero_1500x300_-festiv._V517410320_.jpg"
@@ -51,7 +51,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             }}
           />
         </Carousel.Item>
-        <Carousel.Item interval={1000}>
+        <Carousel.Item interval={5000}>
           <img
             className="advertise"
             src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/AmazonPay/PDAYILM/v1/01.jpg"
