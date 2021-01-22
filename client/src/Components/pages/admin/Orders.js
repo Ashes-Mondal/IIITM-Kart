@@ -25,6 +25,7 @@ import Paper from "@material-ui/core/Paper";
 import SearchIcon from "@material-ui/icons/Search";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -211,6 +212,7 @@ const Orders = ({ setAdmin }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [showProcessing, setShowProcessing] = useState(true);
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const history = useHistory();
@@ -240,6 +242,8 @@ const Orders = ({ setAdmin }) => {
       if (result.response === true) {
         setOrders(result.ordersData);
         setDisplayOrders(result.ordersData);
+        setShowProcessing(false);
+        console.log("order Use Effect");
       } else {
         setOrders([]);
         setDisplayOrders([]);
@@ -249,7 +253,7 @@ const Orders = ({ setAdmin }) => {
       }
     };
     fetchAllOrders();
-  }, [history, setIsAuth, setAdmin]);
+  }, [history, setIsAuth, setAdmin, setDisplayOrders]);
 
   const handleDeliveryStatus = async (order) => {
     const customerId = order.user._id;
@@ -373,7 +377,7 @@ const Orders = ({ setAdmin }) => {
       </Modal>
 
       <h1>Orders</h1>
-      <nav>
+      <nav style={{ top: "4.1rem" }} className="sticky-top">
         <Paper className={classes.root}>
           <Tabs
             value={value}
@@ -413,44 +417,46 @@ const Orders = ({ setAdmin }) => {
           </form>
         </Paper>
       </nav>
+      {showProcessing ? <LinearProgress color="secondary" /> : null}
       <main>
         <table>
-          <tbody>
+          <thead>
             <tr>
-              <th>
+              <th style={{ top: "7.25rem" }} className="sticky-top">
                 <h4>
                   <strong>Order ID</strong>
                 </h4>
               </th>
-              <th>
+              <th style={{ top: "7.25rem" }} className="sticky-top">
                 <h4>
                   <strong>Customer Name</strong>
                 </h4>
               </th>
-              <th>
+              <th style={{ top: "7.25rem" }} className="sticky-top">
                 <h4>
                   <strong>Customer Phone</strong>
                 </h4>
               </th>
-              <th>
+              <th style={{ top: "7.25rem" }} className="sticky-top">
                 <h4>
                   <strong>Order Cost</strong>
                 </h4>
               </th>
-              <th>
+              <th style={{ top: "7.25rem" }} className="sticky-top">
                 <h4>
                   <strong>Delivery Status</strong>
                 </h4>
               </th>
-              <th></th>
+              <th style={{ top: "7.25rem" }} className="sticky-top"></th>
             </tr>
-          </tbody>
-          {displayOrders
-            .slice(0)
-            .reverse()
-            .map((order, index) => {
-              return (
-                <tbody key={index}>
+          </thead>
+
+          <tbody>
+            {displayOrders
+              .slice(0)
+              .reverse()
+              .map((order, index) => {
+                return (
                   <tr>
                     <td>
                       <h5 className="m-2"> {order._id}</h5>
@@ -497,9 +503,9 @@ const Orders = ({ setAdmin }) => {
                       </button>
                     </td>
                   </tr>
-                </tbody>
-              );
-            })}
+                );
+              })}
+          </tbody>
         </table>
       </main>
     </div>

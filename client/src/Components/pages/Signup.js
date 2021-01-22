@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   avatar: {
-    margin: theme.spacing(1),
+    //margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
@@ -63,7 +63,7 @@ export default function SignUp({ setLoaded }) {
   const handleSignUp = async (e) => {
     e.preventDefault();
     //POSTING THE FORM
-    if (signup.confirmPassword !==signup.password) {
+    if (signup.confirmPassword !== signup.password) {
       alert("Passwords are not matched...");
     } else {
       const requestOptions = {
@@ -83,163 +83,165 @@ export default function SignUp({ setLoaded }) {
         setLoaded(false);
         history.push("/login");
         history.go();
-      } else if(result.error._message === undefined){
+      } else if (result.error._message === undefined) {
         setError(result.error);
-      }else{
+      } else {
         setError(result.error._message);
       }
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      {error !== "" ? (
-        <Alert variant="danger">
-          <Alert.Heading>
-            <h5 style={{ textAlign: "center" }}>{error}</h5>
-          </Alert.Heading>
-        </Alert>
-      ) : null}
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} onSubmit={handleSignUp}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={signup.firstName}
-                onChange={(e) => {
-                  setSignup({ ...signup, firstName: e.target.value });
-                }}
-              />
+    <>
+      <Container component="main" maxWidth="xs">
+        {error !== "" ? (
+          <Alert variant="danger">
+            <Alert.Heading>
+              <h5 style={{ textAlign: "center" }}>{error}</h5>
+            </Alert.Heading>
+          </Alert>
+        ) : null}
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} onSubmit={handleSignUp}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={signup.firstName}
+                  onChange={(e) => {
+                    setSignup({ ...signup, firstName: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  value={signup.lastName}
+                  onChange={(e) => {
+                    setSignup({ ...signup, lastName: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={signup.email}
+                  onChange={(e) => {
+                    setSignup({ ...signup, email: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="phone"
+                  name="phone"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone"
+                  value={signup.phone}
+                  onChange={(e) => {
+                    setSignup({ ...signup, phone: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="address"
+                  name="address"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  value={signup.address}
+                  onChange={(e) => {
+                    setSignup({ ...signup, address: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={signup.password}
+                  onChange={(e) => {
+                    setSignup({ ...signup, password: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  value={signup.confirmPassword}
+                  onChange={(e) => {
+                    setSignup({ ...signup, confirmPassword: e.target.value });
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={signup.lastName}
-                onChange={(e) => {
-                  setSignup({ ...signup, lastName: e.target.value });
-                }}
-              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={signup.email}
-                onChange={(e) => {
-                  setSignup({ ...signup, email: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="phone"
-                name="phone"
-                variant="outlined"
-                required
-                fullWidth
-                id="phone"
-                label="Phone"
-                value={signup.phone}
-                onChange={(e) => {
-                  setSignup({ ...signup, phone: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="address"
-                name="address"
-                variant="outlined"
-                required
-                fullWidth
-                id="address"
-                label="Address"
-                value={signup.address}
-                onChange={(e) => {
-                  setSignup({ ...signup, address: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={signup.password}
-                onChange={(e) => {
-                  setSignup({ ...signup, password: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Confirm Password"
-                type="password"
-                id="confirmPassword"
-                value={signup.confirmPassword}
-                onChange={(e) => {
-                  setSignup({ ...signup, confirmPassword: e.target.value });
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+    </>
   );
 }
 

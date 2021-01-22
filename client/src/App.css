@@ -283,7 +283,6 @@ h1 {
 }
 .flex-childA3 p {
   font-size: 3vw;
-  
 }
 .flex-childA3:hover {
   cursor: pointer;
@@ -299,4 +298,11 @@ h1 {
   padding: 3px;
   width: 20%;
   height: 20%;
+}
+
+/******************************* Home Page *************************************/
+.advertise {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
