@@ -241,7 +241,6 @@ function Navbar({ user, cart, admin }) {
         }}
       >
         <span className="text1">IIITM-Kart</span>
-        <span className="text2">A Shopping site for IIITM students</span>
       </div>
       <div className="search-box">
         <SearchBox />

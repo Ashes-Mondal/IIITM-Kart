@@ -62,9 +62,9 @@ h1 {
 .flex-child2 {
   flex: 1;
   padding: 20px;
-
   margin-bottom: auto;
   top: 6.5rem;
+  z-index: 0;
 }
 .flex-child3 {
   width: 50%;
@@ -166,18 +166,7 @@ h1 {
   font-size: 30px;
   font-weight: 700;
   letter-spacing: 3px;
-
-  position: relative;
-  /* animation: text 2s 1; */
 }
-
-.text2 {
-  -webkit-text-stroke: 1px rgb(255, 251, 0);
-  font-size: 15px;
-  color: azure;
-  font-weight: 400;
-}
-
 .menu-icon {
   display: flex;
   width: 50%;
@@ -307,4 +296,8 @@ h1 {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  z-index: 0;
+}
+.adminPanel .sticky-top {
+  z-index: 0;
 }
