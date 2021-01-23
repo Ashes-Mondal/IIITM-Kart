@@ -248,13 +248,6 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
     setState({ open: false, vertical: "top", horizontal: "center" });
     setConfirmClearCartModal(false);
   };
-
-  const addClass = () => {
-    if (cart.length) {
-      return "flex-child1 shadow bg-white rounded";
-    }
-    return "container shadow bg-white rounded p-3";
-  };
   return (
     <>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
@@ -387,11 +380,17 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
       </Modal>
 
       <div className="product flex-container">
-        <div className={addClass()}>
+        <div
+          className={
+            cart.length
+              ? "flex-child1 cartContainer"
+              : "container bg-white shadow rounded p-3"
+          }
+        >
           <h1>My Cart</h1>
           {cart.length ? (
             <button
-              className="btn btn-danger"
+              className="clearCartBtn"
               onClick={() => setConfirmClearCartModal(true)}
             >
               Clear Cart
@@ -412,7 +411,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
             const { item, Qty } = productDetail;
             return (
               <div
-                className="flex-container shadow rounded mb-3 mt-3"
+                className="flex-container cartItemContainer mb-5 mt-4"
                 key={index}
               >
                 <div className="flex-child3">
@@ -431,7 +430,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
                   <h5>{item.description}</h5>
                   <h4>Rs. {item.cost}</h4>
                   <button
-                    className="btn btn-primary mb-2"
+                    className="qtyBtn mb-2"
                     onClick={() => {
                       minusItemQuantity(productDetail);
                     }}
@@ -440,7 +439,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
                   </button>
                   <span className="qtyInput">{Qty}</span>
                   <button
-                    className="btn btn-primary mb-2"
+                    className="qtyBtn mb-2"
                     onClick={() => {
                       plusItemQuantity(productDetail);
                     }}
@@ -448,9 +447,8 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
                     +
                   </button>
                   <br />
-                  <br />
                   <button
-                    className="btn btn-primary mb-3"
+                    className="removeBtn mb-3"
                     onClick={() => removeFromCart(productDetail)}
                   >
                     Remove this Item
@@ -468,7 +466,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
           )}
         </div>
         {cart.length ? (
-          <div className="flex-child2 shadow bg-white rounded sticky-top">
+          <div className="flex-child2 cartTotalContainer sticky-top">
             <h1>Cart Total</h1>
             <br />
             <p className="cartDetail">

@@ -208,7 +208,7 @@ function UserDetails({ user, setUser, setCart }) {
       </Modal>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
       <div className="product flex-container md-0 userbackground">
-        <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
+        <div className="flex-child1 shadow ml-3 mt-1 md-0  rounded userbackground">
           <h1>Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
             <div>
@@ -460,7 +460,7 @@ function UserDetails({ user, setUser, setCart }) {
               </div>
             </form>
             <button
-              className="btn btn-danger"
+              className="deleteUser"
               onClick={() => {
                 if (checkPendingOrders()) {
                   showDeleteModal(true);

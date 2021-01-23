@@ -31,6 +31,7 @@ const ChatBot = ({ user, isAuth }) => {
                         );
                       })}
                       <b>Total Cost:{element.totalCost}</b>
+                      <hr />
                     </li>
                   );
                 })}

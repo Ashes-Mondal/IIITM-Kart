@@ -481,7 +481,7 @@ const Orders = ({ setAdmin }) => {
                             : order.deliveryStatus
                             ? "btn-success"
                             : "btn-warning"
-                        } float-right mr-2 shadow`}
+                        } float-right mr-2 shadow ordersBtn`}
                         disabled={order.cancelledStatus ? "disabled" : ""}
                         onClick={() => handleDeliveryStatus(order)}
                       >
