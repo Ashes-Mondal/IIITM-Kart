@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
-function UserDetails({ user, setUser, setCart }) {
+function UserDetails({ user, setUser, setCart, setLoaded }) {
   const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
   const [editable, setEditable] = useState(false);
@@ -121,8 +121,9 @@ function UserDetails({ user, setUser, setCart }) {
       setIsAuth(false);
       history.push("/login");
     } else {
+      setLoaded(false);
       history.push("/");
-      history.go(0);
+      history.go();
     }
   };
 
@@ -208,7 +209,7 @@ function UserDetails({ user, setUser, setCart }) {
       </Modal>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
       <div className="product flex-container md-0 userbackground">
-        <div className="flex-child1 shadow ml-3 mt-1 md-0  rounded userbackground">
+        <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
           <h1>Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
             <div>
@@ -218,31 +219,10 @@ function UserDetails({ user, setUser, setCart }) {
                 .map((element, index) => {
                   return (
                     <div key={index} className="orderContainer">
-                      <h3>
-                        Order No. {index + 1}
-                        <button
-                          disabled={showProcessing}
-                          onClick={() => {
-                            setCancelOrderDetails(
-                              user.orders[user.orders.length - index - 1]
-                            );
-                            setConfirmCancelModal(true);
-                          }}
-                          className="cancelOrderButton mr-5 float-right"
-                        >
-                          {user.orders[user.orders.length - index - 1]
-                            .deliveryStatus === true
-                            ? "Return Product"
-                            : "Cancel Order"}
-                        </button>
-                      </h3>
+                      <b>Order ID.</b> {element.razorpayOrderId}
                       <p>
                         <b>Date Of Order : </b>
-                        {element.dateOfOrder}
-                      </p>
-                      <p>
-                        <b>Order ID : </b>
-                        {element._id}
+                        {element.dateOfOrder.slice(0, 25)}
                       </p>
                       {element.order.map((item, i) => {
                         return (
@@ -258,7 +238,7 @@ function UserDetails({ user, setUser, setCart }) {
                               />
                             </div>
                             <div className="flex-child6">
-                              <b>{item.item.itemName}</b>, Cost :{" "}
+                              <b>{item.item.itemName}</b>, Cost :{" Rs "}
                               {item.item.cost}, Qty : {item.Qty}
                               <br />
                               <span className="text-muted">
@@ -328,9 +308,9 @@ function UserDetails({ user, setUser, setCart }) {
                           </div>
                         );
                       })}
-                      <b>Total Cost:</b>
+                      <b>Total Cost: Rs </b>
                       {user.orders[user.orders.length - index - 1].totalCost}
-                      <p>
+                      <p className="d-flex align-items-center">
                         <b>Delivery Status : </b>
                         {user.orders[user.orders.length - index - 1]
                           .deliveryStatus === true ? (
@@ -338,6 +318,22 @@ function UserDetails({ user, setUser, setCart }) {
                         ) : (
                           <span className="pending">Pending...</span>
                         )}
+                        <button
+                          style={{ marginLeft: "auto", height: "3rem" }}
+                          disabled={showProcessing}
+                          onClick={() => {
+                            setCancelOrderDetails(
+                              user.orders[user.orders.length - index - 1]
+                            );
+                            setConfirmCancelModal(true);
+                          }}
+                          className="cancelOrderButton"
+                        >
+                          {user.orders[user.orders.length - index - 1]
+                            .deliveryStatus === true
+                            ? "Return Product"
+                            : "Cancel Order"}
+                        </button>
                       </p>
                     </div>
                   );

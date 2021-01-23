@@ -282,15 +282,14 @@ a.active-nav-link {
   /* box-shadow: inset 5px 5px 5px rgb(209, 168, 56);*/
   border-radius: 50px;
   border-width: 0px;
-  background: none;
-  padding: 5px 10px;
-  border: 3px solid rgb(255, 205, 69);
+  background: rgb(255, 243, 213);
+  padding: 10px;
+  /* background-color: #CD5C5C; */
 }
 .cancelOrderButton:hover {
-  /* box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  padding: 11px; */
-  color: white;
-  background: rgb(255, 205, 69);
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  padding: 11px;
+  background-color: #f08080;
 }
 .orderContainer {
   text-align: left;
