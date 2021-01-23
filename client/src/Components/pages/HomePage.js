@@ -18,6 +18,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             alt="First slide"
             onClick={() => {
               history.push("/productDetails/5fe1535fab0e1cd6ff989368");
+              history.go();
             }}
           />
         </Carousel.Item>
@@ -28,6 +29,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             alt="Second slide"
             onClick={() => {
               history.push("/productDetails/5fe15647ab0e1cd6ff98936b");
+              history.go();
             }}
           />
         </Carousel.Item>
@@ -38,6 +40,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             alt="Third slide"
             onClick={() => {
               history.push("/productDetails/60052d6dac871a5d5a4db6e3");
+              history.go();
             }}
           />
         </Carousel.Item>
@@ -48,6 +51,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
             alt="Fourth slide"
             onClick={() => {
               history.push("/productDetails/5fe15943ab0e1cd6ff98936e");
+              history.go();
             }}
           />
         </Carousel.Item>

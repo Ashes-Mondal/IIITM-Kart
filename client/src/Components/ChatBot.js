@@ -42,6 +42,9 @@ const ChatBot = ({ user, isAuth }) => {
       </div>
     );
   };
+  const DisplayPayments = () => {
+    return <>PAYMENTS</>;
+  };
   var steps = [
     {
       id: "pleaseLogin",
@@ -67,20 +70,24 @@ const ChatBot = ({ user, isAuth }) => {
       {
         id: "orders",
         message: "Here are your orders:",
-        trigger: "orderlist",
+        trigger: "orderList",
       },
       {
         id: "payments",
         message: "Here are your payments:",
-        trigger: "orderlist",
+        trigger: "paymentsList",
+      },
+      {
+        id: "paymentsList",
+        component: DisplayPayments(),
       },
       {
         id: "contactDetails",
         message: "Here are your contactDetails:",
-        trigger: "orderlist",
+        trigger: "orderList",
       },
       {
-        id: "orderlist",
+        id: "orderList",
         component: DisplayOrders(),
       },
       {
