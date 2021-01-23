@@ -266,6 +266,17 @@ exports.paymentOrder = async (req, res) => {
 /*****************************LOGIN, SIGNUP, LOGOUT***************************/
 //LOGIN
 exports.login = async (req, res) => {
+	function validatePhone(phone) {
+		const re = /\d{10}/;
+		return re.test(phone);
+	}
+	 if (!validatePhone(req.body.phone)) {
+		res.send({
+			response: false,
+			error: "phone not in valid format ( 10 digits)",
+		});
+		return;
+	}
 	const { phone, password } = req.body;
 	//finding the user in the database
 	try {

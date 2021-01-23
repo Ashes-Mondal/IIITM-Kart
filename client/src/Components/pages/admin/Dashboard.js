@@ -189,7 +189,7 @@ const Dashboard = ({ user, setAdmin }) => {
                 return (
                   <tr>
                     <td>
-                      <h5>{order._id}</h5>
+                    <h6 className="m-2"> {order.razorpayOrderId}</h6>
                     </td>
                     <td>
                       <h5>
@@ -197,7 +197,7 @@ const Dashboard = ({ user, setAdmin }) => {
                       </h5>
                     </td>
                     <td>
-                      <h5>{order.dateOfOrder.slice(0, 33)}</h5>
+                      <h5>{order.dateOfOrder.slice(0, 25)}</h5>
                     </td>
                     <td>
                       <h5>

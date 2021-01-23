@@ -285,10 +285,12 @@ a.active-nav-link {
   border-width: 0px;
   background: rgb(255, 243, 213);
   padding: 10px;
+  /* background-color: #CD5C5C; */
 }
 .cancelOrderButton:hover {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
   padding: 11px;
+  background-color:#F08080;
 }
 .orderContainer {
   text-align: left;
