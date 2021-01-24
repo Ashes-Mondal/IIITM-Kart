@@ -81,7 +81,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Order Id: {orderDetails._id}
+              _Id: {orderDetails._id}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -121,35 +121,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
           </ListItem>
         </List>
         <Divider />
-        <List>
-          <h4>
-            <strong>Items ordered</strong>
-          </h4>
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">Item Name</TableCell>
-                  <TableCell align="center">Item ID</TableCell>
-                  <TableCell align="center">Cost</TableCell>
-                  <TableCell align="center">Qty</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orderDetails.order.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell scope="row" align="center">
-                      {item.item.itemName}
-                    </TableCell>
-                    <TableCell align="center">{item.item._id}</TableCell>
-                    <TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
-                    <TableCell align="center">{item.Qty}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </List>
+
         <Divider />
         <List>
           <h4>
@@ -200,6 +172,35 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
           </ListItem>
         </List>
         <Divider />
+        <List>
+          <h4>
+            <strong>Items ordered</strong>
+          </h4>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Item Name</TableCell>
+                  <TableCell align="center">Item ID</TableCell>
+                  <TableCell align="center">Cost</TableCell>
+                  <TableCell align="center">Qty</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderDetails.order.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell scope="row" align="center">
+                      {item.item.itemName}
+                    </TableCell>
+                    <TableCell align="center">{item.item._id}</TableCell>
+                    <TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
+                    <TableCell align="center">{item.Qty}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </List>
       </Dialog>
     </div>
   );
@@ -459,7 +460,7 @@ const Orders = ({ setAdmin }) => {
                 return (
                   <tr>
                     <td>
-                      <h5 className="m-2"> {order._id}</h5>
+                      <h6 className="m-2"> {order.razorpayOrderId}</h6>
                     </td>
                     <td>
                       <h5>
@@ -481,7 +482,7 @@ const Orders = ({ setAdmin }) => {
                             : order.deliveryStatus
                             ? "btn-success"
                             : "btn-warning"
-                        } float-right mr-2 shadow`}
+                        } float-right mr-2 shadow ordersBtn`}
                         disabled={order.cancelledStatus ? "disabled" : ""}
                         onClick={() => handleDeliveryStatus(order)}
                       >

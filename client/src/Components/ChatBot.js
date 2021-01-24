@@ -30,6 +30,7 @@ const ChatBot = ({ user, isAuth }) => {
                         );
                       })}
                       <b>Total Cost:{element.totalCost}</b>
+                      <hr />
                     </li>
                   );
                 })}
@@ -54,6 +55,8 @@ const ChatBot = ({ user, isAuth }) => {
                   return (
                     <li key={index}>
                       <b>Payment ID: {element.razorpayPaymentId}</b>
+                      <br />
+                      <b>Order ID: {element.razorpayOrderId}</b>
                       <br />
                       <b>Total Cost:{element.totalCost}</b>
                       <br />
@@ -147,7 +150,7 @@ const ChatBot = ({ user, isAuth }) => {
       },
       {
         id: "3",
-        message: "Thanks for chatting with us!!",
+        message: "Thanks for chatting with us!! For any other query, continue",
       },
     ];
   }

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
-function UserDetails({ user, setUser, setCart }) {
+function UserDetails({ user, setUser, setCart, setLoaded }) {
   const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
   const [editable, setEditable] = useState(false);
@@ -121,8 +121,9 @@ function UserDetails({ user, setUser, setCart }) {
       setIsAuth(false);
       history.push("/login");
     } else {
+      setLoaded(false);
       history.push("/");
-      history.go(0);
+      history.go();
     }
   };
 
@@ -218,31 +219,10 @@ function UserDetails({ user, setUser, setCart }) {
                 .map((element, index) => {
                   return (
                     <div key={index} className="orderContainer">
-                      <h3>
-                        Order No. {index + 1}
-                        <button
-                          disabled={showProcessing}
-                          onClick={() => {
-                            setCancelOrderDetails(
-                              user.orders[user.orders.length - index - 1]
-                            );
-                            setConfirmCancelModal(true);
-                          }}
-                          className="cancelOrderButton mr-5 float-right"
-                        >
-                          {user.orders[user.orders.length - index - 1]
-                            .deliveryStatus === true
-                            ? "Return Product"
-                            : "Cancel Order"}
-                        </button>
-                      </h3>
+                      <b>Order ID.</b> {element.razorpayOrderId}
                       <p>
                         <b>Date Of Order : </b>
-                        {element.dateOfOrder}
-                      </p>
-                      <p>
-                        <b>Order ID : </b>
-                        {element._id}
+                        {element.dateOfOrder.slice(0, 25)}
                       </p>
                       {element.order.map((item, i) => {
                         return (
@@ -258,7 +238,7 @@ function UserDetails({ user, setUser, setCart }) {
                               />
                             </div>
                             <div className="flex-child6">
-                              <b>{item.item.itemName}</b>, Cost :{" "}
+                              <b>{item.item.itemName}</b>, Cost :{" Rs "}
                               {item.item.cost}, Qty : {item.Qty}
                               <br />
                               <span className="text-muted">
@@ -328,9 +308,9 @@ function UserDetails({ user, setUser, setCart }) {
                           </div>
                         );
                       })}
-                      <b>Total Cost:</b>
+                      <b>Total Cost: Rs </b>
                       {user.orders[user.orders.length - index - 1].totalCost}
-                      <p>
+                      <p className="d-flex align-items-center">
                         <b>Delivery Status : </b>
                         {user.orders[user.orders.length - index - 1]
                           .deliveryStatus === true ? (
@@ -338,6 +318,22 @@ function UserDetails({ user, setUser, setCart }) {
                         ) : (
                           <span className="pending">Pending...</span>
                         )}
+                        <button
+                          style={{ marginLeft: "auto", height: "3rem" }}
+                          disabled={showProcessing}
+                          onClick={() => {
+                            setCancelOrderDetails(
+                              user.orders[user.orders.length - index - 1]
+                            );
+                            setConfirmCancelModal(true);
+                          }}
+                          className="cancelOrderButton"
+                        >
+                          {user.orders[user.orders.length - index - 1]
+                            .deliveryStatus === true
+                            ? "Return Product"
+                            : "Cancel Order"}
+                        </button>
                       </p>
                     </div>
                   );
@@ -460,7 +456,7 @@ function UserDetails({ user, setUser, setCart }) {
               </div>
             </form>
             <button
-              className="btn btn-danger"
+              className="deleteUser"
               onClick={() => {
                 if (checkPendingOrders()) {
                   showDeleteModal(true);
@@ -475,11 +471,9 @@ function UserDetails({ user, setUser, setCart }) {
             <h2>Feel free to Contact us</h2>
             <br />
             <h4>
-              <a href="mailto:iiitmkart.help@gmail.com">Contact</a>{" "}
-            </h4>
-            <h4>
-              <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp7ZXBSOy1Me1C3rmHDZRHIl1o7T6y_P5D-A&usqp=CAU">
-                About us
+              Mail Us at:{" "}
+              <a href="mailto:iiitmkart.help@gmail.com">
+                iiitmkart.help@gmail.com
               </a>{" "}
             </h4>
             <br />
@@ -487,7 +481,7 @@ function UserDetails({ user, setUser, setCart }) {
             <span>
               <img
                 className="logo"
-                src="https://thumbs.dreamstime.com/b/rounded-instagram-logo-web-print-transparent-white-background-use-printing-purpose-165758567.jpg"
+                src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-linkedin-circle-512.png"
                 alt="insta"
               />
               <img
@@ -504,6 +498,9 @@ function UserDetails({ user, setUser, setCart }) {
           </div>
         </div>
       </div>
+      <footer className="footer">
+        <p className="ml-3">Copyright © IIITM Kart 2021.</p>
+      </footer>
     </>
   );
 }

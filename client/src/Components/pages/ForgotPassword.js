@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const ForgotPassword = () => {
   const classes = useStyles();
   const history = useHistory();
-
+  const [showProcessing, setShowProcessing] = useState(false);
   const [open, setOpen] = useState(true);
   const [openOtp, setOpenOtp] = useState(false);
   const [openResetPwd, setOpenResetPwd] = useState(false);
@@ -53,6 +54,7 @@ const ForgotPassword = () => {
   };
 
   const emailValidation = async () => {
+    setShowProcessing(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -70,20 +72,24 @@ const ForgotPassword = () => {
     } else {
       alert("This email is not registered!");
     }
+    setShowProcessing(false);
   };
 
   const handleOtp = (e) => {
     e.preventDefault();
+    setShowProcessing(true)
     if (otp === inputOtp) {
       setOpenResetPwd(true);
       setOpenOtp(false);
     } else {
       alert("Invalid OTP!");
     }
+    setShowProcessing(false)
   };
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    setShowProcessing(true)
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -93,22 +99,23 @@ const ForgotPassword = () => {
       }),
     };
     const result = await (await fetch("/resetPassword", requestOptions)).json();
-    console.log("result_Reset:", result);
     if (result.response) {
       history.push("/login");
     } else {
-      alert("U fucked up!");
+      alert("Could not reset.");
     }
+    setShowProcessing(false);
   };
 
   /*******************************DEBUG********************************* */
-  console.log("email:", email);
+  // console.log("email:", email);
   /***************************************************************** */
   if (open === false && openOtp === false && openResetPwd === false) {
     history.push("/login");
   }
   return (
     <>
+    {showProcessing ? <LinearProgress color="secondary" /> : null}
       {openOtp ? (
         <div>
           <Container component="main" maxWidth="xs">

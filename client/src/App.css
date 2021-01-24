@@ -9,6 +9,8 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
@@ -22,9 +24,9 @@ h1 {
   text-align: center;
   background-color: #fffafa;
   position: relative;
-  -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
-  box-shadow: 3px 3px 5px 6px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  /* -webkit-box-shadow: 3px 3px 5px 6px #ccc; Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  /* -moz-box-shadow: 3px 3px 5px 6px #ccc; Firefox 3.5 - 3.6 */
+  /* box-shadow: 3px 3px 5px 6px #ccc; Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
 
 .itemImg {
@@ -130,19 +132,31 @@ h1 {
 .tc {
   text-align: center;
 }
-
+.cartTotalContainer {
+  background: rgb(245, 245, 245);
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
+  border-radius: 10px;
+}
 .btnProceed {
-  color: #fffafa;
   text-align: center;
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 27px;
-  border: 2px solid orangered;
-  border-radius: 4px;
-  background-color: orangered;
+  font-size: x-large;
+  font-weight: bold;
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 5%;
+  border: 0;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 50px;
+  padding: 10px 10px;
+  color: rgb(236, 137, 55);
+}
+.btnProceed:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: rgb(236, 137, 55);
+  color: white;
 }
 
 .cartDetail {
@@ -298,5 +312,20 @@ h1 {
   z-index: 0;
 }
 .adminPanel .sticky-top {
-  z-index: 0;
+  z-index: 1;
+}
+.footer {
+  flex-shrink: 0;
+  background-color: royalblue;
+  color: white;
+  width: 100%;
+  height: 100%;
+  margin-left: 0%;
+  margin-bottom: 0%;
+  font-family: "Raleway", sans-serif;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
