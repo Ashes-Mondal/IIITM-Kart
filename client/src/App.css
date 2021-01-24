@@ -4,6 +4,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap");
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -56,12 +60,14 @@ h1 {
 
 .flex-child1 {
   flex: 2;
+  float: left;
   margin-right: 20px;
   padding: 20px;
 }
 
 .flex-child2 {
   flex: 1;
+  float: left;
   padding: 20px;
   margin-bottom: auto;
   top: 6.5rem;
@@ -69,11 +75,13 @@ h1 {
 }
 .flex-child3 {
   width: 50%;
+  float: left;
   padding: 10px;
 }
 
 .flex-child4 {
   width: 50%;
+  float: left;
   margin-top: 100px;
   margin-left: 60px;
 }
@@ -85,6 +93,55 @@ h1 {
   font-size: 1.3rem;
 }
 
+.qtyBtn {
+  border-radius: 50px;
+  font-weight: bolder;
+  font-size: x-large;
+  border: none;
+  color: royalblue;
+  width: 45px;
+  height: 45px;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+}
+.qtyBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: royalblue;
+  color: white;
+}
+.removeBtn {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 24px;
+  font-size: larger;
+  font-weight: bold;
+  color: rgb(223, 63, 63);
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  padding: 10px;
+}
+.removeBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: rgb(223, 63, 63);
+  color: white;
+}
+.clearCartBtn {
+  border: 0;
+  background: rgb(245, 245, 245);
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 24px;
+  font-size: larger;
+  font-weight: bold;
+  color: rgb(223, 63, 63);
+  padding: 10px;
+}
+.clearCartBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: rgb(223, 63, 63);
+  color: white;
+}
+
 .cartEmpty {
   display: block;
   margin-left: auto;
@@ -92,7 +149,9 @@ h1 {
   width: 50%;
   height: auto;
 }
-
+.flex-child3 .cartEmpty {
+  max-width: 100px;
+}
 .btnShop {
   text-align: center;
   color: #fffafa;
@@ -254,10 +313,6 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
-.flex-container {
-  display: flex;
-  padding: 20px;
-}
 
 .flex-childA1 {
   flex: 1;
@@ -340,4 +395,34 @@ h1 {
   padding: 10px;
   width: 100%;
   background: rgb(54, 88, 189);
+}
+
+/**************************************** Responsiveness ******************************************/
+@media only screen and (max-width: 500px) {
+  /* For mobile phones: */
+  body {
+    width: fit-content;
+  }
+  .qtyBtn,
+  .removeBtn,
+  .clearCartBtn,
+  .btnProceed {
+    font-size: 3vw;
+  }
+  h1 {
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 25px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 15px;
+  }
+  h5,
+  p {
+    font-size: 10px;
+  }
 }
