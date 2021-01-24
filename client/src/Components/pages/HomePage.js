@@ -3,7 +3,6 @@ import ProductCard from "../ProductCard";
 import { useHistory } from "react-router-dom";
 import Navbar2 from "../Navbar2";
 import Carousel from "react-bootstrap/Carousel";
-import Footer from "../Footer";
 const HomePage = ({ itemList, cart, setCart, setItemList }) => {
   const history = useHistory();
   return (

@@ -6,7 +6,6 @@ import Modal from "react-bootstrap/Modal";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Footer from "../Footer";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
