@@ -316,16 +316,28 @@ h1 {
 }
 .footer {
   flex-shrink: 0;
-  background-color: royalblue;
+  background: royalblue;
   color: white;
   width: 100%;
   height: 100%;
   margin-left: 0%;
   margin-bottom: 0%;
   font-family: "Raleway", sans-serif;
+  text-align: center;
+  padding-top: 30px;
 }
 #root {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.copyright {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  background: rgb(54, 88, 189);
 }

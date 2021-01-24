@@ -54,6 +54,7 @@ const ChatBot = ({ user, isAuth }) => {
                 .map((element, index) => {
                   return (
                     <li key={index}>
+                      {console.log(element)}
                       <b>Payment ID: {element.razorpayPaymentId}</b>
                       <br />
                       <b>Order ID: {element.razorpayOrderId}</b>
