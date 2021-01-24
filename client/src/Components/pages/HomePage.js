@@ -75,6 +75,9 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
           );
         })}
       </div>
+      <footer className="footer">
+        <p className="ml-3">Copyright © IIITM Kart 2021.</p>
+      </footer>
     </>
   );
 };

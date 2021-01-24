@@ -143,7 +143,7 @@ img {
 
 /********************************************** Navbar ****************************************/
 .navbar1 {
-  background-color: rgb(64, 64, 231);
+  background-color: royalblue;
   width: 100%;
   justify-content: space-between;
   align-content: center;
@@ -279,9 +279,8 @@ a.active-nav-link {
   margin: 15px;
 }
 .cancelOrderButton {
-  box-shadow: inset 5px 5px 5px rgb(206, 196, 173),
-    inset -5px -5px 5px rgb(252, 248, 238);
-  border-radius: 10px;
+  /* box-shadow: inset 5px 5px 5px rgb(209, 168, 56);*/
+  border-radius: 50px;
   border-width: 0px;
   background: rgb(255, 243, 213);
   padding: 10px;
@@ -290,7 +289,7 @@ a.active-nav-link {
 .cancelOrderButton:hover {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
   padding: 11px;
-  background-color:#F08080;
+  background-color: #f08080;
 }
 .orderContainer {
   text-align: left;
@@ -323,7 +322,16 @@ a.active-nav-link {
   border-radius: 10px;
   padding: 10px;
 }
-
+.deleteUser {
+  font-weight: bold;
+  background: none;
+  border: 3px solid rgb(223, 63, 63);
+  border-radius: 5px;
+}
+.deleteUser:hover {
+  color: white;
+  background: rgb(223, 63, 63);
+}
 .searchButton {
   border: 0;
   background: rgb(245, 245, 245);
@@ -514,6 +522,9 @@ th {
 .ordersH1 {
   margin-left: 20%;
 }
+.ordersBtn {
+  z-index: -1;
+}
 .buttons3D {
   margin: 10px;
   border: 0;
@@ -550,6 +561,10 @@ th {
   background: none;
   font-weight: bold;
 }
+.backButton:hover {
+  color: white;
+  background: royalblue;
+}
 .similarItems {
   overflow-y: hidden;
   overflow-x: auto;
@@ -583,4 +598,63 @@ th {
   position: fixed;
   bottom: 5%;
   right: 3%;
+}
+.cartContainer {
+  background: rgb(245, 245, 245);
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.cartItemContainer {
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.qtyBtn {
+  border-radius: 50px;
+  font-weight: bolder;
+  font-size: x-large;
+  border: none;
+  color: royalblue;
+  width: 45px;
+  height: 45px;
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+}
+.qtyBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: royalblue;
+  color: white;
+}
+.removeBtn {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 24px;
+  font-size: larger;
+  font-weight: bold;
+  color: rgb(223, 63, 63);
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  padding: 10px;
+}
+.removeBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: rgb(223, 63, 63);
+  color: white;
+}
+.clearCartBtn {
+  border: 0;
+  background: rgb(245, 245, 245);
+  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+    inset -5px -5px 5px rgb(255, 255, 255);
+  border-radius: 24px;
+  font-size: larger;
+  font-weight: bold;
+  color: rgb(223, 63, 63);
+  padding: 10px;
+}
+.clearCartBtn:hover {
+  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+  background: rgb(223, 63, 63);
+  color: white;
 }

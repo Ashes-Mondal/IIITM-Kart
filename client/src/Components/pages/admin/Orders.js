@@ -63,15 +63,14 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 	};
 
 	return (
-		<div>
+		<div style={{ width: "100vw" }}>
 			<Dialog
-				style={{ width: "100vw" }}
 				fullScreen
 				open={showMore}
 				onClose={handleClose}
 				TransitionComponent={Transition}
 			>
-				<AppBar style={{ width: "100vw" }} className={classes.appBar}>
+				<AppBar className={classes.appBar}>
 					<Toolbar>
 						<IconButton
 							edge="start"
@@ -89,129 +88,133 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<div
-					style={{
-						marginBottom: "2vh",
-						marginTop: "2vh",
-						width: "100vw",
-						height: "auto",
-						overflowY: "scroll",
-						fontSize: "130%",
-					}}
-				>
-					<strong>User Details</strong>
+				<main style={{ width: "100vw" }}>
+					<div
+						style={{
+							margin:"2vh 0vw",
+							padding:"0vh 2vw",
+							width: "100vw",
+							height: "auto",
+							fontSize: "130%",
+						}}
+					>
+						<strong>User Details</strong>
 
-					<Typography variant="h6" className={classes.title}>
-						UserId:{" "}
-						<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						Email:{" "}
-						<span style={{ color: "#808080" }}>{orderDetails.user.email}</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						Phone:{" "}
-						<span style={{ color: "#808080" }}>{orderDetails.user.phone}</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						Address:{" "}
-						<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
-					</Typography>
-				</div>
-				<Divider style={{ width: "100vw" }} />
-				<div
-					style={{
-						marginBottom: "2vh",
-						marginTop: "2vh",
-						width: "100vw",
-						height: "auto",
-						overflowY: "scroll",
-						fontSize: "130%",
-					}}
-				>
-					<strong>Shipping Address</strong>
+						<Typography variant="h6" className={classes.title}>
+							UserId:{" "}
+							<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							Email:{" "}
+							<span style={{ color: "#808080" }}>
+								{orderDetails.user.email}
+							</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							Phone:{" "}
+							<span style={{ color: "#808080" }}>
+								{orderDetails.user.phone}
+							</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							Address:{" "}
+							<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
+						</Typography>
+					</div>
+					<Divider style={{ width: "100vw" }} />
+					<div
+						style={{
+							margin:"2vh 0vw",
+							padding:"0vh 2vw",
+							width: "100vw",
+							height: "auto",
+							fontSize: "130%",
+						}}
+					>
+						<strong>Shipping Address</strong>
 
-					<Typography variant="h6" className={classes.title}>
-						<span style={{ color: "#808080" }}>
-							{orderDetails.shippingAddress}
-						</span>
-					</Typography>
-				</div>
-				<Divider style={{ width: "100vw" }} />
-				<div
-					style={{
-						marginBottom: "2vh",
-						marginTop: "2vh",
-						width: "100vw",
-						height: "auto",
-						overflowY: "scroll",
-						fontSize: "130%",
-					}}
-				>
-					<strong>Payment Details</strong>
+						<Typography variant="h6" className={classes.title}>
+							<span style={{ color: "#808080" }}>
+								{orderDetails.shippingAddress}
+							</span>
+						</Typography>
+					</div>
+					<Divider style={{ width: "100vw" }} />
+					<div
+						style={{
+							margin:"2vh 0vw",
+							padding:"0vh 2vw",
+							width: "100vw",
+							height: "auto",
+							fontSize: "130%",
+							overflow: "hidden"
+						}}
+					>
+						<strong>Payment Details</strong>
 
-					<Typography variant="h6" className={classes.title}>
-						Total Cost:{" "}
-						<span style={{ color: "#808080" }}>
-							Rs {orderDetails.totalCost}
-						</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						razorpayOrderId:{" "}
-						<span style={{ color: "#808080" }}>
-							{orderDetails.razorpayOrderId}
-						</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						razorpayPaymentId:{" "}
-						<span style={{ color: "#808080" }}>
-							{orderDetails.razorpayPaymentId}
-						</span>
-					</Typography>
-					<Typography variant="h6" className={classes.title}>
-						razorpaySignature:{" "}
-						<span style={{ color: "#808080" }}>
-							{orderDetails.razorpaySignature}
-						</span>
-					</Typography>
-				</div>
-				<Divider style={{ width: "100vw" }} />
-				<div
-					style={{
-						marginBottom: "2vh",
-						marginTop: "2vh",
-						width: "100vw",
-						height: "auto",
-						fontSize: "130%",
-					}}
-				>
-					<strong>Items ordered</strong>
+						<Typography variant="h6" className={classes.title}>
+							Total Cost:{" "}
+							<span style={{ color: "#808080" }}>
+								Rs {orderDetails.totalCost}
+							</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							razorpayOrderId:{" "}
+							<span style={{ color: "#808080" }}>
+								{orderDetails.razorpayOrderId}
+							</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							razorpayPaymentId:{" "}
+							<span style={{ color: "#808080" }}>
+								{orderDetails.razorpayPaymentId}
+							</span>
+						</Typography>
+						<Typography variant="h6" className={classes.title}>
+							razorpaySignature:{" "}
+							<span style={{ color: "#808080" }}>
+								{orderDetails.razorpaySignature}
+							</span>
+						</Typography>
+					</div>
+					<Divider style={{ width: "100vw" }} />
+					<div
+						style={{
+							margin:"2vh 0vw",
+							padding:"0vh 2vw",
+							width: "100vw",
+							height: "auto",
+							fontSize: "130%",
+						}}
+					>
+						<strong>Items ordered</strong>
 
-					<TableContainer component={Paper}>
-						<Table className={classes.table} aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell align="center">Item Name</TableCell>
-									<TableCell align="center">Item ID</TableCell>
-									<TableCell align="center">Cost</TableCell>
-									<TableCell align="center">Qty</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{orderDetails.order.map((item, index) => (
-									<TableRow key={index}>
-										<TableCell scope="row" align="center">
-											{item.item.itemName}
-										</TableCell>
-										<TableCell align="center">{item.item._id}</TableCell>
-										<TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
-										<TableCell align="center">{item.Qty}</TableCell>
+						<TableContainer component={Paper}>
+							<Table className={classes.table} aria-label="simple table">
+								<TableHead>
+									<TableRow>
+										<TableCell align="center">Item Name</TableCell>
+										<TableCell align="center">Item ID</TableCell>
+										<TableCell align="center">Cost</TableCell>
+										<TableCell align="center">Qty</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</div>
+								</TableHead>
+								<TableBody>
+									{orderDetails.order.map((item, index) => (
+										<TableRow key={index}>
+											<TableCell scope="row" align="center">
+												{item.item.itemName}
+											</TableCell>
+											<TableCell align="center">{item.item._id}</TableCell>
+											<TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
+											<TableCell align="center">{item.Qty}</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</div>
+				</main>
 			</Dialog>
 		</div>
 	);
@@ -358,7 +361,7 @@ const Orders = ({ setAdmin }) => {
 		setDisplayOrders(filteredList);
 	};
 	return (
-		<div style={{ width: "90vw" }} className="adminPanel">
+		<div className="adminPanel">
 			<OrderDetails
 				orderDetails={orderDetails}
 				showMore={showMore}
@@ -430,96 +433,98 @@ const Orders = ({ setAdmin }) => {
 				</Paper>
 			</nav>
 			{showProcessing ? <LinearProgress color="secondary" /> : null}
-			<main>
-				<table>
-					<thead>
-						<tr>
-							<th style={{ top: "7.25rem" }} className="sticky-top">
-								<h4>
-									<strong>Order ID</strong>
-								</h4>
-							</th>
-							<th style={{ top: "7.25rem" }} className="sticky-top">
-								<h4>
-									<strong>Customer Name</strong>
-								</h4>
-							</th>
-							<th style={{ top: "7.25rem" }} className="sticky-top">
-								<h4>
-									<strong>Customer Phone</strong>
-								</h4>
-							</th>
-							<th style={{ top: "7.25rem" }} className="sticky-top">
-								<h4>
-									<strong>Order Cost</strong>
-								</h4>
-							</th>
-							<th style={{ top: "7.25rem" }} className="sticky-top">
-								<h4>
-									<strong>Delivery Status</strong>
-								</h4>
-							</th>
-							<th style={{ top: "7.25rem" }} className="sticky-top"></th>
-						</tr>
-					</thead>
+			{!showMore ? (
+				<main>
+					<table>
+						<thead>
+							<tr>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Order ID</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Customer Name</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Customer Phone</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Order Cost</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Delivery Status</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top"></th>
+							</tr>
+						</thead>
 
-					<tbody>
-						{displayOrders
-							.slice(0)
-							.reverse()
-							.map((order, index) => {
-								return (
-									<tr>
-										<td>
-											<h6 className="m-2"> {order.razorpayOrderId}</h6>
-										</td>
-										<td>
-											<h5>
-												{order.user.name.firstName} {order.user.name.lastName}
-											</h5>
-										</td>
+						<tbody>
+							{displayOrders
+								.slice(0)
+								.reverse()
+								.map((order, index) => {
+									return (
+										<tr>
+											<td>
+												<h6 className="m-2"> {order.razorpayOrderId}</h6>
+											</td>
+											<td>
+												<h5>
+													{order.user.name.firstName} {order.user.name.lastName}
+												</h5>
+											</td>
 
-										<td>
-											<h5 className="m-2"> {order.user.phone}</h5>
-										</td>
-										<td>
-											<h5 className="m-2"> Rs {order.totalCost}</h5>
-										</td>
-										<td>
-											<button
-												className={` btn ${
-													order.cancelledStatus
-														? "btn-danger"
-														: order.deliveryStatus
-														? "btn-success"
-														: "btn-warning"
-												} mr-2 shadow`}
-												disabled={order.cancelledStatus}
-												onClick={() => handleDeliveryStatus(order)}
-											>
-												{showDeliveryStatus(
-													order.cancelledStatus,
-													order.deliveryStatus
-												)}
-											</button>
-										</td>
-										<td>
-											<button
-												className="btn btn-primary float-right mr-3 shadow"
-												onClick={() => {
-													setOrderDetails(order);
-													setShowMore(true);
-												}}
-											>
-												More
-											</button>
-										</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</main>
+											<td>
+												<h5 className="m-2"> {order.user.phone}</h5>
+											</td>
+											<td>
+												<h5 className="m-2"> Rs {order.totalCost}</h5>
+											</td>
+											<td>
+												<button
+													className={`btn ${
+														order.cancelledStatus
+															? "btn-danger"
+															: order.deliveryStatus
+															? "btn-success"
+															: "btn-warning"
+													} mr-2 shadow ordersBtn`}
+													disabled={order.cancelledStatus ? "disabled" : ""}
+													onClick={() => handleDeliveryStatus(order)}
+												>
+													{showDeliveryStatus(
+														order.cancelledStatus,
+														order.deliveryStatus
+													)}
+												</button>
+											</td>
+											<td>
+												<button
+													className="btn btn-primary float-right mr-3 shadow"
+													onClick={() => {
+														setOrderDetails(order);
+														setShowMore(true);
+													}}
+												>
+													More
+												</button>
+											</td>
+										</tr>
+									);
+								})}
+						</tbody>
+					</table>
+				</main>
+			) : null}
 		</div>
 	);
 };
