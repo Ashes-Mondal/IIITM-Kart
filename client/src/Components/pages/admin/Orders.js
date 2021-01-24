@@ -9,18 +9,18 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
 import Paper from "@material-ui/core/Paper";
 import SearchIcon from "@material-ui/icons/Search";
 import Tabs from "@material-ui/core/Tabs";
@@ -65,12 +65,13 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 	return (
 		<div>
 			<Dialog
+				style={{ width: "100vw" }}
 				fullScreen
 				open={showMore}
 				onClose={handleClose}
 				TransitionComponent={Transition}
 			>
-				<AppBar className={classes.appBar}>
+				<AppBar style={{ width: "100vw" }} className={classes.appBar}>
 					<Toolbar>
 						<IconButton
 							edge="start"
@@ -81,101 +82,111 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 							<CloseIcon />
 						</IconButton>
 						<Typography variant="h6" className={classes.title}>
-							_Id: {orderDetails._id}
+							<span>
+								<strong>orderId: </strong>
+							</span>{" "}
+							{orderDetails.razorpayOrderId}
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<List>
-					<h4>
-						<strong>User Details</strong>
-					</h4>
-					<ListItem>
-						<ListItemText
-							primary="User Id:"
-							secondary={orderDetails.user._id}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Customer Name:"
-							secondary={`${orderDetails.user.name.firstName} ${orderDetails.user.name.lastName}`}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Phone:"
-							secondary={orderDetails.user.phone}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Email:"
-							secondary={orderDetails.user.email}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Address"
-							secondary={orderDetails.user.address}
-						/>
-					</ListItem>
-				</List>
-				<Divider />
+				<div
+					style={{
+						marginBottom: "2vh",
+						marginTop: "2vh",
+						width: "100vw",
+						height: "auto",
+						overflowY: "scroll",
+						fontSize: "130%",
+					}}
+				>
+					<strong>User Details</strong>
 
-				<Divider />
-				<List>
-					<h4>
-						<strong>Shipping Address:</strong>
-					</h4>
-					<ListItem>
-						<ListItemText
-							primary={
-								orderDetails.shippingAddress || orderDetails.user.address
-							}
-						/>
-					</ListItem>
-				</List>
-				<Divider />
-				<List>
-					<h4>
-						<strong>Payment Details</strong>
-					</h4>
-					<ListItem>
-						<ListItemText
-							primary="Date Of Order:"
-							secondary={orderDetails.dateOfOrder}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="Total Cost:"
-							secondary={`Rs ${orderDetails.totalCost}`}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpayPaymentId:"
-							secondary={orderDetails.razorpayPaymentId}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpayOrderId"
-							secondary={orderDetails.razorpayOrderId}
-						/>
-					</ListItem>
-					<ListItem>
-						<ListItemText
-							primary="razorpaySignature"
-							secondary={orderDetails.razorpaySignature}
-						/>
-					</ListItem>
-				</List>
-				<Divider />
-				<List>
-					<h4>
-						<strong>Items ordered</strong>
-					</h4>
+					<Typography variant="h6" className={classes.title}>
+						UserId:{" "}
+						<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						Email:{" "}
+						<span style={{ color: "#808080" }}>{orderDetails.user.email}</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						Phone:{" "}
+						<span style={{ color: "#808080" }}>{orderDetails.user.phone}</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						Address:{" "}
+						<span style={{ color: "#808080" }}>{orderDetails.user._id}</span>
+					</Typography>
+				</div>
+				<Divider style={{ width: "100vw" }} />
+				<div
+					style={{
+						marginBottom: "2vh",
+						marginTop: "2vh",
+						width: "100vw",
+						height: "auto",
+						overflowY: "scroll",
+						fontSize: "130%",
+					}}
+				>
+					<strong>Shipping Address</strong>
+
+					<Typography variant="h6" className={classes.title}>
+						<span style={{ color: "#808080" }}>
+							{orderDetails.shippingAddress}
+						</span>
+					</Typography>
+				</div>
+				<Divider style={{ width: "100vw" }} />
+				<div
+					style={{
+						marginBottom: "2vh",
+						marginTop: "2vh",
+						width: "100vw",
+						height: "auto",
+						overflowY: "scroll",
+						fontSize: "130%",
+					}}
+				>
+					<strong>Payment Details</strong>
+
+					<Typography variant="h6" className={classes.title}>
+						Total Cost:{" "}
+						<span style={{ color: "#808080" }}>
+							Rs {orderDetails.totalCost}
+						</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						razorpayOrderId:{" "}
+						<span style={{ color: "#808080" }}>
+							{orderDetails.razorpayOrderId}
+						</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						razorpayPaymentId:{" "}
+						<span style={{ color: "#808080" }}>
+							{orderDetails.razorpayPaymentId}
+						</span>
+					</Typography>
+					<Typography variant="h6" className={classes.title}>
+						razorpaySignature:{" "}
+						<span style={{ color: "#808080" }}>
+							{orderDetails.razorpaySignature}
+						</span>
+					</Typography>
+				</div>
+				<Divider style={{ width: "100vw" }} />
+				<div
+					style={{
+						marginBottom: "2vh",
+						marginTop: "2vh",
+						width: "100vw",
+						height: "auto",
+						fontSize: "130%",
+					}}
+				>
+					<strong>Items ordered</strong>
+
 					<TableContainer component={Paper}>
 						<Table className={classes.table} aria-label="simple table">
 							<TableHead>
@@ -200,7 +211,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 							</TableBody>
 						</Table>
 					</TableContainer>
-				</List>
+				</div>
 			</Dialog>
 		</div>
 	);
@@ -347,7 +358,7 @@ const Orders = ({ setAdmin }) => {
 		setDisplayOrders(filteredList);
 	};
 	return (
-		<div className="adminPanel">
+		<div style={{ width: "90vw" }} className="adminPanel">
 			<OrderDetails
 				orderDetails={orderDetails}
 				showMore={showMore}
@@ -476,14 +487,14 @@ const Orders = ({ setAdmin }) => {
 										</td>
 										<td>
 											<button
-												className={`btn ${
+												className={` btn ${
 													order.cancelledStatus
 														? "btn-danger"
 														: order.deliveryStatus
 														? "btn-success"
 														: "btn-warning"
-												} float-right mr-2 shadow`}
-												disabled={order.cancelledStatus ? "disabled" : ""}
+												} mr-2 shadow`}
+												disabled={order.cancelledStatus}
 												onClick={() => handleDeliveryStatus(order)}
 											>
 												{showDeliveryStatus(
@@ -514,3 +525,122 @@ const Orders = ({ setAdmin }) => {
 };
 
 export default Orders;
+
+/************************************************Old Code Modal more button************************** */
+/*
+<List>
+					<h4>
+						<strong>User Details</strong>
+					</h4>
+					<ListItem>
+						<ListItemText
+							primary="User Id:"
+							secondary={orderDetails.user._id}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="Customer Name:"
+							secondary={`${orderDetails.user.name.firstName} ${orderDetails.user.name.lastName}`}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="Phone:"
+							secondary={orderDetails.user.phone}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="Email:"
+							secondary={orderDetails.user.email}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="Address"
+							secondary={orderDetails.user.address}
+						/>
+					</ListItem>
+				</List>
+				<Divider />
+
+				<Divider />
+				<List>
+					<h4>
+						<strong>Shipping Address:</strong>
+					</h4>
+					<ListItem>
+						<ListItemText
+							primary={
+								orderDetails.shippingAddress || orderDetails.user.address
+							}
+						/>
+					</ListItem>
+				</List>
+				<Divider />
+				<List>
+					<h4>
+						<strong>Payment Details</strong>
+					</h4>
+					<ListItem>
+						<ListItemText
+							primary="Date Of Order:"
+							secondary={orderDetails.dateOfOrder}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="Total Cost:"
+							secondary={`Rs ${orderDetails.totalCost}`}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="razorpayPaymentId:"
+							secondary={orderDetails.razorpayPaymentId}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="razorpayOrderId"
+							secondary={orderDetails.razorpayOrderId}
+						/>
+					</ListItem>
+					<ListItem>
+						<ListItemText
+							primary="razorpaySignature"
+							secondary={orderDetails.razorpaySignature}
+						/>
+					</ListItem>
+				</List>
+				<Divider />
+				<List>
+					<h4>
+						<strong>Items ordered</strong>
+					</h4>
+					<TableContainer component={Paper}>
+						<Table className={classes.table} aria-label="simple table">
+							<TableHead>
+								<TableRow>
+									<TableCell align="center">Item Name</TableCell>
+									<TableCell align="center">Item ID</TableCell>
+									<TableCell align="center">Cost</TableCell>
+									<TableCell align="center">Qty</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{orderDetails.order.map((item, index) => (
+									<TableRow key={index}>
+										<TableCell scope="row" align="center">
+											{item.item.itemName}
+										</TableCell>
+										<TableCell align="center">{item.item._id}</TableCell>
+										<TableCell align="center">{`Rs ${item.item.cost}`}</TableCell>
+										<TableCell align="center">{item.Qty}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</List>*/
