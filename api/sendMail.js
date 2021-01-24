@@ -88,14 +88,14 @@ exports.WelcomeMail = async (userDetails, res) => {
 };
 
 exports.cancelOrderMail = async (orderDetails, res) => {
-	const { _id, totalCost, user } = orderDetails;
+	const { totalCost, user,razorpayOrderId } = orderDetails;
 	const { name, email } = user;
 	const { firstName, lastName } = name;
 	const html = `
 	<h2>Dear,<em>${firstName} ${lastName}</em> </h2>
 	<h2>Your order has been cancelled successfully<h2>
 	<h2>Total Cost: Rs ${totalCost} <h2>
-	<h3>For any future query refer this Order Id: ${_id}<h3>
+	<h3>For any future query refer this Order Id: ${razorpayOrderId}<h3>
     <h2>Thank you for choosing IIITM Kart for shopping<h2>
 	`;
 	await mailtransport.sendMail(
@@ -120,14 +120,14 @@ exports.cancelOrderMail = async (orderDetails, res) => {
 };
 
 exports.returnOrderMail = async (orderDetails, res) => {
-	const { _id, totalCost, user } = orderDetails;
+	const { totalCost, user,razorpayOrderId } = orderDetails;
 	const { name, email } = user;
 	const { firstName, lastName } = name;
 	const html = `
 	<h2>Dear,<em>${firstName} ${lastName}</em> </h2>
 	<h2>Your order has been returned successfully<h2>
 	<h2>Total Cost: Rs ${totalCost} <h2>
-	<h3>For any future query refer this Order Id: ${_id}<h3>
+	<h3>For any future query refer this Order Id: ${razorpayOrderId}<h3>
     <h2>Thank you for choosing IIITM Kart for shopping<h2>
 	`;
 	await mailtransport.sendMail(

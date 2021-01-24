@@ -7,10 +7,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Footer from "../Footer";
-<meta
-  name="viewport"
-  content="width=device-width,height=device-height,initial-scale=1.0"
-/>;
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

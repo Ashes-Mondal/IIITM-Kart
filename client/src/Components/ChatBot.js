@@ -54,7 +54,6 @@ const ChatBot = ({ user, isAuth }) => {
                 .map((element, index) => {
                   return (
                     <li key={index}>
-                      {console.log(element)}
                       <b>Payment ID: {element.razorpayPaymentId}</b>
                       <br />
                       <b>Order ID: {element.razorpayOrderId}</b>
@@ -157,7 +156,7 @@ const ChatBot = ({ user, isAuth }) => {
     ];
   }
   return (
-    <div>
+    <div className="chatbot">
       <ChatBotSimple steps={steps} floating={true} />
     </div>
   );
