@@ -208,7 +208,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
         </Modal.Footer>
       </Modal>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
-      <div className="row yourOrders userbackground">
+      <div className="row userbackground">
         <div className="col">
           <h1>Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
@@ -227,7 +227,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                       {element.order.map((item, i) => {
                         return (
                           <div className="ordersList row p-2" key={i}>
-                            <div className="col child5">
+                            <div className="col-3">
                               <img
                                 src={item.item.imageURL}
                                 alt="item"
@@ -395,7 +395,6 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                 <input
                   type="text"
                   value={user.name.lastName || ""}
-                  className="mt-2"
                   name="LastName"
                   disabled={editable ? "" : "disabled"}
                   onChange={(e) => {

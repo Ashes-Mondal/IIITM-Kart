@@ -302,18 +302,18 @@ a.active-nav-link {
   margin-right: 0px;
   margin-left: 3%;
 }
-.child5 {
-  width: 10%;
-}
+
 .child6 {
   padding: 5%;
   width: 100%;
 }
 .userdetails {
-  padding: 5%;
+  padding: 5% 10%;
+  padding-right: 5%;
   margin-top: 5%;
   margin-right: 5%;
   margin-bottom: auto;
+  margin-left: 5%;
   top: 6.5rem;
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
@@ -325,6 +325,7 @@ a.active-nav-link {
     inset -5px -5px 5px rgb(255, 255, 255);
   border-radius: 10px;
   padding: 10px;
+  margin-bottom: 2%;
 }
 .deleteUser {
   font-weight: bold;
