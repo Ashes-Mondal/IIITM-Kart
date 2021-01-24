@@ -75,7 +75,6 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
           );
         })}
       </div>
-      <Footer />
     </>
   );
 };

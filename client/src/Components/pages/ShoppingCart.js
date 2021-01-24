@@ -501,7 +501,6 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
           </div>
         ) : null}
       </div>
-      <Footer />
     </>
   );
 }
