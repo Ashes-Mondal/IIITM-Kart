@@ -380,96 +380,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
         </Modal.Footer>
       </Modal>
 
-      <div className="product flex-container">
-        <div
-          className={
-            cart.length
-              ? "flex-child1 cartContainer"
-              : "container bg-white shadow rounded p-3"
-          }
-        >
-          <h1>My Cart</h1>
-          {cart.length ? (
-            <button
-              className="clearCartBtn"
-              onClick={() => setConfirmClearCartModal(true)}
-            >
-              Clear Cart
-            </button>
-          ) : (
-            <div>
-              <img
-                className="cartEmpty"
-                src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
-                alt="Cart is empty"
-              />
-              <Link to="/" className="text-white">
-                <button className="btnShop">Start Shopping Now</button>
-              </Link>
-            </div>
-          )}
-          {cart.map((productDetail, index) => {
-            const { item, Qty } = productDetail;
-            return (
-              <div
-                className="flex-container cartItemContainer mb-5 mt-4"
-                key={index}
-              >
-                <div className="flex-child3">
-                  <a
-                    style={{
-                      color: "#696969",
-                      textDecoration: "none",
-                    }}
-                    href={`/productDetails/${item._id}`}
-                  >
-                    <h3>{item.itemName}</h3>
-                    <img
-                      className="cartEmpty"
-                      src={item.imageURL}
-                      alt={item.itemName}
-                    />
-                  </a>
-                </div>
-                <div className="flex-child4">
-                  <h5>{item.description}</h5>
-                  <h4>Rs. {item.cost}</h4>
-                  <button
-                    className="qtyBtn mb-2"
-                    onClick={() => {
-                      minusItemQuantity(productDetail);
-                    }}
-                  >
-                    -
-                  </button>
-                  <span className="qtyInput">{Qty}</span>
-                  <button
-                    className="qtyBtn mb-2"
-                    onClick={() => {
-                      plusItemQuantity(productDetail);
-                    }}
-                  >
-                    +
-                  </button>
-                  <br />
-                  <button
-                    className="removeBtn mb-3"
-                    onClick={() => removeFromCart(productDetail)}
-                  >
-                    Remove this Item
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-          {orderHistory ? (
-            <Link to="/user" className="btn text-white">
-              <button className="btn btn-warning ml-3">Order History</button>
-            </Link>
-          ) : (
-            <></>
-          )}
-        </div>
+      <div className="gridContainer userbackground">
         {cart.length ? (
           <div className="flex-child2 cartTotalContainer sticky-top">
             <h1>Cart Total</h1>
@@ -504,6 +415,94 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
             ) : null}
           </div>
         ) : null}
+        <div
+          className={
+            cart.length
+              ? "flex-child1 cartContainer"
+              : "container bg-white shadow rounded p-3"
+          }
+        >
+          <h1>My Cart</h1>
+          {cart.length ? (
+            <button
+              className="clearCartBtn"
+              onClick={() => setConfirmClearCartModal(true)}
+            >
+              Clear Cart
+            </button>
+          ) : (
+            <div>
+              <img
+                className="cartEmpty"
+                src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
+                alt="Cart is empty"
+              />
+              <Link to="/" className="text-white">
+                <button className="btnShop">Start Shopping Now</button>
+              </Link>
+            </div>
+          )}
+          {cart.map((productDetail, index) => {
+            const { item, Qty } = productDetail;
+            return (
+              <div className="cartItemContainer mb-5 mt-4" key={index}>
+                <h3>{item.itemName}</h3>
+                <div className="d-flex">
+                  <div className="flex-child3">
+                    <a
+                      style={{
+                        color: "#696969",
+                        textDecoration: "none",
+                      }}
+                      href={`/productDetails/${item._id}`}
+                    >
+                      <img
+                        className="cartEmpty"
+                        src={item.imageURL}
+                        alt={item.itemName}
+                      />
+                    </a>
+                  </div>
+                  <div className="flex-child4">
+                    <h5>{item.description}</h5>
+                    <h4>Rs. {item.cost}</h4>
+                    <button
+                      className="qtyBtn mb-2"
+                      onClick={() => {
+                        minusItemQuantity(productDetail);
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className="qtyInput">{Qty}</span>
+                    <button
+                      className="qtyBtn mb-2"
+                      onClick={() => {
+                        plusItemQuantity(productDetail);
+                      }}
+                    >
+                      +
+                    </button>
+                    <br />
+                    <button
+                      className="removeBtn mb-3"
+                      onClick={() => removeFromCart(productDetail)}
+                    >
+                      Remove this Item
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          {orderHistory ? (
+            <Link to="/user" className="btn text-white">
+              <button className="btn btn-warning ml-3">Order History</button>
+            </Link>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <Footer />
     </>

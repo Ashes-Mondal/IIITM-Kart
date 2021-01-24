@@ -61,8 +61,12 @@ h1 {
 .flex-child1 {
   flex: 2;
   float: left;
-  margin-right: 20px;
+  margin-right: 5%;
+  margin-top: 10%;
+  margin-left: 5%;
+  margin-bottom: 1%;
   padding: 20px;
+  z-index: 1;
 }
 
 .flex-child2 {
@@ -70,20 +74,19 @@ h1 {
   float: left;
   padding: 20px;
   margin-bottom: auto;
+  margin-right: 5%;
+  margin-left: 5%;
   top: 6.5rem;
   z-index: 0;
 }
 .flex-child3 {
-  width: 50%;
-  float: left;
+  width: 30%;
   padding: 10px;
 }
 
 .flex-child4 {
-  width: 50%;
-  float: left;
-  margin-top: 100px;
-  margin-left: 60px;
+  width: 70%;
+  margin: 5%;
 }
 
 .btn {
@@ -272,6 +275,7 @@ h1 {
   display: block;
   margin-right: 50px;
   margin-left: 50px;
+  z-index: 1;
 }
 
 /***************************************** Login************************************/

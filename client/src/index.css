@@ -298,9 +298,7 @@ a.active-nav-link {
   background: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 20px 40px;
-  margin: 5% 0px;
-  margin-right: 0px;
-  margin-left: 3%;
+  margin: 0% 5% 5% 5%;
 }
 
 .child6 {
@@ -601,4 +599,13 @@ th {
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
+  padding: 5%;
+}
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  direction: rtl;
+}
+.gridContainer > * {
+  direction: ltr;
 }
