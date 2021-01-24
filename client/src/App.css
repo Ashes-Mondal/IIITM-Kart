@@ -4,6 +4,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap");
 
+@media only screen and (max-width: 500px) {
+  /* For mobile phones: */
+  body {
+    width: fit-content;
+  }
+}
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -38,7 +44,7 @@ h1 {
 
 .float-container {
   border: 3px solid #fff;
-  padding: 20px;
+  padding: 5%;
 }
 
 .float-child {
@@ -49,24 +55,6 @@ h1 {
   color: cadetblue;
 }
 
-.flex-container {
-  display: flex;
-  padding: 20px;
-}
-
-.flex-child1 {
-  flex: 2;
-  margin-right: 20px;
-  padding: 20px;
-}
-
-.flex-child2 {
-  flex: 1;
-  padding: 20px;
-  margin-bottom: auto;
-  top: 6.5rem;
-  z-index: 0;
-}
 .flex-child3 {
   width: 50%;
   padding: 10px;
@@ -255,7 +243,7 @@ h1 {
 }
 .flex-container {
   display: flex;
-  padding: 20px;
+  padding: 2%;
 }
 
 .flex-childA1 {

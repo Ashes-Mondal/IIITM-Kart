@@ -208,8 +208,8 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
         </Modal.Footer>
       </Modal>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
-      <div className="product flex-container md-0 userbackground">
-        <div className="flex-child1 container shadow ml-3 mt-1 md-0 bg-light rounded userbackground">
+      <div className="row yourOrders userbackground">
+        <div className="col">
           <h1>Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
             <div>
@@ -226,18 +226,15 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                       </p>
                       {element.order.map((item, i) => {
                         return (
-                          <div
-                            className="ordersList flex-container p-2"
-                            key={i}
-                          >
-                            <div className="flex-child5">
+                          <div className="ordersList row p-2" key={i}>
+                            <div className="col child5">
                               <img
                                 src={item.item.imageURL}
                                 alt="item"
                                 className="orderImgs"
                               />
                             </div>
-                            <div className="flex-child6">
+                            <div className="col-md-auto child6">
                               <b>{item.item.itemName}</b>, Cost :{" Rs "}
                               {item.item.cost}, Qty : {item.Qty}
                               <br />
@@ -250,8 +247,8 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                                 i
                               ].rated !== true ? (
                                 <>
-                                  <div className="flex-container p-0">
-                                    <div className="giveRating">
+                                  <div className="row">
+                                    <div className="giveRating ml-3">
                                       Give a rating:
                                     </div>
                                     <div className="reactStars">
@@ -264,13 +261,13 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                                           ].order[i].userRating = newValue;
                                           setUser(tempUser);
                                         }}
-                                        size={24}
+                                        size={20}
                                         activeColor="#ffd700"
                                       />
                                     </div>
                                     <div>
                                       <button
-                                        className="postRating"
+                                        className="postRating "
                                         onClick={() => {
                                           if (
                                             user.orders[
@@ -352,7 +349,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
             </>
           )}
         </div>
-        <div className="flex-child2">
+        <div className="col">
           <div className="userdetails">
             <h1>User Details</h1>
             <br />
@@ -379,39 +376,38 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
 
               <div className="form-group">
                 <h5>Personal Information</h5>
-                <div className="d-flex">
-                  <input
-                    type="text"
-                    className="mr-2"
-                    value={user.name.firstName || ""}
-                    name="FirstName"
-                    disabled={editable ? "" : "disabled"}
-                    onChange={(e) => {
-                      setUser({
-                        ...user,
-                        name: {
-                          firstName: e.target.value,
-                          lastName: user.name.lastName,
-                        },
-                      });
-                    }}
-                  />
-                  <input
-                    type="text"
-                    value={user.name.lastName || ""}
-                    name="LastName"
-                    disabled={editable ? "" : "disabled"}
-                    onChange={(e) => {
-                      setUser({
-                        ...user,
-                        name: {
-                          firstName: user.name.firstName,
-                          lastName: e.target.value,
-                        },
-                      });
-                    }}
-                  />
-                </div>
+                <input
+                  type="text"
+                  className="mr-5"
+                  value={user.name.firstName || ""}
+                  name="FirstName"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({
+                      ...user,
+                      name: {
+                        firstName: e.target.value,
+                        lastName: user.name.lastName,
+                      },
+                    });
+                  }}
+                />
+                <input
+                  type="text"
+                  value={user.name.lastName || ""}
+                  className="mt-2"
+                  name="LastName"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({
+                      ...user,
+                      name: {
+                        firstName: user.name.firstName,
+                        lastName: e.target.value,
+                      },
+                    });
+                  }}
+                />
               </div>
               <br />
               <div className="form-group">
