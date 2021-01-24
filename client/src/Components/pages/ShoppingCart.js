@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Footer from "../Footer";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -498,13 +499,9 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
               </button>
             ) : null}
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
-      <footer className="footer">
-        <p className="ml-3">Copyright © IIITM Kart 2021.</p>
-      </footer>
+      <Footer />
     </>
   );
 }
