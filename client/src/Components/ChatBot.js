@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import ChatBotSimple from "react-simple-chatbot";
 
 const ChatBot = ({ user, isAuth }) => {
-  const DisplayOrders = () => {
+  const displayOrders = () => {
     return (
       <div>
-        {console.log("user.orders is:", user.orders)}
         {user.orders !== undefined && user.orders.length > 0 ? (
           <div>
             <ol>
@@ -42,8 +41,57 @@ const ChatBot = ({ user, isAuth }) => {
       </div>
     );
   };
-  const DisplayPayments = () => {
-    return <>PAYMENTS</>;
+  const displayPayments = () => {
+    return (
+      <div>
+        {user.orders !== undefined && user.orders.length > 0 ? (
+          <div>
+            <ol>
+              {user.orders
+                .slice(0)
+                .reverse()
+                .map((element, index) => {
+                  return (
+                    <li key={index}>
+                      <b>Payment ID: {element.razorpayPaymentId}</b>
+                      <br />
+                      <b>Total Cost:{element.totalCost}</b>
+                      <br />
+                      <b>Payment Status: Success</b>
+                    </li>
+                  );
+                })}
+            </ol>
+          </div>
+        ) : (
+          "Your Order List is Empty!"
+        )}
+      </div>
+    );
+  };
+  const contactUs = () => {
+    return (
+      <div>
+        <h5 className="tc">
+          <a href="mailto:iiitmkart.help@gmail.com">Mail Us</a>
+          <br />
+          <br />
+          Developers Info:
+          <br />
+          <span>
+            <a href="https://www.linkedin.com/in/ashes-mondal-31690319a">
+              Ashes
+            </a>{" "}
+            <a href="https://www.linkedin.com/in/subodh-rajpopat-644a81167">
+              Subodh
+            </a>{" "}
+            <a href="https://www.linkedin.com/in/utkarsh-agnihotri-275731193">
+              Utkarsh
+            </a>
+          </span>
+        </h5>
+      </div>
+    );
   };
   var steps = [
     {
@@ -56,7 +104,7 @@ const ChatBot = ({ user, isAuth }) => {
     steps = [
       {
         id: "1",
-        message: `Hello ${user.name.firstName}, What do you want to do?`,
+        message: `Hello ${user.name.firstName}, What do you want to check?`,
         trigger: "options",
       },
       {
@@ -74,26 +122,32 @@ const ChatBot = ({ user, isAuth }) => {
       },
       {
         id: "payments",
-        message: "Here are your payments:",
+        message: "Showing your payments info:",
         trigger: "paymentsList",
       },
       {
-        id: "paymentsList",
-        component: DisplayPayments(),
-      },
-      {
         id: "contactDetails",
-        message: "Here are your contactDetails:",
-        trigger: "orderList",
+        message: "Feel free to contact us:",
+        trigger: "contactUs",
       },
       {
         id: "orderList",
-        component: DisplayOrders(),
+        component: displayOrders(),
+        trigger: "3",
+      },
+      {
+        id: "paymentsList",
+        component: displayPayments(),
+        trigger: "3",
+      },
+      {
+        id: "contactUs",
+        component: contactUs(),
+        trigger: "3",
       },
       {
         id: "3",
-        message: "Wrong answer, try again.",
-        trigger: "options",
+        message: "Thanks for chatting with us!!",
       },
     ];
   }
