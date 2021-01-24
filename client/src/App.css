@@ -72,7 +72,7 @@ h1 {
 .flex-child2 {
   flex: 1;
   float: left;
-  padding: 20px;
+  padding: 5% 10%;
   margin-bottom: auto;
   margin-right: 5%;
   margin-left: 5%;
@@ -186,11 +186,6 @@ h1 {
   background-color: darkcyan;
 }
 
-.side {
-  position: absolute;
-  right: 25px;
-}
-
 .tc {
   text-align: center;
 }
@@ -230,8 +225,7 @@ h1 {
 }
 
 .side {
-  position: absolute;
-  right: 25px;
+  float: right;
 }
 
 .text1 {
