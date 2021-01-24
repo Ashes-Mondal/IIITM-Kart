@@ -62,7 +62,7 @@ const SearchBox = () => {
 						setSearch(e.target.value);
 					}}
 				/>
-				<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
+				<button type="submit" className="btn btn-warning btn-circle btn-lg ml-1">
 					<SearchIcon />
 				</button>
 			</form>

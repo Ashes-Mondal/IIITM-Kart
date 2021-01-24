@@ -156,7 +156,7 @@ const Items = ({ itemList, setItemList }) => {
 						/>
 						<button
 							type="submit"
-							class="btn btn-warning btn-circle btn-lg ml-1"
+							className="btn btn-warning btn-circle btn-lg ml-1"
 						>
 							<SearchIcon />
 						</button>
