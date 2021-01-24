@@ -4,16 +4,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles({
-	root: {
-		width: "auto",
-		height: "auto",
-		flexDirection: "column",
-		justifyContent: "center",
-	},
-	img: {
-		margin: "1rem 0 0 0",
-		objectFit: "scale-down",
-	},
+  root: {
+    width: "auto",
+    height: "auto",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  img: {
+    margin: "1rem 0 0 0",
+    objectFit: "scale-down",
+  },
 });
 
 const ProductCard = ({ product }) => {

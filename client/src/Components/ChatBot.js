@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React from "react";
 import ChatBotSimple from "react-simple-chatbot";
 
 const ChatBot = ({ user, isAuth }) => {
@@ -151,6 +151,7 @@ const ChatBot = ({ user, isAuth }) => {
       {
         id: "3",
         message: "Thanks for chatting with us!! For any other query, continue",
+        trigger: "options",
       },
     ];
   }
