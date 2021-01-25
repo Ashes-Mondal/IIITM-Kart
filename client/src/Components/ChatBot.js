@@ -100,6 +100,20 @@ const ChatBot = ({ user, isAuth }) => {
     {
       id: "pleaseLogin",
       message: "Hello user, please Login to continue.",
+      trigger: "options",
+    },
+    {
+      id: "options",
+      options: [{ value: 1, label: "Contact Us", trigger: "contactDetails" }],
+    },
+    {
+      id: "contactDetails",
+      message: "Feel free to contact us:",
+      trigger: "contactUs",
+    },
+    {
+      id: "contactUs",
+      component: contactUs(),
     },
   ];
 
@@ -157,7 +171,14 @@ const ChatBot = ({ user, isAuth }) => {
   }
   return (
     <div className="chatbot">
-      <ChatBotSimple steps={steps} floating={true} />
+      <ChatBotSimple
+        steps={steps}
+        className={"chatbot"}
+        floating={true}
+        headerTitle={"IIITM-Kart's Customer Service"}
+        enableMobileAutoFocus={true}
+        placeholder=""
+      />
     </div>
   );
 };

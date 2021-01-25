@@ -148,6 +148,9 @@ img {
   justify-content: space-between;
   align-content: center;
   display: flex;
+  z-index: 3;
+  position: sticky;
+  top: 0;
 }
 .drawer-logout {
   width: 100%;
@@ -298,9 +301,7 @@ a.active-nav-link {
   background: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 20px 40px;
-  margin: 5% 0px;
-  margin-right: 0px;
-  margin-left: 3%;
+  margin: 0% 5% 5% 5%;
 }
 
 .child6 {
@@ -311,15 +312,12 @@ a.active-nav-link {
   padding: 5% 10%;
   padding-right: 5%;
   text-align: center;
-  background-color: #fffafa;
   margin: 2rem 20% 4rem;
-  /* margin-top: 5%;
+  margin-top: 5%;
   margin-right: 5%;
   margin-bottom: auto;
-  margin-left: 5%; */
+  margin-left: 5%;
   top: 6.5rem;
-  box-shadow: 10px 10px 10px rgb(200, 200, 200),
-    -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
 }
 .userdetails input {
@@ -604,4 +602,20 @@ th {
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
+  padding: 5%;
+}
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  direction: rtl;
+}
+.gridContainer > * {
+  direction: ltr;
+}
+/**************************************** Responsiveness ******************************************/
+@media only screen and (max-width: 500px) {
+  /* For mobile phones: */
+  body {
+    width: fit-content;
+  }
 }

@@ -142,7 +142,7 @@ const Dashboard = ({ user, setAdmin }) => {
               <img
                 alt="prnding order"
                 className="smallImage"
-                src="https://cdn.onlinewebfonts.com/svg/img_110930.png"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5AC_5-RQE1INXzoNP09Vr3A5DtYJiEb_zQA&usqp=CAU"
               />
             </span>
           </p>
@@ -189,7 +189,7 @@ const Dashboard = ({ user, setAdmin }) => {
                 return (
                   <tr>
                     <td>
-                    <h6 className="m-2"> {order.razorpayOrderId}</h6>
+                      <h6 className="m-2"> {order.razorpayOrderId}</h6>
                     </td>
                     <td>
                       <h5>

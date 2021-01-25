@@ -61,29 +61,32 @@ h1 {
 .flex-child1 {
   flex: 2;
   float: left;
-  margin-right: 20px;
+  margin-right: 5%;
+  margin-top: 10%;
+  margin-left: 5%;
+  margin-bottom: 1%;
   padding: 20px;
+  z-index: 1;
 }
 
 .flex-child2 {
   flex: 1;
   float: left;
-  padding: 20px;
+  padding: 5% 10%;
   margin-bottom: auto;
+  margin-right: 5%;
+  margin-left: 5%;
   top: 6.5rem;
   z-index: 0;
 }
 .flex-child3 {
-  width: 50%;
-  float: left;
+  width: 30%;
   padding: 10px;
 }
 
 .flex-child4 {
-  width: 50%;
-  float: left;
-  margin-top: 100px;
-  margin-left: 60px;
+  width: 70%;
+  margin: 5%;
 }
 
 .btn {
@@ -183,11 +186,6 @@ h1 {
   background-color: darkcyan;
 }
 
-.side {
-  position: absolute;
-  right: 25px;
-}
-
 .tc {
   text-align: center;
 }
@@ -227,8 +225,7 @@ h1 {
 }
 
 .side {
-  position: absolute;
-  right: 25px;
+  float: right;
 }
 
 .text1 {
@@ -272,6 +269,14 @@ h1 {
   display: block;
   margin-right: 50px;
   margin-left: 50px;
+  z-index: 1;
+}
+.input-container {
+  display: block;
+  padding: 2%;
+}
+.input-child {
+  flex: 1;
 }
 
 /***************************************** Login************************************/
@@ -397,32 +402,19 @@ h1 {
   background: rgb(54, 88, 189);
 }
 
+.chatbot {
+  color: white;
+  z-index: 4;
+  position: relative;
+}
 /**************************************** Responsiveness ******************************************/
 @media only screen and (max-width: 500px) {
   /* For mobile phones: */
   body {
     width: fit-content;
   }
-  .qtyBtn,
-  .removeBtn,
-  .clearCartBtn,
-  .btnProceed {
-    font-size: 3vw;
-  }
-  h1 {
-    font-size: 30px;
-  }
-  h2 {
-    font-size: 25px;
-  }
-  h3 {
-    font-size: 20px;
-  }
-  h4 {
-    font-size: 15px;
-  }
-  h5,
-  p {
-    font-size: 10px;
+  .cartEmpty {
+    width: 100%;
+    height: auto;
   }
 }
