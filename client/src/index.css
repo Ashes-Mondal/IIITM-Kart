@@ -543,7 +543,7 @@ th {
 .productDetailsImg {
   display: block;
   margin: auto;
-  height: 400px;
+  width: 50%;
 }
 .biggerFont {
   font-size: x-large;

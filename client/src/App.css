@@ -426,20 +426,87 @@ h1 {
   width: 100%;
   background: rgb(54, 88, 189);
 }
-
-.chatbot {
-  color: white;
-  z-index: 4;
-  position: relative;
+.qtyBtn,
+.removeBtn,
+.clearCartBtn,
+.btnProceed {
+  font-size: 1rem;
 }
-/**************************************** Responsiveness ******************************************/
-@media only screen and (max-width: 500px) {
+
+/* // Small devices (landscape phones, 576px and down) */
+@media (max-width: 576px) {
   /* For mobile phones: */
   body {
-    width: fit-content;
+    height: 100vh;
+    margin: auto;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .navbar1 {
+    display: flex;
+    width: 100vw;
+  }
+  .navbar2 {
+    width: 100vw;
+    padding: 0;
+    font-size: 1.8vw;
+  }
+  .text1 {
+    font-size: 5vw;
+  }
+  .product-card {
+    flex: 0 0 50%;
+  }
+  .search-box {
+    width: 100vw;
+  }
+  .card-content {
+    font-size: 0.8rem;
+  }
+  .footer {
+    height: auto;
+    position: sticky;
+    top: 80vh;
+    font-size: 2.5vw;
+    width: 100vw;
   }
   .cartEmpty {
+    margin: auto;
     width: 100%;
     height: auto;
   }
+  .qtyBtn,
+  .removeBtn,
+  .clearCartBtn {
+    font-size: 3vw;
+  }
+  .btnProceed {
+    font-size: 5vw;
+    margin-bottom: 5%;
+  }
+  .flex-child2 {
+    width: 100vw;
+    margin: auto;
+    margin-bottom: 4rem;
+  }
+  .flex-child1 {
+    width: 100vw;
+    margin: auto;
+  }
+}
+
+/* // Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
 }
