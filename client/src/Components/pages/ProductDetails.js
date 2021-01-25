@@ -70,6 +70,11 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 	const handleClose = () => {
 		setState({ open: false, vertical: "top", horizontal: "right" });
 	};
+
+	const filterSimilarProducts = (itemList, itemCategory) => {
+		return itemList.filter((product) => product.category === itemCategory);
+	};
+
 	return (
 		<div className="productDetails">
 			<Snackbar
@@ -86,7 +91,7 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 			<button
 				className="backButton"
 				onClick={() => {
-				history.goBack();
+					history.goBack();
 				}}
 			>
 				Back
@@ -199,23 +204,23 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 			</div>
 			<h5>Similar items:</h5>
 			<div className="similarItems">
-				{itemList.map((product, i) => {
-					if (product.category === item.category)
-						return (
-							<div
-								className="m-3 similarItem homeCard"
-								onClick={() => {
-									console.log("Product Details:", product);
-									window.location.href = `/productDetails/${product._id}`;
-								}}
-							>
-								<img src={product.imageURL} alt="???" />
-								<div className="similarItemDescription">
-									{product.description}
-								</div>
-								<div>Rs.{product.cost}</div>
+				{filterSimilarProducts(itemList, item.category).map((product, i) => {
+					return (
+						<div
+							key={i}
+							className="m-3 similarItem homeCard"
+							onClick={() => {
+								console.log("Product Details:", product);
+								window.location.href = `/productDetails/${product._id}`;
+							}}
+						>
+							<img src={product.imageURL} alt="???" />
+							<div className="similarItemDescription">
+								{product.description}
 							</div>
-						);
+							<div>Rs.{product.cost}</div>
+						</div>
+					);
 				})}
 			</div>
 		</div>

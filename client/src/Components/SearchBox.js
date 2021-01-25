@@ -40,7 +40,7 @@ const SearchBox = () => {
 		}
 	};
 	return (
-		<>
+		<div className="search-box">
 			<Snackbar
 				anchorOrigin={{ vertical, horizontal }}
 				open={open}
@@ -62,11 +62,16 @@ const SearchBox = () => {
 						setSearch(e.target.value);
 					}}
 				/>
-				<button type="submit" class="btn btn-warning btn-circle btn-lg ml-1">
-					<SearchIcon />
-				</button>
+				{window.innerWidth <= 580 ? null : (
+					<button
+						type="submit"
+						className="btn btn-warning btn-circle btn-lg ml-1"
+					>
+						<SearchIcon />
+					</button>
+				)}
 			</form>
-		</>
+		</div>
 	);
 };
 export default SearchBox;

@@ -5,7 +5,6 @@ import ReactStars from "react-rating-stars-component";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Footer from "../Footer";
 function UserDetails({ user, setUser, setCart, setLoaded }) {
   const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
@@ -463,7 +462,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
           )}
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 }

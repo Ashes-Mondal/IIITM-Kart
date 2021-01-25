@@ -44,7 +44,6 @@
     "path": "^0.12.7",
     "razorpay": "^2.0.6",
     "react-simple-chatbot": "^0.6.1",
-    "shortid": "2.2.16",
-    "styled-components": "^5.2.1"
+    "shortid": "2.2.16"
   }
 }

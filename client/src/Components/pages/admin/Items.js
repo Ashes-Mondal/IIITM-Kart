@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 	},
 	root: {
-    alignItems: "center",
+		alignItems: "center",
 		backgroundColor: "#ede7f6",
 		display: "flex",
 		flexGrow: 1,
@@ -157,7 +156,7 @@ const Items = ({ itemList, setItemList }) => {
 						/>
 						<button
 							type="submit"
-							class="btn btn-warning btn-circle btn-lg ml-1"
+							className="btn btn-warning btn-circle btn-lg ml-1"
 						>
 							<SearchIcon />
 						</button>
