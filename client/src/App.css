@@ -4,403 +4,510 @@
 @import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap");
 
+* {
+	box-sizing: border-box;
+}
+
 body {
-  width: 100vw;
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+	width: 100vw;
+	margin: 0;
+	font-family: "Roboto", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
 }
 
 h1 {
-  text-align: center;
-  font-family: "Raleway", sans-serif;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
 }
 
 .container {
-  margin: 2rem 20% 4rem;
-  width: auto;
-  text-align: center;
-  background-color: #fffafa;
-  position: relative;
-  /* -webkit-box-shadow: 3px 3px 5px 6px #ccc; Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  /* -moz-box-shadow: 3px 3px 5px 6px #ccc; Firefox 3.5 - 3.6 */
-  /* box-shadow: 3px 3px 5px 6px #ccc; Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+	margin: 2rem 20% 4rem;
+	width: auto;
+	text-align: center;
+	background-color: #fffafa;
+	position: relative;
+	/* -webkit-box-shadow: 3px 3px 5px 6px #ccc; Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+	/* -moz-box-shadow: 3px 3px 5px 6px #ccc; Firefox 3.5 - 3.6 */
+	/* box-shadow: 3px 3px 5px 6px #ccc; Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
 
 .itemImg {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 }
 
 .float-container {
-  border: 3px solid #fff;
-  padding: 5%;
+	border: 3px solid #fff;
+	padding: 5%;
 }
 
 .float-child {
-  width: 50%;
-  float: left;
-  padding: 20px;
-  border: 2px solid red;
-  color: cadetblue;
+	width: 50%;
+	float: left;
+	padding: 20px;
+	border: 2px solid red;
+	color: cadetblue;
 }
 
+.flex-container {
+	display: flex;
+	padding: 20px;
+}
+
+.flex-child1 {
+	flex: 2;
+	float: left;
+	margin-right: 5%;
+	margin-top: 10%;
+	margin-left: 5%;
+	margin-bottom: 1%;
+	padding: 20px;
+	z-index: 1;
+}
+
+.flex-child2 {
+	flex: 1;
+	float: left;
+	padding: 5% 10%;
+	margin-bottom: auto;
+	margin-right: 5%;
+	margin-left: 5%;
+	top: 6.5rem;
+	z-index: 0;
+}
 .flex-child3 {
-  width: 50%;
-  padding: 10px;
+	width: 30%;
+	padding: 10px;
 }
 
 .flex-child4 {
-  width: 50%;
-  margin-top: 100px;
-  margin-left: 60px;
+	width: 70%;
+	margin: 5%;
 }
 
 .btn {
-  border: none;
-  color: white;
-  text-align: center;
-  font-size: 1.3rem;
-}
-.cartEmpty {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  height: auto;
+	border: none;
+	color: white;
+	text-align: center;
+	font-size: 1.3rem;
 }
 
+.qtyBtn {
+	border-radius: 50px;
+	font-weight: bolder;
+	font-size: x-large;
+	border: none;
+	color: royalblue;
+	width: 45px;
+	height: 45px;
+	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+		inset -5px -5px 5px rgb(255, 255, 255);
+}
+.qtyBtn:hover {
+	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+	background: royalblue;
+	color: white;
+}
+.removeBtn {
+	margin-top: 10px;
+	border: 0;
+	border-radius: 24px;
+	font-size: larger;
+	font-weight: bold;
+	color: rgb(223, 63, 63);
+	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+		inset -5px -5px 5px rgb(255, 255, 255);
+	padding: 10px;
+}
+.removeBtn:hover {
+	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+	background: rgb(223, 63, 63);
+	color: white;
+}
+.clearCartBtn {
+	border: 0;
+	background: rgb(245, 245, 245);
+	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+		inset -5px -5px 5px rgb(255, 255, 255);
+	border-radius: 24px;
+	font-size: larger;
+	font-weight: bold;
+	color: rgb(223, 63, 63);
+	padding: 10px;
+}
+.clearCartBtn:hover {
+	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+	background: rgb(223, 63, 63);
+	color: white;
+}
+
+.cartEmpty {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	height: auto;
+}
+.flex-child3 .cartEmpty {
+	max-width: 100px;
+}
 .btnShop {
-  text-align: center;
-  color: #fffafa;
-  font-family: "Acme", sans-serif;
-  font-size: 20px;
-  border: 2px solid lightblue;
-  border-radius: 4px;
-  background-color: darkcyan;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0%;
+	text-align: center;
+	color: #fffafa;
+	font-family: "Acme", sans-serif;
+	font-size: 20px;
+	border: 2px solid lightblue;
+	border-radius: 4px;
+	background-color: darkcyan;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0%;
 }
 
 .qtyInput {
-  border-radius: 2px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: 10px;
+	border-radius: 2px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: 10px;
 }
 
 .btnShop {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  font-size: 15px;
-  border: 2px solid;
-  border-radius: 4px;
-  background-color: darkcyan;
-}
-
-.side {
-  position: absolute;
-  right: 25px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	font-size: 15px;
+	border: 2px solid;
+	border-radius: 4px;
+	background-color: darkcyan;
 }
 
 .tc {
-  text-align: center;
+	text-align: center;
 }
 .cartTotalContainer {
-  background: rgb(245, 245, 245);
-  box-shadow: 10px 10px 10px rgb(200, 200, 200),
-    -10px -10px 10px rgb(255, 255, 255);
-  border-radius: 10px;
+	background: rgb(245, 245, 245);
+	box-shadow: 10px 10px 10px rgb(200, 200, 200),
+		-10px -10px 10px rgb(255, 255, 255);
+	border-radius: 10px;
 }
 .btnProceed {
-  text-align: center;
-  font-size: x-large;
-  font-weight: bold;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5%;
-  border: 0;
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
-  border-radius: 50px;
-  padding: 10px 10px;
-  color: rgb(236, 137, 55);
+	text-align: center;
+	font-size: x-large;
+	font-weight: bold;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+	border: 0;
+	box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
+		inset -5px -5px 5px rgb(255, 255, 255);
+	border-radius: 50px;
+	padding: 10px 10px;
+	color: rgb(236, 137, 55);
 }
 .btnProceed:hover {
-  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  background: rgb(236, 137, 55);
-  color: white;
+	box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
+	background: rgb(236, 137, 55);
+	color: white;
 }
 
 .cartDetail {
-  font-size: auto;
+	font-size: auto;
 }
 
 .tc {
-  text-align: center;
+	text-align: center;
 }
 
 .side {
-  position: absolute;
-  right: 25px;
+	float: right;
 }
 
 .text1 {
-  color: cornsilk;
-  font-family: "Nova Flat", cursive;
-  font-family: "Roboto Slab", serif;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: 3px;
+	color: cornsilk;
+	font-family: "Nova Flat", cursive;
+	font-family: "Roboto Slab", serif;
+	font-size: 30px;
+	font-weight: 700;
+	letter-spacing: 3px;
 }
 .menu-icon {
-  display: flex;
-  width: 50%;
-  height: 10%;
+	display: flex;
+	width: 50%;
+	height: 10%;
 }
 .menu-choices {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 @keyframes text {
-  0% {
-    color: black;
-    /* letter-spacing: -0.8rem; */
-    letter-spacing: 0.201rem;
-    margin-bottom: -0.9375rem;
-  }
-  30% {
-    /* letter-spacing: 1.5625rem; */
-    letter-spacing: 0.1em;
-    margin-bottom: -0.9375rem;
-  }
-  65% {
-    /* letter-spacing: 0.5 rem; */
-    letter-spacing: 0.02 rem;
-    margin-bottom: -0.9375rem;
-  }
+	0% {
+		color: black;
+		/* letter-spacing: -0.8rem; */
+		letter-spacing: 0.201rem;
+		margin-bottom: -0.9375rem;
+	}
+	30% {
+		/* letter-spacing: 1.5625rem; */
+		letter-spacing: 0.1em;
+		margin-bottom: -0.9375rem;
+	}
+	65% {
+		/* letter-spacing: 0.5 rem; */
+		letter-spacing: 0.02 rem;
+		margin-bottom: -0.9375rem;
+	}
 }
 /****************************************User Details************************************/
 .footer {
-  display: block;
-  margin-right: 50px;
-  margin-left: 50px;
+	display: block;
+	margin-right: 50px;
+	margin-left: 50px;
+	z-index: 1;
 }
 
 /***************************************** Login************************************/
 .login-form {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  border: solid black 2px;
-  padding: 2rem;
-  margin: 10vh 30%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	border: solid black 2px;
+	padding: 2rem;
+	margin: 10vh 30%;
 }
 
 /* Style the counter cards */
 .card {
-  box-shadow: 10px 4px 8px 0rem rgba(0, 0, 0, 0.2);
-  padding: 16px;
-  text-align: center;
-  background-color: #f1f1f1;
-  align-items: center;
+	box-shadow: 10px 4px 8px 0rem rgba(0, 0, 0, 0.2);
+	padding: 16px;
+	text-align: center;
+	background-color: #f1f1f1;
+	align-items: center;
 }
 .canvas {
-  margin: 2rem 5rem;
+	margin: 2rem 5rem;
 }
 
 /********************************************** Admin page************************************/
 .user-form {
-  display: flex;
-  justify-content: flex-start;
-  text-align: left;
-  flex-direction: column;
+	display: flex;
+	justify-content: flex-start;
+	text-align: left;
+	flex-direction: column;
 }
 .order-div {
-  display: flex;
-  justify-content: space-between;
-  text-align: left;
-  flex-direction: column;
+	display: flex;
+	justify-content: space-between;
+	text-align: left;
+	flex-direction: column;
 }
 .order-item-div {
-  display: flex;
-  justify-content: space-between;
-}
-.flex-container {
-  display: flex;
-  padding: 2%;
+	display: flex;
+	justify-content: space-between;
 }
 
 .flex-childA1 {
-  flex: 1;
-  margin-right: 20px;
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
+	flex: 1;
+	margin-right: 20px;
+	width: 50%;
+	height: 50%;
+	border-radius: 50%;
 }
 
 .flex-childA2 {
-  flex: 5;
-  padding: 20px;
-  text-align: center;
-  margin-bottom: auto;
-  top: 6.5rem;
-  text-align: left;
+	flex: 5;
+	padding: 20px;
+	text-align: center;
+	margin-bottom: auto;
+	top: 6.5rem;
+	text-align: left;
 }
 
 .flex-childA3 {
-  flex: 2;
-  padding: 20px;
-  margin-bottom: auto;
-  text-align: left;
-  color: black;
+	flex: 2;
+	padding: 20px;
+	margin-bottom: auto;
+	text-align: left;
+	color: black;
 }
 .flex-childA3 p {
-  font-size: 3vw;
+	font-size: 3vw;
 }
 .flex-childA3:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .smallImage {
-  width: 40%;
-  height: 40%;
-  border-radius: 50%;
-  margin: 0;
-  margin-left: 5px;
+	width: 40%;
+	height: 40%;
+	border-radius: 50%;
+	margin: 0;
+	margin-left: 5px;
 }
 
 .logo {
-  padding: 3px;
-  width: 20%;
-  height: 20%;
+	padding: 3px;
+	width: 20%;
+	height: 20%;
 }
 
 /******************************* Home Page *************************************/
 .product-card {
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  /* margin:1vw; */
+	padding: 5px 10px;
+	display: flex;
+	flex-direction: column;
+	/* margin:1vw; */
 }
 .product-card:hover {
-  box-shadow: 0px 0px 20px rgb(228, 228, 228);
-  cursor: pointer;
+	box-shadow: 0px 0px 20px rgb(228, 228, 228);
+	cursor: pointer;
 }
-.card-content{
-  /* margin:1vw; */
-  font-size: 0.8rem;
+.card-content {
+	/* margin:1vw; */
+	font-size: 0.8rem;
 }
 .advertise {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  z-index: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	z-index: 0;
 }
 .adminPanel .sticky-top {
-  z-index: 1;
+	z-index: 1;
 }
-.navbar2{
-  width: 100vw;
-  padding: 0;
-  font-size:1.2vw;
+.navbar2 {
+	width: 100vw;
+	padding: 0;
+	font-size: 1.2vw;
 }
-.images-container{
-  width:96vw;
-  margin:2vw;
+.images-container {
+	width: 96vw;
+	margin: 2vw;
 }
 .footer {
-  flex-shrink: 0;
-  background: royalblue;
-  color: white;
-  width: 100%;
-  height: 100%;
-  margin-left: 0%;
-  margin-bottom: 0%;
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  padding-top: 30px;
+	flex-shrink: 0;
+	background: royalblue;
+	color: white;
+	width: 100%;
+	height: 100%;
+	margin-left: 0%;
+	margin-bottom: 0%;
+	font-family: "Raleway", sans-serif;
+	text-align: center;
+	padding-top: 30px;
 }
 #root {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 .grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
+	display: grid;
+	grid-template-columns: auto auto auto;
 }
 .copyright {
-  margin-top: 20px;
-  padding: 10px;
-  width: 100%;
-  background: rgb(54, 88, 189);
+	margin-top: 20px;
+	padding: 10px;
+	width: 100%;
+	background: rgb(54, 88, 189);
+}
+.qtyBtn,
+.removeBtn,
+.clearCartBtn,
+.btnProceed {
+	font-size: 1rem;
+}
+h1 {
+	font-size: 30px;
+}
+h2 {
+	font-size: 25px;
+}
+h3 {
+	font-size: 20px;
+}
+h4 {
+	font-size: 15px;
+}
+h5,
+p {
+	font-size: 10px;
 }
 
-/* media query */
-/* @media only screen and (max-width: 500px) {
-  /* For mobile phones: */
-  body {
-    width: fit-content;
-  }
-/* } */ 
 /* // Small devices (landscape phones, 576px and down) */
-@media (max-width: 576px) { 
-  .navbar1{
-    display: flex;
-    width: 100vw;
-  }
-  .navbar2{
-    width: 100vw;
-    padding: 0;
-    font-size:1.8vw;
-  }
-  .text1{
-    font-size:5vw;
-  }
-  .product-card{
-    flex:0 0 50%;
-  }
-  .search-box{
-    width:100vw;
-  }
-  .card-content{
-    font-size: 0.8rem;
-  }
-  .footer{
-    font-size:2.5vw;
-    width: 100vw;
-  }
- }
-/*
+@media (max-width: 576px) {
+	/* For mobile phones: */
+	body {
+		height: 100vh;
+		margin: auto;
+		width: 100vw;
+		overflow-x: hidden;
+	}
+	.navbar1 {
+		display: flex;
+		width: 100vw;
+	}
+	.navbar2 {
+		width: 100vw;
+		padding: 0;
+		font-size: 1.8vw;
+	}
+	.text1 {
+		font-size: 5vw;
+	}
+	.product-card {
+		flex: 0 0 50%;
+	}
+	.search-box {
+		width: 100vw;
+	}
+	.card-content {
+		font-size: 0.8rem;
+	}
+	.footer {
+		height: auto;
+		position: sticky;
+		top: 80vh;
+		font-size: 2.5vw;
+		width: 100vw;
+	}
+	.qtyBtn,
+	.removeBtn,
+	.clearCartBtn,
+	.btnProceed {
+		font-size: 3vw;
+	}
+	.flex-child2 {
+		width: 100vw;
+		margin: auto;
+		margin-bottom: 4rem;
+	}
+	.flex-child1 {
+		width: 100vw;
+		margin: auto;
+	}
+}
+
 /* // Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {  }
+@media (min-width: 768px) {
+}
 
 /* // Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { }
+@media (min-width: 992px) {
+}
 
 /* // X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) {
+}
 
 /* // XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) {  } 
-@media only screen and (max-width: 580px) {
-  /* For mobile phones: */
-  body {
-    /* width: fit-content; */
-    margin:auto;
-    width:100vw;
-    overflow-x: hidden;
-  }
+@media (min-width: 1400px) {
 }

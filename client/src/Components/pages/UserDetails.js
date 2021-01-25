@@ -207,9 +207,123 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
         </Modal.Footer>
       </Modal>
       {showProcessing ? <LinearProgress color="secondary" /> : null}
-      <div className="row userbackground">
-        <div className="col">
-          <h1>Your Orders</h1>
+      <div className="gridContainer userbackground">
+        <div>
+          <div className="userdetails">
+            <h1>User Details</h1>
+            <br />
+            <form className="userform">
+              {editable ? (
+                <h6
+                  className="edituser"
+                  onClick={() => {
+                    updateUser();
+                  }}
+                >
+                  Update
+                </h6>
+              ) : (
+                <h6
+                  className="edituser"
+                  onClick={() => {
+                    setEditable(true);
+                  }}
+                >
+                  Edit
+                </h6>
+              )}
+
+              <div className="form-group">
+                <h5>Personal Information</h5>
+                <input
+                  type="text"
+                  className="mr-5"
+                  value={user.name.firstName || ""}
+                  name="FirstName"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({
+                      ...user,
+                      name: {
+                        firstName: e.target.value,
+                        lastName: user.name.lastName,
+                      },
+                    });
+                  }}
+                />
+                <input
+                  type="text"
+                  value={user.name.lastName || ""}
+                  name="LastName"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({
+                      ...user,
+                      name: {
+                        firstName: user.name.firstName,
+                        lastName: e.target.value,
+                      },
+                    });
+                  }}
+                />
+              </div>
+              <br />
+              <div className="form-group">
+                <h5>Email address</h5>
+
+                <input
+                  type="text"
+                  value={user.email || ""}
+                  name="Email"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({ ...user, email: e.target.value });
+                  }}
+                />
+              </div>
+              <br />
+              <div className="form-group">
+                <h5>Mobile Number</h5>
+
+                <input
+                  type="text"
+                  value={user.phone || ""}
+                  name="Phno"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({ ...user, phone: e.target.value });
+                  }}
+                />
+              </div>
+              <div className="form-group">
+                <h5>Default Address</h5>
+
+                <input
+                  type="text"
+                  value={user.address || ""}
+                  name="Address"
+                  disabled={editable ? "" : "disabled"}
+                  onChange={(e) => {
+                    setUser({ ...user, address: e.target.value });
+                  }}
+                />
+              </div>
+            </form>
+            <button
+              className="deleteUser"
+              onClick={() => {
+                if (checkPendingOrders()) {
+                  showDeleteModal(true);
+                } else setConfirmDeleteUserModal(true);
+              }}
+            >
+              Delete User
+            </button>
+          </div>
+          <br />
+        </div>
+        <div>
+          <h1 className="mt-3">Your Orders</h1>
           {user.orders !== undefined && user.orders.length > 0 ? (
             <div>
               {user.orders
@@ -347,120 +461,6 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
               </p>
             </>
           )}
-        </div>
-        <div className="col">
-          <div className="userdetails">
-            <h1>User Details</h1>
-            <br />
-            <form className="userform">
-              {editable ? (
-                <h6
-                  className="edituser"
-                  onClick={() => {
-                    updateUser();
-                  }}
-                >
-                  Update
-                </h6>
-              ) : (
-                <h6
-                  className="edituser"
-                  onClick={() => {
-                    setEditable(true);
-                  }}
-                >
-                  Edit
-                </h6>
-              )}
-
-              <div className="form-group">
-                <h5>Personal Information</h5>
-                <input
-                  type="text"
-                  className="mr-5"
-                  value={user.name.firstName || ""}
-                  name="FirstName"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({
-                      ...user,
-                      name: {
-                        firstName: e.target.value,
-                        lastName: user.name.lastName,
-                      },
-                    });
-                  }}
-                />
-                <input
-                  type="text"
-                  value={user.name.lastName || ""}
-                  name="LastName"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({
-                      ...user,
-                      name: {
-                        firstName: user.name.firstName,
-                        lastName: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <br />
-              <div className="form-group">
-                <h5>Email address</h5>
-
-                <input
-                  type="text"
-                  value={user.email || ""}
-                  name="Email"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({ ...user, email: e.target.value });
-                  }}
-                />
-              </div>
-              <br />
-              <div className="form-group">
-                <h5>Mobile Number</h5>
-
-                <input
-                  type="text"
-                  value={user.phone || ""}
-                  name="Phno"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({ ...user, phone: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="form-group">
-                <h5>Default Address</h5>
-
-                <input
-                  type="text"
-                  value={user.address || ""}
-                  name="Address"
-                  disabled={editable ? "" : "disabled"}
-                  onChange={(e) => {
-                    setUser({ ...user, address: e.target.value });
-                  }}
-                />
-              </div>
-            </form>
-            <button
-              className="deleteUser"
-              onClick={() => {
-                if (checkPendingOrders()) {
-                  showDeleteModal(true);
-                } else setConfirmDeleteUserModal(true);
-              }}
-            >
-              Delete User
-            </button>
-          </div>
-          <br />
         </div>
       </div>
       

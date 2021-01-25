@@ -59,10 +59,9 @@ code {
   background: rgb(218, 218, 218);
 }
 .clearFilters {
-  padding: 0.4rem 1.875rem;
+  padding: 0.4rem 0 0.4 1.875rem;
   align-self: center;
   margin: auto;
-  /* font-weight: bold; */
   color:#FFE4E1;
 }
 .clearFilters:hover {
@@ -290,9 +289,7 @@ a.active-nav-link {
   background: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 20px 40px;
-  margin: 5% 0px;
-  margin-right: 0px;
-  margin-left: 3%;
+  margin: 0% 5% 5% 5%;
 }
 
 .child6 {
@@ -579,23 +576,9 @@ th {
   max-width: 300px;
   overflow: hidden;
 }
-.chatbot-img {
-  z-index: 2;
-  position: fixed;
-  bottom: 5%;
-  right: 3%;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  background: black;
-  filter: invert(100%);
-  cursor: pointer;
-}
+
 .chatbot {
-  z-index: 2;
-  position: fixed;
-  bottom: 5%;
-  right: 3%;
+  z-index: 5;
 }
 .cartContainer {
   background: rgb(245, 245, 245);
@@ -607,52 +590,13 @@ th {
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
+  padding: 5%;
 }
-.qtyBtn {
-  border-radius: 50px;
-  font-weight: bolder;
-  font-size: x-large;
-  border: none;
-  color: royalblue;
-  width: 45px;
-  height: 45px;
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  direction: rtl;
 }
-.qtyBtn:hover {
-  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  background: royalblue;
-  color: white;
-}
-.removeBtn {
-  margin-top: 10px;
-  border: 0;
-  border-radius: 24px;
-  font-size: larger;
-  font-weight: bold;
-  color: rgb(223, 63, 63);
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
-  padding: 10px;
-}
-.removeBtn:hover {
-  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  background: rgb(223, 63, 63);
-  color: white;
-}
-.clearCartBtn {
-  border: 0;
-  background: rgb(245, 245, 245);
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
-  border-radius: 24px;
-  font-size: larger;
-  font-weight: bold;
-  color: rgb(223, 63, 63);
-  padding: 10px;
-}
-.clearCartBtn:hover {
-  box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  background: rgb(223, 63, 63);
-  color: white;
+.gridContainer > * {
+  direction: ltr;
 }
