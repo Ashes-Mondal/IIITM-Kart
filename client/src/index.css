@@ -310,10 +310,13 @@ a.active-nav-link {
 .userdetails {
   padding: 5% 10%;
   padding-right: 5%;
-  margin-top: 5%;
+  text-align: center;
+  background-color: #fffafa;
+  margin: 2rem 20% 4rem;
+  /* margin-top: 5%;
   margin-right: 5%;
   margin-bottom: auto;
-  margin-left: 5%;
+  margin-left: 5%; */
   top: 6.5rem;
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
