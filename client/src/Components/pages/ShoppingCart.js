@@ -478,7 +478,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
             {cart.map((productDetail, index) => {
               const { item, Qty } = productDetail;
               return (
-                <div>
+                <div key={index}>
                   <p>
                     {item.itemName}
                     <span className="side">

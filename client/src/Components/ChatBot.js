@@ -156,9 +156,7 @@ const ChatBot = ({ user, isAuth }) => {
     ];
   }
   return (
-    <div>
       <ChatBotSimple steps={steps} floating={true} />
-    </div>
   );
 };
 

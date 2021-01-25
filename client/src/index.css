@@ -7,7 +7,9 @@ code {
 .navbar2 {
   position: relative;
   padding: 0.5rem 1rem;
-  background: white;
+  /* background: #D3D3D3; */
+  background-color: #4169e1;
+  color:white;
   width: 100%;
   justify-content: space-evenly;
   align-content: center;
@@ -50,7 +52,7 @@ code {
   margin: auto;
 }
 .categories:hover {
-  background: rgb(218, 218, 218);
+  background:#145DA0;
   cursor: pointer;
 }
 .categoriesClicked {
@@ -60,25 +62,15 @@ code {
   padding: 0.4rem 1.875rem;
   align-self: center;
   margin: auto;
-  font-weight: bold;
-  color: rgb(255, 72, 72);
+  /* font-weight: bold; */
+  color:#FFE4E1;
 }
 .clearFilters:hover {
   cursor: pointer;
+  background-color:#A52A2A;
 }
 /********************************************** HOMEPAGE, CARD ************************************/
-.homeCard {
-  height: auto;
-  min-height: max-content;
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0.3rem 0 0.3rem;
-}
-.homeCard:hover {
-  box-shadow: 0px 0px 20px rgb(228, 228, 228);
-  cursor: pointer;
-}
+
 
 .btn-circle {
   width: 30px;
@@ -90,8 +82,8 @@ code {
   border-radius: 15px;
 }
 .btn-circle.btn-lg {
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
@@ -144,7 +136,7 @@ img {
 /********************************************** Navbar ****************************************/
 .navbar1 {
   background-color: royalblue;
-  width: 100%;
+  width: 100vw;
   justify-content: space-between;
   align-content: center;
   display: flex;

@@ -4,19 +4,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap");
 
-@media only screen and (max-width: 500px) {
-  /* For mobile phones: */
-  body {
-    width: fit-content;
-  }
-}
 body {
+  width: 100vw;
   margin: 0;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -292,6 +288,20 @@ h1 {
 }
 
 /******************************* Home Page *************************************/
+.product-card {
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  /* margin:1vw; */
+}
+.product-card:hover {
+  box-shadow: 0px 0px 20px rgb(228, 228, 228);
+  cursor: pointer;
+}
+.card-content{
+  /* margin:1vw; */
+  font-size: 0.8rem;
+}
 .advertise {
   width: 100%;
   height: 100%;
@@ -301,11 +311,14 @@ h1 {
 .adminPanel .sticky-top {
   z-index: 1;
 }
-@media only screen and (max-width: 500px) {
-  /* For mobile phones: */
-  body {
-    width: fit-content;
-  }
+.navbar2{
+  width: 100vw;
+  padding: 0;
+  font-size:1.2vw;
+}
+.images-container{
+  width:96vw;
+  margin:2vw;
 }
 .footer {
   flex-shrink: 0;
@@ -333,4 +346,61 @@ h1 {
   padding: 10px;
   width: 100%;
   background: rgb(54, 88, 189);
+}
+
+/* media query */
+/* @media only screen and (max-width: 500px) {
+  /* For mobile phones: */
+  body {
+    width: fit-content;
+  }
+/* } */ 
+/* // Small devices (landscape phones, 576px and down) */
+@media (max-width: 576px) { 
+  .navbar1{
+    display: flex;
+    width: 100vw;
+  }
+  .navbar2{
+    width: 100vw;
+    padding: 0;
+    font-size:1.8vw;
+  }
+  .text1{
+    font-size:5vw;
+  }
+  .product-card{
+    flex:0 0 50%;
+  }
+  .search-box{
+    width:100vw;
+  }
+  .card-content{
+    font-size: 0.8rem;
+  }
+  .footer{
+    font-size:2.5vw;
+    width: 100vw;
+  }
+ }
+/*
+/* // Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {  }
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { }
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {  } 
+@media only screen and (max-width: 580px) {
+  /* For mobile phones: */
+  body {
+    /* width: fit-content; */
+    margin:auto;
+    width:100vw;
+    overflow-x: hidden;
+  }
 }

@@ -233,22 +233,24 @@ function Navbar({ user, cart, admin }) {
 	}, []);
 
 	return (
-		<nav className=" navbar1 sticky-top">
-			<div
-				className="site-name"
-				onClick={() => {
-					window.location.href = "/";
-				}}
-			>
-				<span className="text1">IIITM-Kart</span>
-			</div>
-			<div className="search-box">
-				<SearchBox />
-			</div>
-			<div className="navlink-container">
-				{mobileView ? displayMobile() : displayDesktop()}
-			</div>
-		</nav>
+		<>
+			<nav className=" navbar1 sticky-top">
+				<div
+					className="site-name"
+					onClick={() => {
+						window.location.href = "/";
+					}}
+				>
+					<span className="text1">IIITM-Kart</span>
+				</div>
+				{window.innerWidth <= 580 ? null : <SearchBox />}
+
+				<div className="navlink-container">
+					{mobileView ? displayMobile() : displayDesktop()}
+				</div>
+			</nav>
+			{window.innerWidth <= 580 && window.location.pathname === '/' ? <SearchBox />: null}
+		</>
 	);
 }
 
