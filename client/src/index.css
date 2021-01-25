@@ -148,6 +148,9 @@ img {
   justify-content: space-between;
   align-content: center;
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 .drawer-logout {
   width: 100%;
