@@ -4,7 +4,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-const EditItem = ({ itemList, setItemList ,setLoaded}) => {
+const EditItem = ({ itemList, setItemList, setLoaded }) => {
 	let history = useHistory();
 	const [error, setError] = useState("");
 	const [showModal, setShowModal] = useState(false);
@@ -20,6 +20,7 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 				itemId: itemDetails._id,
 				itemName: itemDetails.itemName,
 				description: itemDetails.description,
+				category: itemDetails.category,
 				cost: itemDetails.cost,
 				imageURL: itemDetails.imageURL,
 			}),
@@ -67,10 +68,13 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 				</Alert>
 			) : null}
 			<h1>Edit Item</h1>
-			<form className="effect3D" onSubmit={(e) => {
-						e.preventDefault();
-						updateItem();
-					}}>
+			<form
+				className="effect3D"
+				onSubmit={(e) => {
+					e.preventDefault();
+					updateItem();
+				}}
+			>
 				<h3>Edit Item Details</h3>
 				<div className="row">
 					<div className="col-12">
@@ -143,11 +147,7 @@ const EditItem = ({ itemList, setItemList ,setLoaded}) => {
 						></input>
 					</div>
 				</div>
-				<button
-					className="btn btn-primary"
-				>
-					Update Item
-				</button>
+				<button className="btn btn-primary">Update Item</button>
 				<Link to="/admin/items" className="text-white">
 					<button className="btn btn-danger ml-3 float-right">Cancel</button>
 				</Link>

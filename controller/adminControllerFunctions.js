@@ -108,6 +108,7 @@ exports.editItem = async (req, res) => {
         itemId: req.body._id,
         itemName: req.body.itemName,
         description: req.body.description,
+        category:req.body.category,
         cost: req.body.cost,
         imageURL: req.body.imageURL,
       });

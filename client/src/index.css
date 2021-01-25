@@ -56,10 +56,11 @@ code {
   cursor: pointer;
 }
 .categoriesClicked {
-  background: rgb(218, 218, 218);
+  background:#145DA0;
 }
 .clearFilters {
-  padding: 0.4rem 0 0.4 1.875rem;
+  /* padding: 0.4rem 0 0.4 1.875rem; */
+  padding :5px 5%;
   align-self: center;
   margin: auto;
   color:#FFE4E1;
@@ -136,7 +137,8 @@ img {
 .navbar1 {
   background-color: royalblue;
   width: 100vw;
-  justify-content: space-between;
+ 
+  justify-content: flex-start;
   align-content: center;
   display: flex;
   position: sticky;
@@ -148,18 +150,17 @@ img {
   font-size: 2rem;
 }
 .site-name {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0.75% 2%;
+   text-align: center;
+  margin:auto;
+  flex: 1 1 auto;
 }
 .site-name:hover {
   cursor: pointer;
+  
 }
 .search-box {
-  width: 32%;
   display: flex;
+  flex: 2 2 auto;
 }
 .search-box-form {
   width: 100%;
@@ -172,10 +173,10 @@ img {
   width: 100%;
 }
 .navlink-container {
-  width: 40%;
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: center; 
+  flex: 3 3 auto;
 }
 
 .navlink {

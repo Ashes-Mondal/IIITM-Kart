@@ -107,6 +107,19 @@ const Navbar2 = ({ itemList, setItemList }) => {
 				Women's Clothing
 			</span>
 			<span
+				className={
+					category === "Kids"
+						? "categories categoriesClicked"
+						: "categories"
+				}
+				onClick={() => {
+					setCategory("Kids");
+					handleSearchSubmit("Kids");
+				}}
+			>
+				Kids
+			</span>
+			<span
 				className="clearFilters"
 				onClick={() => {
 					window.location.href = "/";

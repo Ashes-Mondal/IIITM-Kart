@@ -236,12 +236,12 @@ function Navbar({ user, cart, admin }) {
 		<>
 			<nav className=" navbar1">
 				<div
-					className="site-name"
+					className="site-name text1"
 					onClick={() => {
 						window.location.href = "/";
 					}}
 				>
-					<span className="text1">IIITM-Kart</span>
+					IIITM-Kart
 				</div>
 				{window.innerWidth <= 580 ? null : <SearchBox />}
 
