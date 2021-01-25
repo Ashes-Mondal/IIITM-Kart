@@ -172,7 +172,7 @@ img {
   width: 100%;
 }
 .navlink-container {
-  width: 32%;
+  width: 40%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -544,7 +544,7 @@ th {
 .productDetailsImg {
   display: block;
   margin: auto;
-  height: 400px;
+  width:50%;
 }
 .biggerFont {
   font-size: x-large;

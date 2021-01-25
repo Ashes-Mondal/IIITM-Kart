@@ -381,7 +381,7 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
 
 			<div
 				className="gridContainer userbackground"
-				style={{ width: "100%", margin: "auto"}}
+				style={{ width: "100%", margin: "auto" }}
 			>
 				{cart.length ? (
 					<div className="flex-child2 cartTotalContainer sticky-top">
@@ -437,7 +437,8 @@ function ShoppingCart({ cart, setCart, user, setUser, setLoaded }) {
 						<div>
 							<img
 								className="cartEmpty"
-								src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
+								src="https://professionalscareer.com/assets/images/emptycart.png"
+								// src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
 								alt="Cart is empty"
 							/>
 							<Link to="/" className="text-white">

@@ -425,22 +425,7 @@ h1 {
 .btnProceed {
 	font-size: 1rem;
 }
-h1 {
-	font-size: 30px;
-}
-h2 {
-	font-size: 25px;
-}
-h3 {
-	font-size: 20px;
-}
-h4 {
-	font-size: 15px;
-}
-h5,
-p {
-	font-size: 10px;
-}
+
 
 /* // Small devices (landscape phones, 576px and down) */
 @media (max-width: 576px) {
@@ -478,7 +463,12 @@ p {
 		top: 80vh;
 		font-size: 2.5vw;
 		width: 100vw;
-	}
+  }
+  .cartEmpty {
+    margin:auto;
+    width: 100%;
+    height: auto;
+  }
 	.qtyBtn,
 	.removeBtn,
 	.clearCartBtn,
