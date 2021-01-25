@@ -20,6 +20,8 @@ code {
   background: white;
   border: 2px solid black;
   border-radius: 2px;
+  margin:auto;
+  align-self: center;
 }
 .dropbtn:hover {
   background: black;
@@ -45,11 +47,12 @@ code {
   position: absolute;
   width: auto;
   height: auto;
+  
 }
 .categories {
-  padding: 0.4rem 1.875rem;
+  flex: 1 1 auto;
   align-self: center;
-  margin: auto;
+  text-align: center;
 }
 .categories:hover {
   background:#145DA0;
@@ -59,10 +62,9 @@ code {
   background:#145DA0;
 }
 .clearFilters {
-  /* padding: 0.4rem 0 0.4 1.875rem; */
-  padding :5px 5%;
+  text-align: center;
+  flex: 1 1 auto;
   align-self: center;
-  margin: auto;
   color:#FFE4E1;
 }
 .clearFilters:hover {
