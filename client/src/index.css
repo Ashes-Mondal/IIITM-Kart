@@ -612,10 +612,3 @@ th {
 .gridContainer > * {
   direction: ltr;
 }
-/**************************************** Responsiveness ******************************************/
-@media only screen and (max-width: 500px) {
-  /* For mobile phones: */
-  body {
-    width: fit-content;
-  }
-}
