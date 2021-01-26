@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 		justifyContent: "center",
 	},
 });
-function Navbar({ user, cart, admin }) {
+function Navbar({ user, cart, admin,loaded }) {
 	const { isAuth } = useContext(Authentication);
 	/****************************** hamburger Drawer Starts here********************************************/
 	//usestyles
@@ -210,7 +210,7 @@ function Navbar({ user, cart, admin }) {
 						onClose: handleDrawerClose,
 					}}
 				>
-					<div className="menu-choices">{getDrawerChoices()}</div>
+					<div className="menu-choices" onClick={()=>handleDrawerClose()}>{getDrawerChoices()}</div>
 					{isAuth ? (
 						<form className="" method="POST" action="/logout">
 							<button className="btn btn-danger drawer-logout">Logout</button>
@@ -252,7 +252,7 @@ function Navbar({ user, cart, admin }) {
 					{mobileView ? displayMobile() : displayDesktop()}
 				</div>
 			</nav>
-			{window.location.pathname === "/" && window.innerWidth <= 580 ? (
+			{window.location.pathname === "/" && window.innerWidth <= 580 && loaded===true? (
 				<SearchBox />
 			) : null}
 		</>
