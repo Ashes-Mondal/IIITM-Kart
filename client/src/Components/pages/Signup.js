@@ -13,6 +13,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -190,12 +194,36 @@ const SignUpPage = ({ signup, setSignup, handleEmailVerification }) => {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={signup.showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
                 value={signup.password}
                 onChange={(e) => {
                   setSignup({ ...signup, password: e.target.value });
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          setSignup({
+                            ...signup,
+                            showPassword: !signup.showPassword,
+                          })
+                        }
+                        onMouseDown={() =>
+                          setSignup({ ...signup, showPassword: false })
+                        }
+                      >
+                        {signup.showPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
             </Grid>
@@ -206,11 +234,35 @@ const SignUpPage = ({ signup, setSignup, handleEmailVerification }) => {
                 fullWidth
                 name="password"
                 label="Confirm Password"
-                type="password"
+                type={signup.showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 value={signup.confirmPassword}
                 onChange={(e) => {
                   setSignup({ ...signup, confirmPassword: e.target.value });
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          setSignup({
+                            ...signup,
+                            showConfirmPassword: !signup.showConfirmPassword,
+                          })
+                        }
+                        onMouseDown={() =>
+                          setSignup({ ...signup, showConfirmPassword: false })
+                        }
+                      >
+                        {signup.showConfirmPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
             </Grid>
@@ -267,6 +319,8 @@ export default function SignUp({ setLoaded }) {
     password: "",
     confirmPassword: "",
     address: "",
+    showPassword: false,
+    showConfirmPassword: false,
   });
   const [error, setError] = useState("");
 

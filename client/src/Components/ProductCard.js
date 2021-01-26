@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     margin: "auto",
     marginTop: "1rem",
     objectFit: "scale-down",
-    width: "15vw",
+    width: "auto",
     height: "20vh",
   },
 });
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
         className={classes.img}
         title={itemName}
       />
-      <b style={{ margin: "auto" }}>{itemName}</b>
+      <b>{itemName}</b>
       <div className="card-content">
         Rating:{" "}
         {rating ? (

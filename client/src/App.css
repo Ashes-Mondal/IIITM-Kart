@@ -399,6 +399,9 @@ h1 {
   width: 96vw;
   margin: 2vw;
 }
+.carousel-indicators {
+  z-index: 1;
+}
 .footer {
   flex-shrink: 0;
   background: royalblue;
@@ -452,13 +455,16 @@ h1 {
     font-size: 1.8vw;
   }
   .text1 {
-    font-size: 5vw;
+    font-size: 7vw;
   }
   .product-card {
     flex: 0 0 50%;
   }
   .search-box {
     width: 100vw;
+    position: sticky;
+    top: 4.001rem;
+    z-index: 1;
   }
   .card-content {
     font-size: 0.8rem;

@@ -20,6 +20,8 @@ code {
   background: white;
   border: 2px solid black;
   border-radius: 2px;
+  margin: auto;
+  align-self: center;
 }
 .dropbtn:hover {
   background: black;
@@ -47,9 +49,9 @@ code {
   height: auto;
 }
 .categories {
-  padding: 0.4rem 1.875rem;
+  flex: 1 1 auto;
   align-self: center;
-  margin: auto;
+  text-align: center;
 }
 .categories:hover {
   background: #145da0;
@@ -59,10 +61,10 @@ code {
   background: #145da0;
 }
 .clearFilters {
-  /* padding: 0.4rem 0 0.4 1.875rem; */
-  padding: 0.4rem 1.875rem;
+  text-align: center;
+  flex: 1 1 auto;
   align-self: center;
-  margin: auto;
+  color: #ffe4e1;
 }
 .clearFilters:hover {
   cursor: pointer;
@@ -135,12 +137,12 @@ img {
 .navbar1 {
   background-color: royalblue;
   width: 100vw;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-content: center;
   display: flex;
-  z-index: 3;
   position: sticky;
   top: 0;
+  z-index: 2;
 }
 .drawer-logout {
   width: 100%;
@@ -148,33 +150,25 @@ img {
 }
 .site-name {
   text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0.75% 2%;
+  margin: auto;
+  flex: 1 1 auto;
 }
 .site-name:hover {
   cursor: pointer;
 }
 .search-box {
-  width: 32%;
   display: flex;
-}
-.search-box-form {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 2 2 auto;
 }
 
 .form-control {
   width: 100%;
 }
 .navlink-container {
-  width: 40%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex: 3 3 auto;
 }
 
 .navlink {
@@ -301,13 +295,13 @@ a.active-nav-link {
 .userdetails {
   padding: 5% 10%;
   padding-right: 5%;
-  text-align: center;
-  margin: 2rem 20% 4rem;
   margin-top: 5%;
   margin-right: 5%;
   margin-bottom: auto;
   margin-left: 5%;
   top: 6.5rem;
+  box-shadow: 10px 10px 10px rgb(200, 200, 200),
+    -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
 }
 .userdetails input {
@@ -545,31 +539,6 @@ th {
   margin: auto;
   width: 50%;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-  cursor: all;
-  color: #145da0;
-}
-.dropdown-content {
-  display: none;
-  width: auto;
-  text-align: center;
-  position: relative;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 12px 16px;
-  z-index: 1;
-  /* margin: 2rem 20% 4rem;
-  width: auto;
-  text-align: center;
-  background-color: #fffafa;
-  position: relative; */
-}
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .biggerFont {
   font-size: x-large;
 }
