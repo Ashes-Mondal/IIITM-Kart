@@ -17,7 +17,7 @@ const Navbar2 = ({ itemList, setItemList }) => {
   };
   return (
     <nav className="navbar2">
-      <div className="dropdown1 ml-3 mt-1">
+      <div className="dropdown1 mt-1">
         <button className="dropbtn">
           <b>Sort By: </b>
           {sortBy}

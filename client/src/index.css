@@ -11,16 +11,16 @@ code {
   background-color: #4169e1;
   color: white;
   width: 100%;
-  justify-content: space-evenly;
   align-content: center;
   display: flex;
   border-bottom: 2px solid rgb(223, 223, 223);
 }
 .dropbtn {
   background: #8aa4f3;
+  flex: 1 1 auto;
   border: 2px solid black;
   border-radius: 2px;
-  margin: auto;
+  margin-left: 0;
   margin-bottom: 3%;
   align-self: center;
 }
@@ -270,12 +270,12 @@ a.active-nav-link {
   border-radius: 50px;
   border-width: 0px;
   background: rgb(255, 243, 213);
-  padding: 2%;
+  padding: 11px;
   /* background-color: #CD5C5C; */
 }
 .cancelOrderButton:hover {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  padding: 11px;
+  /* padding: 11px; */
   background-color: #f08080;
 }
 .orderContainer {

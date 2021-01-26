@@ -199,7 +199,7 @@ h1 {
 }
 .btnProceed {
   text-align: center;
-  font-size: x-large;
+  font-size: 25px;
   font-weight: bold;
   display: block;
   margin-left: auto;
@@ -429,12 +429,6 @@ h1 {
   width: 100%;
   background: rgb(54, 88, 189);
 }
-.qtyBtn,
-.removeBtn,
-.clearCartBtn,
-.btnProceed {
-  font-size: 1rem;
-}
 
 /* // Small devices (landscape phones, 576px and down) */
 @media (max-width: 576px) {
@@ -498,6 +492,10 @@ h1 {
   .flex-child1 {
     width: 100vw;
     margin: auto;
+  }
+  .categories,
+  .clearFilters {
+    font-size: 8px;
   }
 }
 

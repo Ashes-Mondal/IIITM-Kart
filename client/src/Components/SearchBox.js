@@ -73,7 +73,7 @@ const SearchBox = () => {
 				)}
 			</form> */}
       <SearchBar
-        type="search"
+        type="text"
         placeholder="search product"
         onChange={(value) => {
           setSearch(value);

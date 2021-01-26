@@ -419,7 +419,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                       })}
                       <b>Total Cost: Rs </b>
                       {user.orders[user.orders.length - index - 1].totalCost}
-                      <p className="d-flex align-items-center">
+                      <p className="row align-items-center">
                         <b>Delivery Status : </b>
                         {user.orders[user.orders.length - index - 1]
                           .deliveryStatus === true ? (
@@ -462,7 +462,6 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
           )}
         </div>
       </div>
-      
     </>
   );
 }
