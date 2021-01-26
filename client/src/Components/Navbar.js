@@ -249,11 +249,6 @@ function Navbar({ user, admin, loaded }) {
           {mobileView ? displayMobile() : displayDesktop()}
         </div>
       </nav>
-      {window.location.pathname === "/" &&
-      window.innerWidth <= 580 &&
-      loaded === true ? (
-        <SearchBox />
-      ) : null}
     </>
   );
 }

@@ -3,14 +3,18 @@ import ProductCard from "../ProductCard";
 // import { useHistory } from "react-router-dom";
 import Navbar2 from "../Navbar2";
 import CarouselPage from "../CarouselPage";
+import SearchBox from "../SearchBox";
 // import Carousel from "react-bootstrap/Carousel";
 const HomePage = ({ itemList, cart, setCart, setItemList }) => {
 	// const history = useHistory();
 	return (
 		<>
+			{window.location.pathname === "/" && window.innerWidth <= 580 ? (
+				<SearchBox />
+			) : null}
 			<Navbar2 itemList={itemList} setItemList={setItemList} />
 			<CarouselPage />
-			<div  className="row justify-content-center images-container">
+			<div className="row justify-content-center images-container">
 				{itemList.map((item, i) => {
 					return (
 						<ProductCard key={i} cart={cart} setCart={setCart} product={item} />
