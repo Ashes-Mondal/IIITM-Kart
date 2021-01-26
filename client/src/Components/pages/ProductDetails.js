@@ -99,10 +99,10 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
       <h1>Product Details</h1>
       <br />
       <div className="row">
-        <div className="col-6">
+        <div className="col-sm-12 col-lg-6">
           <img className="productDetailsImg" src={imageURL} alt="" />
         </div>
-        <div className="col-6">
+        <div className="col-sm-12 col-lg-6">
           <div>{category}</div>
           <h2>{itemName}</h2>
           <h6>{description}</h6>
@@ -180,32 +180,26 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
           </div>
           <br />
           <br />
-          <div class="dropdown">
-            <span>More about this product</span>
-            <div class="dropdown-content">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque id aliquet nulla, nec dapibus ex. Fusce suscipit
-                lectus sit amet risus commodo, at tincidunt sapien semper. Donec
-                eget aliquam orci. Mauris eleifend accumsan vehicula. Nullam
-                lacinia metus ac egestas molestie. Quisque magna magna,
-                venenatis eget diam a, porta bibendum urna. Integer facilisis
-                tempus enim at vulputate. Nunc iaculis pharetra risus, vel
-                convallis dui. Vestibulum eu ultricies orci.
-              </p>
-              <p>
-                Fusce est turpis, sollicitudin eget facilisis ut, consectetur
-                vel massa. Maecenas et nulla libero. Cras rutrum magna id leo
-                commodo, in ullamcorper justo efficitur. Vivamus et finibus
-                ante, ut vehicula metus. Suspendisse in nulla ipsum. Nunc
-                blandit, urna non consequat aliquam, neque risus congue ante, eu
-                scelerisque ante odio at leo. Class aptent taciti sociosqu ad
-                litora torquent per conubia nostra, per inceptos himenaeos.
-                Vestibulum nec consequat ligula. Nullam tempor eget risus id
-                maximus.
-              </p>
-            </div>
-          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Pellentesque id aliquet nulla, nec dapibus ex. Fusce suscipit lectus
+            sit amet risus commodo, at tincidunt sapien semper. Donec eget
+            aliquam orci. Mauris eleifend accumsan vehicula. Nullam lacinia
+            metus ac egestas molestie. Quisque magna magna, venenatis eget diam
+            a, porta bibendum urna. Integer facilisis tempus enim at vulputate.
+            Nunc iaculis pharetra risus, vel convallis dui. Vestibulum eu
+            ultricies orci.
+          </p>
+          <p>
+            Fusce est turpis, sollicitudin eget facilisis ut, consectetur vel
+            massa. Maecenas et nulla libero. Cras rutrum magna id leo commodo,
+            in ullamcorper justo efficitur. Vivamus et finibus ante, ut vehicula
+            metus. Suspendisse in nulla ipsum. Nunc blandit, urna non consequat
+            aliquam, neque risus congue ante, eu scelerisque ante odio at leo.
+            Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+            per inceptos himenaeos. Vestibulum nec consequat ligula. Nullam
+            tempor eget risus id maximus.
+          </p>
         </div>
       </div>
       <h5>Similar items:</h5>
@@ -214,13 +208,17 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
           return (
             <div
               key={i}
-              className="m-3 similarItem homeCard"
+              className="m-3 similarItem product-card"
               onClick={() => {
                 console.log("Product Details:", product);
                 window.location.href = `/productDetails/${product._id}`;
               }}
             >
-              <img src={product.imageURL} alt="???" />
+              <img
+                className="similarItemImg"
+                src={product.imageURL}
+                alt="???"
+              />
               <div className="similarItemDescription">
                 {product.description}
               </div>
