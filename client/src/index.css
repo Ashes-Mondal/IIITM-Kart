@@ -56,13 +56,13 @@ code {
   cursor: pointer;
 }
 .categoriesClicked {
-  background: rgb(218, 218, 218);
+  background: #145da0;
 }
 .clearFilters {
-  padding: 0.4rem 0 0.4 1.875rem;
+  /* padding: 0.4rem 0 0.4 1.875rem; */
+  padding: 0.4rem 1.875rem;
   align-self: center;
   margin: auto;
-  color: #ffe4e1;
 }
 .clearFilters:hover {
   cursor: pointer;
@@ -545,6 +545,31 @@ th {
   margin: auto;
   width: 50%;
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: all;
+  color: #145da0;
+}
+.dropdown-content {
+  display: none;
+  width: auto;
+  text-align: center;
+  position: relative;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  /* margin: 2rem 20% 4rem;
+  width: auto;
+  text-align: center;
+  background-color: #fffafa;
+  position: relative; */
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .biggerFont {
   font-size: x-large;
 }
