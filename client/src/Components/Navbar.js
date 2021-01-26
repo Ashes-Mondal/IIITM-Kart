@@ -221,6 +221,7 @@ function Navbar({ user, cart, admin }) {
 		);
 	};
 	/************************************ hamburger Drawer Ends here **********************************/
+
 	//side-effect
 	useEffect(() => {
 		const setResponsiveness = () => {
@@ -241,15 +242,19 @@ function Navbar({ user, cart, admin }) {
 						window.location.href = "/";
 					}}
 				>
-					IIITM-Kart
+					<a href="/" style={{ color: "white", textDecoration: "none" }}>
+						IIITM-Kart
+					</a>
 				</div>
-				{window.innerWidth <= 580 ? null : <SearchBox />}
+				{window.innerWidth > 580 ? <SearchBox /> : null}
 
-				<div className="navlink-container">
+				<div className={mobileView ? "m-auto" : "navlink-container"}>
 					{mobileView ? displayMobile() : displayDesktop()}
 				</div>
 			</nav>
-			{window.innerWidth <= 580 && window.location.pathname === '/' ? <SearchBox />: null}
+			{window.location.pathname === "/" && window.innerWidth <= 580 ? (
+				<SearchBox />
+			) : null}
 		</>
 	);
 }

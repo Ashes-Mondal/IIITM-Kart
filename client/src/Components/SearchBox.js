@@ -24,8 +24,8 @@ const SearchBox = () => {
 	const [Search, setSearch] = useState("");
 	const { setItemList } = useContext(Item);
 	//handleSearchSubmit
-	const handleSearchSubmit = async (e) => {
-		e.preventDefault();
+	const handleSearchSubmit = async () => {
+		// e.preventDefault();
 		history.push("/");
 		//requesting server to fetch Search data
 		const requestOptions = {
@@ -72,16 +72,17 @@ const SearchBox = () => {
 					</button>
 				)}
 			</form> */}
-
 			<SearchBar
-				className="search-box-form"
-				onChange={(e) => {
-					setSearch(e.target.value);
+				type="search"
+				placeholder="search product"
+				onChange={(value) => {
+					setSearch(value);
 				}}
 				onRequestSearch={() => handleSearchSubmit()}
 				style={{
-					alignSelf:"center",
-					height:"2rem"
+					width: "100%",
+					alignSelf: "center",
+					height: "2rem",
 				}}
 			/>
 		</div>

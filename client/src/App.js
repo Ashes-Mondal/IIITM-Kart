@@ -117,7 +117,7 @@ const App = () => {
 					<Authentication.Provider
 						value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
 					>
-						<Navbar user={user} cart={cart} admin={admin} />
+						<Navbar user={user} cart={cart} admin={admin} setLoaded={setLoaded}/>
 						{loaded === false ? (
 							<div>
 								<Loader

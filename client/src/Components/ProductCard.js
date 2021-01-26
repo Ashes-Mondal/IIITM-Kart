@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     margin:"auto",
 		marginTop: "1rem",
 		objectFit: "scale-down",
-    width: "15vw",
+    width: "auto",
     height:"20vh",
   },
 
