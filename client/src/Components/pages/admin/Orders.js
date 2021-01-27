@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import Divider from "@material-ui/core/Divider";
 import Table from "@material-ui/core/Table";
@@ -23,6 +23,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import SearchBar from "material-ui-search-bar";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -42,10 +43,19 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	root: {
+	tabRoot: {
 		backgroundColor: "#ede7f6",
 		display: "flex",
 		flexGrow: 1,
+	},
+	tableOrder: {
+		position: "relative",
+		margin: 0,
+		width: "100vw",
+	},
+	paper: {
+		margin: 0,
+		marginLeft: 0,
 	},
 }));
 
@@ -88,8 +98,8 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 				<main style={{ width: "100vw" }}>
 					<div
 						style={{
-							margin:"2vh 0vw",
-							padding:"0vh 2vw",
+							margin: "2vh 0vw",
+							padding: "0vh 2vw",
 							width: "100vw",
 							height: "auto",
 							fontSize: "130%",
@@ -121,8 +131,8 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 					<Divider style={{ width: "100vw" }} />
 					<div
 						style={{
-							margin:"2vh 0vw",
-							padding:"0vh 2vw",
+							margin: "2vh 0vw",
+							padding: "0vh 2vw",
 							width: "100vw",
 							height: "auto",
 							fontSize: "130%",
@@ -139,12 +149,12 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 					<Divider style={{ width: "100vw" }} />
 					<div
 						style={{
-							margin:"2vh 0vw",
-							padding:"0vh 2vw",
+							margin: "2vh 0vw",
+							padding: "0vh 2vw",
 							width: "100vw",
 							height: "auto",
 							fontSize: "130%",
-							overflow: "hidden"
+							overflow: "hidden",
 						}}
 					>
 						<strong>Payment Details</strong>
@@ -177,8 +187,8 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 					<Divider style={{ width: "100vw" }} />
 					<div
 						style={{
-							margin:"2vh 0vw",
-							padding:"0vh 2vw",
+							margin: "2vh 0vw",
+							padding: "0vh 2vw",
 							width: "100vw",
 							height: "auto",
 							fontSize: "130%",
@@ -248,6 +258,7 @@ const Orders = ({ setAdmin }) => {
 		razorpayOrderId: "",
 		razorpaySignature: "",
 	});
+	const [showSearchBar, setShowSearchBar] = useState(true);
 	useEffect(() => {
 		const fetchAllOrders = async () => {
 			const result = await (await fetch("/fetchAllOrders")).json();
@@ -265,6 +276,13 @@ const Orders = ({ setAdmin }) => {
 			}
 		};
 		fetchAllOrders();
+		const setResponsiveness = () => {
+			if (window.innerWidth < 1110) return setShowSearchBar(false);
+			else return setShowSearchBar(true);
+		};
+
+		setResponsiveness();
+		window.addEventListener("resize", () => setResponsiveness());
 	}, [history, setIsAuth, setAdmin, setDisplayOrders]);
 
 	const handleDeliveryStatus = async (order) => {
@@ -357,6 +375,25 @@ const Orders = ({ setAdmin }) => {
 		}
 		setDisplayOrders(filteredList);
 	};
+
+	const StyledTableCell = withStyles((theme) => ({
+		head: {
+			backgroundColor: theme.palette.common.black,
+			color: theme.palette.common.white,
+		},
+		body: {
+			fontSize: 14,
+		},
+	}))(TableCell);
+
+	const StyledTableRow = withStyles((theme) => ({
+		root: {
+			"&:nth-of-type(odd)": {
+				backgroundColor: theme.palette.action.hover,
+			},
+		},
+	}))(TableRow);
+	//   &nbsp
 	return (
 		<div className="adminPanel">
 			<OrderDetails
@@ -387,141 +424,161 @@ const Orders = ({ setAdmin }) => {
 					</Button>
 				</Modal.Footer>
 			</Modal>
-
 			<h1>Orders</h1>
-			<nav style={{ top: "4.1rem" }} className="sticky-top">
-				<Paper className={classes.root}>
+			{showProcessing ? <LinearProgress color="secondary" /> : null}
+			<nav style={{ top: "3.5rem" }} className="sticky-top mb-1">
+				<Paper className={classes.tabRoot}>
 					<Tabs
+						style={{ display: "flex", flex: "1 1 auto" }}
 						value={value}
 						onChange={handleChange}
 						indicatorColor="primary"
 						textColor="primary"
 						centered
 					>
-						<Tab onClick={showAllOrders} label="All Orders" />
-						<Tab onClick={showPendingOrders} label="Pending" />
-						<Tab onClick={showDeliveredOrders} label="Delivered" />
-						<Tab onClick={showCancelledOrders} label="Cancelled" />
-						<Tab onClick={showReturnedOrders} label="Returned" />
-					</Tabs>
-					<form
-						className={classes.form}
-						onSubmit={(e) => {
-							e.preventDefault();
-							handleFilter();
-						}}
-					>
-						<input
-							className="form-control col-xs-4"
-							type="search"
-							placeholder="search"
-							value={search}
-							onChange={(e) => {
-								setSearch(e.target.value);
-							}}
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showAllOrders}
+							label="All Orders"
 						/>
-						<button
-							type="submit"
-							className="btn btn-warning btn-circle btn-lg ml-1"
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showDeliveredOrders}
+							label="Delivered"
+						/>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showPendingOrders}
+							label="Pending"
+						/>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showCancelledOrders}
+							label="Cancelled"
+						/>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showReturnedOrders}
+							label="Returned"
+						/>
+					</Tabs>
+					{showSearchBar ? (
+						<form
+							style={{
+								flex: "2 2 auto",
+								marginLeft: "1rem",
+								marginRight: "2rem",
+							}}
+							className={classes.form}
+							onSubmit={(e) => {
+								e.preventDefault();
+								handleFilter();
+							}}
 						>
-							<SearchIcon />
-						</button>
-					</form>
+							<input
+								className="form-control"
+								type="search"
+								placeholder="search"
+								value={search}
+								onChange={(e) => {
+									setSearch(e.target.value);
+								}}
+							/>
+							<button
+								type="submit"
+								className="btn btn-warning btn-circle btn-lg ml-1"
+							>
+								<SearchIcon />
+							</button>
+						</form>
+					) : null}
 				</Paper>
 			</nav>
-			{showProcessing ? <LinearProgress color="secondary" /> : null}
-			{!showMore ? (
-				<main>
-					<table>
-						<thead>
-							<tr>
-								<th style={{ top: "7.25rem" }} className="sticky-top">
-									<h4>
-										<strong>Order ID</strong>
-									</h4>
-								</th>
-								<th style={{ top: "7.25rem" }} className="sticky-top">
-									<h4>
-										<strong>Customer Name</strong>
-									</h4>
-								</th>
-								<th style={{ top: "7.25rem" }} className="sticky-top">
-									<h4>
-										<strong>Customer Phone</strong>
-									</h4>
-								</th>
-								<th style={{ top: "7.25rem" }} className="sticky-top">
-									<h4>
-										<strong>Order Cost</strong>
-									</h4>
-								</th>
-								<th style={{ top: "7.25rem" }} className="sticky-top">
-									<h4>
-										<strong>Delivery Status</strong>
-									</h4>
-								</th>
-								<th style={{ top: "7.25rem" }} className="sticky-top"></th>
-							</tr>
-						</thead>
+			{showSearchBar ? null : (
+				<SearchBar
+					type="text"
+					placeholder="search product"
+					onChange={(value) => {
+						setSearch(value);
+					}}
+					onRequestSearch={() => handleFilter()}
+					style={{
+						width: "100%",
+						alignSelf: "center",
+						height: "2rem",
+					}}
+				/>
+			)}
 
-						<tbody>
-							{displayOrders
-								.slice(0)
-								.reverse()
-								.map((order, index) => {
-									return (
-										<tr>
-											<td>
-												<h6 className="m-2"> {order.razorpayOrderId}</h6>
-											</td>
-											<td>
-												<h5>
-													{order.user.name.firstName} {order.user.name.lastName}
-												</h5>
-											</td>
-
-											<td>
-												<h5 className="m-2"> {order.user.phone}</h5>
-											</td>
-											<td>
-												<h5 className="m-2"> Rs {order.totalCost}</h5>
-											</td>
-											<td>
-												<button
-													className={`btn ${
-														order.cancelledStatus
-															? "btn-danger"
-															: order.deliveryStatus
-															? "btn-success"
-															: "btn-warning"
-													} mr-2 shadow ordersBtn`}
-													disabled={order.cancelledStatus ? "disabled" : ""}
-													onClick={() => handleDeliveryStatus(order)}
-												>
-													{showDeliveryStatus(
-														order.cancelledStatus,
-														order.deliveryStatus
-													)}
-												</button>
-											</td>
-											<td>
-												<button
-													className="btn btn-primary float-right mr-3 shadow"
-													onClick={() => {
-														setOrderDetails(order);
-														setShowMore(true);
-													}}
-												>
-													More
-												</button>
-											</td>
-										</tr>
-									);
-								})}
-						</tbody>
-					</table>
-				</main>
-			) : null}
+			<TableContainer component={Paper} className={classes.paper}>
+				<Table className={classes.tableOrder} aria-label="customized table">
+					<TableHead>
+						<TableRow>
+							<StyledTableCell style={{ fontSize: "1rem" }}>
+								Order Id
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Customer Name
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Total Amount
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Contact Number
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Order Status
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Learn More!
+							</StyledTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{displayOrders.map((order, index) => (
+							<StyledTableRow key={index}>
+								<StyledTableCell component="th" scope="row">
+									{order.razorpayOrderId}
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									{order.user.name.firstName} {order.user.name.lastName}
+								</StyledTableCell>
+								<StyledTableCell align="center">Rs {order.totalCost}</StyledTableCell>
+								<StyledTableCell align="center">{order.user.phone}</StyledTableCell>
+								<StyledTableCell align="center">
+									<button
+										className={`btn ${
+											order.cancelledStatus
+												? "btn-danger"
+												: order.deliveryStatus
+												? "btn-success"
+												: "btn-warning"
+										} mr-2 shadow ordersBtn`}
+										disabled={order.cancelledStatus ? "disabled" : ""}
+										onClick={() => handleDeliveryStatus(order)}
+									>
+										{showDeliveryStatus(
+											order.cancelledStatus,
+											order.deliveryStatus
+										)}
+									</button>
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									<button
+										className="btn btn-primary float-right mr-3 shadow"
+										onClick={() => {
+											setOrderDetails(order);
+											setShowMore(true);
+										}}
+									>
+										More
+									</button>
+								</StyledTableCell>
+							</StyledTableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</div>
 	);
 };
@@ -646,3 +703,172 @@ export default Orders;
 						</Table>
 					</TableContainer>
 				</List>*/
+
+/********************************************Main Code(DO NOT DELETE_)******************************************* */
+{
+	/* <div className="adminPanel">
+			<OrderDetails
+				orderDetails={orderDetails}
+				showMore={showMore}
+				setShowMore={setShowMore}
+			/>
+
+			<Modal show={showModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>OOPS!!</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Session Timeout</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose} href="/login">
+						Login
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			<Modal show={error} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>OOPS!!</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Customer Does Not Exist!!</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						close
+					</Button>
+				</Modal.Footer>
+			</Modal>
+
+			<h1>Orders</h1>
+			<nav style={{ top: "4.1rem" }} className="sticky-top">
+				<Paper className={classes.root}>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						centered
+					>
+						<Tab onClick={showAllOrders} label="All Orders" />
+						<Tab onClick={showPendingOrders} label="Pending" />
+						<Tab onClick={showDeliveredOrders} label="Delivered" />
+						<Tab onClick={showCancelledOrders} label="Cancelled" />
+						<Tab onClick={showReturnedOrders} label="Returned" />
+					</Tabs>
+					<form
+						className={classes.form}
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleFilter();
+						}}
+					>
+						<input
+							className="form-control col-xs-4"
+							type="search"
+							placeholder="search"
+							value={search}
+							onChange={(e) => {
+								setSearch(e.target.value);
+							}}
+						/>
+						<button
+							type="submit"
+							className="btn btn-warning btn-circle btn-lg ml-1"
+						>
+							<SearchIcon />
+						</button>
+					</form>
+				</Paper>
+			</nav>
+			{showProcessing ? <LinearProgress color="secondary" /> : null}
+			{!showMore ? (
+				<main>
+					<table>
+						<thead>
+							<tr>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Order ID</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Customer Name</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Customer Phone</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Order Cost</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top">
+									<h4>
+										<strong>Delivery Status</strong>
+									</h4>
+								</th>
+								<th style={{ top: "7.25rem" }} className="sticky-top"></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{displayOrders
+								.slice(0)
+								.reverse()
+								.map((order, index) => {
+									return (
+										<tr key={index}>
+											<td>
+												<h6 className="m-2"> {order.razorpayOrderId}</h6>
+											</td>
+											<td>
+												<h5>
+													{order.user.name.firstName} {order.user.name.lastName}
+												</h5>
+											</td>
+
+											<td>
+												<h5 className="m-2"> {order.user.phone}</h5>
+											</td>
+											<td>
+												<h5 className="m-2"> Rs {order.totalCost}</h5>
+											</td>
+											<td>
+												<button
+													className={`btn ${
+														order.cancelledStatus
+															? "btn-danger"
+															: order.deliveryStatus
+															? "btn-success"
+															: "btn-warning"
+													} mr-2 shadow ordersBtn`}
+													disabled={order.cancelledStatus ? "disabled" : ""}
+													onClick={() => handleDeliveryStatus(order)}
+												>
+													{showDeliveryStatus(
+														order.cancelledStatus,
+														order.deliveryStatus
+													)}
+												</button>
+											</td>
+											<td>
+												<button
+													className="btn btn-primary float-right mr-3 shadow"
+													onClick={() => {
+														setOrderDetails(order);
+														setShowMore(true);
+													}}
+												>
+													More
+												</button>
+											</td>
+										</tr>
+									);
+								})}
+						</tbody>
+					</table>
+				</main>
+			) : null}
+		</div> */
+}

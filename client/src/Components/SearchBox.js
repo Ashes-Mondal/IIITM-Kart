@@ -53,25 +53,6 @@ const SearchBox = () => {
           Could not find anything!
         </Alert>
       </Snackbar>
-      {/* <form onSubmit={handleSearchSubmit} className="search-box-form ">
-				<input
-					className="form-control"
-					type="search"
-					placeholder="search product"
-					value={Search}
-					onChange={(e) => {
-						setSearch(e.target.value);
-					}}
-				/>
-				{window.innerWidth <= 580 ? null : (
-					<button
-						type="submit"
-						className="btn btn-warning btn-circle btn-lg ml-1"
-					>
-						<SearchIcon />
-					</button>
-				)}
-			</form> */}
       <SearchBar
         type="text"
         placeholder="search product"
