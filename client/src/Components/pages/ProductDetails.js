@@ -74,8 +74,8 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 		setState({ open: false, vertical: "top", horizontal: "right" });
 	};
 
-	const filterSimilarProducts = (itemList, itemCategory) => {
-		return itemList.filter((product) => product.category === itemCategory);
+	const filterSimilarProducts = (itemList, itemCategory,itemId) => {
+		return itemList.filter((product) => product.category === itemCategory && product._id !==itemId);
 	};
 
 	return (
@@ -207,7 +207,7 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 			</div>
 			<h5>Similar items:</h5>
 			<div className="similarItems">
-				{filterSimilarProducts(itemList, item.category).map((product, i) => {
+				{filterSimilarProducts(itemList, item.category,item._id).map((product, i) => {
 					return (
 						<div
 							key={i}
