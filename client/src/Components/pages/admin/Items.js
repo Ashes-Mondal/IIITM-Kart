@@ -196,7 +196,7 @@ const Items = ({ itemList, setItemList }) => {
 					</Button>
 					{showSearchBar ? (
 						<form
-							style={{ flex: "2 2 auto",marginRight:"2rem" }}
+							style={{ flex: "2 2 auto", marginRight: "2rem" }}
 							className={classes.form}
 							onSubmit={(e) => {
 								e.preventDefault();
@@ -274,14 +274,14 @@ const Items = ({ itemList, setItemList }) => {
 										to={`/admin/editItem/${item._id}`}
 										className="text-white"
 									>
-										<button className="btn btn-primary float-right mr-3 shadow">
+										<button className="btn btn -sm btn-primary mr-3 shadow">
 											Edit
 										</button>
 									</Link>
 								</StyledTableCell>
 								<StyledTableCell align="center">
 									<button
-										className="btn btn-danger float-right shadow"
+										className="btn btn -sm btn-danger shadow"
 										onClick={() => {
 											setDeleteItem(item);
 											setConfirmDeleteItemModal(true);
