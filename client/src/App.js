@@ -12,6 +12,7 @@ import {
 	useRouteMatch,
 } from "react-router-dom";
 import "./App.css";
+import "./Components/pages/admin/admin.css"
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
 import Dashboard from "./Components/pages/admin/Dashboard";

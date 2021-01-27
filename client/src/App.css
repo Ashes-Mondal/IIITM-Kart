@@ -95,7 +95,7 @@ h1 {
   border: none;
   color: white;
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 .qtyBtn {
@@ -434,7 +434,6 @@ h1 {
 @media (max-width: 576px) {
   /* For mobile phones: */
   body {
-    height: 100vh;
     margin: auto;
     width: 100vw;
     overflow-x: hidden;
@@ -442,6 +441,7 @@ h1 {
   .navbar1 {
     display: flex;
     width: 100vw;
+    
   }
   .navbar2 {
     width: 100vw;

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Authentication } from "../../../App";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
@@ -21,6 +21,13 @@ import Paper from "@material-ui/core/Paper";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import SearchBar from "material-ui-search-bar";
 
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -62,6 +69,15 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: "#ede7f6",
 		display: "flex",
 		flexGrow: 1,
+	},
+	table: {
+		position: "relative",
+		margin: 0,
+		width: "100vw",
+	},
+	paper: {
+		margin: 0,
+		marginLeft: 0,
 	},
 }));
 
@@ -290,7 +306,8 @@ const Users = ({ setAdmin }) => {
 	});
 	const [edit, setEdit] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-
+	const [showSearchBar, setShowSearchBar] = useState(true);
+	//side-effect
 	useEffect(() => {
 		const fetchAllUsers = async () => {
 			const result = await (await fetch("/fetchAllUsers")).json();
@@ -306,6 +323,13 @@ const Users = ({ setAdmin }) => {
 			}
 		};
 		fetchAllUsers();
+		const setResponsiveness = () => {
+			if (window.innerWidth < 580) return setShowSearchBar(false);
+			else return setShowSearchBar(true);
+		};
+
+		setResponsiveness();
+		window.addEventListener("resize", () => setResponsiveness());
 	}, [history, setIsAuth, setAdmin]);
 
 	const handleClose = () => {
@@ -379,10 +403,346 @@ const Users = ({ setAdmin }) => {
 		}
 		setSelectedUsers(filteredList);
 	};
+
+	const StyledTableCell = withStyles((theme) => ({
+		head: {
+			backgroundColor: theme.palette.common.black,
+			color: theme.palette.common.white,
+		},
+		body: {
+			fontSize: 14,
+		},
+	}))(TableCell);
+
+	const StyledTableRow = withStyles((theme) => ({
+		root: {
+			"&:nth-of-type(odd)": {
+				backgroundColor: theme.palette.action.hover,
+			},
+		},
+	}))(TableRow);
+	//   &nbsp
+
 	return (
-		<>
-			<div className="adminPanel">
-				{/* TOGGLE ADMIN PERMISSION */}
+		<div className="adminPanel">
+			<Modal show={showAdminModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Are you Sure?</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					Do you want to {makeUserAdmin.admin ? "Give" : "Revoke"} the user{" "}
+					{makeUserAdmin.admin ? null : "from"} admin privileges?
+				</Modal.Body>
+				<Modal.Footer>
+					<Button
+						variant="warning"
+						onClick={() => {
+							handleClose();
+							toggleAdminPrivilege();
+						}}
+					>
+						Yes
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						No
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			{/* SESSION TIMEOUT  */}
+			<Modal show={showModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>OOPS!!</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Session Timeout</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose} href="/login">
+						Login
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			<EditCustomer
+				Customer={Customer}
+				setCustomer={setCustomer}
+				edit={edit}
+				setEdit={setEdit}
+				users={users}
+				setUsers={setUsers}
+				setShowModal={setShowModal}
+			/>
+			<h1>Users</h1>
+			{showProcessing ? <LinearProgress color="secondary" /> : null}
+			<nav style={{ top: "3.5rem" }} className="sticky-top mb-1">
+				<Paper className={classes.tabRoot}>
+					<Tabs
+						style={{ display: "flex", flex: "1 1 auto" }}
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						centered
+					>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showAllUsers}
+							label="All Users"
+						/>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showNormalUsers}
+							label="Customers"
+						/>
+						<Tab
+							style={{ flex: "1 1 auto" }}
+							onClick={showAdminUsers}
+							label="Admin Users"
+						/>
+					</Tabs>
+					{showSearchBar ? (
+						<form
+							style={{
+								flex: "2 2 auto",
+								marginLeft: "1rem",
+								marginRight: "2rem",
+							}}
+							className={classes.form}
+							onSubmit={(e) => {
+								e.preventDefault();
+								handleFilter();
+							}}
+						>
+							<input
+								className="form-control"
+								type="search"
+								placeholder="search"
+								value={search}
+								onChange={(e) => {
+									setSearch(e.target.value);
+								}}
+							/>
+							<button
+								type="submit"
+								className="btn btn-warning btn-circle btn-lg ml-1"
+							>
+								<SearchIcon />
+							</button>
+						</form>
+					) : null}
+				</Paper>
+			</nav>
+			{showSearchBar ? null : (
+				<SearchBar
+					type="text"
+					placeholder="search product"
+					onChange={(value) => {
+						setSearch(value);
+					}}
+					onRequestSearch={() => handleFilter()}
+					style={{
+						width: "100%",
+						alignSelf: "center",
+						height: "2rem",
+					}}
+				/>
+			)}
+
+			<TableContainer component={Paper} className={classes.paper}>
+				<Table className={classes.table} aria-label="customized table">
+					<TableHead>
+						<TableRow>
+							<StyledTableCell style={{ fontSize: "1rem" }}>
+								User Id
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Customer Name
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Email
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Contact Number
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Admin privilege
+							</StyledTableCell>
+							<StyledTableCell style={{ fontSize: "1rem" }} align="center">
+								Update
+							</StyledTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{selectedUsers.map((user, index) => (
+							<StyledTableRow key={index}>
+								<StyledTableCell component="th" scope="row">
+									{user._id}
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									{user.name.firstName} {user.name.lastName}
+								</StyledTableCell>
+								<StyledTableCell align="center">{user.email}</StyledTableCell>
+								<StyledTableCell align="center">{user.phone}</StyledTableCell>
+								<StyledTableCell align="center">
+									<button
+										className={`btn btn-sm btn-${
+											user.admin ? "danger" : "warning"
+										} shadow`}
+										onClick={() => {
+											setMakeUserAdmin({
+												_id: user._id,
+												admin: !user.admin,
+											});
+											setShowAdminModal(true);
+										}}
+									>
+										{user.admin ? "Revoke admin" : "Make Admin"}
+									</button>
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									<button
+										className="btn btn-sm btn-primary shadow"
+										onClick={() => {
+											setCustomer({
+												_id: user._id,
+												firstName: user.name.firstName,
+												lastName: user.name.lastName,
+												phone: user.phone,
+												address: user.address,
+												email: user.email,
+											});
+											setEdit(true);
+										}}
+									>
+										Edit
+									</button>
+								</StyledTableCell>
+							</StyledTableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</div>
+	);
+};
+
+export default Users;
+
+/***********************************************************OLD CODE******************************************************* */
+/*
+{users.map((user, index) => {
+  return (
+    <div className="user-form effect3D effect3D-users" key={index}>
+      {user.phone === edit ? (
+        <span className="edituser" onClick={handleUpdate}>
+          UPDATE
+        </span>
+      ) : (
+        <span
+          className="edituser"
+          onClick={() => {
+            toggleEdit(user);
+          }}
+        >
+          EDIT
+        </span>
+      )}
+      <div>
+        <label>Id: </label>
+        <span>{user._id}</span>
+      </div>
+      <div>
+        <label>Name:</label>
+        <input
+          type="text"
+          value={
+            user.phone === edit
+              ? userDetails.name.firstName
+              : user.name.firstName
+          }
+          onChange={(e) => {
+            let changedUserDetails = {
+              ...userDetails,
+              name: {
+                ...userDetails.name,
+                firstName: e.target.value,
+              },
+            };
+            setUserDetails(changedUserDetails);
+          }}
+          disabled={user.phone === edit ? false : true}
+        />
+        <input
+          type="text"
+          value={
+            user.phone === edit
+              ? userDetails.name.lastName
+              : user.name.lastName
+          }
+          onChange={(e) => {
+            let changedUserDetails = {
+              ...userDetails,
+              name: { ...userDetails.name, lastName: e.target.value },
+            };
+            setUserDetails(changedUserDetails);
+          }}
+          disabled={user.phone === edit ? false : true}
+        />
+      </div>
+      <div>
+        <label>Phone:</label>
+        <input
+          type="text"
+          value={user.phone === edit ? userDetails.phone : user.phone}
+          onChange={(e) => {
+            let changedUserDetails = {
+              ...userDetails,
+              phone: e.target.value,
+            };
+            setUserDetails(changedUserDetails);
+          }}
+          disabled={user.phone === edit ? false : true}
+        />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input
+          type="text"
+          value={user.phone === edit ? userDetails.email : user.email}
+          onChange={(e) => {
+            let changedUserDetails = {
+              ...userDetails,
+              email: e.target.value,
+            };
+            setUserDetails(changedUserDetails);
+          }}
+          disabled={user.phone === edit ? false : true}
+        />
+      </div>
+      <div>
+        <label>Address:</label>
+        <input
+          type="text"
+          value={
+            user.phone === edit ? userDetails.address : user.address
+          }
+          onChange={(e) => {
+            let changedUserDetails = {
+              ...userDetails,
+              address: e.target.value,
+            };
+            setUserDetails(changedUserDetails);
+          }}
+          disabled={user.phone === edit ? false : true}
+        />
+      </div>
+    </div>
+  );
+})}
+*/
+
+/********************************************Main Code(DO NOT DELETE_)******************************************* */
+
+{
+	/* <div className="adminPanel">
+				
 				<Modal show={showAdminModal} onHide={handleClose}>
 					<Modal.Header closeButton>
 						<Modal.Title>Are you Sure?</Modal.Title>
@@ -406,7 +766,7 @@ const Users = ({ setAdmin }) => {
 						</Button>
 					</Modal.Footer>
 				</Modal>
-				{/* SESSION TIMEOUT */}
+				 SESSION TIMEOUT 
 				<Modal show={showModal} onHide={handleClose}>
 					<Modal.Header closeButton>
 						<Modal.Title>OOPS!!</Modal.Title>
@@ -545,122 +905,5 @@ const Users = ({ setAdmin }) => {
 						</tbody>
 					</table>
 				</main>
-			</div>
-		</>
-	);
-};
-
-export default Users;
-
-/***********************************************************OLD CODE******************************************************* */
-/*
-{users.map((user, index) => {
-  return (
-    <div className="user-form effect3D effect3D-users" key={index}>
-      {user.phone === edit ? (
-        <span className="edituser" onClick={handleUpdate}>
-          UPDATE
-        </span>
-      ) : (
-        <span
-          className="edituser"
-          onClick={() => {
-            toggleEdit(user);
-          }}
-        >
-          EDIT
-        </span>
-      )}
-      <div>
-        <label>Id: </label>
-        <span>{user._id}</span>
-      </div>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
-          value={
-            user.phone === edit
-              ? userDetails.name.firstName
-              : user.name.firstName
-          }
-          onChange={(e) => {
-            let changedUserDetails = {
-              ...userDetails,
-              name: {
-                ...userDetails.name,
-                firstName: e.target.value,
-              },
-            };
-            setUserDetails(changedUserDetails);
-          }}
-          disabled={user.phone === edit ? false : true}
-        />
-        <input
-          type="text"
-          value={
-            user.phone === edit
-              ? userDetails.name.lastName
-              : user.name.lastName
-          }
-          onChange={(e) => {
-            let changedUserDetails = {
-              ...userDetails,
-              name: { ...userDetails.name, lastName: e.target.value },
-            };
-            setUserDetails(changedUserDetails);
-          }}
-          disabled={user.phone === edit ? false : true}
-        />
-      </div>
-      <div>
-        <label>Phone:</label>
-        <input
-          type="text"
-          value={user.phone === edit ? userDetails.phone : user.phone}
-          onChange={(e) => {
-            let changedUserDetails = {
-              ...userDetails,
-              phone: e.target.value,
-            };
-            setUserDetails(changedUserDetails);
-          }}
-          disabled={user.phone === edit ? false : true}
-        />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input
-          type="text"
-          value={user.phone === edit ? userDetails.email : user.email}
-          onChange={(e) => {
-            let changedUserDetails = {
-              ...userDetails,
-              email: e.target.value,
-            };
-            setUserDetails(changedUserDetails);
-          }}
-          disabled={user.phone === edit ? false : true}
-        />
-      </div>
-      <div>
-        <label>Address:</label>
-        <input
-          type="text"
-          value={
-            user.phone === edit ? userDetails.address : user.address
-          }
-          onChange={(e) => {
-            let changedUserDetails = {
-              ...userDetails,
-              address: e.target.value,
-            };
-            setUserDetails(changedUserDetails);
-          }}
-          disabled={user.phone === edit ? false : true}
-        />
-      </div>
-    </div>
-  );
-})}
-*/
+			</div> */
+}
