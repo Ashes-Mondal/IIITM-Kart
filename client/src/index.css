@@ -51,8 +51,9 @@ code {
 }
 .categories {
 	flex: 1 1 auto;
-	align-self: center;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .categories:hover {
 	background: #145da0;
@@ -62,9 +63,10 @@ code {
 	background: #145da0;
 }
 .clearFilters {
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex: 1 1 auto;
-	align-self: center;
 	color: #ffe4e1;
 }
 .clearFilters:hover {
@@ -99,6 +101,7 @@ code {
 	border-radius: 35px;
 }
 img {
+	height: 200px;
 	object-fit: contain;
 }
 .rating1 {

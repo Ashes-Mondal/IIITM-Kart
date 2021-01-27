@@ -67,7 +67,8 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 				history.push("/login");
 			}
 		} catch (error) {
-			console.log("ERROR:", error);
+			alert(error);
+			// console.log("ERROR:", error);
 		}
 	};
 	const handleClose = () => {
@@ -213,7 +214,6 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 							key={i}
 							className="m-3 similarItem product-card"
 							onClick={() => {
-								console.log("Product Details:", product);
 								window.location.href = `/productDetails/${product._id}`;
 							}}
 						>

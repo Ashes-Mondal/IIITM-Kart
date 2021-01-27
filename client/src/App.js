@@ -12,7 +12,7 @@ import {
 	useRouteMatch,
 } from "react-router-dom";
 import "./App.css";
-import "./Components/pages/admin/admin.css"
+import "./Components/pages/admin/admin.css";
 import Login from "./Components/pages/Login";
 import Signup from "./Components/pages/Signup";
 import Dashboard from "./Components/pages/admin/Dashboard";
@@ -33,6 +33,7 @@ const Item = createContext();
 const Authentication = createContext();
 
 const App = () => {
+	const [completeItemList, setCompleteItemList] = useState([]);
 	const [itemList, setItemList] = useState([]);
 	const [cart, setCart] = useState([]);
 	const [isAuth, setIsAuth] = useState(false);
@@ -50,7 +51,6 @@ const App = () => {
 		const fetchItems_fetchUser = async () => {
 			//fetching user data from the server side if any
 			const result = await (await fetch("/getUserDetails")).json();
-			console.log("RESULT", result);
 			//if response is true then user is logged in
 			if (result.response === true) {
 				//accordingly setting the states
@@ -64,6 +64,7 @@ const App = () => {
 			const listOfItems = await (await fetch("/fetchItems")).json();
 			// dispatch({ type: "setItemList", payload: listOfItems });
 			setItemList(listOfItems || []);
+			setCompleteItemList(listOfItems || []);
 			setLoaded(true);
 		};
 		fetchItems_fetchUser();
@@ -85,7 +86,12 @@ const App = () => {
 					</Route>
 					<Route path={`${path}/items`}>
 						<SideNavBar />
-						<Items itemList={itemList} setItemList={setItemList} />
+						<Items
+							itemList={itemList}
+							setItemList={setItemList}
+							completeItemList={completeItemList}
+							setCompleteItemList={setCompleteItemList}
+						/>
 					</Route>
 					<Route path={`${path}/orders`}>
 						<SideNavBar />
@@ -118,7 +124,7 @@ const App = () => {
 					<Authentication.Provider
 						value={{ isAuth: isAuth, setIsAuth: setIsAuth }}
 					>
-						<Navbar user={user} cart={cart} admin={admin} loaded={loaded}/>
+						<Navbar user={user} cart={cart} admin={admin} loaded={loaded} />
 						{loaded === false ? (
 							<div>
 								<Loader
@@ -143,7 +149,7 @@ const App = () => {
 											setCart={setCart}
 											setItemList={setItemList}
 										/>
-                    <Footer />
+										<Footer />
 									</Route>
 									<Route exact path="/productDetails/:itemId">
 										<ProductDetails
@@ -152,7 +158,7 @@ const App = () => {
 											setCart={setCart}
 											setItemList={setItemList}
 										/>
-                    <Footer />
+										<Footer />
 									</Route>
 									<Route exact path="/cart">
 										<ShoppingCart
@@ -162,7 +168,7 @@ const App = () => {
 											setUser={setUser}
 											setLoaded={setLoaded}
 										/>
-                    <Footer />
+										<Footer />
 									</Route>
 									{isAuth ? (
 										<Route exact path="/user">
@@ -171,7 +177,7 @@ const App = () => {
 												setUser={setUser}
 												setLoaded={setLoaded}
 											/>
-                      <Footer />
+											<Footer />
 										</Route>
 									) : null}
 									{isAuth ? null : (
