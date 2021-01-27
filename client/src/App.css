@@ -441,7 +441,6 @@ h1 {
   .navbar1 {
     display: flex;
     width: 100vw;
-    
   }
   .navbar2 {
     width: 100vw;
@@ -502,6 +501,10 @@ h1 {
   }
   .siteName {
     max-width: 40%;
+  }
+  .search-margin {
+    width: 100%;
+    margin-left: 0;
   }
 }
 

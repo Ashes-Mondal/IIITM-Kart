@@ -62,7 +62,6 @@ const SearchBox = () => {
         }}
         onRequestSearch={() => handleSearchSubmit()}
         style={{
-          width: "50%",
           alignSelf: "center",
           height: "2rem",
         }}
