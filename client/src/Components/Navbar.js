@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import SearchBox from "./SearchBox";
+import logo from "./logo.png";
+import siteName from "./Capture.PNG";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -238,9 +240,12 @@ function Navbar({ user, admin, loaded }) {
   return (
     <>
       <nav className=" navbar1">
-        <div className="site-name text1">
-          <a href="/" style={{ color: "white", textDecoration: "none" }}>
-            IIITM-Kart
+        <div className="site-name">
+          <a href="/">
+            <img className="siteLogo" src={logo} alt="IIITM-Kart" />
+            <span>
+              <img className="siteName" src={siteName} alt="IIITM-Kart" />
+            </span>
           </a>
         </div>
         {window.innerWidth > 580 ? <SearchBox /> : null}

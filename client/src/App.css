@@ -497,6 +497,12 @@ h1 {
   .clearFilters {
     font-size: 8px;
   }
+  .siteLogo {
+    max-width: 80%;
+  }
+  .siteName {
+    max-width: 40%;
+  }
 }
 
 /* // Medium devices (tablets, 768px and up)*/

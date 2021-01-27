@@ -149,9 +149,30 @@ img {
   font-size: 2rem;
 }
 .site-name {
-  text-align: center;
   margin: auto;
   flex: 1 1 auto;
+}
+/* .logo {
+  display: block;
+  padding: 0%;
+} */
+.siteLogo {
+  margin-right: 0px;
+  margin-left: 4px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  max-width: 40%;
+  height: 50px;
+}
+.siteName {
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  max-width: 100%;
+  width: auto;
+  position: absolute;
+  margin-top: 10px;
+  height: 30px;
 }
 .site-name:hover {
   cursor: pointer;
@@ -160,7 +181,9 @@ img {
   display: flex;
   flex: 2 2 auto;
 }
-
+.search-margin {
+  margin-left: 30%;
+}
 .form-control {
   width: 100%;
 }

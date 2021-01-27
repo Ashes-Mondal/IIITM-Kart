@@ -74,13 +74,14 @@ const SearchBox = () => {
 			</form> */}
       <SearchBar
         type="text"
+        className="search-margin"
         placeholder="search product"
         onChange={(value) => {
           setSearch(value);
         }}
         onRequestSearch={() => handleSearchSubmit()}
         style={{
-          width: "100%",
+          width: "50%",
           alignSelf: "center",
           height: "2rem",
         }}
