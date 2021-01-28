@@ -5,7 +5,7 @@ import Carousel from "react-bootstrap/Carousel";
 const CarouselPage = () => {
 	const history = useHistory();
 	return (
-		<Carousel style={{ backgroundColor: "red", width: "100vw" }}>
+		<Carousel style={{ width: "100vw" }}>
 			<Carousel.Item interval={5000}>
 				<img
 					style={{
