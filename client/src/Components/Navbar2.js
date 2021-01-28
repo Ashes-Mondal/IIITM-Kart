@@ -31,8 +31,9 @@ const Navbar2 = ({ itemList, setItemList }) => {
           {sortBy}{" "}
         </Dropdown.Toggle> */}
 
-        <Dropdown.Toggle variant="info">
-          {sortBy}
+        <Dropdown.Toggle variant="inherit">
+          <span className="toggleDropDown">{sortBy}</span>
+
           {/* <button className="dropbtn">
             <b>{sortBy}</b>
           </button> */}

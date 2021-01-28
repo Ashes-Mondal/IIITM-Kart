@@ -45,10 +45,13 @@ code {
   cursor: pointer;
 } */
 .dropdown1 {
-  flex: 1 1 auto;
   margin-right: 0px;
-  margin-left: 4px;
+  margin-left: 1%;
   margin-bottom: 4px;
+}
+
+.toggleDropDown {
+  font-size: 15px;
 }
 /* .dropdown1:hover .dropdown-content1 {
   display: block;
@@ -61,6 +64,7 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1rem;
 }
 .categories:hover {
   background: #145da0;
@@ -75,6 +79,7 @@ code {
   align-items: center;
   flex: 1 1 auto;
   color: #ffe4e1;
+  font-size: 1rem;
 }
 .clearFilters:hover {
   cursor: pointer;
