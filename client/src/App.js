@@ -157,6 +157,7 @@ const App = () => {
 											cart={cart}
 											setCart={setCart}
 											setItemList={setItemList}
+											completeItemList={completeItemList}
 										/>
 										<Footer />
 									</Route>
