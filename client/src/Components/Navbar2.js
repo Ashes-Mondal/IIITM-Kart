@@ -22,21 +22,9 @@ const Navbar2 = ({ itemList, setItemList }) => {
   return (
     <nav className="navbar2">
       <Dropdown className="dropdown1 mt-1">
-        {/* <Dropdown.Toggle
-          split
-          variant="info"
-          size="xs"
-          id="dropdown-split-basic"
-        >
-          {sortBy}{" "}
-        </Dropdown.Toggle> */}
-
         <Dropdown.Toggle variant="inherit">
           <span className="toggleDropDown">{sortBy}</span>
 
-          {/* <button className="dropbtn">
-            <b>{sortBy}</b>
-          </button> */}
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => {
@@ -85,58 +73,6 @@ const Navbar2 = ({ itemList, setItemList }) => {
           </Dropdown.Menu>
         </Dropdown.Toggle>
       </Dropdown>
-      {/* <div className="dropdown1 mt-1">
-        <button className="dropbtn">
-          <b>Sort By: </b>
-          {sortBy}
-        </button>
-        <div className="dropdown-content1">
-          <li
-            onClick={() => {
-              setSortBy("Category");
-              let newItemList = itemList.sort((a, b) =>
-                a.category > b.category ? -1 : 1
-              );
-              setItemList([...newItemList]);
-            }}
-          >
-            Category
-          </li>
-          <li
-            onClick={() => {
-              setSortBy("Cost Ascending");
-              let newItemList = itemList.sort((a, b) =>
-                a.cost > b.cost ? 1 : -1
-              );
-              setItemList([...newItemList]);
-            }}
-          >
-            Cost Ascending
-          </li>
-          <li
-            onClick={() => {
-              setSortBy("Cost Descending");
-              let newItemList = itemList.sort((a, b) =>
-                a.cost < b.cost ? 1 : -1
-              );
-              setItemList([...newItemList]);
-            }}
-          >
-            Cost Descending
-          </li>
-          <li
-            onClick={() => {
-              setSortBy("Rating");
-              let newItemList = itemList.sort((a, b) =>
-                a.rating > b.rating ? -1 : 1
-              );
-              setItemList([...newItemList]);
-            }}
-          >
-            Rating
-          </li>
-        </div>
-      </div> */}
       <span
         className={
           category === "Mobile" ? "categories categoriesClicked" : "categories"

@@ -25,7 +25,6 @@ const SearchBox = () => {
   const { setItemList } = useContext(Item);
   //handleSearchSubmit
   const handleSearchSubmit = async () => {
-    // e.preventDefault();
     history.push("/");
     //requesting server to fetch Search data
     const requestOptions = {

@@ -77,19 +77,19 @@ const ForgotPassword = () => {
 
   const handleOtp = (e) => {
     e.preventDefault();
-    setShowProcessing(true)
+    setShowProcessing(true);
     if (otp === inputOtp) {
       setOpenResetPwd(true);
       setOpenOtp(false);
     } else {
       alert("Invalid OTP!");
     }
-    setShowProcessing(false)
+    setShowProcessing(false);
   };
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    setShowProcessing(true)
+    setShowProcessing(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -107,15 +107,12 @@ const ForgotPassword = () => {
     setShowProcessing(false);
   };
 
-  /*******************************DEBUG********************************* */
-  // console.log("email:", email);
-  /***************************************************************** */
   if (open === false && openOtp === false && openResetPwd === false) {
     history.push("/login");
   }
   return (
     <>
-    {showProcessing ? <LinearProgress color="secondary" /> : null}
+      {showProcessing ? <LinearProgress color="secondary" /> : null}
       {openOtp ? (
         <div>
           <Container component="main" maxWidth="xs">

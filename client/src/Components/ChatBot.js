@@ -96,6 +96,7 @@ const ChatBot = ({ user, isAuth }) => {
       </div>
     );
   };
+
   var steps = [
     {
       id: "pleaseLogin",
@@ -169,6 +170,7 @@ const ChatBot = ({ user, isAuth }) => {
       },
     ];
   }
+
   return (
     <div className="chatbot">
       <ChatBotSimple
@@ -177,7 +179,6 @@ const ChatBot = ({ user, isAuth }) => {
         floating={true}
         headerTitle={"IIITM-Kart's Customer Service"}
         enableMobileAutoFocus={true}
-        placeholder=""
       />
     </div>
   );

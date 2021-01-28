@@ -7,7 +7,6 @@ code {
 .navbar2 {
   position: relative;
   padding: 0.5rem 1rem;
-  /* background: #D3D3D3; */
   background-color: #4169e1;
   color: white;
   width: 100%;
@@ -15,35 +14,6 @@ code {
   display: flex;
   border-bottom: 2px solid rgb(223, 223, 223);
 }
-/* .dropbtn {
-  background: #8aa4f3;
-  flex: 1 1 auto;
-  border: 2px solid black;
-  z-index: 2;
-  border-radius: 2px;
-  margin-left: 0;
-  margin-bottom: 3%;
-  align-self: center;
-}
-.dropbtn:hover {
-  background: rgb(243, 243, 117);
-  color: black;
-} */
-/* .dropdown-content1 {
-  display: none;
-  z-index: 2;
-  background: black;
-  color: white;
-  opacity: 0.9;
-}
-.dropdown-content1 li {
-  list-style-type: none;
-  padding: 10px;
-}
-.dropdown-content1 li:hover {
-  background: rgb(68, 68, 68);
-  cursor: pointer;
-} */
 .dropdown1 {
   margin-right: 0px;
   margin-left: 1%;
@@ -53,12 +23,6 @@ code {
 .toggleDropDown {
   font-size: 15px;
 }
-/* .dropdown1:hover .dropdown-content1 {
-  display: block;
-  position: absolute;
-  width: auto;
-  height: auto;
-} */
 .categories {
   flex: 1 1 auto;
   display: flex;
@@ -223,7 +187,6 @@ a.active-nav-link {
     -10px -10px 10px rgb(255, 255, 255);
 }
 .box h1 {
-  /* color: white; */
   text-transform: uppercase;
   font-weight: 500;
   font-family: sans-serif;
@@ -240,7 +203,6 @@ a.active-nav-link {
   outline: none;
   box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
     inset -5px -5px 5px rgb(255, 255, 255);
-  /* color: white; */
   border-radius: 24px;
   transition: 0.25s;
 }
@@ -260,7 +222,6 @@ a.active-nav-link {
   padding: 14px 40px;
   cursor: pointer;
   outline: none;
-  /* color: white; */
   border-radius: 24px;
   transition: 0.25s;
 }
@@ -290,16 +251,13 @@ a.active-nav-link {
   margin-bottom: 2%;
 }
 .cancelOrderButton {
-  /* box-shadow: inset 5px 5px 5px rgb(209, 168, 56);*/
   border-radius: 50px;
   border-width: 0px;
   background: rgb(255, 243, 213);
   padding: 11px;
-  /* background-color: #CD5C5C; */
 }
 .cancelOrderButton:hover {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  /* padding: 11px; */
   background-color: #f08080;
 }
 .orderContainer {
@@ -357,7 +315,6 @@ a.active-nav-link {
   margin: 0px 10px;
   cursor: pointer;
   outline: none;
-  /* color: white; */
   border-radius: 24px;
   transition: 0.25s;
 }
@@ -589,14 +546,10 @@ th {
   display: inline;
   flex: 0 0 auto;
 }
-/* .similarItemImg {
-  height: 200px;
-} */
 .similarItemDescription {
   max-width: 300px;
   overflow: hidden;
 }
-
 .chatbot {
   z-index: 5;
 }
@@ -605,11 +558,9 @@ th {
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
+  border: 2px solid black;
 }
 .cartItemContainer {
-  box-shadow: 10px 10px 10px rgb(200, 200, 200),
-    -10px -10px 10px rgb(255, 255, 255);
-  border-radius: 10px;
   padding: 5%;
 }
 .gridContainer {

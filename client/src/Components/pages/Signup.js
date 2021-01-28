@@ -64,8 +64,8 @@ const OtpPage = ({
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Verify OTP
+        <Typography>
+          <h1>Verify OTP</h1>
           <br />
           <h6>(OTP has been sent to your registered email-id)</h6>
         </Typography>
@@ -80,7 +80,17 @@ const OtpPage = ({
             name="OTP"
             autoComplete="OTP"
             autoFocus
-            onChange={(e) => setInputOtp(e.target.value)}
+            value={inputOtp}
+            onChange={(e) => {
+              var numbers = /^[0-9]+$/;
+              if (
+                e.target.value.length <= 6 &&
+                (e.target.value.match(numbers) || e.target.value === "")
+              ) {
+                console.log("number:", e.target.value);
+                setInputOtp(e.target.value);
+              }
+            }}
           />
           <Button
             type="submit"
@@ -345,7 +355,7 @@ export default function SignUp({ setLoaded }) {
         await fetch("/signupEmailValidation", requestOptions)
       ).json();
       if (result.response === false) {
-        window.scroll(0,0);
+        window.scroll(0, 0);
         setError(result.error);
         setSignup({
           ...signup,
