@@ -431,7 +431,7 @@ h1 {
 }
 
 /* // Small devices (landscape phones, 576px and down) */
-@media (max-width: 576px) {
+@media (max-width: 580px) {
   /* For mobile phones: */
   body {
     margin: auto;
@@ -455,6 +455,7 @@ h1 {
   }
   .search-box {
     width: 100vw;
+    margin-right: 0;
     position: sticky;
     top: 4.001rem;
     z-index: 1;
@@ -499,9 +500,7 @@ h1 {
   .siteLogo {
     max-width: 80%;
   }
-  .siteName {
-    max-width: 40%;
-  }
+
   .search-margin {
     width: 100%;
     margin-left: 0;

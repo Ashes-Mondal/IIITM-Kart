@@ -55,7 +55,6 @@ const SearchBox = () => {
       </Snackbar>
       <SearchBar
         type="text"
-        className="search-margin"
         placeholder="search product"
         onChange={(value) => {
           setSearch(value);

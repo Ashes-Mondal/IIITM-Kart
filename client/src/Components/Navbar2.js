@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-// import Dropdown from "react-bootstrap/SplitButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const Navbar2 = ({ itemList, setItemList }) => {
-  const [sortBy, setSortBy] = useState("Category");
+  const [sortBy, setSortBy] = useState("Sort By");
   const [category, setCategory] = useState("");
+
   const handleSearchSubmit = async (search) => {
     const requestOptions = {
       method: "POST",
@@ -17,20 +18,73 @@ const Navbar2 = ({ itemList, setItemList }) => {
       setItemList(result.itemList);
     }
   };
+
   return (
     <nav className="navbar2">
-      {/* <Dropdown>
-        <button variant="success">Split Button</button>
+      <Dropdown className="dropdown1 mt-1">
+        {/* <Dropdown.Toggle
+          split
+          variant="info"
+          size="xs"
+          id="dropdown-split-basic"
+        >
+          {sortBy}{" "}
+        </Dropdown.Toggle> */}
 
-        <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown> */}
-      <div className="dropdown1 mt-1">
+        <Dropdown.Toggle variant="info">
+          {sortBy}
+          {/* <button className="dropbtn">
+            <b>{sortBy}</b>
+          </button> */}
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("Category");
+                let newItemList = itemList.sort((a, b) =>
+                  a.category > b.category ? -1 : 1
+                );
+                setItemList([...newItemList]);
+              }}
+            >
+              Category
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("Cost Ascending");
+                let newItemList = itemList.sort((a, b) =>
+                  a.cost > b.cost ? 1 : -1
+                );
+                setItemList([...newItemList]);
+              }}
+            >
+              Cost Ascending
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("Cost Descending");
+                let newItemList = itemList.sort((a, b) =>
+                  a.cost < b.cost ? 1 : -1
+                );
+                setItemList([...newItemList]);
+              }}
+            >
+              Cost Descending
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("Rating");
+                let newItemList = itemList.sort((a, b) =>
+                  a.rating > b.rating ? -1 : 1
+                );
+                setItemList([...newItemList]);
+              }}
+            >
+              Rating
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown.Toggle>
+      </Dropdown>
+      {/* <div className="dropdown1 mt-1">
         <button className="dropbtn">
           <b>Sort By: </b>
           {sortBy}
@@ -81,7 +135,7 @@ const Navbar2 = ({ itemList, setItemList }) => {
             Rating
           </li>
         </div>
-      </div>
+      </div> */}
       <span
         className={
           category === "Mobile" ? "categories categoriesClicked" : "categories"
