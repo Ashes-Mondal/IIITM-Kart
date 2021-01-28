@@ -9,7 +9,7 @@ function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const ProductDetails = ({ itemList, cart, setCart }) => {
+const ProductDetails = ({ itemList, cart, setCart,completeItemList }) => {
 	const [state, setState] = useState({
 		open: false,
 		vertical: "top",
@@ -23,7 +23,7 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 	const { isAuth, setIsAuth } = useContext(Authentication);
 	const history = useHistory();
 	const { itemId } = useParams();
-	let item = itemList.filter((item) => item._id === itemId)[0];
+	let item = completeItemList.filter((item) => item._id === itemId)[0];
 	const {
 		category,
 		itemName,
@@ -75,8 +75,8 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 		setState({ open: false, vertical: "top", horizontal: "right" });
 	};
 
-	const filterSimilarProducts = (itemList, itemCategory,itemId) => {
-		return itemList.filter((product) => product.category === itemCategory && product._id !==itemId);
+	const filterSimilarProducts = (completeItemList, itemCategory,itemId) => {
+		return completeItemList.filter((product) => product.category === itemCategory && product._id !==itemId);
 	};
 
 	return (
@@ -208,13 +208,14 @@ const ProductDetails = ({ itemList, cart, setCart }) => {
 			</div>
 			<h5>Similar items:</h5>
 			<div className="similarItems">
-				{filterSimilarProducts(itemList, item.category,item._id).map((product, i) => {
+				{filterSimilarProducts(completeItemList, item.category,item._id).map((product, i) => {
 					return (
 						<div
 							key={i}
 							className="m-3 similarItem product-card"
 							onClick={() => {
-								window.location.href = `/productDetails/${product._id}`;
+								history.push(`/productDetails/${product._id}`);
+								window.scrollTo(0, 0);
 							}}
 						>
 							<img

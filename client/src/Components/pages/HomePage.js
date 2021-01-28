@@ -14,6 +14,9 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
 
 		setResponsiveness();
 		window.addEventListener("resize", () => setResponsiveness());
+
+		return;
+		window.removeEventListener("resize", () => setResponsiveness());
 	});
 	return (
 		<>

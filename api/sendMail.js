@@ -158,6 +158,7 @@ exports.signupEmailValidation = async (req, res) => {
 		return re.test(email);
 	}
 	function validatePhone(phone) {
+		if(phone.length > 10) return false;
 		const re = /\d{10}/;
 		return re.test(phone);
 	}

@@ -345,6 +345,7 @@ export default function SignUp({ setLoaded }) {
         await fetch("/signupEmailValidation", requestOptions)
       ).json();
       if (result.response === false) {
+        window.scroll(0,0);
         setError(result.error);
         setSignup({
           ...signup,

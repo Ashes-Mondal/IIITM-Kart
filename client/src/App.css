@@ -321,37 +321,45 @@ h1 {
   justify-content: space-between;
 }
 
-.flex-childA1 {
+/* .flex-childA1 {
   flex: 1;
   margin-right: 20px;
   width: 50%;
   height: 50%;
   border-radius: 50%;
+} */
+.grid-containerA1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-content: center;
+  align-items: center;
 }
-
 .flex-childA2 {
-  flex: 5;
   padding: 20px;
   text-align: center;
   margin-bottom: auto;
   top: 6.5rem;
   text-align: left;
+  grid-column: 3/1;
 }
-
+.flex-childA2 h5 {
+  overflow-wrap: break-word;
+}
 .flex-childA3 {
-  flex: 2;
   padding: 20px;
   margin-bottom: auto;
-  text-align: left;
+  text-align: center;
   color: black;
-}
-.flex-childA3 p {
-  font-size: 3vw;
 }
 .flex-childA3:hover {
   cursor: pointer;
 }
-
+.flex-childA3 p {
+  font-size: xx-large;
+}
+.flex-childA3 p span img {
+  margin-left: 10%;
+}
 .smallImage {
   width: 40%;
   height: 40%;
@@ -504,6 +512,21 @@ h1 {
   .search-margin {
     width: 100%;
     margin-left: 0;
+  }
+}
+@media (max-width: 700px) {
+  /* for admin dashboard welcome panel*/
+  .flex-childA2 {
+    grid-column: 1/1;
+  }
+  .effect3D {
+    width: 90%;
+  }
+}
+@media (max-width: 780px) {
+  /*for add item and edit item*/
+  .effect3D {
+    width: 90%;
   }
 }
 
