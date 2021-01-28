@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// import Dropdown from "react-bootstrap/SplitButton";
+
 const Navbar2 = ({ itemList, setItemList }) => {
   const [sortBy, setSortBy] = useState("Category");
   const [category, setCategory] = useState("");
@@ -17,6 +19,17 @@ const Navbar2 = ({ itemList, setItemList }) => {
   };
   return (
     <nav className="navbar2">
+      {/* <Dropdown>
+        <button variant="success">Split Button</button>
+
+        <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+        <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown> */}
       <div className="dropdown1 mt-1">
         <button className="dropbtn">
           <b>Sort By: </b>
