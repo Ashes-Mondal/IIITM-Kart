@@ -202,11 +202,11 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Orders Lost</h5>
         </div>
       </div>
-      <>
-        <a
+      <div onClick={()=>{history.push("/admin/orders")}}>
+        {/* <
           href="/admin/orders"
           style={{ textDecoration: "none", color: "black" }}
-        >
+        > */}
           {showProcessing ? <LinearProgress color="secondary" /> : null}
           <h1>Recent Orders</h1>
 
@@ -257,8 +257,7 @@ const Dashboard = ({ user, setAdmin }) => {
               </TableBody>
             </Table>
           </TableContainer>
-        </a>
-      </>
+        </div>
     </div>
   );
 };
