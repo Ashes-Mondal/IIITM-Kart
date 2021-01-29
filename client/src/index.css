@@ -31,11 +31,12 @@ code {
   font-size: 1rem;
 }
 .categories:hover {
-  background: #145da0;
+  background: rgb(56, 92, 197);
   cursor: pointer;
 }
 .categoriesClicked {
-  background: #145da0;
+  background: rgb(56, 92, 197);
+  border-bottom: 4px solid rgb(34, 54, 117);
 }
 .clearFilters {
   display: flex;
@@ -47,7 +48,8 @@ code {
 }
 .clearFilters:hover {
   cursor: pointer;
-  background-color: #a52a2a;
+  background-color: rgb(207, 53, 53);
+  border-bottom: 4px solid rgb(112, 3, 3);
 }
 /********************************************** HOMEPAGE, CARD ************************************/
 
@@ -255,7 +257,7 @@ a.active-nav-link {
 }
 .cancelOrderButton:hover {
   box-shadow: 5px 5px 5px rgb(200, 200, 200), -5px -5px 5px rgb(255, 255, 255);
-  background-color: #f08080;
+  background-color: indianred;
 }
 .orderContainer {
   text-align: left;
@@ -299,12 +301,14 @@ a.active-nav-link {
 .deleteUser {
   font-weight: bold;
   background: none;
-  border: 3px solid rgb(223, 63, 63);
+  border: 2px solid black;
   border-radius: 5px;
-}
-.deleteUser:hover {
   color: white;
   background: rgb(223, 63, 63);
+  padding: 5px 10px;
+}
+.deleteUser:hover {
+  background: rgb(172, 47, 47);
 }
 .searchButton {
   border: 0;
@@ -577,4 +581,16 @@ th {
   cursor: pointer;
   width: fit-content;
   margin: auto;
+}
+.logoutBtn {
+  border: 2px solid black;
+  margin-top: 10%;
+  background: rgb(204, 24, 24);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+}
+.logoutBtn:hover {
+  background: rgb(161, 19, 19);
+  font-weight: bold;
 }

@@ -65,7 +65,7 @@ function Navbar({ user, admin, loaded }) {
             </NavLink>
           ) : null}
           <form className="navlink" method="POST" action="/logout">
-            <button className="btn mt-1 btn-danger">Logout</button>
+            <button className="logoutBtn">Logout</button>
           </form>
         </>
       );
