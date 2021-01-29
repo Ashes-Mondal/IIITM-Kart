@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import ScrollTop from "./ScrollTop"
 
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -244,7 +245,8 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 		setConfirmClearCartModal(false);
 	};
 	return (
-		<>
+		<div style={{paddingBottom:"15rem"}}>
+			<ScrollTop showBelow={400}/>
 			{showProcessing ? <LinearProgress color="secondary" /> : null}
 			<Snackbar
 				anchorOrigin={{ vertical, horizontal }}
@@ -426,7 +428,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 					) : (
 						<div
 							style={{
-								height: "40rem",
+								height: "30rem",
 								display: "flex",
 								flexDirection: "column",
 								justifyContent: "center",
@@ -441,8 +443,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 								src="https://professionalscareer.com/assets/images/emptycart.png"
 								alt="Cart is empty"
 							/>
-
-							<button className="btnShop">
+							<button onClick={()=>window.scroll(0,0)} style={{marginBottom:"1rem"}} className="btnShop">
 								<Link to="/" className="text-white mb-5">
 									Start Shopping Now
 								</Link>
@@ -505,7 +506,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 					})}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

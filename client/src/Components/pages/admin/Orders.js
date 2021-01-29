@@ -24,6 +24,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SearchBar from "material-ui-search-bar";
+import ScrollTop from "../ScrollTop"
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -71,6 +72,7 @@ const OrderDetails = ({ orderDetails, showMore, setShowMore }) => {
 
 	return (
 		<div style={{ width: "100vw" }}>
+			<ScrollTop showBelow={400}/>
 			<Dialog
 				fullScreen
 				open={showMore}
@@ -354,29 +356,72 @@ const Orders = ({setAdmin}) => {
 		setDisplayOrders(adminUser);
 	};
 
+
 	const handleFilter = () => {
-		setValue(0);
-		if (search === "") {
-			setDisplayOrders(orders);
-			return;
+		const filterSearch = (itemList, Search) => {
+			for (let wordIndex = 1; wordIndex < Search.length; wordIndex++) {
+				if (wordIndex === 0) continue;
+				itemList = itemList.filter((itemObject) => {
+					let flag = false;
+					let findResult = new RegExp(Search[wordIndex], "ig");
+
+					//testing on firstName
+					flag = findResult.test(itemObject.user.name.firstName);
+					if (flag) return itemObject;
+					//testing on lastName
+					flag = findResult.test(itemObject.user.name.lastName);
+					if (flag) return itemObject;
+					//testing on phone
+					flag = findResult.test(itemObject.user.phone);
+					if (flag) return itemObject;
+					//testing on email
+					flag = findResult.test(itemObject.user.email);
+					if (flag) return itemObject;
+
+					return null;
+				});
+			}
+			return itemList;
+		};
+
+		const Search = search.split(" ");
+		//parent searching based on first word
+		const firstWord = Search[0];
+		const regex = new RegExp("\\b" + firstWord + "\\b", "gi");
+		// console.log(regex.test("POCO X3"))
+		let combinedResult = [];
+		for (let i = 0; i < orders.length; i++) {
+			//razorPay Orderid
+			if (search === orders[i].razorpayOrderId) {
+				combinedResult.push(orders[i]);
+				continue;
+			}
+			// customer Name
+			if (regex.test(orders[i].user.name.firstName)) {
+				combinedResult.push(orders[i]);
+				continue;
+			}
+			if (regex.test(orders[i].user.name.lastName)) {
+				combinedResult.push(orders[i]);
+				continue;
+			}
+			//phone
+			if (regex.test(orders[i].user.phone)) {
+				combinedResult.push(orders[i]);
+				continue;
+			}
+			//email
+			if (regex.test(orders[i].user.email)) {
+				combinedResult.push(orders[i]);
+				continue;
+			}
 		}
-		let filteredList = orders.filter(
-			(order) =>
-				search === order.user.name.firstName ||
-				search === order.user.name.lastName ||
-				search === `${order.user.name.firstName} ${order.user.name.lastName}` ||
-				search === order._id ||
-				search === order.user.phone ||
-				search === order.user.email ||
-				search === order.razorpayPaymentId ||
-				search === order.razorpayOrderId ||
-				search === order.razorpaySignature
-		);
-		if (filteredList.length < 1) {
-			alert("No result found!");
-			return;
-		}
-		setDisplayOrders(filteredList);
+		//filtering based on further words in search string
+		let itemList = combinedResult;
+		if (Search.length > 1 && itemList.length)
+			itemList = filterSearch(itemList, Search);
+		if (itemList.length) setDisplayOrders(itemList);
+		else alert("No result found!");
 	};
 
 	const StyledTableCell = withStyles((theme) => ({

@@ -3,6 +3,7 @@ import ProductCard from "../ProductCard";
 import Navbar2 from "../Navbar2";
 import CarouselPage from "../CarouselPage";
 import SearchBox from "../SearchBox";
+import ScrollTop from "./ScrollTop"
 
 const HomePage = ({ itemList, cart, setCart, setItemList }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -20,7 +21,8 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
     };
   },[]);
   return (
-    <>
+    <div style={{paddingBottom:"15rem"}}>
+      <ScrollTop showBelow={400}/>
       {showSearchBar ? <SearchBox /> : null}
       <Navbar2 itemList={itemList} setItemList={setItemList} />
       <CarouselPage />
@@ -31,7 +33,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

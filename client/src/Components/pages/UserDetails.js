@@ -5,6 +5,8 @@ import ReactStars from "react-rating-stars-component";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import ScrollTop from "./ScrollTop";
+
 function UserDetails({ user, setUser, setCart, setLoaded }) {
   const { setIsAuth } = useContext(Authentication);
   const history = useHistory();
@@ -133,7 +135,8 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
     return false;
   };
   return (
-    <>
+    <div style={{paddingBottom:"12rem"}}>
+      <ScrollTop showBelow={400}/>
       {/* CONFIRM CANCEL/RETURN PRODUCT*/}
       <Modal
         show={confirmCancelModal}
@@ -475,7 +478,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

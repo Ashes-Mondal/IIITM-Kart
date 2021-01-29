@@ -28,6 +28,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SearchBar from "material-ui-search-bar";
+import ScrollTop from "../ScrollTop"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -384,28 +385,73 @@ const Users = ({ setAdmin }) => {
     setSelectedUsers(users);
   };
 
-  const handleFilter = () => {
-    setValue(0);
-    if (search === "") {
-      setSelectedUsers(users);
-      return;
-    }
-    let filteredList = users.filter(
-      (user) =>
-        search === user.name.firstName ||
-        search === user.name.lastName ||
-        search === `${user.name.firstName} ${user.name.lastName}` ||
-        search === user._id ||
-        search === user.phone ||
-        search === user.email ||
-        search === user.address
-    );
-    if (filteredList.length < 1) {
-      alert("No result found!");
-      return;
-    }
-    setSelectedUsers(filteredList);
-  };
+
+	const handleFilter = () => {
+		const filterSearch = (itemList, Search) => {
+			for (let wordIndex = 1; wordIndex < Search.length; wordIndex++) {
+				if (wordIndex === 0) continue;
+				itemList = itemList.filter((itemObject) => {
+					let flag = false;
+					let findResult = new RegExp(Search[wordIndex], "ig");
+
+					//testing on firstName
+					flag = findResult.test(itemObject.name.firstName);
+					if (flag) return itemObject;
+					//testing on lastName
+					flag = findResult.test(itemObject.name.lastName);
+					if (flag) return itemObject;
+					//testing on phone
+					flag = findResult.test(itemObject.phone);
+					if (flag) return itemObject;
+					//testing on email
+					flag = findResult.test(itemObject.email);
+					if (flag) return itemObject;
+
+					return null;
+				});
+			}
+			return itemList;
+		};
+
+		const Search = search.split(" ");
+		//parent searching based on first word
+		const firstWord = Search[0];
+		const regex = new RegExp("\\b" + firstWord + "\\b", "gi");
+		// console.log(regex.test("POCO X3"))
+		let combinedResult = [];
+		for (let i = 0; i < users.length; i++) {
+			//razorPay Orderid
+			if (search === users[i]._id) {
+				combinedResult.push(users[i]);
+				continue;
+			}
+			// customer Name
+			if (regex.test(users[i].name.firstName)) {
+				combinedResult.push(users[i]);
+				continue;
+			}
+			if (regex.test(users[i].name.lastName)) {
+				combinedResult.push(users[i]);
+				continue;
+			}
+			//phone
+			if (regex.test(users[i].phone)) {
+				combinedResult.push(users[i]);
+				continue;
+			}
+			//email
+			if (regex.test(users[i].email)) {
+				combinedResult.push(users[i]);
+				continue;
+			}
+		}
+		//filtering based on further words in search string
+		let itemList = combinedResult;
+		if (Search.length > 1 && itemList.length)
+			itemList = filterSearch(itemList, Search);
+		if (itemList.length) setSelectedUsers(itemList);
+		else alert("No result found!");
+	};
 
   const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -428,6 +474,7 @@ const Users = ({ setAdmin }) => {
 
   return (
     <div className="adminPanel">
+      <ScrollTop showBelow={400}/>
       <Modal show={showAdminModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Are you Sure?</Modal.Title>

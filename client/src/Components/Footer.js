@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer style={{}} className="footer">
+    <footer style={{marginTop:"2rem"}} className="footer">
       <div className="grid-container">
         <div>
           <b>Get To Know Us</b>

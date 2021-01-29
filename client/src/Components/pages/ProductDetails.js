@@ -4,7 +4,7 @@ import { Authentication } from "../../App";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-
+import ScrollTop from "./ScrollTop"
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -80,7 +80,8 @@ const ProductDetails = ({ itemList, cart, setCart,completeItemList }) => {
 	};
 
 	return (
-		<div className="productDetails">
+		<div style={{paddingBottom:"15rem"}} className="productDetails">
+			<ScrollTop showBelow={400}/>
 			<Snackbar
 				anchorOrigin={{ vertical, horizontal }}
 				open={open}
