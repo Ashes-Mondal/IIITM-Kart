@@ -202,63 +202,65 @@ const Dashboard = ({ user, setAdmin }) => {
           <h5>Orders Lost</h5>
         </div>
       </div>
-      <>
-        <a
-          href="/admin/orders"
-          style={{ textDecoration: "none", color: "black" }}
+      <div>
+        {showProcessing ? <LinearProgress color="secondary" /> : null}
+        <h1
+          onClick={() => {
+            history.push("/admin/orders");
+          }}
+          className="recentOrders"
         >
-          {showProcessing ? <LinearProgress color="secondary" /> : null}
-          <h1>Recent Orders</h1>
+          Recent Orders
+        </h1>
 
-          <TableContainer component={Paper} className={classes.paper}>
-            <Table className={classes.tableOrder} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell style={{ fontSize: "1rem" }}>
-                    Order Id
-                  </StyledTableCell>
-                  <StyledTableCell style={{ fontSize: "1rem" }} align="center">
-                    Customer Name
-                  </StyledTableCell>
-                  <StyledTableCell style={{ fontSize: "1rem" }} align="center">
-                    Total Amount
-                  </StyledTableCell>
-                  <StyledTableCell style={{ fontSize: "1rem" }} align="center">
-                    Contact Number
-                  </StyledTableCell>
-                  <StyledTableCell style={{ fontSize: "1rem" }} align="center">
-                    Order Status
-                  </StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orders
-                  .slice(-5)
-                  .reverse()
-                  .map((order, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
-                        {order.razorpayOrderId}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {order.user.name.firstName} {order.user.name.lastName}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        Rs {order.totalCost}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {order.user.phone}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {status(order.deliveryStatus, order.cancelledStatus)}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </a>
-      </>
+        <TableContainer component={Paper} className={classes.paper}>
+          <Table className={classes.tableOrder} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell style={{ fontSize: "1rem" }}>
+                  Order Id
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1rem" }} align="center">
+                  Customer Name
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1rem" }} align="center">
+                  Total Amount
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1rem" }} align="center">
+                  Contact Number
+                </StyledTableCell>
+                <StyledTableCell style={{ fontSize: "1rem" }} align="center">
+                  Order Status
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders
+                .slice(-5)
+                .reverse()
+                .map((order, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {order.razorpayOrderId}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {order.user.name.firstName} {order.user.name.lastName}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Rs {order.totalCost}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {order.user.phone}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {status(order.deliveryStatus, order.cancelledStatus)}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 };

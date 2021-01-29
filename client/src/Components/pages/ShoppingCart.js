@@ -426,7 +426,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
 					) : (
 						<div
 							style={{
-								height: "30rem",
+								height: "40rem",
 								display: "flex",
 								flexDirection: "column",
 								justifyContent: "center",

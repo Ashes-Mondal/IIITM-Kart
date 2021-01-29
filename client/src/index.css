@@ -245,9 +245,6 @@ a.active-nav-link {
 }
 .ordersList {
   background: rgb(245, 245, 245);
-  border-radius: 10px;
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
   margin-bottom: 2%;
 }
 .cancelOrderButton {
@@ -268,6 +265,7 @@ a.active-nav-link {
   border-radius: 10px;
   padding: 20px 40px;
   margin: 0% 5% 5% 5%;
+  border: 2px solid black;
 }
 
 .child6 {
@@ -285,14 +283,18 @@ a.active-nav-link {
   box-shadow: 10px 10px 10px rgb(200, 200, 200),
     -10px -10px 10px rgb(255, 255, 255);
   border-radius: 10px;
+  border: 2px solid black;
 }
 .userdetails input {
-  border: 0;
-  box-shadow: inset 5px 5px 5px rgb(200, 200, 200),
-    inset -5px -5px 5px rgb(255, 255, 255);
-  border-radius: 10px;
   padding: 10px;
   margin-bottom: 2%;
+}
+.userdetails .disabled {
+  background: rgb(240, 239, 239);
+  border-radius: 3px;
+  color: grey;
+  cursor: no-drop;
+  border: 1px solid rgb(209, 209, 209);
 }
 .deleteUser {
   font-weight: bold;
@@ -570,4 +572,9 @@ th {
 }
 .gridContainer > * {
   direction: ltr;
+}
+.recentOrders {
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
 }

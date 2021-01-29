@@ -209,7 +209,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
       {showProcessing ? <LinearProgress color="secondary" /> : null}
       <div className="gridContainer userbackground">
         <div>
-          <div className="userdetails userbackground shadow">
+          <div className="userdetails userbackground">
             <h1>User Details</h1>
             <br />
             <form className="userform">
@@ -236,7 +236,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
               <div className="form-group">
                 <input
                   type="text"
-                  className="mr-5"
+                  className={editable ? "mr-5" : "mr-5 disabled"}
                   value={user.name.firstName || ""}
                   name="FirstName"
                   disabled={editable ? "" : "disabled"}
@@ -253,6 +253,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                 <input
                   type="text"
                   value={user.name.lastName || ""}
+                  className={editable ? "" : "disabled"}
                   name="LastName"
                   disabled={editable ? "" : "disabled"}
                   onChange={(e) => {
@@ -273,6 +274,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                 <input
                   type="text"
                   value={user.email || ""}
+                  className={editable ? "" : "disabled"}
                   name="Email"
                   disabled={editable ? "" : "disabled"}
                   onChange={(e) => {
@@ -287,6 +289,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                 <input
                   type="text"
                   value={user.phone || ""}
+                  className={editable ? "" : "disabled"}
                   name="Phno"
                   disabled={editable ? "" : "disabled"}
                   onChange={(e) => {
@@ -300,6 +303,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                 <input
                   type="text"
                   value={user.address || ""}
+                  className={editable ? "" : "disabled"}
                   name="Address"
                   disabled={editable ? "" : "disabled"}
                   onChange={(e) => {
@@ -336,84 +340,89 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                         <b>Date Of Order : </b>
                         {element.dateOfOrder.slice(0, 25)}
                       </p>
+                      <hr />
                       {element.order.map((item, i) => {
                         return (
-                          <div className="ordersList row p-2" key={i}>
-                            <div className="col-3">
-                              <img
-                                src={item.item.imageURL}
-                                alt="item"
-                                className="orderImgs"
-                              />
-                            </div>
-                            <div className="col-md-auto child6">
-                              <b>{item.item.itemName}</b>, Cost :{" Rs "}
-                              {item.item.cost}, Qty : {item.Qty}
-                              <br />
-                              <span className="text-muted">
-                                {item.item.description}
-                              </span>
-                              {user.orders[user.orders.length - index - 1]
-                                .deliveryStatus === true &&
-                              user.orders[user.orders.length - index - 1].order[
-                                i
-                              ].rated !== true ? (
-                                <>
-                                  <div className="row">
-                                    <div className="giveRating ml-3">
-                                      Give a rating:
-                                    </div>
-                                    <div className="reactStars">
-                                      <ReactStars
-                                        count={5}
-                                        onChange={(newValue) => {
-                                          let tempUser = user;
-                                          tempUser.orders[
-                                            tempUser.orders.length - index - 1
-                                          ].order[i].userRating = newValue;
-                                          setUser(tempUser);
-                                        }}
-                                        size={20}
-                                        activeColor="#ffd700"
-                                      />
-                                    </div>
-                                    <div>
-                                      <button
-                                        className="postRating "
-                                        onClick={() => {
-                                          if (
-                                            user.orders[
-                                              user.orders.length - index - 1
-                                            ].order[i].userRating
-                                          ) {
+                          <div key={i}>
+                            <div className="ordersList row p-2">
+                              <div className="col-3">
+                                <img
+                                  src={item.item.imageURL}
+                                  alt="item"
+                                  className="orderImgs"
+                                />
+                              </div>
+                              <div className="col-md-auto child6">
+                                <b>{item.item.itemName}</b>, Cost :{" Rs "}
+                                {item.item.cost}, Qty : {item.Qty}
+                                <br />
+                                <span className="text-muted">
+                                  {item.item.description}
+                                </span>
+                                {user.orders[user.orders.length - index - 1]
+                                  .deliveryStatus === true &&
+                                user.orders[user.orders.length - index - 1]
+                                  .order[i].rated !== true ? (
+                                  <>
+                                    <div className="row">
+                                      <div className="giveRating ml-3">
+                                        Give a rating:
+                                      </div>
+                                      <div className="reactStars">
+                                        <ReactStars
+                                          count={5}
+                                          onChange={(newValue) => {
                                             let tempUser = user;
                                             tempUser.orders[
                                               tempUser.orders.length - index - 1
-                                            ].order[i].rated = true;
+                                            ].order[i].userRating = newValue;
                                             setUser(tempUser);
-                                            updateUser();
-                                            addRating(
-                                              user.orders[
-                                                user.orders.length - index - 1
-                                              ].order[i].item._id,
+                                          }}
+                                          size={20}
+                                          activeColor="#ffd700"
+                                        />
+                                      </div>
+                                      <div>
+                                        <button
+                                          className="postRating "
+                                          onClick={() => {
+                                            if (
                                               user.orders[
                                                 user.orders.length - index - 1
                                               ].order[i].userRating
-                                            );
-                                            setEditable(!editable);
-                                            setEditable(!editable);
-                                          } else {
-                                            alert("select a rating first");
-                                          }
-                                        }}
-                                      >
-                                        Post Rating
-                                      </button>
+                                            ) {
+                                              let tempUser = user;
+                                              tempUser.orders[
+                                                tempUser.orders.length -
+                                                  index -
+                                                  1
+                                              ].order[i].rated = true;
+                                              setUser(tempUser);
+                                              updateUser();
+                                              addRating(
+                                                user.orders[
+                                                  user.orders.length - index - 1
+                                                ].order[i].item._id,
+                                                user.orders[
+                                                  user.orders.length - index - 1
+                                                ].order[i].userRating
+                                              );
+                                              setEditable(!editable);
+                                              setEditable(!editable);
+                                            } else {
+                                              alert("select a rating first");
+                                            }
+                                          }}
+                                        >
+                                          Post Rating
+                                        </button>
+                                      </div>
                                     </div>
-                                  </div>
-                                </>
-                              ) : null}
+                                  </>
+                                ) : null}
+                              </div>
                             </div>
+                            <hr />
                           </div>
                         );
                       })}
@@ -428,7 +437,11 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                           <span className="pending">Pending...</span>
                         )}
                         <button
-                          style={{ marginLeft: "auto", height: "3rem" }}
+                          style={{
+                            marginLeft: "auto",
+                            height: "3rem",
+                            border: "2px solid indianred",
+                          }}
                           disabled={showProcessing}
                           onClick={() => {
                             setCancelOrderDetails(
