@@ -4,7 +4,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-const EditItem = ({ itemList, setItemList, setLoaded }) => {
+const EditItem = ({ itemList, setItemList, setLoaded ,setCompleteItemList,completeItemList}) => {
 	let history = useHistory();
 	const [error, setError] = useState("");
 	const [showModal, setShowModal] = useState(false);
@@ -28,13 +28,14 @@ const EditItem = ({ itemList, setItemList, setLoaded }) => {
 		const result = await (await fetch("/editItem", requestOptions)).json();
 		if (result.response) {
 			setLoaded(false);
-			let tempItemList = itemList.map((item) => {
+			let tempItemList = completeItemList.map((item) => {
 				if (item._id === itemId) {
 					item = itemDetails;
 				}
 				return item;
 			});
 			setItemList(tempItemList);
+			setCompleteItemList(tempItemList);
 			history.push("/admin/items");
 			history.go();
 		} else if (result.error === "Not logged in") {

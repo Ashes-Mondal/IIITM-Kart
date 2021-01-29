@@ -18,7 +18,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
     return function cleanup() {
       window.removeEventListener("resize", () => setResponsiveness());
     };
-  });
+  },[]);
   return (
     <>
       {showSearchBar ? <SearchBox /> : null}

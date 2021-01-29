@@ -516,7 +516,7 @@ const Users = ({ setAdmin }) => {
               <input
                 className="form-control"
                 type="search"
-                placeholder="search"
+                placeholder="Search"
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
@@ -535,7 +535,7 @@ const Users = ({ setAdmin }) => {
       {showSearchBar ? null : (
         <SearchBar
           type="text"
-          placeholder="search product"
+          placeholder="Search"
           onChange={(value) => {
             setSearch(value);
           }}
