@@ -164,7 +164,7 @@ function Navbar({ user, admin, loaded }) {
       ? [
           { label: "Home", href: "/" },
           { label: "Cart", href: "/cart" },
-          { label: "User", href: "/user" },
+          { label: `${user.name.firstName}`, href: "/user" },
         ]
       : [
           { label: "Home", href: "/" },

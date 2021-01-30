@@ -43,9 +43,7 @@ API.defaultProps = {
 };
 
 const ChatBot = ({ user, isAuth }) => {
-  console.log("isAuth: ", isAuth);
   tempAuth = isAuth;
-  console.log("tempAuth: ", tempAuth);
   const displayOrders = () => {
     return (
       <div>
