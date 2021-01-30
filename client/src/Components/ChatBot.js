@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ChatBotSimple from "react-simple-chatbot";
-const API = (props, isAuth) => {
+
+var tempAuth;
+const API = (props) => {
   const { steps } = props;
   const userInput = steps.userInput.value;
   const [APIOutput, setAPIOutput] = useState();
@@ -23,8 +25,9 @@ const API = (props, isAuth) => {
       console.log("Error...");
     }
   };
+
   useEffect(() => {
-    if (isAuth) fetchAPIOutput();
+    if (tempAuth) fetchAPIOutput();
     else {
       setAPIOutput(
         "Please Login first so that you can have fun with the chatbot and we can sell your precious data to Facebook XD."
@@ -44,6 +47,9 @@ API.defaultProps = {
 };
 
 const ChatBot = ({ user, isAuth }) => {
+  console.log("isAuth: ", isAuth);
+  tempAuth = isAuth;
+  console.log("tempAuth: ", tempAuth);
   const displayOrders = () => {
     return (
       <div>
@@ -152,7 +158,7 @@ const ChatBot = ({ user, isAuth }) => {
     },
     {
       id: "API",
-      component: <API isAuth={isAuth} />,
+      component: <API />,
       asMessage: true,
       trigger: "userInput",
     },
