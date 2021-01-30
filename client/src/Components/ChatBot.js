@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ChatBotSimple from "react-simple-chatbot";
-const BMI = (props) => {
+const API = (props, isAuth) => {
   const { steps } = props;
   const userInput = steps.userInput.value;
-  const [APIOutput, setAPIOutput] = useState("");
+  const [APIOutput, setAPIOutput] = useState();
   const fetchAPIOutput = async () => {
     const requestOptions = {
       method: "POST",
@@ -15,24 +15,31 @@ const BMI = (props) => {
     };
     const result = await (await fetch("/chatbotQuery", requestOptions)).json();
     if (result.response) {
+      // setAPIOutput(JSON.parse(JSON.stringify(result.reply)));
       setAPIOutput(result.reply);
+      console.log("result", result);
       console.log("APIOutput:", APIOutput);
     } else {
       console.log("Error...");
     }
   };
   useEffect(() => {
-    fetchAPIOutput();
-  }, [userInput]);
+    if (isAuth) fetchAPIOutput();
+    else {
+      setAPIOutput(
+        "Please Login first so that you can have fun with the chatbot and we can sell your precious data to Facebook XD."
+      );
+    }
+  }, []);
 
-  return <div>API Output:{APIOutput}</div>;
+  return <>{APIOutput ? <div>{APIOutput}</div> : "..."}</>;
 };
 
-BMI.propTypes = {
+API.propTypes = {
   steps: PropTypes.object,
 };
 
-BMI.defaultProps = {
+API.defaultProps = {
   steps: undefined,
 };
 
@@ -136,20 +143,18 @@ const ChatBot = ({ user, isAuth }) => {
     {
       id: "pleaseLogin",
       message: "Hello user, please Login to continue.",
-      trigger: "options",
+      trigger: "userInput",
     },
     {
-      id: "options",
-      options: [{ value: 1, label: "Contact Us", trigger: "contactDetails" }],
+      id: "userInput",
+      user: true,
+      trigger: "API",
     },
     {
-      id: "contactDetails",
-      message: "Feel free to contact us:",
-      trigger: "contactUs",
-    },
-    {
-      id: "contactUs",
-      component: contactUs(),
+      id: "API",
+      component: <API isAuth={isAuth} />,
+      asMessage: true,
+      trigger: "userInput",
     },
   ];
 
@@ -166,7 +171,17 @@ const ChatBot = ({ user, isAuth }) => {
           { value: 1, label: "Orders", trigger: "orders" },
           { value: 2, label: "Payments", trigger: "payments" },
           { value: 3, label: "Contact Us", trigger: "contactDetails" },
+          {
+            value: 4,
+            label: "I want to type something",
+            trigger: "Ask me something",
+          },
         ],
+      },
+      {
+        id: "Ask me something",
+        message: "Ask me something😉",
+        trigger: "userInput",
       },
       {
         id: "orders",
@@ -200,23 +215,20 @@ const ChatBot = ({ user, isAuth }) => {
       },
       {
         id: "3",
-        message: "Thanks for chatting with us!! For any other query, continue",
-        trigger: "userInput",
+        message:
+          "Thanks for chatting with us!! For any other query, continue...",
+        trigger: "options",
       },
       {
         id: "userInput",
         user: true,
-        trigger: "reciprocate",
-      },
-      {
-        id: "reciprocate",
-        message: "{previousValue}",
         trigger: "API",
       },
       {
         id: "API",
-        component: <BMI />,
-        end: true,
+        component: <API />,
+        asMessage: true,
+        trigger: "userInput",
       },
     ];
   }
