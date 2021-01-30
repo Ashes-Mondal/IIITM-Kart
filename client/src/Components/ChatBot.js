@@ -17,10 +17,6 @@ const API = (props, isAuth) => {
     if (result.response) {
       // setAPIOutput(JSON.parse(JSON.stringify(result.reply)));
       setAPIOutput(result.reply);
-      console.log("result", result);
-      console.log("APIOutput:", APIOutput);
-    } else {
-      console.log("Error...");
     }
   };
   useEffect(() => {
