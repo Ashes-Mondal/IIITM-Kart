@@ -1,5 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import ChatBotSimple from "react-simple-chatbot";
+const BMI = (props) => {
+  const { steps } = props;
+  const userInput = steps.userInput.value;
+  const [APIOutput, setAPIOutput] = useState("");
+  const fetchAPIOutput = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: userInput,
+      }),
+    };
+    const result = await (await fetch("/chatbotQuery", requestOptions)).json();
+    if (result.response) {
+      setAPIOutput(result.reply);
+      console.log("APIOutput:", APIOutput);
+    } else {
+      console.log("Error...");
+    }
+  };
+  useEffect(() => {
+    fetchAPIOutput();
+  }, [userInput]);
+
+  return <div>API Output:{APIOutput}</div>;
+};
+
+BMI.propTypes = {
+  steps: PropTypes.object,
+};
+
+BMI.defaultProps = {
+  steps: undefined,
+};
 
 const ChatBot = ({ user, isAuth }) => {
   const displayOrders = () => {
@@ -166,7 +201,22 @@ const ChatBot = ({ user, isAuth }) => {
       {
         id: "3",
         message: "Thanks for chatting with us!! For any other query, continue",
-        trigger: "options",
+        trigger: "userInput",
+      },
+      {
+        id: "userInput",
+        user: true,
+        trigger: "reciprocate",
+      },
+      {
+        id: "reciprocate",
+        message: "{previousValue}",
+        trigger: "API",
+      },
+      {
+        id: "API",
+        component: <BMI />,
+        end: true,
       },
     ];
   }
