@@ -55,6 +55,9 @@ An online portal for people of IIITM to have their own system of e-commerce. Ins
 
 ## Screenshots:
 ![Home Page](https://drive.google.com/uc?export=view&id=154ytB_mmaQKcE_WdZ_muJBN4zKQrDL-_)
+
 ![Chatbot](https://drive.google.com/uc?export=view&id=1-PrXGQtMHxhgXvAY1Hc1264kbo1gIo2J)
+
 ![Payment](https://drive.google.com/uc?export=view&id=1Qc5WMpFq8976ln4OpBYeo3jNt68k1Ebv)
+
 ![Admin](https://drive.google.com/uc?export=view&id=1YMxXgsO4A_K5FP-DBHHY8QXqWY0kWBuF)
