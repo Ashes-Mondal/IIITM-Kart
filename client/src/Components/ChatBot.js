@@ -1,36 +1,43 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ChatBotSimple from "react-simple-chatbot";
-const API = (props, isAuth) => {
-  const { steps } = props;
+
+const API = (props) => {
+  const { steps,isAuth } = props;
   const userInput = steps.userInput.value;
+  const [booleanCheck, setBooleanCheck] = useState(false);
   const [APIOutput, setAPIOutput] = useState();
-  const fetchAPIOutput = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: userInput,
-      }),
-    };
-    const result = await (await fetch("/chatbotQuery", requestOptions)).json();
-    if (result.response) {
-      // setAPIOutput(JSON.parse(JSON.stringify(result.reply)));
-      setAPIOutput(result.reply);
-      console.log("result", result);
-      console.log("APIOutput:", APIOutput);
-    } else {
-      console.log("Error...");
-    }
-  };
+
+  
   useEffect(() => {
+    if(booleanCheck)
+      return;
+    setBooleanCheck(true);
+    const fetchAPIOutput = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+        text: userInput,
+        }),
+      };
+      const result = await (await fetch("/chatbotQuery", requestOptions)).json();
+      if (result.response) {
+        // setAPIOutput(JSON.parse(JSON.stringify(result.reply)));
+        setAPIOutput(result.reply);
+        // console.log("result", result);
+        // console.log("APIOutput:", APIOutput);
+      } else {
+        alert("Sorry Some Error occurred...");
+      }
+    };
     if (isAuth) fetchAPIOutput();
     else {
       setAPIOutput(
         "Please Login first so that you can have fun with the chatbot and we can sell your precious data to Facebook XD."
       );
     }
-  }, []);
+  }, [isAuth,userInput,booleanCheck]);
 
   return <>{APIOutput ? <div>{APIOutput}</div> : "..."}</>;
 };
@@ -226,7 +233,7 @@ const ChatBot = ({ user, isAuth }) => {
       },
       {
         id: "API",
-        component: <API />,
+        component: <API isAuth={isAuth} />,
         asMessage: true,
         trigger: "userInput",
       },

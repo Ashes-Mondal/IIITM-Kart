@@ -87,7 +87,7 @@ const OtpPage = ({
                 e.target.value.length <= 6 &&
                 (e.target.value.match(numbers) || e.target.value === "")
               ) {
-                console.log("number:", e.target.value);
+                // console.log("number:", e.target.value);
                 setInputOtp(e.target.value);
               }
             }}

@@ -451,6 +451,7 @@ function UserDetails({ user, setUser, setCart, setLoaded }) {
                               user.orders[user.orders.length - index - 1]
                             );
                             setConfirmCancelModal(true);
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
                           }}
                           className="cancelOrderButton"
                         >

@@ -80,7 +80,7 @@ const ProductDetails = ({ itemList, cart, setCart,completeItemList }) => {
 	};
 
 	return (
-		<div style={{paddingBottom:"15rem"}} className="productDetails">
+		<div style={{paddingBottom:"25rem",backgroundColor:"white"}} className="productDetails">
 			<ScrollTop showBelow={400}/>
 			<Snackbar
 				anchorOrigin={{ vertical, horizontal }}

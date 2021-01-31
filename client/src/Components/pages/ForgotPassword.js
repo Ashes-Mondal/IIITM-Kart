@@ -63,7 +63,7 @@ const ForgotPassword = () => {
     const result = await (
       await fetch("/emailValidation", requestOptions)
     ).json();
-    console.log("resultFP:", result);
+    // console.log("resultFP:", result);
     if (result.response) {
       setOpenOtp(true);
       setOtp(result.otp);
