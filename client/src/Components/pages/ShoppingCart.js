@@ -245,7 +245,7 @@ function ShoppingCart({ cart, setCart, user, setUser }) {
     setConfirmClearCartModal(false);
   };
   return (
-    <div style={{ paddingBottom: "15rem" }}>
+    <div style={{ paddingBottom: "15rem",backgroundColor:`${cart.length<1?"white":""}`}}>
       <ScrollTop showBelow={400} />
       {showProcessing ? <LinearProgress color="secondary" /> : null}
       <Snackbar

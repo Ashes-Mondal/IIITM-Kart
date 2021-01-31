@@ -8,7 +8,6 @@ const useStyles = makeStyles({
     margin: "auto",
     marginTop: "1rem",
     objectFit: "scale-down",
-    width: "auto",
     height: "20vh",
   },
 });

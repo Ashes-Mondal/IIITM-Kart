@@ -21,7 +21,7 @@ const HomePage = ({ itemList, cart, setCart, setItemList }) => {
     };
   },[]);
   return (
-    <div style={{paddingBottom:"15rem"}}>
+    <div style={{paddingBottom:"15rem",backgroundColor:"white"}}>
       <ScrollTop showBelow={400}/>
       {showSearchBar ? <SearchBox /> : null}
       <Navbar2 itemList={itemList} setItemList={setItemList} />
